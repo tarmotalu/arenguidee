@@ -1149,8 +1149,6 @@ ActiveRecord::Schema.define(:version => 20120321185510) do
     t.string   "salt",                         :limit => 40
     t.string   "first_name",                   :limit => 100
     t.string   "last_name",                    :limit => 100
-    t.text    "group_ids",                    :null=>false
-    t.text    "admin_group_ids",              :null=>false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "activated_at"

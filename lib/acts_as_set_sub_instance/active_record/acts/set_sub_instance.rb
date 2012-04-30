@@ -10,9 +10,9 @@ module ActiveRecord
           belongs_to :sub_instance
           before_create :set_sub_instance
 
-          default_scope lambda {{ :include=>options[:table_name]=="ideas" ? "" : "ideas".to_sym,
+          default_scope lambda {{ :include=>["groups","ideas"].includes(options[:table_name]) ? "" : "ideas".to_sym,
                                   :conditions=>"#{options[:table_name]}.sub_instance_id #{SubInstance.current.id} "+
-                                  "ideas.group_id IN #{current_user.group_ids}" }}
+                                  ["groups"].includes(options[:table_name]) ? "" : "ideas.group_id IN #{current_user.group_ids}" }}
           class_eval <<-EOV
             include SetSubInstance::InstanceMethods
           EOV
@@ -25,7 +25,7 @@ module ActiveRecord
     #      if self.class.class_name=="Activity" and self.idea and self.idea.sub_instance
     #        self.sub_instance_id = self.idea.sub_instance.id
     #      else
-            self.sub_instance_id = SubInstance.current.id if SubInstance.current
+            self.sub_instance_id = SubInstance.current.id
     #      end
         end
       end

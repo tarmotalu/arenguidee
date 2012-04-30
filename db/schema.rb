@@ -18,6 +18,12 @@ ActiveRecord::Schema.define(:version => 20120321185510) do
     t.text   "description"
   end
 
+  create_table "groups_users", :force => true, :id=>false do |t|
+    t.integer  "user_id"
+    t.integer "group_id"
+    t.boolean "admin", :default=>"false"
+  end
+
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
     t.integer  "sub_instance_id"
@@ -1143,6 +1149,8 @@ ActiveRecord::Schema.define(:version => 20120321185510) do
     t.string   "salt",                         :limit => 40
     t.string   "first_name",                   :limit => 100
     t.string   "last_name",                    :limit => 100
+    t.text    "group_ids",                    :null=>false
+    t.text    "admin_group_ids",              :null=>false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "activated_at"

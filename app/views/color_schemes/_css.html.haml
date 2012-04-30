@@ -1,0 +1,6 @@
+- if @color_scheme
+  %div{:id => "color_scheme_#{id||current_instance.color_scheme_id}"}
+    = render :partial => "color_schemes/scheme_css", :locals => {:scheme => @color_scheme }
+- else
+  %div{:id => "color_scheme_#{id}"}
+    = render :partial => "color_schemes/scheme_css", :locals => {:scheme => ColorScheme.find(id) }

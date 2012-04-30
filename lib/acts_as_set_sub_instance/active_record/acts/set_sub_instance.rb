@@ -1,0 +1,34 @@
+module ActiveRecord
+  module Acts
+    module SetSubInstance
+      def self.included(base)
+        base.extend(ClassMethods)
+      end
+      
+      module ClassMethods
+        def acts_as_set_sub_instance(options = {})
+          belongs_to :sub_instance
+          before_create :set_sub_instance
+
+          default_scope lambda {{ :include=>options[:table_name]=="ideas" ? "" : "ideas".to_sym,
+                                  :conditions=>"#{options[:table_name]}.sub_instance_id #{SubInstance.current.id} "+
+                                  "ideas.group_id IN #{current_user.group_ids}" }}
+          class_eval <<-EOV
+            include SetSubInstance::InstanceMethods
+          EOV
+        end
+      end
+      
+      module InstanceMethods
+        def set_sub_instance
+    # DISABLED HACK
+    #      if self.class.class_name=="Activity" and self.idea and self.idea.sub_instance
+    #        self.sub_instance_id = self.idea.sub_instance.id
+    #      else
+            self.sub_instance_id = SubInstance.current.id if SubInstance.current
+    #      end
+        end
+      end
+    end
+  end
+end

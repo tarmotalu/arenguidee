@@ -1,0 +1,103 @@
+#sib_top_navigation
+  #topnav.topnav
+    %div
+      = render :partial => "shared/search"
+    %a.new_idea{:href => "/ideas/new"}
+      %span
+        = tr("New idea")
+    - if false and logged_in?
+      %a.notifications{:href => "notifications"}
+        %span
+          = tr("Notification")
+    - unless logged_in?
+      %a.signin{:href => "login"}
+        %span
+          = tr("Sign in")
+    - else
+      %a.profile{:href => "profile"}
+        %span
+          = current_user.login
+    %a.help{:href => "help"}
+      %span
+        = tr("Help")
+    - if logged_in?
+      = render :partial => "shared/user_info"
+      = render :partial => "shared/notifications"
+    - else
+      = render :partial => "users/login"
+    = render :partial => "shared/help"
+
+:javascript
+  $(document).ready(function() {
+
+      $(".signin").click(function(e) {
+          e.preventDefault();
+          $("#sib_login_form").toggle();
+          $(".signin").toggleClass("menu-open");
+      });
+
+      $("#sib_login_form").mouseup(function() {
+          return false
+      });
+
+      $(document).mouseup(function(e) {
+          if($(e.target).parent("a.signin").length==0) {
+              $(".signin").removeClass("menu-open");
+              $("#sib_login_form").hide();
+          }
+      });
+
+      $(".notifications").click(function(e) {
+          e.preventDefault();
+          $("#sib_notifications").toggle();
+          $(".notifications").toggleClass("menu-open");
+      });
+
+      $("#sib_notifications_box").mouseup(function() {
+          return false
+      });
+      $(document).mouseup(function(e) {
+          if($(e.target).parent("a.notifications").length==0) {
+              $(".notifications").removeClass("menu-open");
+              $("#sib_notifications").hide();
+          }
+      });
+
+      $(".profile").click(function(e) {
+          e.preventDefault();
+          $("#sib_profile").toggle();
+          $(".profile").toggleClass("menu-open");
+      });
+
+      $("#sib_profile").mouseup(function() {
+          return false
+      });
+      $(document).mouseup(function(e) {
+          if($(e.target).parent("a.profile").length==0) {
+              $(".profile").removeClass("menu-open");
+              $("#sib_profile").hide();
+          }
+      });
+
+      $(".help").click(function(e) {
+          e.preventDefault();
+          $("#sib_help").toggle();
+          $(".help").toggleClass("menu-open");
+      });
+
+      $("#sib_help").mouseup(function() {
+          return false
+      });
+      $(document).mouseup(function(e) {
+          if($(e.target).parent("a.help").length==0) {
+              $(".help").removeClass("menu-open");
+              $("#sib_help").hide();
+          }
+      });
+
+  });
+:javascript
+  $(function() {
+    $('#forgot_username_link').tipsy({gravity: 'w'});
+  });
+

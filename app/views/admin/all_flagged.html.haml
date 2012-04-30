@@ -1,0 +1,12 @@
+%b= @page_title
+%br/
+%br/
+- @all.each do |action_item|
+  - if action_item.instance_of?(Idea)
+    = render :partial => "ideas/flagged_listing", :locals => {:idea => action_item, :suffix => "_noself"}
+  - elsif action_item.instance_of?(Point)
+    = render :partial => "points/show_full", :locals => {:point => action_item, :revision=>nil, :skip_details=>true, :suffix => "_noself"}
+  - elsif action_item.instance_of?(Comment)
+    = render :partial => "comments/show", :locals => {:comment => action_item, :suffix => "_noself"}
+  _________________________________________________________________
+  %br/

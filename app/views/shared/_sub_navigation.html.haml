@@ -1,0 +1,50 @@
+#sib_sub_nav
+  %div#section_title
+    %span
+      = controller_name == "points" ? tr("Debate","sub_nav") + " :" : tr(controller_name.camelize,"sub_nav") + " :"
+    %span
+    - if @selected_sub_nav_name
+      %a.subnav.pulldown_trigger{:href => "subnav"}
+        %span
+          = @selected_sub_nav_name
+    -elsif @selected_sub_nav_name
+      %a{:href => "#"}
+        %span
+          = @selected_sub_nav_name
+    -else
+      %a{:href => "#"}
+        %span
+          = @page_title
+  - if @sub_menu_items and not @sub_menu_items.empty?
+    %div#sub_menu.submenu
+      %ul
+      - @sub_menu_items.each do |menu_item_id, menu_item|
+        - if menu_item_id==@selected_sub_nav_item_id
+          %li.pulldown
+            %a{:href => menu_item[1]}
+              = menu_item[0]
+        - else
+          %li.selected
+            %a{:href => menu_item[1]}
+              = menu_item[0]
+
+:javascript
+  $(document).ready(function() {
+
+      $(".subnav").click(function(e) {
+          e.preventDefault();
+          $("#sub_menu").toggle();
+          $(".preventDefault").toggleClass("menu-open");
+      });
+
+      $("#sub_menu").mouseup(function() {
+          return false
+      });
+
+      $(document).mouseup(function(e) {
+          if($(e.target).parent("a.preventDefault").length==0) {
+              $(".preventDefault").removeClass("menu-open");
+              $("#sub_menu").hide();
+          }
+      });
+  });

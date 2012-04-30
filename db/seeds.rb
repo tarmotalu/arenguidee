@@ -49,7 +49,7 @@ g.name = "public"
 g.save
 
 u.groups << g
-u.set_admin_for_group(g)
+Group.set_admin_for_group(u,g)
 
 Category.create(:name=>"New Products", :description => "")
 Category.create(:name=>"Improved Services", :description => "")

@@ -8,7 +8,7 @@ class SubInstance < ActiveRecord::Base
   
   belongs_to :picture
 
-  has_attached_file :top_banner, :styles => { :icon_full => "980x100#" }
+  has_attached_file :top_banner, :styles => { :icon_full => "1024x80#" }
   validates_attachment_size :top_banner, :less_than => 5.megabytes
   validates_attachment_content_type :top_banner, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
@@ -40,24 +40,24 @@ class SubInstance < ActiveRecord::Base
     state :passive do
       event :registered, transitions_to: :pending
       event :suspend, transitions_to: :suspended
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :pending do
       event :activate, transitions_to: :active
       event :suspend, transitions_to: :suspended
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
     end
     state :active do
       event :suspend, transitions_to: :suspended
-      event :delete, transitions_to: :deleted
+      event :removed, transitions_to: :removed
     end
     state :suspended do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
       event :unsuspend, transitions_to: :active, meta: { validates_presence_of: [:activated_at] }
       event :unsuspend, transitions_to: :pending, meta: { validates_presence_of: [:activation_code] }
       event :unsuspend, transitions_to: :passive
     end
-    state :deleted
+    state :removed
   end
 
   before_save :clean_urls
@@ -99,9 +99,13 @@ class SubInstance < ActiveRecord::Base
   ReservedShortnames = %w[admin blog ftp mail pop pop3 imap smtp stage stats status www localize feedback facebook]
   validates_exclusion_of :short_name, :in => ReservedShortnames, :message => tr('is already taken',"")
 
-  def self.current  
-    Thread.current[:sub_instance]
-  end  
+  def self.current
+    if Thread.current[:sub_instance]
+      Thread.current[:sub_instance]
+    else
+      Thread.current[:sub_instance] = SubInstance.first
+    end
+  end
 
   def self.current_id
     if Thread.current[:sub_instance]
@@ -177,8 +181,8 @@ class SubInstance < ActiveRecord::Base
     end
   end
 
-  def on_deleted_entry(new_state, event)
-    self.deleted_at = Time.now
+  def on_removed_entry(new_state, event)
+    self.removed_at = Time.now
     save(:validate => false)
   end
 end

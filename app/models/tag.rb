@@ -1,7 +1,7 @@
 class Tag < ActiveRecord::Base
 
   acts_as_set_sub_instance :table_name=>"tags"
-  
+
   scope :by_endorsers_count, :order => "tags.up_endorsers_count desc"
 
   scope :alphabetical, :order => "tags.name asc"
@@ -98,11 +98,11 @@ class Tag < ActiveRecord::Base
   end
   
   def published_idea_ids
-    @published_idea_ids ||= Idea.published.filtered.tagged_with(self.name, :on => :issues).collect{|p| p.id}
+    @published_idea_ids ||= Idea.published.tagged_with(self.name, :on => :issues).collect{|p| p.id}
   end
   
   def calculate_discussions_count
-    Activity.active.filtered.discussions.for_all_users.by_recently_updated.count(:conditions => ["idea_id in (?)",published_idea_ids])
+    Activity.active.discussions.for_all_users.by_recently_updated.count(:conditions => ["idea_id in (?)",published_idea_ids])
   end
   
   def calculate_points_count

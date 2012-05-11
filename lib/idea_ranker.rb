@@ -157,9 +157,9 @@ class IdeaRanker
       end
       Rails.cache.delete('views/total_volume_chart') # reset the daily volume chart
       for u in User.active.at_least_one_endorsement.all
-        u.index_24hr_change = u.index_change_percent(2)
-        u.index_7days_change = u.index_change_percent(7)
-        u.index_30days_change = u.index_change_percent(30)
+        u.index_24hr_delta = u.index_delta_percent(2)
+        u.index_7days_delta = u.index_delta_percent(7)
+        u.index_30days_delta = u.index_delta_percent(30)
         u.save(:validate => false)
         u.expire_charts
       end       
@@ -194,23 +194,23 @@ class IdeaRanker
     # make sure the scores for all the positions above the max position are set to 0
     Endorsement.update_all("score = 0", "position > #{Endorsement.max_position}")      
     # get the last version # for the different time lengths
-    v = Ranking.filtered.find(:all, :select => "max(version) as version")[0]
+    v = Ranking.find(:all, :select => "max(version) as version")[0]
     if v
      v = v.version || 0
      v+=1
     else
      v = 1
     end
-    oldest = Ranking.filtered.find(:all, :select => "max(version) as version")[0].version
+    oldest = Ranking.find(:all, :select => "max(version) as version")[0].version
     v_1hr = oldest
     v_24hr = oldest
-    r = Ranking.filtered.find(:all, :select => "max(version) as version", :conditions => "created_at < '#{Time.now-1.hour}'")[0]
+    r = Ranking.find(:all, :select => "max(version) as version", :conditions => "created_at < '#{Time.now-1.hour}'")[0]
     v_1hr = r.version if r
-    r = Ranking.filtered.find(:all, :select => "max(version) as version", :conditions => "created_at < '#{Time.now-1.hour}'")[0]
+    r = Ranking.find(:all, :select => "max(version) as version", :conditions => "created_at < '#{Time.now-1.hour}'")[0]
     v_24hr = r.version if r
 
     ideas = Idea.find_by_sql("
-       select ideas.id, ideas.endorsements_count, ideas.position_7days_change, ideas.up_endorsements_count, ideas.down_endorsements_count, \
+       select ideas.id, ideas.endorsements_count, ideas.up_endorsements_count, ideas.down_endorsements_count, \
        sum(((#{Endorsement.max_position+1}-endorsements.position)*endorsements.value)*users.score) as number
        from users,endorsements,ideas
        where endorsements.user_id = users.id
@@ -222,14 +222,11 @@ class IdeaRanker
        order by number desc")
 
     i = 0
-    puts "ideas.count = #{ideas.count}"
     for p in ideas
-     puts "7D #{p.position_7days_change}"
      p.score = p.number
      first_time = false
      i = i + 1
      p.position = i
-     puts "5D #{p.position_7days_change}"
      r = p.rankings.find_by_version(v_1hr)
      if r # it's in that version
        p.position_1hr = r.position
@@ -242,46 +239,37 @@ class IdeaRanker
          first_time = true
        end
      end
-     puts "4D #{p.position_7days_change}"
-     p.position_1hr_change = p.position_1hr - i 
+     p.position_1hr_delta = p.position_1hr - i 
      r = p.rankings.find_by_version(v_24hr)
-     puts "3D #{p.position_7days_change}"
      if r # in that version
        p.position_24hr = r.position
-       p.position_24hr_change = p.position_24hr - i          
+       p.position_24hr_delta = p.position_24hr - i          
      else # didn't exist yet, so let's find the oldest one we can
        r = p.rankings.find(:all, :conditions => ["version < ?",v_24hr],:order => "version asc", :limit => 1)[0]
        p.position_24hr = 0
-       p.position_24hr_change = 0
+       p.position_24hr_delta = 0
      end   
-     puts "2D #{p.position_7days_change}"
      date = Time.now-5.hours-7.days
      c = p.charts.find_by_date_year_and_date_month_and_date_day(date.year,date.month,date.day)
      if c
-       puts "1D #{p.position_7days_change} #{c.position}"
        p.position_7days = c.position
-       puts "position_7days_change #{p.position_7days_change} cc"
-       p.position_7days_change = p.position_7days - i
-       puts "position_7days_change #{p.position_7days_change} cc"
+       p.position_7days_delta = p.position_7days - i
      else
        p.position_7days = 0
-       puts "position_7days_change #{p.position_7days_change}"
-       p.position_7days_change = 0
-       puts "position_7days_change #{p.position_7days_change}"
+       p.position_7days_delta = 0
      end
 
      date = Time.now-5.hours-30.days
      c = p.charts.find_by_date_year_and_date_month_and_date_day(date.year,date.month,date.day)
      if c
        p.position_30days = c.position
-       p.position_30days_change = p.position_30days - i   
+       p.position_30days_delta = p.position_30days - i   
      else
        p.position_30days = 0
-       p.position_30days_change = 0
+       p.position_30days_delta = 0
      end      
 
-     puts "#{0} #{p.position_7days_change} #{p.position}"
-     p.trending_score = 0 #p.position_7days_change/p.position
+     p.trending_score = p.position_7days_delta/p.position
      if p.down_endorsements_count == 0
        p.is_controversial = false
        p.controversial_score = 0
@@ -294,14 +282,13 @@ class IdeaRanker
        end
        p.controversial_score = p.endorsements_count - (p.endorsements_count-p.down_endorsements_count).abs
      end
-     # HACK Idea.update_all("position = #{p.position}, trending_score = #{p.trending_score}, is_controversial = #{p.is_controversial}, controversial_score = #{p.controversial_score}, score = #{p.score}, position_1hr = #{p.position_1hr}, position_1hr_change = #{p.position_1hr_change}, position_24hr = #{p.position_24hr}, position_24hr_change = #{p.position_24hr_change}, position_7days = #{p.position_7days}, position_7days_change = #{p.position_7days_change}, position_30days = #{p.position_30days}, position_30days_change = #{p.position_30days_change}", ["id = ?",p.id])
-     Idea.update_all("position = #{p.position}, trending_score = #{p.trending_score}, is_controversial = #{p.is_controversial}, controversial_score = #{p.controversial_score}, score = #{p.score}, position_1hr = #{p.position_1hr}, position_24hr = #{p.position_24hr}, position_7days = #{p.position_7days}, position_30days = #{p.position_30days}", ["id = ?",p.id])
+     Idea.update_all("position = #{p.position}, trending_score = #{p.trending_score}, is_controversial = #{p.is_controversial}, controversial_score = #{p.controversial_score}, score = #{p.score}, position_1hr = #{p.position_1hr}, position_1hr_delta = #{p.position_1hr_delta}, position_24hr = #{p.position_24hr}, position_24hr_delta = #{p.position_24hr_delta}, position_7days = #{p.position_7days}, position_7days_delta = #{p.position_7days_delta}, position_30days = #{p.position_30days}, position_30days_delta = #{p.position_30days_delta}", ["id = ?",p.id])
      r = Ranking.create(:version => v, :idea => p, :position => i, :endorsements_count => p.endorsements_count)
     end
     Idea.connection.execute("update ideas set position = 0, trending_score = 0, is_controversial = false, controversial_score = 0, score = 0 where endorsements_count = 0;")
 
     # check if there's a new fastest rising idea
-    rising = Idea.filtered.published.rising.all[0]
+    rising = Idea.published.rising.all[0]
     ActivityIdeaRising1.find_or_create_by_idea_id(rising.id) if rising
     SubInstance.current = nil
   end

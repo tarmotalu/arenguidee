@@ -16,7 +16,7 @@ class PointsController < ApplicationController
  
   def your_index
     @page_title = tr("Your points", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
-    @points = Point.filtered.published.by_recently_created.paginate :conditions => ["user_id = ?", current_user.id], :include => :idea, :page => params[:page], :per_page => params[:per_page]
+    @points = Point.published.by_recently_created.paginate :conditions => ["user_id = ?", current_user.id], :include => :idea, :page => params[:page], :per_page => params[:per_page]
     get_qualities
     respond_to do |format|
       format.html { render :action => "index" }
@@ -27,7 +27,7 @@ class PointsController < ApplicationController
   
   def newest
     @page_title = tr("Newest points", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
-    @points = Point.filtered.published.by_recently_created.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
+    @points = Point.published.by_recently_created.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
     @rss_url = url_for :only_path => false, :format => "rss"
     get_qualities
     respond_to do |format|
@@ -117,7 +117,7 @@ class PointsController < ApplicationController
   # GET /points/1
   def show
     @point = Point.find(params[:id])
-    if @point.is_deleted?
+    if @point.is_removed?
       flash[:error] = tr("That point was deleted", "controller/points")
       redirect_to @point.idea
       return
@@ -314,7 +314,7 @@ class PointsController < ApplicationController
   def abusive
     @point = Point.find(params[:id])
     @point.do_abusive
-    @point.delete!
+    @point.remove!
     respond_to do |format|
       format.js {
         render :update do |page|
@@ -344,7 +344,7 @@ class PointsController < ApplicationController
       redirect_to(@point)
       return
     end
-    @point.delete!
+    @point.remove!
     ActivityPointDeleted.create(:user => current_user, :point => @point)
     respond_to do |format|
       format.html { redirect_to(points_url) }

@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   scope :admins, :conditions => "users.is_admin = true"
   scope :suspended, :conditions => "users.status = 'suspended'"
   scope :probation, :conditions => "users.status = 'probation'"
-  scope :deleted, :conditions => "users.status = 'deleted'"
+  scope :removed, :conditions => "users.status = 'removed'"
   scope :pending, :conditions => "users.status = 'pending'"  
   scope :warnings, :conditions => "warnings_count > 0"
   
@@ -29,27 +29,27 @@ class User < ActiveRecord::Base
   scope :by_revisions, :order => "users.point_revisions_count desc"
   scope :by_invites_accepted, :conditions => "users.contacts_invited_count > 0", :order => "users.referrals_count desc"
   scope :by_suspended_at, :order => "users.suspended_at desc"
-  scope :by_deleted_at, :order => "users.deleted_at desc"
+  scope :by_removed_at, :order => "users.removed_at desc"
   scope :by_recently_loggedin, :order => "users.loggedin_at desc"
   scope :by_probation_at, :order => "users.probation_at desc"
   scope :by_oldest_updated_at, :order => "users.updated_at asc"
   scope :by_twitter_crawled_at, :order => "users.twitter_crawled_at asc"
   
-  scope :by_24hr_gainers, :conditions => "users.endorsements_count > 4", :order => "users.index_24hr_change desc"
-  scope :by_24hr_losers, :conditions => "users.endorsements_count > 4", :order => "users.index_24hr_change asc"  
-  scope :by_7days_gainers, :conditions => "users.endorsements_count > 4", :order => "users.index_7days_change desc"
-  scope :by_7days_losers, :conditions => "users.endorsements_count > 4", :order => "users.index_7days_change asc"  
-  scope :by_30days_gainers, :conditions => "users.endorsements_count > 4", :order => "users.index_30days_change desc"
-  scope :by_30days_losers, :conditions => "users.endorsements_count > 4", :order => "users.index_30days_change asc"  
+  scope :by_24hr_gainers, :conditions => "users.endorsements_count > 4", :order => "users.index_24hr_delta desc"
+  scope :by_24hr_losers, :conditions => "users.endorsements_count > 4", :order => "users.index_24hr_delta asc"  
+  scope :by_7days_gainers, :conditions => "users.endorsements_count > 4", :order => "users.index_7days_delta desc"
+  scope :by_7days_losers, :conditions => "users.endorsements_count > 4", :order => "users.index_7days_delta asc"  
+  scope :by_30days_gainers, :conditions => "users.endorsements_count > 4", :order => "users.index_30days_delta desc"
+  scope :by_30days_losers, :conditions => "users.endorsements_count > 4", :order => "users.index_30days_delta asc"  
 
   scope :item_limit, lambda{|limit| {:limit=>limit}}
   scope :all_endorsers_and_opposers_for_idea, lambda { |idea_id| User.joins(:endorsements).where(endorsements: {idea_id: idea_id}); }
 
   has_and_belongs_to_many :groups
+
   belongs_to :picture
   has_attached_file :buddy_icon, :styles => { :icon_24 => "24x24#", :icon_35 => "35x35#", :icon_48 => "48x48#", :icon_96 => "96x96#" }
-
-
+  
   validates_attachment_size :buddy_icon, :less_than => 5.megabytes
   validates_attachment_content_type :buddy_icon, :content_type => ['image/jpeg', 'image/png', 'image/gif','image/x-png','image/pjpeg']
   
@@ -279,41 +279,41 @@ class User < ActiveRecord::Base
     state :pending do
       event :activate, transitions_to: :active
       event :suspend, transitions_to: :suspended
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
       event :probation, transitions_to: :probation
     end
     state :passive do
       event :register, transitions_to: :pending, meta: { validates_presence_of: [:crypted_password, :password] }
       event :activate, transitions_to: :active
       event :suspend, transitions_to: :suspended
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
       event :probation, transitions_to: :probation
     end
     state :active do
       event :suspend, transitions_to: :suspended
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
       event :probation, transitions_to: :probation
     end
     state :suspended do
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
       event :unsuspend, transitions_to: :active, meta: { validates_presence_of: [:activated_at] }
       event :unsuspend, transitions_to: :pending, meta: { validates_presence_of: [:activation_code] }
       event :unsuspend, transitions_to: :passive
     end
     state :probation do
       event :suspend, transitions_to: :suspended
-      event :delete, transitions_to: :deleted
+      event :remove, transitions_to: :removed
       event :unprobation, transitions_to: :active, meta: { validates_presence_of: [:activated_at] }
       event :unprobation, transitions_to: :pending, meta: { validates_presence_of: [:activation_code] }
       event :unprobation, transitions_to: :passive
     end
-    state :deleted
+    state :removed
   end
 
    def on_pending_entry(new_state = nil, event = nil)
     self.probation_at = nil
     self.suspended_at = nil
-    self.deleted_at = nil
+    self.removed_at = nil
     save(:validate => false) if persisted?
   end
 
@@ -324,7 +324,7 @@ class User < ActiveRecord::Base
     self.activation_code = nil
     self.probation_at = nil
     self.suspended_at = nil
-    self.deleted_at = nil
+    self.removed_at = nil
     for e in endorsements.suspended
       e.unsuspend!
     end
@@ -332,8 +332,8 @@ class User < ActiveRecord::Base
     save(:validate => false)
   end  
   
-  def on_deleted_entry(new_state, event)
-    self.deleted_at = Time.now
+  def on_removed_entry(new_state, event)
+    self.removed_at = Time.now
     for e in endorsements
       e.destroy
     end    
@@ -508,7 +508,7 @@ class User < ActiveRecord::Base
   
   def pick_ad(current_idea_ids)
   	shown = 0
-  	for ad in Ad.active.filtered.most_paid.all
+  	for ad in Ad.active.most_paid.all
   		if shown == 0 and not current_idea_ids.include?(ad.idea_id)
   			shown_ad = ad.shown_ads.find_by_user_id(self.id)
   			if shown_ad and not shown_ad.has_response? and shown_ad.seen_count < 4
@@ -802,7 +802,7 @@ class User < ActiveRecord::Base
   end
   
   # computes the change in percentage of all their ideas over the last [limit] days.
-  def index_change_percent(limit=7)
+  def index_delta_percent(limit=7)
     index_charts(limit-1).collect{|c|c.percentage.to_f}.reverse.sum
   end
   
@@ -1126,7 +1126,7 @@ class User < ActiveRecord::Base
     top_category_score = {}
     Category.all.each do |category|
       category = Tag.find_by_name(category.name)
-      top_ideas[category] = Idea.filtered.tagged_with(category, :on => :issues).published.top_rank.limit(3)
+      top_ideas[category] = Idea.tagged_with(category, :on => :issues).published.top_rank.limit(3)
       top_category_score[category] = top_ideas[category].shift.score
       top_ideas[category].each do |idea|
         idea_followers[idea.id] = all_endorsers_and_opposers_for_idea(idea.id).collect { |u| u.id }
@@ -1176,6 +1176,16 @@ class User < ActiveRecord::Base
       near_top = near_top[0..2] if near_top.count > 3
 
       UserMailer.user_report(user, important, important_to_followers, near_top, frequency).deliver
+    end
+  end
+
+  def is_group_admin?(idea)
+    return true if self.is_admin?
+    groups_user = idea ? GroupsUser.where(:user_id=>self.id, :group_id=>idea.group_id) : nil
+    if groups_user and groups_user.is_admin?
+      true
+    else
+      false
     end
   end
 

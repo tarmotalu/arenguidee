@@ -1,4 +1,4 @@
-.col-4
+.col-half
   .col-content
     .header-add
       = render partial: "points_header", locals: { idea: @idea, support: true }
@@ -17,7 +17,7 @@
       = link_to(tr("All points for endorse", "view/ideas/top_points"), endorsed_top_points_idea_url(@idea,:by_newest=>true))
     #pro_new
       = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "pro_new", :points => @points_new_up, :numbering=>false}
-.col-4
+.col-half
   .col-content
     .header-add
       = render partial: "points_header", locals: { idea: @idea, support: false }

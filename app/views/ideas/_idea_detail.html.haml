@@ -9,7 +9,7 @@
         .col-content
           = render :partial => "ideas/idea_status_changelogs"
       .col-half
-        .col-content{:style=>"background-color: #fff;"}
+        .col-content.point_for
           %div
             .header-add
               = render partial: "points_header", locals: { idea: @idea, support: true }
@@ -29,7 +29,7 @@
             #pro_new
               = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "pro_new", :points => @points_new_up, :numbering=>false}
       .col-half
-        .col-content{:style=>"background-color: #fff;"}
+        .col-content.point_against
           %div
             .header-add
               = render partial: "points_header", locals: { idea: @idea, support: false }

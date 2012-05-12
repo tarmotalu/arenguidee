@@ -372,7 +372,7 @@ class PointsController < ApplicationController
       @items[1]=[tr("Newest Points", "view/points"), newest_points_url]
       @items[2]=[tr("Recently revised", "view/points"), revised_points_url]
       if logged_in?
-        @items[3]=[tr("Your priorities points", "view/ideas"), your_ideas_points_url]
+        @items[3]=[tr("Your ideas' points", "view/ideas"), your_ideas_points_url]
       end
       @items
     end

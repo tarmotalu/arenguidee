@@ -23,12 +23,13 @@
   = render :partial => "shared/notifications"
 - else
   = render :partial => "users/login"
-  = render :partial => "shared/help"
+
+= render :partial => "shared/help"
 
 :javascript
   $(document).ready(function() {
 
-      $(".signin").click(function(e) {
+      $("a.signin").click(function(e) {
           e.preventDefault();
           $("#sib_login_form").toggle();
           $(".signin").toggleClass("menu-open");
@@ -45,7 +46,7 @@
           }
       });
 
-      $(".notifications").click(function(e) {
+      $("a.notifications").click(function(e) {
           e.preventDefault();
           $("#sib_notifications").toggle();
           $(".notifications").toggleClass("menu-open");
@@ -61,7 +62,7 @@
           }
       });
 
-      $(".profile").click(function(e) {
+      $("a.profile").click(function(e) {
           e.preventDefault();
           $("#sib_profile").toggle();
           $(".profile").toggleClass("menu-open");
@@ -77,7 +78,7 @@
           }
       });
 
-      $(".help").click(function(e) {
+      $("a.help").click(function(e) {
           e.preventDefault();
           $("#sib_help").toggle();
           $(".help").toggleClass("menu-open");

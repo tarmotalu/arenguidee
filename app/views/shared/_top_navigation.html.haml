@@ -1,22 +1,22 @@
 .nav.nav-user
   %ul
-    %li.add
-      %a.button{:href => "/ideas/new"}
-        = tr("New idea")
-        %span.icn.icn-add
-    %li.signin
-    - unless logged_in?
-      %a.signin{:href => "login"}
-        = tr("Sign in")
-    - else
-      %a.profile{:href => "profile"}
-        = current_user.login
+    %li.search
+      = render :partial => "shared/search"
     %li.help
       %a.help{:href => "help"}
         %span
           = tr("Help")
-    %li.search
-      = render :partial => "shared/search"
+    %li.signin
+      - unless logged_in?
+        %a.signin{:href => "login"}
+          = tr("Sign in")
+      - else
+        %a.profile{:href => "profile"}
+          = current_user.login
+    %li.add
+      %a.button{:href => "/ideas/new"}
+        = tr("New idea")
+        %span.icn.icn-add
 
 - if logged_in?
   = render :partial => "shared/user_info"

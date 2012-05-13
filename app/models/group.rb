@@ -4,6 +4,8 @@ class Group < ActiveRecord::Base
 
   has_and_belongs_to_many :users
 
+  before_destroy { users.clear }
+
   def self.set_admin_for_group(user, group)
     users_group = GroupsUser.find_or_create(:user_id=>user.id, :group_id=>group.id)
     users_group.is_admin = true

@@ -46,6 +46,7 @@ gem 'awesome_print'
 #gem 'multi_json', '1.1.0'
 
 group :development do
+  gem "thin"
   gem 'rails-dev-boost'
   gem 'rails_view_annotator', :git => "git://github.com/duncanbeevers/rails_view_annotator.git"
 end

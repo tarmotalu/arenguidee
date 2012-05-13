@@ -11,7 +11,7 @@
  * the fly. It supports keybord navigation (UP + DOWN + RETURN), as well
  * as multiple AutoSuggest fields on the same page.
  *
- * Inspied by the Autocomplete plugin by: Jšrn Zaefferer
+ * Inspied by the Autocomplete plugin by: Jorn Zaefferer
  * and the Facelist plugin by: Ian Tearle (iantearle.com)
  *
  * This AutoSuggest jQuery plug-in is dual licensed under the MIT and GPL licenses:
@@ -81,7 +81,7 @@
 				var org_li = $("#as-original-"+x);				
 				var results_holder = $('<div class="as-results" id="as-results-'+x+'"></div>').hide();
 				var results_ul =  $('<ul class="as-list"></ul>');
-				var values_input = $('<input type="hidden" class="as-values" name="as_values_'+x+'" id="as-values-'+x+'" />');
+				var values_input = $('<input type="hidden" class="as-values" name="as_values_'+opts.as_values_postfix+'" id="as-values-'+opts.as_values_postfix+'" />');
 				var prefill_value = "";
 				if(typeof opts.preFill == "string"){
 					var vals = opts.preFill.split(",");					
@@ -271,7 +271,7 @@
 							}
 						}
 						if(str){
-							if (!opts.matchCase){ str = str.toLowerCase(); }				
+							if (!opts.matchCase){ str = str.toLowerCase(); }
 							if(str.search(query) != -1 && values_input.val().search(","+data[num][opts.selectedValuesProp]+",") == -1){
 								forward = true;
 							}	

@@ -56,9 +56,9 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        GroupsUser.create(:group_id=>@group.id, :user_id=>current_user.id, :is_admin=>true)
+        format.html { redirect_to :action=>"edit", :id=>@group.id, notice: 'Group was successfully created.' }
         format.json { render json: @group, status: :created, location: @group }
-        redirect_to :action=>"edit", :id=>@group.id
       else
         format.html { render action: "new" }
         format.json { render json: @group.errors, status: :unprocessable_entity }
@@ -70,22 +70,26 @@ class GroupsController < ApplicationController
   # PUT /groups/1.json
   def update
     @group = group_with_access(:need_admin=>true)
-
     respond_to do |format|
       if @group.update_attributes(params[:group])
         params[:as_values_group_users] = params[:as_values_group_users][1..params[:as_values_group_users].length] if params[:as_values_group_users][0]==","
         params[:as_values_group_admin_users] = params[:as_values_group_admin_users][1..params[:as_values_group_admin_users].length] if params[:as_values_group_admin_users][0]==","
-        GroupsUser.transaction do
-          @group.users.clear
-          params[:as_values_group_users].split(",").each do |u|
-            GroupsUser.create(:group_id=>@group.id, :user_id=>u.to_i)
+        if params[:as_values_group_admin_users].split(",").length>0
+          GroupsUser.transaction do
+            @group.users.clear
+            params[:as_values_group_users].split(",").each do |u|
+              GroupsUser.create(:group_id=>@group.id, :user_id=>u.to_i)
+            end
+            params[:as_values_group_admin_users].split(",").uniq.each do |u|
+              GroupsUser.create(:group_id=>@group.id, :user_id=>u.to_i, :is_admin=>true)
+            end
           end
-          params[:as_values_group_admin_users].split(",").uniq.each do |u|
-            GroupsUser.create(:group_id=>@group.id, :user_id=>u.to_i, :is_admin=>true)
-          end
+          format.html { redirect_to @group, notice: 'Group was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @group.errors, status: :unprocessable_entity }
         end
-        format.html { redirect_to @group, notice: 'Group was successfully updated.' }
-        format.json { head :no_content }
       else
         format.html { render action: "edit" }
         format.json { render json: @group.errors, status: :unprocessable_entity }

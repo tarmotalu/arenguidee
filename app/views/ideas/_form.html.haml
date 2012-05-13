@@ -32,6 +32,12 @@
     .field_box
       = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 5, :cols => 60, :maxLength => 300
   %br/
+  #idea_group
+    .form_header
+      = tr("Group", "views/ideas/form")
+      %span.red *
+    .form_select
+      = select("idea", "group_id", current_user.groups.uniq.collect {|p| [ tr(p.name,"Name from database"), p.id ] }, { :include_blank => tr("Public","views_ideas_form") })
   - if current_sub_instance and current_sub_instance.required_tags
     #idea_category
       .form_header

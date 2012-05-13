@@ -15,6 +15,7 @@
 //= require jquery.sticky
 //= require jquery.pop
 //= require jquery.dd
+//= require jquery.autoSuggest
 //= require_self
 
 jQuery(function ($) {

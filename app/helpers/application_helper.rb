@@ -220,11 +220,11 @@ module ApplicationHelper
 
   def official_status(idea)
   	if idea.is_failed?
-  		out = '<span class="opposed">' + idea.official_status_name + '</span>'
+  		out = '<span class="status_opposed">' + idea.official_status_name + '</span>'
   	elsif idea.is_successful?
-  		out = '<span class="endorsed">' + idea.official_status_name + '</span>'
+  		out = '<span class="status_endorsed">' + idea.official_status_name + '</span>'
   	elsif idea.is_compromised?
-  		out = '<span class="compromised">' + idea.official_status_name + '</span>'
+  		out = '<span class="status_in_progress">' + idea.official_status_name + '</span>'
   	elsif idea.is_intheworks?
   		out = '<span>' + idea.official_status_name + '</span>'
     else

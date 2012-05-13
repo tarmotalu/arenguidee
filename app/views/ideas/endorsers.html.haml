@@ -1,9 +1,9 @@
 = render :partial => "header"
 .col-group
-  .col-2
+  .col-1
     .col-content
       = render :partial => "nav"
-  .col-10
+  .col-11
     .col-content
       - if @idea.has_tags? and @idea.relationships_count > 0 and @idea.endorsements_count > 3
         = tr("What other ideas do they endorse?", "view/ideas/endorsers")

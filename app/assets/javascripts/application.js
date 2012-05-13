@@ -16,6 +16,7 @@
 //= require jquery.pop
 //= require jquery.dd
 //= require jquery.autoSuggest
+//= require msdropdown
 //= require_self
 
 jQuery(function ($) {

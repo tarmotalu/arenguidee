@@ -53,10 +53,10 @@
         %br/
         .tiny_info
           %p= tr("It‘s important to choose a category for the idea. It will increase the chances of your idea being realised", "views/ideas/form")
-      - Category.for_sub_instance.each do |category|
-        = f.radio_button :category_id, category.id
-        %span.Chapter_name{:id => "category_#{category.id}"}= category.i18n_name
-        %span.invisible{:id => "category_#{category.id}_text"}= tr(category.description, "Description from database")
+      %select#category_id{:name => "[idea][category_id]"}
+        - Category.all.each do |category|
+          %option{:title => category.icon.url(:icon_50), :value => category.id, :selected=>(@idea.category and @idea.category_id==category.id) ? true : false}
+            = tr(category.name,"from_database")
     - if Instance.current.default_tags_checkbox and Instance.current.default_tags_checkbox!="" and not (current_sub_instance and current_sub_instance.required_tags)
       %br/
       #idea_category2
@@ -128,3 +128,11 @@
           .append(item.value)
           .appendTo($('#idea_suggestions ul'));
       };
+
+  $(document).ready(function(e) {
+    try {
+      $("#category_id").msDropDown({visibleRows:7});
+      } catch(e) {
+        alert(e.message);
+      }
+  });

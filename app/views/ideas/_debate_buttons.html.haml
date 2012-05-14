@@ -23,7 +23,7 @@
         .debate_button{:id=>"debate_button_#{idea.id}"}
           .idea_add
             - if not force_debate_to_new
-              %a{:link=>"#", :class => "idea_add_link1"}
+              %a{:link=>"#", :class => "idea_add_link3"}
                 = tr("DEBATE", "view/ideas")
                 = "(#{idea.points.count})".html_safe
             - else
@@ -53,7 +53,7 @@
         .debate_button{:id=>"debate_button_#{idea.id}"}
           .idea_add
             - if not force_debate_to_new
-              %a{:link=>"#", :class => "idea_add_link1"}
+              %a{:link=>"#", :class => "idea_add_link3"}
                 = tr("DEBATE", "view/ideas")
                 = "(#{idea.points.count})".html_safe
             - else
@@ -84,7 +84,7 @@
       .debate_button{:id=>"debate_button_#{idea.id}"}
         .idea_add
           - if not force_debate_to_new
-            %a{:link=>"#", :class => "idea_add_link1"}
+            %a{:link=>"#", :class => "idea_add_link3"}
               = tr("DEBATE", "view/ideas")
               = "(#{idea.points.count})".html_safe
           - else

@@ -18,6 +18,6 @@
     .col-2
       .col-content
         %div.sib_debate_buttons
-          = render :partial => "ideas/debate_buttons", :locals => {:idea => idea, :endorsement => endorsement, :region=>"idea_inline" }
+          = render :partial => "ideas/debate_buttons", :locals => {:idea => idea, :endorsement => endorsement, :region=>"idea_inline", :force_debate_to_new=>@ideas ? false : true}
         %div.sib_social
           = render :partial => "ideas/idea_social_buttons", :locals => {:idea => idea, :endorsement => endorsement, :region=>"idea_inline" }

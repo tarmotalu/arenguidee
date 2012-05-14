@@ -15,7 +15,7 @@ gem 'kgio'
 gem 'whenever', :require => false
 gem 'geoip'
 gem 'htmlentities'
-gem 'auto_html'
+gem 'auto_html', '1.5.1'
 gem 'delayed_job', '2.1.4'
 gem 'rmagick','2.12.2'
 gem 'daemons'

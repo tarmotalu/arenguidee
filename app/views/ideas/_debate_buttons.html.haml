@@ -7,104 +7,104 @@
     %div{:style => "width:400px;overflow:hidden;"}
     - if endorsement and endorsement.status == 'active'
       - if endorsement.is_up?
-        %table.debate_buttons_table
-          %tr
-            %td
-              %span.idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
-                = link_to tr("ENDORSED", "view/ideas"), endorsement_path(endorsement, :region => region),     |
-                  :method => :delete,                                                                |
-                  :remote=>true,                                                                     |
-                  'data-disable-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",                                                         |
-                  'data-loader-name' => "external_spinner",                                                     |
-                  :class => "idea_add_link1",                                                  |
-                  :title => tr("Remove from my list of ideas", "view/ideas") |
-              %span.count
-                = "(#{up_endorser_link})".html_safe
-              %span.idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
-          %tr
-            %td
-              %span.debate_button{:id=>"debate_button_#{idea.id}"}
-                - if @ideas
-                  = tr("DEBATE", "view/ideas")
-                - else
-                  = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
-          %tr
-            %td
-              %span.idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
-                = link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1), |
-                    :method => :post,                                                                                                                                        |
-                    :remote => true,                                                                                                                                         |
-                  'data-disable-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
-                  'data-loader-name' => "external_spinner",                      |
-                    :class => "idea_add_link2 oppose_grey", :title =>  tr("I oppose this, and want to add my opposition to my idea list.", "view/ideas")      |
-              %span.count
-                = "(#{down_endorser_link})".html_safe
-              %span.idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
+        - # ENDORSED STATE
+        .endorse_button
+          .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
+            = link_to tr("ENDORSED", "view/ideas"), endorsement_path(endorsement, :region => region, :force_debate_to_new=>@ideas ? "0" : "1"),     |
+              :method => :delete,                                                                |
+              :remote=>true,                                                                     |
+              'data-disable-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",                                                         |
+              'data-loader-name' => "external_spinner",                                                     |
+              :class => "idea_add_link1",                                                  |
+              :title => tr("Remove from my list of ideas", "view/ideas") |
+          .count
+            = "(#{up_endorser_link})".html_safe
+          .idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
+        .debate_button{:id=>"debate_button_#{idea.id}"}
+          - if not force_debate_to_new
+            .idea_add
+              = tr("DEBATE", "view/ideas")
+            .count
+              = "(#{idea.points.count})".html_safe
+          - else
+            .idea_add
+              = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
+        .oppose_button
+          .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
+            = link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1, :force_debate_to_new=>@ideas ? "0" : "1"), |
+                :method => :post,                                                                                                                                        |
+                :remote => true,                                                                                                                                         |
+              'data-disable-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
+              'data-loader-name' => "external_spinner",                      |
+                :class => "idea_add_link2 oppose_grey", :title =>  tr("I oppose this, and want to add my opposition to my idea list.", "view/ideas")      |
+          .count
+            = "(#{down_endorser_link})".html_safe
+          .idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
       - else
-        %table.debate_buttons_table
-          %tr
-            %td
-              %span.idea_add.endorse_grey{:id => "idea_add_endorse_#{idea.id.to_s}"}
-                = link_to tr("ENDORSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => 1), |
-                    :method => :post,                                                                                                                                        |
-                    :remote => true,                                                                                                                                         |
-                    'data-disable-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",                                                         |
-                    'data-loader-name' => "external_spinner",                    |
-                    :class => "idea_add_link1 endorse_grey", :title =>  tr("I support this, add it to my idea list", "view/ideas")                             |
-              %span.count
-                = "(#{up_endorser_link})".html_safe
-              %span.idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
-          %tr
-            %td
-              %div.debate_button{:id=>"debate_button_#{idea.id}"}
-                - if @ideas
-                  = tr("DEBATE", "view/ideas")
-                - else
-                  = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
-          %tr
-            %td
-              %span.idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
-                = link_to tr("OPPOSED", "view/ideas"), endorsement_path(endorsement, :region => region),     |
-                  :method => :delete,                                                                |
-                  :remote=>true,                                                                     |
-                  'data-disable-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
-                  'data-loader-name' => "external_spinner",                                                   |
-                  :class => "idea_add_link2",                                                  |
-                  :title => tr("Remove from my list of ideas", "view/ideas") |
-              %span.count
-                = "(#{down_endorser_link})".html_safe
-              %span.idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
+        - # OPPOSED STATE
+        .endorse_button
+          .idea_add.endorse_grey{:id => "idea_add_endorse_#{idea.id.to_s}"}
+            = link_to tr("ENDORSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => 1, :force_debate_to_new=>@ideas ? "0" : "1"), |
+                :method => :post,                                                                                                                                        |
+                :remote => true,                                                                                                                                         |
+                'data-disable-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",                                                         |
+                'data-loader-name' => "external_spinner",                    |
+                :class => "idea_add_link1 endorse_grey", :title =>  tr("I support this, add it to my idea list", "view/ideas")                             |
+          .count
+            = "(#{up_endorser_link})".html_safe
+          .idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
+        .debate_button{:id=>"debate_button_#{idea.id}"}
+          - if not force_debate_to_new
+            .idea_add
+              = tr("DEBATE", "view/ideas")
+            .count
+              = "(#{idea.points.count})".html_safe
+          - else
+            .idea_add
+              = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
+        .oppose_button
+          .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
+            = link_to tr("OPPOSED", "view/ideas"), endorsement_path(endorsement, :region => region, :force_debate_to_new=>@ideas ? "0" : "1"),     |
+              :method => :delete,                                                                |
+              :remote=>true,                                                                     |
+              'data-disable-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
+              'data-loader-name' => "external_spinner",                                                   |
+              :class => "idea_add_link2",                                                  |
+              :title => tr("Remove from my list of ideas", "view/ideas") |
+          .count
+            = "(#{down_endorser_link})".html_safe
+          .idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
     - else
-      %table.debate_buttons_table
-        %tr
-          %td
-            %span.idea_add{:id => "idea_add_endorse_#{idea.id.to_s}"}
-              = link_to tr("ENDORSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => 1), |
-                  :method => :post,                                                                                                                                        |
-                  :remote => true,                                                                                                                                         |
-                    'data-disable-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",                                                         |
-                    'data-loader-name' => "external_spinner",                  |
-                  :class => "idea_add_link1", :title =>  tr("I support this, add it to my idea list", "view/ideas")                             |
-            %span.count
-              = "(#{up_endorser_link})".html_safe
-            %span.idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
-        %tr
-          %td
-            %div.debate_button{:id=>"debate_button_#{idea.id}"}
-              - if @ideas
-                = tr("DEBATE", "view/ideas")
-              - else
-                = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
-        %tr
-          %td
-            %span.idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
-              = link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1), |
-                  :method => :post,                                                                                                                                        |
-                  :remote => true,                                                                                                                                         |
-                  'data-disable-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
-                  'data-loader-name' => "external_spinner",                   |
-                  :class => "idea_add_link2", :title =>  tr("I oppose this, and want to add my opposition to my idea list.", "view/ideas")      |
-            %span.count
-              = "(#{down_endorser_link})".html_safe
-            %span.idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
-    = render :partial => "ideas/debate_button_javascript", :locals => { :idea => idea } if @ideas
+      - # NOT VOTED STATE
+      .endorse_button
+        .idea_add{:id => "idea_add_endorse_#{idea.id.to_s}"}
+          = link_to tr("ENDORSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => 1, :force_debate_to_new=>@ideas ? "0" : "1"), |
+              :method => :post,                                                                                                                                        |
+              :remote => true,                                                                                                                                         |
+                'data-disable-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",                                                         |
+                'data-loader-name' => "external_spinner",                  |
+              :class => "idea_add_link1", :title =>  tr("I support this, add it to my idea list", "view/ideas")                             |
+        .count
+          = "(#{up_endorser_link})".html_safe
+        .idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
+      .debate_button{:id=>"debate_button_#{idea.id}"}
+        - if not force_debate_to_new
+          .idea_add
+            = tr("DEBATE", "view/ideas")
+          .count
+            = "(#{idea.points.count})".html_safe
+        - else
+          .idea_add
+            = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
+      .oppose_button
+        .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
+          = link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1, :force_debate_to_new=>@ideas ? "0" : "1"), |
+              :method => :post,                                                                                                                                        |
+              :remote => true,                                                                                                                                         |
+              'data-disable-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
+              'data-loader-name' => "external_spinner",                   |
+              :class => "idea_add_link2", :title =>  tr("I oppose this, and want to add my opposition to my idea list.", "view/ideas")      |
+        .count
+          = "(#{down_endorser_link})".html_safe
+        .idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
+    = render :partial => "ideas/debate_button_javascript", :locals => { :idea => idea } if not force_debate_to_new

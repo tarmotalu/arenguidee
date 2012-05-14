@@ -2,6 +2,8 @@
   .idea_chart_container
     = link_to url_for(controller: "ideas", action: "statistics"), remote: true do
       - @charts = @idea.charts.newest_first
+      - if Rails.env.development? and @charts.length>0 and @charts.length<=2
+        - @charts = [@charts[0],@charts[0],@charts[0]]
       - if @charts.any? and @charts.length > 2
         - sorted = @charts.sort_by { |c| c.position }
         - max_position = sorted.last.position

@@ -73,7 +73,6 @@ class User < ActiveRecord::Base
   has_many :activities, :dependent => :destroy
   has_many :points, :dependent => :destroy
   has_many :point_revisions, :class_name => "Revision", :dependent => :destroy
-  has_many :changes, :dependent => :nullify
   has_many :rankings, :class_name => "UserRanking", :dependent => :destroy
     
   has_many :point_qualities, :dependent => :destroy

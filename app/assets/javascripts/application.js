@@ -55,7 +55,7 @@ jQuery(document).ready(function() {
       if ($clicked.attr("data-disabled-with")) {
           $disable_with = $clicked.attr("data-disabled-with");
       } else {
-          $disable_with = $clicked.attr("data-disable-with");
+          return;
       }
       if ($clicked.attr("data-loader-name")=="external_spinner") {
         $("#"+$disable_with).html('<img src=\"/assets/ajax/spinner.gif\">');
@@ -82,7 +82,7 @@ jQuery(document).ready(function() {
 	function addMega(){
 	  jQuery(this).addClass("hovering"); 
 	} 
-                                          77
+
 	function removeMega(){ 
 	  jQuery(this).removeClass("hovering"); 
 	}

@@ -85,17 +85,10 @@ class Idea < ActiveRecord::Base
   has_many :ads, :dependent => :destroy
   has_many :notifications, :as => :notifiable, :dependent => :destroy
   
-  has_many :changes, :conditions => "status <> 'removed'", :order => "updated_at desc"
-  has_many :approved_changes, :class_name => "Change", :conditions => "status = 'approved'", :order => "updated_at desc"
-  has_many :sent_changes, :class_name => "Change", :conditions => "status = 'sent'", :order => "updated_at desc"
-  has_many :declined_changes, :class_name => "Change", :conditions => "status = 'declined'", :order => "updated_at desc"
-  has_many :changes_with_deleted, :class_name => "Change", :order => "updated_at desc", :dependent => :destroy
   has_many :idea_status_change_logs, dependent: :destroy
 
   attr_accessor :idea_type
 
-  belongs_to :change # if there is currently a pending change, it will be attached
-  
   acts_as_taggable_on :issues
   acts_as_list
   

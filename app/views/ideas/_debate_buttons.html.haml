@@ -10,7 +10,7 @@
     - if endorsement and endorsement.status == 'active'
       - if endorsement.is_up?
         - # ENDORSED STATE
-        .endorse_button
+        .endorse_button{:style=>"width: 400px;"}
           .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
             = link_to tr("ENDORSED", "view/ideas")+" (#{idea.up_endorsements_count})", endorsement_path(endorsement, :region => region, :force_debate_to_new=>force_debate_to_new),     |
               :method => :delete,                                                                |
@@ -38,7 +38,7 @@
                 'data-disabled-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
                 'data-loader-name' => "external_spinner",                      |
                 :class => "idea_add_link2 oppose_grey", :title =>  tr("I oppose this, and want to add my opposition to my idea list.", "view/ideas")      |
-          .idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
+          .idea_debate_spinner_oppose{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
       - else
         - # OPPOSED STATE
         .endorse_button
@@ -69,7 +69,7 @@
               'data-loader-name' => "external_spinner",                                                   |
               :class => "idea_add_link2",                                                  |
               :title => tr("Remove from my list of ideas", "view/ideas") |
-          .idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
+          .idea_debate_spinner_oppose{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
     - else
       - # NOT VOTED STATE
       .endorse_button
@@ -99,5 +99,5 @@
               'data-disabled-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
               'data-loader-name' => "external_spinner",                   |
               :class => "idea_add_link2", :title =>  tr("I oppose this, and want to add my opposition to my idea list.", "view/ideas")      |
-        .idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
+        .idea_debate_spinner_oppose{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
     = render :partial => "ideas/debate_button_javascript", :locals => { :idea => idea } if not force_debate_to_new

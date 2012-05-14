@@ -11,11 +11,11 @@
         = f.error_messages
         - if @tag_names
           = hidden_field_tag :tag_names, @tag_names
-        %h1
-          = tr("Create a new idea", "views/ideas/form")
   .col-group
     .col-6
       .col-content
+        %h1
+          = tr("Create a new idea", "views/ideas/form")
         #your_idea.form_header
           = tr("What is your idea?", "views/ideas/form")
           %span.red *
@@ -70,6 +70,8 @@
               - first_tag = false
     .col-6
       .col-content
+        %h1
+          = tr("Why should people support your idea?", "views/ideas/form")
         .form_header
           = tr("Add a point in support or against", "views/ideas/form")
           %span.red *

@@ -24,11 +24,11 @@
           - if not force_debate_to_new
             .idea_add
               = tr("DEBATE", "view/ideas")
-            .count
-              = "(#{idea.points.count})".html_safe
           - else
             .idea_add
               = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
+          .count
+            = "(#{idea.points.count})".html_safe
         .oppose_button
           .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
             = link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1, :force_debate_to_new=>@ideas ? "0" : "1"), |
@@ -57,11 +57,11 @@
           - if not force_debate_to_new
             .idea_add
               = tr("DEBATE", "view/ideas")
-            .count
-              = "(#{idea.points.count})".html_safe
           - else
             .idea_add
               = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
+          .count
+            = "(#{idea.points.count})".html_safe
         .oppose_button
           .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
             = link_to tr("OPPOSED", "view/ideas"), endorsement_path(endorsement, :region => region, :force_debate_to_new=>@ideas ? "0" : "1"),     |
@@ -91,11 +91,11 @@
         - if not force_debate_to_new
           .idea_add
             = tr("DEBATE", "view/ideas")
-          .count
-            = "(#{idea.points.count})".html_safe
         - else
           .idea_add
             = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
+        .count
+          = "(#{idea.points.count})".html_safe
       .oppose_button
         .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
           = link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1, :force_debate_to_new=>@ideas ? "0" : "1"), |

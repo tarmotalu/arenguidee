@@ -337,7 +337,7 @@ ActiveRecord::Schema.define(:version => 20120514115411) do
     t.integer  "external_session_id"
     t.string   "finished_status_subject"
     t.date     "finished_status_date"
-    t.integer  "group_id"
+    t.integer  "group_id",                                :default => 1
   end
 
   add_index "ideas", ["category_id"], :name => "index_ideas_on_category_id"

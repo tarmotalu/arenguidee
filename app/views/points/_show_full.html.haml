@@ -16,7 +16,7 @@
           = link_to point.idea.name, point.idea
           = official_status(point.idea)
           .point_byline
-            #{tr("Added {time_ago}", "view/points/_show_full", :time_ago => time_ago(point.created_at))}
+            #{tr("Point added {time_ago}", "view/points/_show_full", :time_ago => time_ago(point.created_at))}
             %span.point_edit
               - if point.discussions_count == 0
                 = link_to tr("Discuss", "view/points/_show_full"), discussions_point_url(point)

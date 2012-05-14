@@ -1,7 +1,7 @@
 - if quality
   - if quality.is_helpful?
     .grey_button_wide{:id => "idea_add_endorse_#{point.id.to_s}"}
-      = tr("HELPFUL", "view/points/_button")
+      = tr("Helpful", "view/points/_button")
       %span.big_x
         = link_to "X", unquality_point_path(point, :region => "point_detail"), |
           :method => :post,                                                    |

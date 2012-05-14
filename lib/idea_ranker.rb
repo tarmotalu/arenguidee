@@ -3,7 +3,9 @@ class IdeaRanker
 
   def perform
     puts "IdeaRanker.perform starting... at #{start_time=Time.now}"
-    Instance.current = Instance.all.last
+    Instance.current = Instance.first
+    SubInstance.current = SubInstance.first
+    Thread.current[:current_user]= User.first
     setup_endorsements_counts
     if Instance.current.is_tags? and Tag.count > 0
       # update the # of issues people who've logged in the last two hours have up endorsed
@@ -124,19 +126,21 @@ class IdeaRanker
 
     # now, check to see if the charts have been updated in the last day
     
-    date = Time.now-4.hours-1.day
-    previous_date = date-1.day
+    date = Time.now
+    previous_date = date-3.day
     start_date = date.year.to_s + "-" + date.month.to_s + "-" + date.day.to_s
     end_date = (date+1.day).year.to_s + "-" + (date+1.day).month.to_s + "-" + (date+1.day).day.to_s
-    
+
+    puts "Before charts"
     if IdeaChart.count(:conditions => ["date_year = ? and date_month = ? and date_day = ?", date.year, date.month, date.day]) == 0  # check to see if it's already been done for yesterday
       ideas = Idea.published.find(:all)
       for p in ideas
         # find the ranking
         r = p.rankings.find(:all, :conditions => ["rankings.created_at between ? and ?",start_date,end_date], :order => "created_at desc",:limit => 1)
+        puts "r: #{r}"
         if r.any?
           c = p.charts.find_by_date_year_and_date_month_and_date_day(date.year,date.month,date.day)
-          if not c
+          if true or not c
             c = IdeaChart.new(:idea => p, :date_year => date.year, :date_month => date.month, :date_day => date.day)
           end
           c.position = r[0].position

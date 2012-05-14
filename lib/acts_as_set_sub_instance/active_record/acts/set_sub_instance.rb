@@ -8,7 +8,7 @@ module ActiveRecord
       module ClassMethods
         # Not with idea accos
         def default_scope
-          if not ["activities","comments","tags","users","groups","ideas","points","ads","rakings"].include?(table_name)
+          if not ["activities","comments","tags","users","groups","ideas","points","ads","r"].include?(table_name)
             # Do nothing
           elsif table_name=="users"
             # Do nothing for now

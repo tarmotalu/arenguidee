@@ -7,7 +7,6 @@ class Activity < ActiveRecord::Base
   scope :for_all_users, :conditions => "is_user_only=false"
 
   scope :discussions, :conditions => "activities.comments_count > 0"
-  scope :changes, :conditions => "change_id is not null"
   scope :points, :conditions => "type like 'ActivityPoint%'", :order => "activities.created_at desc"
   scope :capital, :conditions => "type like '%Capital%'"
   scope :interesting, :conditions => "type in ('ActivityIdeaMergeProposal','ActivityIdeaAcquisitionProposal') or comments_count > 0"

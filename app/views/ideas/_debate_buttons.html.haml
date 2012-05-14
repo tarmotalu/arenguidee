@@ -10,7 +10,7 @@
     - if endorsement and endorsement.status == 'active'
       - if endorsement.is_up?
         - # ENDORSED STATE
-        .endorse_button{:style=>"width: 400px;"}
+        .endorse_button
           .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
             = link_to tr("ENDORSED", "view/ideas")+" (#{idea.up_endorsements_count})", endorsement_path(endorsement, :region => region, :force_debate_to_new=>force_debate_to_new),     |
               :method => :delete,                                                                |

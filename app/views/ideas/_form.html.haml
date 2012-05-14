@@ -12,69 +12,56 @@
         - if @tag_names
           = hidden_field_tag :tag_names, @tag_names
   .col-group
-    .col-6
+    .col-6.col-inset
       .col-content
         %h1
           = tr("Create a new idea", "views/ideas/form")
         #your_idea.form_header
           = tr("What is your idea?", "views/ideas/form")
-          %span.red *
         %span.idea_name
           = f.text_field :name, :maxlength => 60, :autocomplete =>"off"
         #idea_suggestions{ style: "display: none;" }
           = tr("Some ideas already exist with similar names", "view/ideas/_form")
           %ul
-        - if current_sub_instance and Instance.current.layout=="better_reykjavik"
-          %input{:name => "idea[category_id]", :type => "hidden", :value => "14"}/
-        - else
-          #idea_category
-            .form_header
-              = tr("Select category", "views/ideas/form")
-              %span.red *
-              %br/
-              .tiny_info
-                %p= tr("It‘s important to choose a category for the idea. It will increase the chances of your idea being realised", "views/ideas/form")
-            %select#category_id{:name => "[idea][category_id]"}
-              - Category.all.each do |category|
-                %option{:title => category.icon.url(:icon_25,), :value => category.id, :selected=>(@idea.category and @idea.category_id==category.id) ? true : false}
-                  = tr(category.name,"from_database")
+        %br
+        %br
+        .col-group
+          .col-half
+            .col-content
+              #idea_category
+                .form_header
+                  = tr("Select category", "views/ideas/form")
+                %select#category_id{:name => "[idea][category_id]"}
+                  - Category.all.each do |category|
+                    %option{:title => category.icon.url(:icon_25,), :value => category.id, :selected=>(@idea.category and @idea.category_id==category.id) ? true : false}
+                      = tr(category.name,"from_database")
+          .col-half
+            .col-content
+              #idea_group
+                .form_header
+                  = tr("Select group", "views/ideas/form")
+                %select#group_id{:name => "[idea][group_id]"}
+                  %option{:value => "", :selected=>(@idea.group_id==nil) ? true : false}
+                    = tr("Public","views_ideas_form")
+                  - current_user.groups.uniq.each do |group|
+                    %option{:value => group.id, :selected=>(@idea.group_id and @idea.group_id==group.id) ? true : false}
+                      = tr(group.name,"from_database")
         %br
         .field
-          .field_label.form_header
-            = tr("Explain your idea.", "view/ideas/_form")
-            %span.characters
-              %span#ideaContentDown
-              = tr("characters left", "view/ideas/_form")
-            %span.red *
-            .tiny_info
-              %p= tr("Please describe your idea as neutrally as you can. You have plenty space below to convince others!", "views/ideas/form")
+          %em
+            %p= tr("Please describe your idea as neutrally as you can. You have plenty space below to convince others here on the right.", "views/ideas/form")
           .field_box
-            = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 5, :cols => 60, :maxLength => 300
-        %br/
-        #idea_group
-          .form_header
-            = tr("Group", "views/ideas/form")
-            %span.red *
-          .form_select
-            = select("idea", "group_id", current_user.groups.uniq.collect {|p| [ tr(p.name,"Name from database"), p.id ] }, { :include_blank => tr("Public","views_ideas_form") })
-        - if current_sub_instance and current_sub_instance.required_tags
-          #idea_category
-            .form_header
-              = tr("Select idea type", "views/ideas/form")
-              %span.red *
-              %br/
-            - first_tag = true
-            - current_sub_instance.required_tags.split(',').each do |sub_instance_tag|
-              = f.radio_button :idea_type, sub_instance_tag, checked: first_tag
-              %span.Chapter_name= tr(sub_instance_tag, "views/ideas/form")
-              - first_tag = false
-    .col-6
+            = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 4, :class=>"col_text_area", :maxLength => 300
+          %span.characters
+            = tr("Explain your idea - ", "view/ideas/_form")
+            %span#ideaContentDown
+            = tr("characters left", "view/ideas/_form")
+    .col-6.col-inset
       .col-content
         %h1
           = tr("Why should people support your idea?", "views/ideas/form")
         .form_header
           = tr("Add a point in support or against", "views/ideas/form")
-          %span.red *
         = f.fields_for(:points) do |point_form|
           .field
             .field_box
@@ -100,7 +87,7 @@
                 = tr("characters left", "view/ideas/_form")
               %span.red *
             .field_box
-              = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :rows => 5, :maxLength => 500
+              = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"col_text_area", :rows => 5, :maxLength => 500
             .tiny_info_no_pad
               = tr("Other people will be able to edit your points, similar to Wikipedia", "views/ideas/form")
           %br/
@@ -109,11 +96,12 @@
               = tr("Add a link to an external website", "views/ideas/form")
             .field_box
               = point_form.text_field :website, :size => 50
+  %br
   .col-group
     .col-12
       .col-content
         %div{:style=>"text-align: center;"}
-          = submit_tag tr("Create idea", "view/ideas/_form"), :class => "submit_button"
+          = submit_tag tr("Submit your idea and point", "view/ideas/_form"), :class => "submit_button"
 :javascript
   jQuery("input#idea_name").autocomplete({
           minLength: 10,
@@ -133,6 +121,14 @@
   $(document).ready(function(e) {
     try {
       $("#category_id").msDropDown({visibleRows:7});
+      } catch(e) {
+        alert(e.message);
+      }
+  });
+
+  $(document).ready(function(e) {
+    try {
+      $("#group_id").msDropDown({visibleRows:7});
       } catch(e) {
         alert(e.message);
       }

@@ -64,7 +64,7 @@ class Activity < ActiveRecord::Base
   end
 
   before_save :update_changed_at
-  
+
   def update_changed_at
     self.changed_at = Time.now unless self.attribute_present?("changed_at")
   end
@@ -105,11 +105,6 @@ class Activity < ActiveRecord::Base
     comments.count(:group => :user, :order => "count_all desc")
   end  
 
-  def is_official_user?
-    return false unless Instance.current.has_official?
-    user_id == Instance.current.official_user_id
-  end
-
   def has_idea?
     attribute_present?("idea_id")
   end
@@ -129,11 +124,7 @@ class Activity < ActiveRecord::Base
   def has_point?
     attribute_present?("point_id")
   end
-  
-  def has_change?
-    attribute_present?("change_id")
-  end
-  
+
   def has_capital?
     attribute_present?("capital_id")
   end  

@@ -8,7 +8,7 @@ module ActiveRecord
       module ClassMethods
         # Not with idea accos
         def default_scope
-          if not ["comments","tags","users","groups","ideas","points","ads","rakings"].include?(table_name)
+          if not ["activities","comments","tags","users","groups","ideas","points","ads","rakings"].include?(table_name)
             # Do nothing
           elsif table_name=="users"
             # Do nothing for now
@@ -16,12 +16,16 @@ module ActiveRecord
             where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil)
           elsif table_name=="ideas"
             where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil).
-            where("ideas.group_id = 1 OR ideas.group_id IN (#{(Thread.current[:current_user] and not Thread.current[:current_user].groups.empty?) ? Thread.current[:current_user].groups.map{|g| g.id}.to_s.gsub("[","").gsub("]","") : "-1"})")
+            where("ideas.group_id IS NULL OR ideas.group_id IN (#{(Thread.current[:current_user] and not Thread.current[:current_user].groups.empty?) ? Thread.current[:current_user].groups.map{|g| g.id}.to_s.gsub("[","").gsub("]","") : "-1"})")
           elsif ["comments","tags","users"].include?(table_name)
             where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil)
+          elsif table_name=="activities"
+            where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil).
+            where("activities.idea_id IS NULL or (ideas.group_id IS NULL OR ideas.group_id IN (#{(Thread.current[:current_user] and not Thread.current[:current_user].groups.empty?) ? Thread.current[:current_user].groups.map{|g| g.id}.to_s.gsub("[","").gsub("]","") : "-1"}))").
+            includes(:idea)
           else
             where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil).
-            where("ideas.group_id = 1 OR ideas.group_id IN (#{(Thread.current[:current_user] and not Thread.current[:current_user].groups.empty?) ? Thread.current[:current_user].groups.map{|g| g.id}.to_s.gsub("[","").gsub("]","") : "-1"})").
+            where("ideas.group_id IS NULL OR ideas.group_id IN (#{(Thread.current[:current_user] and not Thread.current[:current_user].groups.empty?) ? Thread.current[:current_user].groups.map{|g| g.id}.to_s.gsub("[","").gsub("]","") : "-1"})").
             includes(:idea)
           end
         end

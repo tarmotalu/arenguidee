@@ -1,9 +1,12 @@
 SocialInnovation::Application.routes.draw do
+
   mount Ckeditor::Engine => '/ckeditor'
   mount WillFilter::Engine => "/will_filter"
   mount Tr8n::Engine => "/tr8n"
 
   resources :categories
+
+  match '/groups/suggest_user' => 'groups#suggest_user'
 
   match '/ideas/flag/:id' => 'ideas#flag'
   match '/ideas/abusive/:id' => 'ideas#abusive'
@@ -11,6 +14,8 @@ SocialInnovation::Application.routes.draw do
   match '/admin/all_flagged' => 'admin#all_flagged'
   match '/admin/all_deleted' => 'admin#all_deleted'
   match '/users/list_suspended' => 'users#list_suspended'
+
+  resources :groups
 
   resources :sub_instances do
     member do

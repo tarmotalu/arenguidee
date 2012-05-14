@@ -411,7 +411,7 @@ class Idea < ActiveRecord::Base
   
   def official_status_name
     return tr("Failed", "status_messages") if official_status == -2
-    return tr("In Progress", "status_messages") if official_status == -1
+    return tr("In progress", "status_messages") if official_status == -1
     return tr("Unknown", "status_messages") if official_status == 0
     return tr("Published", "status_messages") if official_status == 1
     return tr("Successful", "status_messages") if official_status == 2

@@ -1,7 +1,6 @@
 - standard_width = 90
 - up_endorser_link = (link_to (idea.up_endorsements_count.to_s).html_safe, idea.show_endorsers_url).html_safe
 - down_endorser_link = (link_to (idea.down_endorsements_count.to_s).html_safe, idea.show_opposers_url).html_safe
-
 %span{:class => "idea_#{idea.id.to_s}_button_small", :id => "idea_#{idea.id.to_s}_button_small"}
   - unless @geoblocked
     %div{:style => "width:400px;overflow:hidden;"}

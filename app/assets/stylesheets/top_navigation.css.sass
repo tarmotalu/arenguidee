@@ -80,20 +80,20 @@ a.profile
   width: 170px
 
 #general_form
-  -moz-border-radius-topleft: 3px
-  -moz-border-radius-topright: 3px
-  -moz-border-radius-bottomleft: 3px
-  -moz-border-radius-bottomright: 3px
-  -webkit-border-top-left-radius: 3px
-  -webkit-border-top-right-radius: 3px
-  -webkit-border-bottom-left-radius: 3px
-  -webkit-border-bottom-right-radius: 3px
+  -moz-border-radius-topleft: 5px
+  -moz-border-radius-topright: 5px
+  -moz-border-radius-bottomleft: 5px
+  -moz-border-radius-bottomright: 5px
+  -webkit-border-top-left-radius: 5px
+  -webkit-border-top-right-radius: 5px
+  -webkit-border-bottom-left-radius: 5px
+  -webkit-border-bottom-right-radius: 5px
   display: none
   background-color: #fff
   position: absolute
-  width: 225px
+  width: 240px
   z-index: 100
-  border: 1px solid #1931B9
+  border: 1px solid #a0a5ad
   text-align: left
   padding: 0px
   margin-left: -8px
@@ -132,22 +132,30 @@ a.profile
 #sib_login_form
   @extend #general_form
   display: none
-  margin-left: 276px !important
-  margin-top: 8px !important
-  padding: 10px 0px 0px 10px
+  margin-left: 270px !important
+  margin-top: 25px !important
+  padding: 10px 10px 10px 10px
 
 #sib_profile
   @extend #general_form
   display: none
-  margin-left: 251px !important
-  margin-top: 3px !important
+  margin-left: 230px !important
+  margin-top: 25px !important
+
+#user_info_box
+  background: none repeat scroll 0 0 transparent
+  border: 0 solid #DDDDDD
+  line-height: 1.4em
+  margin-bottom: 0
+  padding: 10px 10px 10px 10px
+  width: 225px
 
 #sib_help
   @extend #general_form
   display: none
-  margin-left: 348px !important
-  margin-top: 3px !important
-  padding: 10px 0px 0px 10px
+  margin-left: 338px !important
+  margin-top: 25px !important
+  padding: 10px 10px 10px 10px
 
 .magnifier_wrap
   height: 20px
@@ -190,3 +198,5 @@ a.signin.menu-open a.notifications.menu-open span
   color: #333
   a
     font-weight: bold
+
+

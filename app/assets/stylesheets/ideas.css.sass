@@ -55,8 +55,7 @@ span.count
   text-transform: uppercase
   font-weight: bold
   float: left
-  margin: 0px 0px 5px 0px
-
+  margin: 0px 0px 0px 0px
 
 .idea_remove
   font-weight: bold
@@ -93,12 +92,14 @@ span.idea_add a,span.idea_add a:hover
   font-weight: bold
   text-decoration: none
 
-.idea_add_link1
+.endorse_button
+  width: 125px
+  height: 22px
   color: #fff
   background-image: url("/assets/buttons/endorse_button_bg_strip.png")
   background-repeat: repeat-x
   background-position: 0 0
-  padding: 3px 10px 3px 10px
+  margin: 0px 0px 5px 0px
   -moz-border-radius-topleft: 3px
   -moz-border-radius-topright: 3px
   -moz-border-radius-bottomleft: 3px
@@ -108,27 +109,14 @@ span.idea_add a,span.idea_add a:hover
   -webkit-border-bottom-left-radius: 3px
   -webkit-border-bottom-right-radius: 3px
 
-.idea_add_link2
-  color: #fff
-  background-image: url("/assets/buttons/oppose_button_bg_strip.png")
-  background-repeat: repeat-x
-  background-position: 0 0
-  padding: 3px 10px 3px 10px
-  -moz-border-radius-topleft: 3px
-  -moz-border-radius-topright: 3px
-  -moz-border-radius-bottomleft: 3px
-  -moz-border-radius-bottomright: 3px
-  -webkit-border-top-left-radius: 3px
-  -webkit-border-top-right-radius: 3px
-  -webkit-border-bottom-left-radius: 3px
-  -webkit-border-bottom-right-radius: 3px
-
-.idea_add_link3
+.debate_button
+  width: 125px
+  height: 22px
   color: #fff
   background-image: url("/assets/buttons/debate_button_bg_strip.png")
   background-repeat: repeat-x
   background-position: 0 0
-  padding: 3px 10px 3px 10px
+  margin: 0px 0px 5px 0px
   -moz-border-radius-topleft: 3px
   -moz-border-radius-topright: 3px
   -moz-border-radius-bottomleft: 3px
@@ -137,6 +125,42 @@ span.idea_add a,span.idea_add a:hover
   -webkit-border-top-right-radius: 3px
   -webkit-border-bottom-left-radius: 3px
   -webkit-border-bottom-right-radius: 3px
+  font-size: 13px
+  font-weight: bold
+  &:hover,&:focus
+    cursor: pointer
+  a
+    &:visited
+      color: blue !important
+    &:hover
+      color: #999
+
+.oppose_button
+  width: 125px
+  height: 22px
+  color: #fff
+  background-image: url("/assets/buttons/oppose_button_bg_strip.png")
+  background-repeat: repeat-x
+  background-position: 0 0
+  -moz-border-radius-topleft: 3px
+  -moz-border-radius-topright: 3px
+  -moz-border-radius-bottomleft: 3px
+  -moz-border-radius-bottomright: 3px
+  -webkit-border-top-left-radius: 3px
+  -webkit-border-top-right-radius: 3px
+  -webkit-border-bottom-left-radius: 3px
+  -webkit-border-bottom-right-radius: 3px
+
+
+.idea_add_link1
+  padding: 3px 10px 3px 10px
+
+.idea_add_link2
+  padding: 3px 10px 3px 10px
+
+.idea_add_link3
+  padding: 3px 10px 3px 10px
+
 
 .idea_add_link1:hover
   color: #eee
@@ -177,20 +201,6 @@ div.oppose-wrap
   margin: 0 0 10px 10px
   padding: 10px
   width: 340px
-
-
-.debate_button
-  color: #00f
-  font-size: 13px
-  font-weight: bold
-  padding-bottom: 2px
-  &:hover,&:focus
-    cursor: pointer
-  a
-    &:visited
-      color: blue !important
-    &:hover
-      color: #999
 
 .idea_detail_left
   float: left

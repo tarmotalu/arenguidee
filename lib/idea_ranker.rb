@@ -127,7 +127,7 @@ class IdeaRanker
     # now, check to see if the charts have been updated in the last day
     
     date = Time.now
-    previous_date = date-3.day
+    previous_date = date-1.day
     start_date = date.year.to_s + "-" + date.month.to_s + "-" + date.day.to_s
     end_date = (date+1.day).year.to_s + "-" + (date+1.day).month.to_s + "-" + (date+1.day).day.to_s
 

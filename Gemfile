@@ -6,6 +6,7 @@ gem 'mysql2'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'capistrano_colors'
 gem 'rvm-capistrano'
+gem 'haml', '3.1.4'
 gem 'haml-rails'
 gem 'nokogiri'
 gem 'tidy-ext'

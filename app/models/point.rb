@@ -95,6 +95,7 @@ class Point < ActiveRecord::Base
       event :remove, transitions_to: :removed
       event :bury, transitions_to: :buried
       event :abusive, transitions_to: :abusive
+      event :remove, transitions_to: :removed
     end
     state :draft do
       event :publish, transitions_to: :published
@@ -135,7 +136,7 @@ class Point < ActiveRecord::Base
   
   def on_removed_entry(new_state, event)
     remove_counts
-    activities.each do |a|
+    activities.active.each do |a|
       a.remove!
     end
     #capital_earned = capitals.sum(:amount)

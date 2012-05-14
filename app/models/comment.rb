@@ -92,7 +92,7 @@ class Comment < ActiveRecord::Base
     if self.activity.comments_count == 1
       self.activity.changed_at = self.activity.created_at
     else
-      self.activity.changed_at = self.activity.comments.published.by_recently_created.first.created_at
+      self.activity.changed_at = self.activity.comments.by_recently_created.first.created_at
     end
     self.activity.comments_count -= 1
     self.save(:validate => false)    

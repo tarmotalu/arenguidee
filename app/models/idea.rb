@@ -691,11 +691,10 @@ class Idea < ActiveRecord::Base
   end
   
   def on_removed_entry(new_state, event)
-    activities.each do |a|
-      a.remove!
-    end
-    endorsements.each do |e|
-      e.destroy
+    [activities, endorsements, points].each do |children|
+      children.each do |child|
+        child.remove!
+      end
     end
     self.removed_at = Time.now
     save(:validate => false)

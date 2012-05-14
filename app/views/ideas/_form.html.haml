@@ -61,24 +61,8 @@
           %p= tr("It‘s important to choose a category for the idea. It will increase the chances of your idea being realised", "views/ideas/form")
       %select#category_id{:name => "[idea][category_id]"}
         - Category.all.each do |category|
-          %option{:title => category.icon.url(:icon_50), :value => category.id, :selected=>(@idea.category and @idea.category_id==category.id) ? true : false}
+          %option{:title => category.icon.url(:icon_25, :size=>"25x25"), :value => category.id, :selected=>(@idea.category and @idea.category_id==category.id) ? true : false}
             = tr(category.name,"from_database")
-    - if Instance.current.default_tags_checkbox and Instance.current.default_tags_checkbox!="" and not (current_sub_instance and current_sub_instance.required_tags)
-      %br/
-      #idea_category2
-        %b{:style => "color:red; font-size: 14px; line-height: 140%;"}
-          Ef setja á inn hugmynd að hverfisverkefni, undir Betri hverfi, verður fyrst að
-          %a{:href => "http://betrireykjavik.is/about/choose_sub_instance", :style => "text-decoration:underline !important;"} velja hverfið hér
-          og smella síðan á hnappinn Settu inn nýja hugmynd.
-        %br/
-        %br/
-        .form_header
-          = tr("Select neighborhood (if applicable)", "views/ideas/form")
-          %br/
-        - Instance.current.default_tags_checkbox.split(",").each_with_index do |special_tag, i|
-          = check_box_tag "special_checkbox_tag_#{i}", special_tag
-          %span.Chapter_name_2= special_tag
-    %br/
   %br/
   .form_header
     = tr("Add a point in support or against", "views/ideas/form")

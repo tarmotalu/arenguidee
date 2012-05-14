@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120511160347) do
+ActiveRecord::Schema.define(:version => 20120514115411) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20120511160347) do
     t.integer  "followers_count",                         :default => 0
     t.datetime "changed_at"
     t.integer  "idea_status_change_log_id"
+    t.integer  "group_id"
   end
 
   add_index "activities", ["activity_id"], :name => "activity_activity_id"

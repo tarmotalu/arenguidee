@@ -113,7 +113,7 @@ GEM
     gem_plugin (0.2.3)
     geoip (1.1.2)
     googlecharts (1.6.8)
-    haml (3.1.5)
+    haml (3.1.4)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
       activesupport (~> 3.0)
@@ -299,6 +299,7 @@ DEPENDENCIES
   factory_girl_rails
   geoip
   googlecharts
+  haml (= 3.1.4)
   haml-rails
   headless
   hpricot (>= 0.6)

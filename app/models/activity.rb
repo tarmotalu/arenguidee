@@ -63,7 +63,18 @@ class Activity < ActiveRecord::Base
     end
   end
 
+  before_save :setup_group_id
   before_save :update_changed_at
+
+  def setup_group_id
+    if self.idea
+      self.group_id = self.idea.group_id
+    elsif self.point and self.point.idea
+      self.group_id = self.point.idea.group_id
+    elsif self.revision and self.revision.point and self.revision.point.idea
+      self.group_id = self.revision.point.idea.group_id
+    end
+  end
 
   def update_changed_at
     self.changed_at = Time.now unless self.attribute_present?("changed_at")

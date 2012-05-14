@@ -38,8 +38,9 @@ module ApplicationHelper
    end
  end
 
- def options_for_select_simple(options,selected=nil)
+ def options_for_select_simple(options,selected=nil,blank=nil)
     out = ""
+    out+="<option value=\"\"#{selected==nil ? "selected" : ""}>#{blank}</option>" if blank
     options.each do |a,b|
       out+="<option value=\"#{b}\"#{b==selected ? "selected" : ""}>#{a}</option>"
     end

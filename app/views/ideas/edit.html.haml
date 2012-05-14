@@ -21,6 +21,14 @@
               %span.Chapter_name= tr(sub_instance_tag, "views/ideas/form")
         .field
           .field_label
+            = tr("Group", "views/ideas/form")
+          .field_box
+            - if current_user.is_admin
+              = f.select :group, options_for_select_simple(Group.all.collect {|p| [ tr(p.name,"Name from database"), p.id.to_s ] }, @idea.group_id.to_s, tr("Public","views_ideas_form"))
+            - else
+              = f.select :group, options_for_select_simple(current_user.groups.uniq.collect {|p| [ tr(p.name,"Name from database"), p.id.to_s ] }, @idea.group_id.to_s, tr("Public","views_ideas_form"))
+        .field
+          .field_label
             = tr("Category", "view/users/_form_long")
           .field_box
             = f.select :category, options_for_select_simple(Category.all.collect{|s|[s.i18n_name,s.id]}, @idea.category.id)

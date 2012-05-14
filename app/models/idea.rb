@@ -58,6 +58,7 @@ class Idea < ActiveRecord::Base
   belongs_to :user
   belongs_to :sub_instance
   belongs_to :category
+  belongs_to :group
   
   has_many :relationships, :dependent => :destroy
   has_many :incoming_relationships, :foreign_key => :other_idea_id, :class_name => "Relationship", :dependent => :destroy

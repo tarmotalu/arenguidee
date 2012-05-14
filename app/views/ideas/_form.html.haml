@@ -20,7 +20,7 @@
           = tr("What is your idea?", "views/ideas/form")
           %span.red *
         %span.idea_name
-          = f.text_field :name, :size => 60, :maxlength => 60, :autocomplete =>"off"
+          = f.text_field :name, :maxlength => 60, :autocomplete =>"off"
         #idea_suggestions{ style: "display: none;" }
           = tr("Some ideas already exist with similar names", "view/ideas/_form")
           %ul
@@ -100,7 +100,7 @@
                 = tr("characters left", "view/ideas/_form")
               %span.red *
             .field_box
-              = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :rows => 5, :cols => 60, :maxLength => 500
+              = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :rows => 5, :maxLength => 500
             .tiny_info_no_pad
               = tr("Other people will be able to edit your points, similar to Wikipedia", "views/ideas/form")
           %br/

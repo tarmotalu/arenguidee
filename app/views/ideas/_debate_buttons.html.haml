@@ -29,7 +29,7 @@
                 - else
                   = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
           %tr
-            %td
+            %td.button_oppose_bg
               %span.idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
                 = link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1), |
                     :method => :post,                                                                                                                                        |
@@ -62,7 +62,7 @@
                 - else
                   = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
           %tr
-            %td
+            %td.button_oppose_bg
               %span.idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
                 = link_to tr("OPPOSED", "view/ideas"), endorsement_path(endorsement, :region => region),     |
                   :method => :delete,                                                                |
@@ -96,7 +96,7 @@
               - else
                 = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
         %tr
-          %td
+          %td.button_oppose_bg
             %span.idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
               = link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1), |
                   :method => :post,                                                                                                                                        |

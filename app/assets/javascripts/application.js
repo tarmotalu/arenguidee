@@ -82,7 +82,7 @@ jQuery(document).ready(function() {
 	function addMega(){
 	  jQuery(this).addClass("hovering"); 
 	} 
-                                          77
+
 	function removeMega(){ 
 	  jQuery(this).removeClass("hovering"); 
 	}

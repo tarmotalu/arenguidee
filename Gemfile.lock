@@ -269,7 +269,7 @@ GEM
     uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
-    watir-webdriver (0.5.7)
+    watir-webdriver (0.5.8)
       selenium-webdriver (>= 2.18.0)
     whenever (0.7.3)
       activesupport (>= 2.3.4)

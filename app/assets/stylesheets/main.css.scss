@@ -952,3 +952,8 @@ body {
 @media screen and (max-width: 768px) {
 
 }
+
+.field_with_errors {
+  border-color: #f00;
+  border: 1px solid red !important;
+}

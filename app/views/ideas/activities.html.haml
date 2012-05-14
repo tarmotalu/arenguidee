@@ -5,6 +5,7 @@
       = render :partial => "nav"
   .col-11
     - if logged_in?
+      #new_activities
       = render :partial => "bulletins/form", :locals => {:activity => Activity.new, :comment => Comment.new }
     #activities
       - for activity in @activities

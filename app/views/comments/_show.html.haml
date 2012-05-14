@@ -9,8 +9,8 @@
       .comment_box
         %table
           %tr
-            %td{:width => "50"}
-              .list_left= render :partial => "users/pic_50", :locals => {:user => comment.user}
+            %td{:width => "48"}
+              .list_left= render :partial => "users/pic_48", :locals => {:user => comment.user}
             %td
               %span.list_left
                 = link_to(comment.user.login, comment.user)

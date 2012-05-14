@@ -1,15 +1,6 @@
 #sib_idea_container
-  /* background-color: #eef2f4 */
-   background-color: #fff
-  -moz-border-radius-topleft: 3px
-  -moz-border-radius-topright: 3px
-  -moz-border-radius-bottomleft: 3px
-  -moz-border-radius-bottomright: 3px
-  -webkit-border-top-left-radius: 3px
-  -webkit-border-top-right-radius: 3px
-  -webkit-border-bottom-left-radius: 3px
-  -webkit-border-bottom-right-radius: 3px
-  border-bottom: 3px dotted #eee
+  border-bottom: 1px solid #FFFFFF
+  margin-bottom: 14px
 
   .sib_left
     float: left
@@ -34,8 +25,6 @@
   .sib_social
     display: none
   .debate_button
-    float: left
-
 
 #sib_idea_detail
   width: 845px
@@ -65,6 +54,7 @@ span.count
 .idea_add,.idea_add_follow,.idea_add_ignore
   text-transform: uppercase
   font-weight: bold
+  float: left
 
 
 .idea_remove
@@ -103,24 +93,31 @@ span.idea_add a,span.idea_add a:hover
   text-decoration: none
 
 .idea_add_link1
-  color: #090
-  padding-bottom: 2px
+  color: #fff
+  background-image: url("/assets/buttons/endorse_button_bg_strip.png")
+  background-repeat: repeat-x
+  background-position: 0 0
+  padding: 3px 10px 7px 10px
 
 .idea_add_link2
-  color: #900
+  color: #fff
+  background-image: url("/assets/buttons/oppose_button_bg_strip.png")
+  background-repeat: repeat-x
+  background-position: 0 0
+  padding: 3px 10px 7px 10px
 
 .idea_add_link1:hover
-  color: #999
+  color: #eee
 
 .idea_add_link2:hover
-  color: #999
+  color: #eee
 
 .sib_debate_buttons
 
 .top_level_idea_listing
   float: left
   padding-top: 0px
-  padding-bottom: 2px
+  padding-bottom: 5px
   width: 100%
 
 div.endorse-wrap
@@ -182,13 +179,6 @@ div.oppose-wrap
 .debate_buttons_table
   /* width: 262px !important */
   margin-top: -1px
-
-.button_oppose_bg
-  background: transparent url(/assets/oppose_button_strip.png) repeat-x top left
-  display: block
-  line-height: 22px
-  padding: 0px 0px 0px 0px
-
 
 .endorse_grey
   color: #aaa

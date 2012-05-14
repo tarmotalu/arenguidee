@@ -12,6 +12,8 @@ module ActiveRecord
             # Do nothing
           elsif table_name=="users"
             # Do nothing for now
+          elsif Thread.current[:current_user] and Thread.current[:current_user].is_admin?
+            where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil)
           elsif table_name=="groups"
             where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil)
           elsif table_name=="ideas"

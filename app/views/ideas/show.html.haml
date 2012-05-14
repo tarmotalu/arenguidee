@@ -4,8 +4,8 @@
   .col-11.col-offset-1
     .col-content
       - if logged_in?
-        %div
-          = render :partial => "bulletins/form", :locals => {:activity => Activity.new, :comment => Comment.new}
+        #new_activities
+        = render :partial => "bulletins/form", :locals => {:activity => Activity.new, :comment => Comment.new}
       - unless @activities.blank?
         %ul#endless_scroll_ul_idea_show.list{:last => @activities.to_a.last.changed_at, :idea_id => @idea.id}
           = render :template => 'feed/activity_list_simple'

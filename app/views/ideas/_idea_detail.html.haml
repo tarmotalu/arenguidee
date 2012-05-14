@@ -48,4 +48,8 @@
                 = link_to(tr("All points for oppose", "view/ideas/top_points"), opposed_top_points_idea_url(@idea,:by_newest=>true))
               #con_new
                 = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "con_new", :points => @points_new_down, :numbering=>false}
-
+    - if request.xhr?
+      .col-group
+        .col-full
+          .col-content
+            .idea_detail_more= link_to tr("More", "view/ideas/idea_detail"), idea_path(@idea)

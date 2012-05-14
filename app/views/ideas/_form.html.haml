@@ -68,20 +68,6 @@
               = f.radio_button :idea_type, sub_instance_tag, checked: first_tag
               %span.Chapter_name= tr(sub_instance_tag, "views/ideas/form")
               - first_tag = false
-        - if current_sub_instance and Instance.current.layout=="better_reykjavik"
-          %input{:name => "idea[category_id]", :type => "hidden", :value => "14"}/
-        - else
-          #idea_category
-            .form_header
-              = tr("Select category", "views/ideas/form")
-              %span.red *
-              %br/
-              .tiny_info
-                %p= tr("It‘s important to choose a category for the idea. It will increase the chances of your idea being realised", "views/ideas/form")
-            %select#category_id{:name => "[idea][category_id]"}
-              - Category.all.each do |category|
-                %option{:title => category.icon.url(:icon_25,), :value => category.id, :selected=>(@idea.category and @idea.category_id==category.id) ? true : false}
-                  = tr(category.name,"from_database")
     .col-6
       .col-content
         .form_header

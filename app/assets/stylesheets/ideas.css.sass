@@ -93,7 +93,7 @@ span.idea_add a,span.idea_add a:hover
   text-decoration: none
 
 .endorse_button
-  width: 125px
+  width: 145px
   height: 22px
   color: #fff
   background-image: url("/assets/buttons/endorse_button_bg_strip_2.png")
@@ -109,8 +109,12 @@ span.idea_add a,span.idea_add a:hover
   -webkit-border-bottom-left-radius: 3px
   -webkit-border-bottom-right-radius: 3px
 
+.endorse_grey
+  @extend .endorse_button
+  background-image: url("/assets/buttons/endorse_button_bg_strip_2_disabled.png")
+
 .debate_button
-  width: 125px
+  width: 145px
   height: 22px
   color: #fff
   background-image: url("/assets/buttons/debate_button_bg_strip_2.png")
@@ -125,8 +129,6 @@ span.idea_add a,span.idea_add a:hover
   -webkit-border-top-right-radius: 3px
   -webkit-border-bottom-left-radius: 3px
   -webkit-border-bottom-right-radius: 3px
-  font-size: 13px
-  font-weight: bold
   &:hover,&:focus
     cursor: pointer
   a
@@ -135,36 +137,8 @@ span.idea_add a,span.idea_add a:hover
     &:hover
       color: #999
 
-.oppose_grey
-  width: 125px
-  background-image: url("/assets/buttons/oppose_button_bg_strip_2_disabled.png")
-  background-repeat: repeat-x
-  background-position: 0 0
-  -moz-border-radius-topleft: 3px
-  -moz-border-radius-topright: 3px
-  -moz-border-radius-bottomleft: 3px
-  -moz-border-radius-bottomright: 3px
-  -webkit-border-top-left-radius: 3px
-  -webkit-border-top-right-radius: 3px
-  -webkit-border-bottom-left-radius: 3px
-  -webkit-border-bottom-right-radius: 3px
-
-.endorse_grey
-  width: 125px
-  background-image: url("/assets/buttons/endorse_button_bg_strip_2_disabled.png")
-  background-repeat: repeat-x
-  background-position: 0 0
-  -moz-border-radius-topleft: 3px
-  -moz-border-radius-topright: 3px
-  -moz-border-radius-bottomleft: 3px
-  -moz-border-radius-bottomright: 3px
-  -webkit-border-top-left-radius: 3px
-  -webkit-border-top-right-radius: 3px
-  -webkit-border-bottom-left-radius: 3px
-  -webkit-border-bottom-right-radius: 3px
-
 .oppose_button
-  width: 125px
+  width: 145px
   height: 22px
   color: #fff
   background-image: url("/assets/buttons/oppose_button_bg_strip_2.png")
@@ -179,6 +153,9 @@ span.idea_add a,span.idea_add a:hover
   -webkit-border-bottom-left-radius: 3px
   -webkit-border-bottom-right-radius: 3px
 
+.oppose_grey
+  @extend .oppose_button
+  background-image: url("/assets/buttons/oppose_button_bg_strip_2_disabled.png")
 
 .idea_add_link1
   color: #fff

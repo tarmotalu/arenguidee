@@ -35,8 +35,8 @@
             = link_to tr("OPPOSE", "view/ideas")+" (#{idea.down_endorsements_count})", endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1, :force_debate_to_new=>force_debate_to_new), |
                 :method => :post,                                                                                                                                        |
                 :remote => true,                                                                                                                                         |
-              'data-disabled-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
-              'data-loader-name' => "external_spinner",                      |
+                'data-disabled-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
+                'data-loader-name' => "external_spinner",                      |
                 :class => "idea_add_link2 oppose_grey", :title =>  tr("I oppose this, and want to add my opposition to my idea list.", "view/ideas")      |
           .idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
       - else

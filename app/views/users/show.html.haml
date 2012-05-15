@@ -38,9 +38,10 @@
             = render :partial => "users/button_small", :locals => {:user => @user, :following => @following}
         - if @user.position > 0
           = tr("{position} most influential", "view/users/_header", :position => @user.position)
-        = tr("Joined {time_ago}", "view/users/_header", :time_ago => time_ago(@user.created_at))
-        - if @user.attribute_present?("loggedin_at")
-          #{tr("Last visit {time_ago}", "view/users/_header", :time_ago => time_ago(@user.loggedin_at))}
+        %div.user_joined_visit
+          = tr("Joined {time_ago}.", "view/users/_header", :time_ago => time_ago(@user.created_at))
+          - if @user.attribute_present?("loggedin_at")
+            #{tr("Last visit {time_ago}.", "view/users/_header", :time_ago => time_ago(@user.loggedin_at))}
       - if @user.profile
         .bio= @user.profile.bio_html
       - if @ideas.any?

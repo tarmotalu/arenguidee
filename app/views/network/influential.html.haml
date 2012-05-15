@@ -1,3 +1,6 @@
+.col-group
+  .col-12
+    .col-content
 - if Instance.current.message_for_network and Instance.current.message_for_network!=""
   = render :partial=>"/shared/top_message_box", :locals=> {:message_text => Instance.current.message_for_network.html_safe }
 %p

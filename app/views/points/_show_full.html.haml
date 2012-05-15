@@ -9,7 +9,7 @@
         = render :partial=>"points/report_content", :locals=>{:point=>point}
         = render :partial=>"points/flagged", :locals=>{:point=>point}
         .point_user_name
-          = tr("{author_sentence}", "view/points/_show_full", :author_sentence => point.author_sentence)
+          = link_to tr("{author_sentence}", "view/points/_show_full", :author_sentence => point.author_sentence), user_path(point.author_user)
         .point_other
           - if point.is_down?
             %span.opposed= tr("opposed", "view/points/_show_full")

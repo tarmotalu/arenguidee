@@ -26,18 +26,18 @@
                 .form_header
                   = tr("First name", "view/users/_form")
                 .field_box
-                  = f.text_field :first_name, :size => 20
+                  = f.text_field :first_name, :size => 30
               %td{:style => "padding-left: 3px;", :valign => "top"}
                 .field_label
                   = tr("and Last name", "view/users/_form")
                 .form_header
-                  = f.text_field :last_name, :size => 20
+                  = f.text_field :last_name, :size => 30
           .small{:style => "margin-bottom: 10px;"}= tr("(Not displayed on the site)", "view/users/_form")
         .field
           .field_label
             = tr("Email address", "view/users/_form")
           .field_box
-            = f.text_field :email
+            = f.text_field :email, :size => 30
           .small{:style => "margin-bottom: 10px;"}= tr("(Never shared without your permission)", "view/users/_form")
         - if Instance.current.layout == "better_reykjavik"
           .field

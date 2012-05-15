@@ -10,7 +10,6 @@
           %td{:valign => "top"}
             .add_talking_point
               = tr("<h3>Add a talking point.</h3><p>What is the best argument for or against this idea?  Others will be able to edit it, and we keep a record of revisions, just like Wikipedia. Keep it concise and focused on just one point, you can add additional ones later.  Only the <span class=\"red\">\*</span> fields are required.</p>", "view/points/new")
-            %br/
             .form_header
               = tr("Add a point", "view/points/new")
               %span.red *
@@ -19,7 +18,6 @@
               .add_point_field
                 .field_box
                   = f.text_field :name, :size => 50, :maxlength => 60
-              %br/
               .field
                 .field_label
                   #point_supports.form_header
@@ -28,7 +26,6 @@
                   #point_opposes.form_header
                     = f.radio_button(:value, -1, :checked=>params[:support] ?  "nil" : "checked")
                     = tr("Not, this point is against this idea","views/ideas/form")
-              %br/
               .field.form_header
                 .field_label.form_header
                   = tr("Explain your point.", "view/points/new")
@@ -37,10 +34,8 @@
                 .field_box
                   = f.text_area :content, :id => 'pointContent', :button => 'submit', :rows => 5, :cols => 60, :maxLength => 500
               .tiny_info_no_pad= tr("Other people will be able to edit your points, similar to Wikipedia","views/ideas/form")
-              %br/
               .field.form_header
                 .field_label= tr("Include a website source link", "view/points/new")
                 .field_box
                   = f.text_field :website, :size => 50
-              %br/
               = f.submit tr("Save point", "view/points/new"), :id => "submit", :class => "submit_button"

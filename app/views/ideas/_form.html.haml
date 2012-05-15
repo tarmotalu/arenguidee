@@ -50,12 +50,12 @@
         .field
           %em
             %p= tr("Please describe your idea as neutrally as you can. You have plenty space below to convince others here on the right.", "views/ideas/form")
-          .field_box
-            = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 4, :class=>"col_text_area", :maxLength => 300
           %span.characters
             = tr("Explain your idea - ", "view/ideas/_form")
             %span#ideaContentDown
             = tr("characters left", "view/ideas/_form")
+          .field_box
+            = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 4, :class=>"col_text_area", :maxLength => 300
     .col-6.col-inset
       .col-content
         %h1
@@ -66,10 +66,7 @@
           .field
             .field_box
               = point_form.text_field :name, :size => 60, :maxlength => 60
-            .field_label
-              .tiny_info
-                %em
-                  = tr("To convince other people about this idea a strong point is important", "views/ideas/form")
+          %br
           .field.form_header
             .field_label
               #point_supports
@@ -79,17 +76,20 @@
                 = point_form.radio_button :value, -1
                 %span.point_opposes_label= tr("No, this point is against this idea", "views/ideas/form")
           %br/
+          .field_label
+            .tiny_info
+              %em
+                = tr("To convince other people about this idea a strong point is important. ", "views/ideas/form")
+                = tr("Other people will be able to edit your points, similar to Wikipedia", "views/ideas/form")
+          %br
           .field
             .field_label.form_header
-              = tr("Explain your point.", "view/ideas/_form")
+              = tr("Explain your point - ", "view/ideas/_form")
               %span.characters
                 %span#pointContentDown
                 = tr("characters left", "view/ideas/_form")
-              %span.red *
             .field_box
               = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"col_text_area", :rows => 5, :maxLength => 500
-            .tiny_info_no_pad
-              = tr("Other people will be able to edit your points, similar to Wikipedia", "views/ideas/form")
           %br/
           .field
             .form_header

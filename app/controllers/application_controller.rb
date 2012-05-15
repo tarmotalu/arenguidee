@@ -107,6 +107,7 @@ class ApplicationController < ActionController::Base
         unless @time_left > 0
           Rails.logger.info("Resetting session")
           reset_session
+          Thread.current[:current_user] = nil
           flash[:error] = tr("Your session has expired, please login again.","session")
           redirect_to '/'
         end
@@ -318,6 +319,7 @@ class ApplicationController < ActionController::Base
       self.current_user.forget_me if logged_in?
       cookies.delete :auth_token
       reset_session
+      Thread.current[:current_user] = nil
       flash[:notice] = "This account has been suspended."
       redirect_back_or_default('/')
       return  
@@ -432,6 +434,7 @@ class ApplicationController < ActionController::Base
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     reset_session    
+    Thread.current[:current_user] = nil
     flash[:error] = tr("Your Facebook session expired.", "controller/application")
     respond_to do |format|
       format.html { redirect_to '/portal/' }

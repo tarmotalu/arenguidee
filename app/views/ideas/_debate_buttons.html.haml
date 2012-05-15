@@ -19,7 +19,7 @@
               'data-loader-name' => "external_spinner",                                                     |
               :class => "idea_add_link1",                                                  |
               :title => tr("Remove from my list of ideas", "view/ideas") |
-          .idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
+          .idea_debate_spinner_endorse{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
         .debate_button{:id=>"debate_button_#{idea.id}"}
           .idea_add
             - if not force_debate_to_new
@@ -29,7 +29,7 @@
             - else
               = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
               = "(#{idea.points.count})".html_safe
-            .idea_debate_spinner{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
+            .idea_debate_spinner_3{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
         .oppose_grey
           .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
             = link_to tr("OPPOSE", "view/ideas")+" (#{idea.down_endorsements_count})", endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1, :force_debate_to_new=>force_debate_to_new), |
@@ -49,7 +49,7 @@
                 'data-disabled-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",                                                         |
                 'data-loader-name' => "external_spinner",                    |
                 :class => "idea_add_link1", :title =>  tr("I support this, add it to my idea list", "view/ideas")                             |
-          .idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
+          .idea_debate_spinner_endorse{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
         .debate_button{:id=>"debate_button_#{idea.id}"}
           .idea_add
             - if not force_debate_to_new
@@ -59,7 +59,7 @@
             - else
               = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
               = "(#{idea.points.count})".html_safe
-            .idea_debate_spinner{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
+            .idea_debate_spinner_3{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
         .oppose_button
           .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
             = link_to tr("OPPOSED", "view/ideas")+" (#{idea.down_endorsements_count})", endorsement_path(endorsement, :region => region, :force_debate_to_new=>force_debate_to_new),     |
@@ -80,7 +80,7 @@
                 'data-disabled-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",                                                         |
                 'data-loader-name' => "external_spinner",                  |
               :class => "idea_add_link1", :title =>  tr("I support this, add it to my idea list", "view/ideas")                             |
-        .idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
+        .idea_debate_spinner_endorse{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
       .debate_button{:id=>"debate_button_#{idea.id}"}
         .idea_add
           - if not force_debate_to_new
@@ -90,7 +90,7 @@
           - else
             = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
             = "(#{idea.points.count})".html_safe
-          .idea_debate_spinner{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
+          .idea_debate_spinner_3{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
       .oppose_button
         .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
           = link_to tr("OPPOSE", "view/ideas")+" (#{idea.down_endorsements_count})", endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1, :force_debate_to_new=>force_debate_to_new), |

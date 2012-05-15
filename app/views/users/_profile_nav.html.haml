@@ -9,10 +9,12 @@
   - if @user.followings_count > 0 or @user.followers_count > 0
     %li
       = link_to tr("Network", "view/users/_profile_nav") + " (" + @user.followings_count.to_s + ")", following_user_url(@user)
-      - if @user.followings_count > 0
+    - if @user.followings_count > 0
+      %li
         = link_to tr("Following", "view/users/_profile_nav"), following_user_url(@user)
         (#{@user.followings_count})
-      - if @user.followers_count > 0
+    - if @user.followers_count > 0
+      %li
         = link_to tr("Followers", "view/users/_profile_nav"), followers_user_url(@user)
         (#{@user.followers_count})
   %li

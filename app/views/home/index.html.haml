@@ -36,10 +36,7 @@
   %div.home_welcome
     %h1
       = tr("Latest Activity","home")
-    .col-group
-      .col-11.col-offset-1
-        .col-content
-          %ul#endless_scroll_ul.list{:last => @activities.to_a.last.changed_at}
-            = render :template => 'feed/activity_list_simple'
-            #infinite-scroll
-            .endless_scroll_inner_wrap
+    %ul#endless_scroll_ul.list{:last => @activities.to_a.last.changed_at}
+      = render :template => 'feed/activity_list_simple'
+      #infinite-scroll
+      .endless_scroll_inner_wrap

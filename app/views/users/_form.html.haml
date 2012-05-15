@@ -2,9 +2,9 @@
   - if @geoblocked
     = render :partial=>"shared/geoblocking_info"
   - else
-    = tr("You can sign up with one click using Facebook, Twitter or GMail or you can sign up below using your own email.", "view/users/_form")
-    %br/
     - if current_instance.has_facebook_enabled?
+      = tr("You can sign up with one click using Facebook, Twitter or GMail or you can sign up below using your own email.", "view/users/_form")
+      %br/
       %div{:style => "margin-bottom: 10px; margin-top: 7px;"}
         = fb_login_and_redirect "/", :text=>tr("Sign in with Facebook","views/shared/_login"), :size=>"small", :title=>tr("Sign in with Facebook","views/shared/_login"), :scope=>"email"
     %p
@@ -100,5 +100,5 @@
             = submit_tag tr("Signup", "view/users/_form"), :class => "submit_button"
         - else
           = submit_tag tr("Signup", "view/users/_form"), :class => "submit_button"
-= render :partial=>"shared/keypad_javascript"
+
 = render :partial => "users/rules_info"

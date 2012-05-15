@@ -3,15 +3,11 @@
 :javascript
   $(function(){
   	$('.rss_move').replaceWith($('.rss_feed'));
-  
+
   });
-%ul
-  %li{:style => "float:left; list-style:none;"}
-    #hp_intro{:style => "border-bottom:none;"}= @page_title
-  %li{:style => "float:right; list-style:none;"}
-    .rss_move
+/ Needs RSS here
+/    .rss_move
 .clear
-.white_line
 /
   <haml:silent> if not logged_in? </haml:silent><haml:block>
   <div class="pre_text">

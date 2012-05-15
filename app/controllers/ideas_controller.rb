@@ -1074,7 +1074,7 @@ class IdeasController < ApplicationController
       @items[10]=[tr("Controversial", "view/ideas"), controversial_ideas_url]
       @items[11]=[tr("Ads", "view/ideas"), ads_ideas_url]
       @items[12]=[tr("Rising", "view/ideas"), rising_ideas_url]
-      @items[13]=[tr("Falling", "view/ideas"), rising_ideas_url]
+      @items[13]=[tr("Falling", "view/ideas"), falling_ideas_url]
       if logged_in?
         @items[14]=[tr("Your network", "view/ideas"), network_ideas_url]
         @items[15]=[tr("Yours", "view/ideas"), yours_ideas_url]

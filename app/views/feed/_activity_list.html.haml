@@ -7,7 +7,7 @@
         - else
           = render :partial => "activities/show", :locals => {:activity => activity, :suffix => ""}
     - else
-      %span = tr("The end","_activites")
+      %span= tr("The end","_activites")
 - else
   #activities.single
     - if not @activities.empty?

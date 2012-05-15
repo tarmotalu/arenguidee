@@ -456,7 +456,7 @@ class ApplicationController < ActionController::Base
     @sub_menu_items = @items
     Rails.logger.debug action_name
 
-    if action_name == "index" and @items and not request.xhr?
+    if action_name == "index" and @items and not request.xhr? and controller_name != 'issues'
       Rails.logger.debug "index"
       selected = cookies["selected_#{controller_name}_filter_id"].to_i
       Rails.logger.debug "cookie #{selected}"
@@ -475,7 +475,10 @@ class ApplicationController < ActionController::Base
     if selected_sub_menu_item
       @selected_sub_nav_name = selected_sub_menu_item[0]
       Rails.logger.debug "Saved submenu id #{selected_sub_menu_item_id}"
-      @selected_sub_nav_item_id = cookies["selected_#{controller_name}_filter_id"] = selected_sub_menu_item_id
+      @selected_sub_nav_item_id = selected_sub_menu_item_id
+      if controller_name != 'issues'
+        cookies["selected_#{controller_name}_filter_id"] = @selected_sub_nav_item_id
+      end
     end
   end
 

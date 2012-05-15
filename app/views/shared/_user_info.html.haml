@@ -55,9 +55,13 @@
                       %br/
                       = link_to tr("Pages", "view/shared/_menu"), pages_url
                       \&middot;
-                      %br/
-                      = link_to tr("Graphics", "view/shared/_menu"), :controller => "admin", :action => "picture"
-                      \&middot; #{link_to tr("Colors", "view/shared/_menu"), color_schemes_url}
+                      = link_to tr("Logo", "view/admin/_nav"), :controller => "admin", :action => "picture"
+                      \&middot;
+                      = link_to tr("Buddy Icon", "view/admin/_nav"), :controller => "admin", :action => "buddy_icon"
+                      \&middot;
+                      = link_to tr("Fav Icon", "view/admin/_nav"), :controller => "admin", :action => "fav_icon"
+                      \&middot;
+                      = link_to tr("Colors", "view/shared/_menu"), color_schemes_url
                       %br/
                       = link_to tr("Unverified users", "view/network/_nav"), :controller => "network", :action => "unverified"
                       %br/

@@ -2,11 +2,11 @@
   .field
     .field_label
       = tr("Email address", "view/sessions/_form")
-    .field_box.scale_bottom
+    .field_box
       = text_field_tag :email
   .field
     .field_label
       = tr("Password", "view/sessions/_form")
-    .field_box.scale_bottom
+    .field_box
       = password_field_tag :password
   = submit_tag tr("Sign in", "view/sessions/_form"), :class => "submit_button"

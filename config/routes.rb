@@ -275,7 +275,7 @@ SocialInnovation::Application.routes.draw do
   match '/splash' => 'splash#index'
   match '/issues' => 'issues#index'
   match '/issues.:format' => 'issues#index'
-  match '/issues/:slug' => 'issues#show'
+  match '/issues/:slug' => 'issues#show', as: 'issue'
   match '/issues/:slug.:format' => 'issues#show'
   match '/issues/:slug/:action' => 'issues#index'
   match '/issues/:slug/:action.:format' => 'issues#index'

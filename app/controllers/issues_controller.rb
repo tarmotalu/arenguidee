@@ -3,6 +3,7 @@ class IssuesController < ApplicationController
   before_filter :get_tag_names, :except => :index
   before_filter :set_counts, :except => :index
   before_filter :check_for_user, :only => [:yours, :yours_finished, :yours_created, :network]
+  before_filter :setup_filter_dropdown
 
   def index
     @page_title =  tr("Categories", "controller/issues")
@@ -220,6 +221,19 @@ class IssuesController < ApplicationController
   end
   
   private
+
+  def setup_menu_items
+    @items ||= begin
+      items = Hash.new
+      categories = Category.all.collect { |category| t = Tag.find_by_name(category.name) }.select { |t| t != nil }
+      categories.each_with_index do |category, idx|
+        items[idx] = [tr(category.name, "model/category"), issue_url(category.slug)]
+      end
+      Rails.logger.debug "FOOBAR"
+      Rails.logger.debug items.inspect
+      items
+    end
+  end
 
   def set_counts
     if @tag_names

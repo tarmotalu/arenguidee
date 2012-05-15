@@ -1,27 +1,61 @@
 .col-group
   .col-1
     .col-content
-      = #render :partial => "left_nav"
-      - if @activities.total_pages > 1
-        = will_paginate(@activities, :params => {:action => "activities"} )
+      .idea_menu
+        .profile_picture48
+          - if @user.has_picture?
+            %a{:href => url_for(@user)}
+              = image_tag @user.buddy_icon.url(:icon_48), :size => "48x48", :border => 0
+          - elsif current_facebook_user_if_on_facebook and @user.has_facebook?
+            %a{:href => url_for(@user)}
+              %fb:profile-pic{:border => "0", :linked => "false", :size => "small", :uid => @user.facebook_uid, :width => "96px"}/
+          - elsif logged_in? and @user.id == current_user.id
+            = link_to image_tag("upload_pic.gif", :size => "48x48", :border => 0), picture_settings_url
+          - else
+            .image_48
+              = image_tag current_instance.buddy_icon.url(:icon_48), :size => "48x48", :border => 0, :alt => ""
+        = render :partial => "users/profile_nav"
   .col-11
     .col-content
-      = render :partial => "header"
-      %p
-        - if @user.profile
-          .bio
-            = @user.profile.bio_html
-        - if @ideas.any?
-          - if @user.endorsements_count > 5
-            .heading= link_to tr("Top 5 of {idea_count} ideas", "view/users/show", :idea_count => @user.endorsements_count), ideas_user_path(@user)
-          - else
-            .heading= tr("Top {count} ideas", "view/users/show", :count => @ideas.length)
-            - @ideas.each do |idea_endorsement|
-              = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea_endorsement.idea, :endorsements=>@endorsements}
-              %div
-                %div{:id => "idea_detail_#{idea_endorsement.idea.id}"}
-    #activities.single
-      %h1
-        = tr("Latest Activity","home")
-      - for activity in @activities
-        = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_nouser"}
+      #profile_name
+        - if params[:action] == 'show'
+          %span.profile_name= @user.name
+          %span.profile_pc= link_to @user.capitals_count.to_s + current_instance.currency_short_name, capital_user_url(@user)
+        - else
+          %span.profile_name= @page_title
+      - if @user.has_website? or @user.has_twitter?
+        .profile_website
+          - if @user.has_website?
+            %a{:href => @user.website_link}= @user.website_link
+          - if @user.has_website? and @user.has_twitter?
+            \&middot;
+          - if @user.has_twitter?
+            %a{:href => "http://twitter.com/#{@user.twitter_login}"}
+              http://twitter.com/#{@user.twitter_login}
+      .profile_small
+        - if not (logged_in? and current_user == @user)
+          %span.users_button{:id => "user_#{@user.id.to_s}_button"}
+            = render :partial => "users/button_small", :locals => {:user => @user, :following => @following}
+        - if @user.position > 0
+          = tr("{position} most influential", "view/users/_header", :position => @user.position)
+        = tr("Joined {time_ago}", "view/users/_header", :time_ago => time_ago(@user.created_at))
+        - if @user.attribute_present?("loggedin_at")
+          #{tr("Last visit {time_ago}", "view/users/_header", :time_ago => time_ago(@user.loggedin_at))}
+      - if @user.profile
+        .bio= @user.profile.bio_html
+      - if @ideas.any?
+        - if @user.endorsements_count > 5
+          .heading= link_to tr("Top 5 of {idea_count} ideas", "view/users/show", :idea_count => @user.endorsements_count), ideas_user_path(@user)
+        - else
+          .heading= tr("Top {count} ideas", "view/users/show", :count => @ideas.length)
+        - @ideas.each do |idea_endorsement|
+          = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea_endorsement.idea, :endorsements=>@endorsements}
+          %div{:id => "idea_detail_#{idea_endorsement.idea.id}"}
+      #activities.single
+        %h1
+          = tr("Latest Activity","home")
+        - for activity in @activities
+          = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_nouser"}
+        = #render :partial => "left_nav"
+        - if @activities.total_pages > 1
+          = will_paginate(@activities, :params => {:action => "activities"} )

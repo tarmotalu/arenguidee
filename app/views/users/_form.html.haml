@@ -86,10 +86,10 @@
             )
         :javascript
           var RecaptchaOptions = { theme : 'clean' };
-        = recaptcha_tags
+        = recaptcha_tags :ssl => true
         %br/
         = check_box("user", "terms")
-        = tr("I accept the terms detailed below.", "view/users/_form")
+        = tr("I accept the terms.", "view/users/_form")
         %br/
         - if @idea
           - if @value == 1

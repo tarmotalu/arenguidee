@@ -44,13 +44,6 @@ u.password_confirmation="admin"
 u.email="admin@admin.is"
 u.save(:validation=>false)
 
-g = Group.new
-g.name = "public"
-g.save
-
-u.groups << g
-Group.set_admin_for_group(u,g)
-
 Category.create(:name=>"New Products", :description => "")
 Category.create(:name=>"Improved Services", :description => "")
 Category.create(:name=>"Customer Satisfaction", :description => "")

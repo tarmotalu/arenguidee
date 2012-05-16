@@ -9,13 +9,13 @@ set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
 
 ssh_options[:forward_agent] = true
-set :application, "social-innovation"
-set :domain, "www.idea-synergy.com"
+set :application, "social_innovation_internal"
+set :domain, "db-demo.idea-synergy.com"
 set :scm, "git"
-set :repository, "git://github.com/rbjarnason/social_innovation.git"
+set :repository, "git@github.com:rbjarnason/social_innovation_internal.git"
 set :use_sudo, false
-set :deploy_to, "/home/robert/sites/#{application}"
-set :user, "robert"
+set :deploy_to, "/home/db-demo/sites/#{application}"
+set :user, "db-demo"
 set :deploy_via, :remote_cache
 set :shared_children, shared_children + %w[config db/sphinx assets]
 

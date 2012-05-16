@@ -27,7 +27,7 @@
                 = tr("DEBATE", "view/ideas")
                 = "(#{idea.points.count})".html_safe
             - else
-              = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
+              = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea), {:class => "idea_add_link3"}
               = "(#{idea.points.count})".html_safe
             .idea_debate_spinner_3{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
         .oppose_grey
@@ -57,7 +57,7 @@
                 = tr("DEBATE", "view/ideas")
                 = "(#{idea.points.count})".html_safe
             - else
-              = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
+              = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea), {:class => "idea_add_link3"}
               = "(#{idea.points.count})".html_safe
             .idea_debate_spinner_3{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
         .oppose_button
@@ -88,7 +88,7 @@
               = tr("DEBATE", "view/ideas")
               = "(#{idea.points.count})".html_safe
           - else
-            = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea)
+            = link_to tr("DEBATE", "view/ideas"), new_idea_point_path(idea), {:class => "idea_add_link3"}
             = "(#{idea.points.count})".html_safe
           .idea_debate_spinner_3{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
       .oppose_button

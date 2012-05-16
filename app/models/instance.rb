@@ -91,8 +91,12 @@ class Instance < ActiveRecord::Base
     if Thread.current[:localhost_override]
       'http://' + Thread.current[:localhost_override] + '/'
     else
-      if p = sub_instance or p = SubInstance.current
-        'http://' + p.short_name + '.' + base_url + '/'
+      if p = sub_instance or (p = SubInstance.current)
+        if p.short_name=="db-demo"
+          'https://' + p.short_name + '.' + base_url + '/'
+        else
+          'http://' + p.short_name + '.' + base_url + '/'
+        end
       else
         'http://' + base_url + '/'
       end

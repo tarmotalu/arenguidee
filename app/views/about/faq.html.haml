@@ -7,11 +7,7 @@
     - tr("which you support", "email")
     - tr("which you oppose", "email")
     - tr('The status of the idea "{idea}" has been changed', "email", idea: "")
-    - tr("{user_name} was refunded {capital}{currency_short_name} for an ad for idea {idea_name} because the idea is now in progress", "model/activity",
-    - user_name: "",
-    - capital: "",
-    - currency_short_name: "",
-    - idea_name: "")
+    - tr("{user_name} was refunded {capital}{currency_short_name} for an ad for idea {idea_name} because the idea is now in progress", "model/activity", user_name: "", capital: "", currency_short_name: "", idea_name: "")
     %p= tr("<a name=\"what_is\"></a><b>Q: What is {instance_name}?</b>", "view/about/br_faq", :instance_name => tr(current_instance.name,"Name from database"))
     %p= tr("A: {instance_name} is a website that allows people from all over the world to prioritise which issues matter the most to them", "view/about/br_faq", :instance_name => tr(current_instance.name,"Name from database"))
     %br/

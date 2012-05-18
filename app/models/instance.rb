@@ -17,6 +17,11 @@ class Instance < ActiveRecord::Base
   
   validates_attachment_size :logo, :less_than => 5.megabytes
   validates_attachment_content_type :logo, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+
+  has_attached_file :email_banner
+
+  validates_attachment_size :email_banner, :less_than => 5.megabytes
+  validates_attachment_content_type :email_banner, :content_type => ['image/jpeg', 'image/png', 'image/gif']
     
   belongs_to :buddy_icon_old, :class_name => "Picture"
   has_attached_file :buddy_icon, :styles => { :icon_24 => "24x24#", :icon_48  => "48x48#", :icon_96 => "96x96#" }
@@ -158,6 +163,10 @@ class Instance < ActiveRecord::Base
     attribute_present?("picture_id")
   end
   
+  def has_email_banner?
+    attribute_present?("email_banner_file_name")
+  end
+
   def has_fav_icon?
     attribute_present?("fav_icon_file_name")
   end

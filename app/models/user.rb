@@ -730,8 +730,7 @@ class User < ActiveRecord::Base
     self.update_attribute(:capitals_count,new_capitals_count)
 
     if capitals_difference != 0 and !self.is_admin and self.is_capital_subscribed and self.status == "active"
-      activity_id = self.activities.last.id
-      self.delay.send_capital_email(activity_id, capitals_difference)
+      User.delay.send_capital_email(self.activities.last.id, capitals_difference)
     end
   end  
   
@@ -1095,7 +1094,7 @@ class User < ActiveRecord::Base
     self.increment!("warnings_count")
   end
 
-  def send_capital_email(activity_id, point_difference)
+  def self.send_capital_email(activity_id, point_difference)
     activity = Activity.find(activity_id)
     user = activity.user
     UserMailer.lost_or_gained_capital(user, activity, point_difference).deliver

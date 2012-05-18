@@ -52,6 +52,11 @@
             .field_label
               Language:
               \#{f.select :language_code, [1, 2, 3]}
+          - if @instance.has_email_banner?
+            = image_tag @instance.email_banner.url(), :border => 0
+          .field
+            .field_label= tr("Email banner", "view/instances/edit")
+            .field_box= f.file_field :email_banner
         %td{:style => "padding-left: 20px;", :valign => "top"}
           .field
             .field_label

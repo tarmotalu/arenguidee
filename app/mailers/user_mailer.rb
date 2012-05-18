@@ -23,7 +23,6 @@ class UserMailer < ActionMailer::Base
 
   def lost_or_gained_capital(user, activity, point_difference)
     @instance = Instance.current
-    @user = user
     @activity = activity
     @point_difference = point_difference
     @recipient = @user = user
@@ -179,7 +178,9 @@ class UserMailer < ActionMailer::Base
   private
 
     def get_conditional_logo
-      if Instance.first.layout.include?("better_reykjavik")
+      if Instance.first.has_email_banner?
+        File.read(Instance.first.email_banner.path()
+      elsif Instance.first.layout.include?("better_reykjavik")
         File.read(Rails.root.join("app/assets/images/logos/BR_email.png"))
       elsif Instance.first.layout.include?("better_iceland")
         File.read(Rails.root.join("app/assets/images/logos/betraIsland-merki.png"))

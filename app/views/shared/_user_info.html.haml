@@ -17,7 +17,7 @@
       = link_to :controller=>"settings", :action=>"picture" do
         = render :partial => "users/pic_48", :locals => {:user => current_user}
     - if logged_in? and current_user.is_admin?
-      %ul#menu
+      %ul
         %li
           = link_to tr("Settings", "view/shared/_menu"), "#"
         %li

@@ -1,4 +1,4 @@
-%ul
+%ul.idea_menu
   %li
     = link_to_unless_current tr("Profile", "view/users/_profile_nav"), @user
   - if @user.endorsements_count > 5
@@ -18,7 +18,7 @@
     = link_to_unless_current current_instance.currency_name.titleize, capital_user_url(@user)
   %li
     = link_to_unless_current tr("Ads", "view/users/_profile_nav"), ads_user_url(@user)
-  %li
+  %li.sub
     = link_to_unless_current tr("Admin", "view/users/_profile_nav"), edit_user_url(@user)
   %li
     = link_to_unless_current tr("Account settings", "view/users/_profile_nav"), edit_user_url(@user)
@@ -27,9 +27,7 @@
       = link_to_unless_current tr("Email settings", "view/users/_profile_nav"), signups_user_url(@user)
   - if @user.is_pending?
     %li
-      = link_to_unless_current tr("Resend verification email", "view/users/_profile_nav"), resend_activation_user_url(@user)
-  %li
-    = link_to_unless_current tr("Reset password", "view/users/_profile_nav"), reset_password_user_url(@user)
+      = link_to_unless_current tr("Reset password", "view/users/_profile_nav"), reset_password_user_url(@user)
   - if not @user.is_suspended?
     %li
       = link_to tr("Suspend this member", "view/users/_profile_nav"), suspend_user_url(@user), :title => tr("Lock out this member completely", "view/users/_profile_nav"), :class => "qtip_left", :confirm => tr("{user_name} will no longer be able to sign in, and their profile will be deleted with a message that they were suspended. They will NOT receive an email notification of this.", "view/users/_profile_nav", :user_name => @user.name), :method => :put

@@ -131,11 +131,11 @@ class PointsController < ApplicationController
     end
     @points = nil
     if @idea.down_points_count > 1 and @point.is_down?
-      @points = @idea.points.published.down.by_recently_created.find(:all, :conditions => "id <> #{@point.id}", :include => :idea, :limit => 3)
+      @points = @idea.points.published.down.by_recently_created.find(:all, :conditions => "points.id <> #{@point.id}", :include => :idea, :limit => 3)
     elsif @idea.up_points_count > 1 and @point.is_up?
-      @points = @idea.points.published.up.by_recently_created.find(:all, :conditions => "id <> #{@point.id}", :include => :idea, :limit => 3)
+      @points = @idea.points.published.up.by_recently_created.find(:all, :conditions => "points.id <> #{@point.id}", :include => :idea, :limit => 3)
     elsif @idea.neutral_points_count > 1 and @point.is_neutral?
-      @points = @idea.points.published.neutral.by_recently_created.find(:all, :conditions => "id <> #{@point.id}", :include => :idea, :limit => 3)
+      @points = @idea.points.published.neutral.by_recently_created.find(:all, :conditions => "points.id <> #{@point.id}", :include => :idea, :limit => 3)
     end
     get_qualities if @points and @points.any?
     respond_to do |format|

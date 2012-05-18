@@ -23,7 +23,6 @@ class UserMailer < ActionMailer::Base
 
   def lost_or_gained_capital(user, activity, point_difference)
     @instance = Instance.current
-    @user = user
     @activity = activity
     @point_difference = point_difference
     @recipient = @user = user

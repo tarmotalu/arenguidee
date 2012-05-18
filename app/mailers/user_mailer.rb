@@ -179,7 +179,7 @@ class UserMailer < ActionMailer::Base
 
     def get_conditional_logo
       if Instance.first.has_email_banner?
-        File.read(Instance.first.email_banner.path()
+        File.read(Instance.first.email_banner.path())
       elsif Instance.first.layout.include?("better_reykjavik")
         File.read(Rails.root.join("app/assets/images/logos/BR_email.png"))
       elsif Instance.first.layout.include?("better_iceland")

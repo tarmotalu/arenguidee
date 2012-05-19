@@ -458,7 +458,7 @@ class ApplicationController < ActionController::Base
 
     if action_name == "index" and @items and not request.xhr? and controller_name != 'issues'
       Rails.logger.debug "index"
-      selected = cookies["selected_#{controller_name}_filter_id"].to_i
+      selected = nil #DISABLED FEATURE cookies["selected_#{controller_name}_filter_id"].to_i
       Rails.logger.debug "cookie #{selected}"
       if selected and @sub_menu_items[selected]
         Rails.logger.debug "cookie"

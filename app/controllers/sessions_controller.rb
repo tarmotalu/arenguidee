@@ -58,14 +58,15 @@ class SessionsController < ApplicationController
             Rails.logger.debug("BLAH: #{session[:return_to]}")
             redirect_from_facebox(session[:return_to] ? session[:return_to] : "/")
           else
-            if params[:region] == 'inline'
-              render :update do |page|
-                page.replace_html 'login_message', tr("Oops, try again.", "controller/sessions")
-              end
-            else
-              flash[:error] = tr("Oops, try again.", "controller/sessions")
-              render_to_facebox(:action => "new")
-            end
+            render partial: 'login_failed'
+            #if params[:region] == 'inline'
+            #  render :update do |page|
+            #    page.replace_html 'login_message', tr("Oops, try again.", "controller/sessions")
+            #  end
+            #else
+            #  flash[:error] = tr("Oops, try again.", "controller/sessions")
+            #  render_to_facebox(:action => "new")
+            #end
           end          
         }
     end        

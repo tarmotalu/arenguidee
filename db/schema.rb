@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120515154309) do
+ActiveRecord::Schema.define(:version => 20120518175547) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -349,66 +349,66 @@ ActiveRecord::Schema.define(:version => 20120515154309) do
   add_index "ideas", ["user_id"], :name => "ideas_user_id_index"
 
   create_table "instances", :force => true do |t|
-    t.string   "status",                  :limit => 30
-    t.string   "short_name",              :limit => 20
-    t.string   "domain_name",             :limit => 60
-    t.string   "layout",                  :limit => 20
-    t.string   "name",                    :limit => 60
-    t.string   "tagline",                 :limit => 100
-    t.string   "email",                   :limit => 100
-    t.boolean  "is_public",                              :default => true
+    t.string   "status",                    :limit => 30
+    t.string   "short_name",                :limit => 20
+    t.string   "domain_name",               :limit => 60
+    t.string   "layout",                    :limit => 20
+    t.string   "name",                      :limit => 60
+    t.string   "tagline",                   :limit => 100
+    t.string   "email",                     :limit => 100
+    t.boolean  "is_public",                                :default => true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "db_name",                 :limit => 20
-    t.string   "target",                  :limit => 30
-    t.boolean  "is_tags",                                :default => true
-    t.boolean  "is_facebook",                            :default => true
-    t.string   "admin_name",              :limit => 60
-    t.string   "admin_email",             :limit => 100
-    t.string   "google_analytics_code",   :limit => 15
-    t.string   "quantcast_code",          :limit => 20
-    t.string   "tags_name",               :limit => 20,  :default => "Category"
-    t.string   "currency_name",           :limit => 30,  :default => "political capital"
-    t.string   "currency_short_name",     :limit => 3,   :default => "pc"
-    t.string   "homepage",                :limit => 20,  :default => "top"
-    t.integer  "ideas_count",                            :default => 0
-    t.integer  "points_count",                           :default => 0
-    t.integer  "users_count",                            :default => 0
-    t.integer  "contributors_count",                     :default => 0
-    t.integer  "sub_instances_count",                    :default => 0
-    t.integer  "endorsements_count",                     :default => 0
+    t.string   "db_name",                   :limit => 20
+    t.string   "target",                    :limit => 30
+    t.boolean  "is_tags",                                  :default => true
+    t.boolean  "is_facebook",                              :default => true
+    t.string   "admin_name",                :limit => 60
+    t.string   "admin_email",               :limit => 100
+    t.string   "google_analytics_code",     :limit => 15
+    t.string   "quantcast_code",            :limit => 20
+    t.string   "tags_name",                 :limit => 20,  :default => "Category"
+    t.string   "currency_name",             :limit => 30,  :default => "political capital"
+    t.string   "currency_short_name",       :limit => 3,   :default => "pc"
+    t.string   "homepage",                  :limit => 20,  :default => "top"
+    t.integer  "ideas_count",                              :default => 0
+    t.integer  "points_count",                             :default => 0
+    t.integer  "users_count",                              :default => 0
+    t.integer  "contributors_count",                       :default => 0
+    t.integer  "sub_instances_count",                      :default => 0
+    t.integer  "endorsements_count",                       :default => 0
     t.integer  "picture_id"
-    t.integer  "color_scheme_id",                        :default => 1
-    t.string   "mission",                 :limit => 200
-    t.string   "prompt",                  :limit => 100
+    t.integer  "color_scheme_id",                          :default => 1
+    t.string   "mission",                   :limit => 200
+    t.string   "prompt",                    :limit => 100
     t.integer  "buddy_icon_id"
     t.integer  "fav_icon_id"
-    t.boolean  "is_suppress_empty_ideas",                :default => false
-    t.string   "tags_page",               :limit => 20,  :default => "list"
-    t.string   "facebook_api_key",        :limit => 32
-    t.string   "facebook_secret_key",     :limit => 32
-    t.string   "windows_appid",           :limit => 32
-    t.string   "windows_secret_key",      :limit => 32
-    t.string   "yahoo_appid",             :limit => 40
-    t.string   "yahoo_secret_key",        :limit => 32
-    t.boolean  "is_twitter",                             :default => true
-    t.string   "twitter_key",             :limit => 46
-    t.string   "twitter_secret_key",      :limit => 46
-    t.string   "language_code",           :limit => 2,   :default => "en"
-    t.string   "password",                :limit => 40
+    t.boolean  "is_suppress_empty_ideas",                  :default => false
+    t.string   "tags_page",                 :limit => 20,  :default => "list"
+    t.string   "facebook_api_key",          :limit => 32
+    t.string   "facebook_secret_key",       :limit => 32
+    t.string   "windows_appid",             :limit => 32
+    t.string   "windows_secret_key",        :limit => 32
+    t.string   "yahoo_appid",               :limit => 40
+    t.string   "yahoo_secret_key",          :limit => 32
+    t.boolean  "is_twitter",                               :default => true
+    t.string   "twitter_key",               :limit => 46
+    t.string   "twitter_secret_key",        :limit => 46
+    t.string   "language_code",             :limit => 2,   :default => "en"
+    t.string   "password",                  :limit => 40
     t.string   "logo_file_name"
-    t.string   "logo_content_type",       :limit => 30
+    t.string   "logo_content_type",         :limit => 30
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
     t.string   "buddy_icon_file_name"
-    t.string   "buddy_icon_content_type", :limit => 30
+    t.string   "buddy_icon_content_type",   :limit => 30
     t.integer  "buddy_icon_file_size"
     t.datetime "buddy_icon_updated_at"
     t.string   "fav_icon_file_name"
-    t.string   "fav_icon_content_type",   :limit => 30
+    t.string   "fav_icon_content_type",     :limit => 30
     t.integer  "fav_icon_file_size"
     t.datetime "fav_icon_updated_at"
-    t.boolean  "google_login_enabled",                   :default => false
+    t.boolean  "google_login_enabled",                     :default => false
     t.string   "default_tags_checkbox"
     t.text     "message_to_users"
     t.text     "description"
@@ -419,6 +419,10 @@ ActiveRecord::Schema.define(:version => 20120515154309) do
     t.text     "message_for_points"
     t.text     "message_for_new_idea"
     t.text     "message_for_news"
+    t.string   "email_banner_file_name"
+    t.string   "email_banner_content_type"
+    t.integer  "email_banner_file_size"
+    t.datetime "email_banner_updated_at"
   end
 
   add_index "instances", ["domain_name"], :name => "index_instances_on_domain_name"

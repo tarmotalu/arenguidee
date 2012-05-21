@@ -6,7 +6,7 @@
       - if logged_in?
         #new_activities
         .col-group
-          .col-11.col-offset-1
+          .col-12
             .col-content
               = render :partial => "bulletins/form", :locals => {:activity => Activity.new, :comment => Comment.new}
       - unless @activities.blank?

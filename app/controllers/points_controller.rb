@@ -241,7 +241,7 @@ class PointsController < ApplicationController
         render :update do |page|
           if params[:region] == "point_detail"
             page.replace_html 'point_' + @point.id.to_s + '_helpful_button', render(:partial => "points/button", :locals => {:point => @point, :quality => @quality })
-            page.replace_html 'point_' + @point.id.to_s + '_helpful_chart', render(:partial => "points/helpful_chart", :locals => {:point => @point })
+            #page.replace_html 'point_' + @point.id.to_s + '_helpful_chart', render(:partial => "points/helpful_chart", :locals => {:point => @point })
           elsif params[:region] = "point_inline"
 #            page.select("point_" + @point.id.to_s + "_quality").each { |item| item.replace_html(render(:partial => "points/button_small", :locals => {:point => @point, :quality => @quality, :idea => @point.idea}) ) }
             page.replace_html 'point_' + @point.id.to_s + '_quality', render(:partial => "points/button_small", :locals => {:point => @point, :quality => @quality, :idea => @point.idea})
@@ -265,7 +265,7 @@ class PointsController < ApplicationController
         render :update do |page|
           if params[:region] == "point_detail"
             page.replace_html 'point_' + @point.id.to_s + '_helpful_button', render(:partial => "points/button", :locals => {:point => @point, :quality => @quality })
-            page.replace_html 'point_' + @point.id.to_s + '_helpful_chart', render(:partial => "points/helpful_chart", :locals => {:point => @point })
+            #page.replace_html 'point_' + @point.id.to_s + '_helpful_chart', render(:partial => "points/helpful_chart", :locals => {:point => @point })
           elsif params[:region] = "point_inline"
 #            page.select("point_" + @point.id.to_s + "_quality").each { |item| item.replace_html(render(:partial => "points/button_small", :locals => {:point => @point, :quality => @quality, :idea => @point.idea}) ) }
             page.replace_html 'point_' + @point.id.to_s + '_quality', render(:partial => "points/button_small", :locals => {:point => @point, :quality => @quality, :idea => @point.idea})

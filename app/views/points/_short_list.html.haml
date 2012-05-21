@@ -25,5 +25,4 @@
     = render :partial=>"points/flagged", :locals=>{:point=>point}
     .point_qualities
       = render :partial => "points/button_small", :locals => {:newest_points=>defined?(newest_points) ? true : false, :point => point, :quality => quality}
-    %br
     %hr

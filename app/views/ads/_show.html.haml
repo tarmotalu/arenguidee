@@ -29,14 +29,15 @@
                 :class => "idea_add_link_small", :title => tr("I oppose this, and want to add my opposition to my idea list.", "view/ads/_show")                        |
           .spacer_button_small
             %span.endorse_or
-            = tr("OR", "view/ads/_show")
+            = tr("or", "view/ads/_show")
         - unless ad.new_record?
-          .oppose_button_small
+          .other_button_small
             %span.tag_button.tag_scale{:id => "notification_show_#{ad.idea.id}_skip"}
               = link_to tr("Skip", "view/ads/_show"), skip_idea_ad_path(ad.idea,ad),                                                  |
                 :method => :post,                                                                                                             |
                 :remote=>true,                                                                                                                |
                 'data-disable-with' => '<span class="tag_scale idea_add_working"><img src="/assets/ajax/horizontal_small.gif" /></span>', |
-                'data-loader-name' => "no_loader"                                                                                             |
+                'data-loader-name' => "no_loader",                                                                                                                      |
+                :class => "idea_add_link_small", :title => tr("I oppose this, and want to add my opposition to my idea list.", "view/ads/_show")                                                                |
         .notification_show_counts
           = render :partial => "ideas/endorsement_count", :locals => {:idea => ad.idea }

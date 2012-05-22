@@ -77,19 +77,19 @@ class ApplicationController < ActionController::Base
   end
   
   def check_missing_user_parameters
-    if logged_in? and Instance.current and Instance.current.layout == "better_reykjavik" and controller_name!="settings"
-      unless current_user.email and current_user.my_gender and current_user.post_code and current_user.age_group
-        flash[:notice] = "Please make sure you have registered all relevant information about you for this website."
-        if request.format.js?
-          render :update do |page|
-            page.redirect_to :controller => "settings"
-          end
-          return false
-        else
-          redirect_to :controller=>"settings"
-        end
-      end
-    end
+    #if logged_in? and Instance.current and controller_name!="settings"
+    #  unless current_user.email and current_user.my_gender and current_user.post_code and current_user.age_group
+    #    flash[:notice] = "Please make sure you have registered all relevant information about you for this website."
+    #    if request.format.js?
+    #      render :update do |page|
+    #        page.redirect_to :controller => "settings"
+    #      end
+    #      return false
+    #    else
+    #      redirect_to :controller=>"settings"
+    #    end
+    #  end
+    #end
   end
 
   def check_for_localhost
@@ -213,12 +213,6 @@ class ApplicationController < ActionController::Base
       if cookies[:last_selected_language]
         session[:locale] = cookies[:last_selected_language]
         Rails.logger.debug("Set language from cookie")
-      elsif Instance.current.layout == "better_reykjavik"
-        session[:locale] = "is"
-        Rails.logger.info("Set language from better reykjavik")
-      elsif Instance.current.layout == "better_iceland"
-        session[:locale] = "is"
-        Rails.logger.info("Set language from better iceland")
       elsif Instance.current.layout == "application"
         session[:locale] = "en"
         Rails.logger.info("Set language for application to English")

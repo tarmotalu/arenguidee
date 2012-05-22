@@ -119,18 +119,18 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => 4..40, :if => [:should_validate_password?]
   validates_confirmation_of :password, :if => [:should_validate_password?]
 
-  validates_presence_of     :post_code, :message => tr("Please enter your postcode.", "model/user"), :if => :using_br?
-  validates_presence_of     :age_group, :message => tr("Please select your age group.", "model/user"), :if => :using_br?
-  validates_presence_of     :my_gender, :message => tr("Please select your gender.", "model/user"), :if => :using_br?
+  #validates_presence_of     :post_code, :message => tr("Please enter your postcode.", "model/user")
+  #validates_presence_of     :age_group, :message => tr("Please select your age group.", "model/user")
+  #validates_presence_of     :my_gender, :message => tr("Please select your gender.", "model/user")
 
   validates_acceptance_of   :terms, :message => tr("Please accept the terms and conditions", "model/user")
 
  # validates_inclusion_of    :age_group, :in => lambda {|foo| foo.allowed_for_age_group},
- #                           message: tr("Please select your gender.", "model/user"), :if => :using_br?
- # validates_inclusion_of    :my_gender, :in => lambda {|foo| foo.allowed_for_gender}, message: tr("Please select your gender.", "model/user"), :if => :using_br?
+ #                           message: tr("Please select your gender.", "model/user")
+ # validates_inclusion_of    :my_gender, :in => lambda {|foo| foo.allowed_for_gender}, message: tr("Please select your gender.", "model/user")
 
-  validate :validate_age_group
-  validate :validate_gender
+  #validate :validate_age_group
+  #validate :validate_gender
 
   before_save :encrypt_password
   before_create :make_rss_code
@@ -148,18 +148,14 @@ class User < ActiveRecord::Base
 
 
   def validate_age_group
-    if using_br?
-      unless allowed_for_age_group.include?(self.age_group)
-        self.errors.add(:age_group ,tr("Please select your age group", "model/user"))
-      end
+    unless allowed_for_age_group.include?(self.age_group)
+      self.errors.add(:age_group ,tr("Please select your age group", "model/user"))
     end
   end
 
   def validate_gender
-    if using_br?
-      unless allowed_for_gender.include?(self.my_gender)
-        self.errors.add(:my_gender ,tr("Please select gender", "model/user"))
-      end
+    unless allowed_for_gender.include?(self.my_gender)
+      self.errors.add(:my_gender ,tr("Please select gender", "model/user"))
     end
   end
 
@@ -169,10 +165,6 @@ class User < ActiveRecord::Base
 
   def allowed_for_gender
     [tr("Male", "model/user"),tr("Female", "model/user")]
-  end
-
-  def using_br?
-    Instance.current && Instance.current.layout == "better_reykjavik" ? true : false
   end
 
   def set_signup_country
@@ -1109,7 +1101,6 @@ class User < ActiveRecord::Base
     }
     status = status_types[status]
     idea = Idea.find(idea_id)
-    Tr8n::Config.init('is', Tr8n::Config.current_user) if Instance.last.layout == "better_reykjavik" or Instance.last.layout == "better_iceland"
     all_endorsers_and_opposers_for_idea(idea_id).each do |user|
       next unless user.is_finished_subscribed
       position = Endorsement.where(idea_id: idea_id, user_id: user.id).first.value
@@ -1118,7 +1109,6 @@ class User < ActiveRecord::Base
   end
 
   def self.send_report_emails(frequency)
-    Tr8n::Config.init('is', Tr8n::Config.current_user) if Instance.last.layout == "better_reykjavik" or Instance.last.layout == "better_iceland"
     top_ideas = {}
     idea_followers = {}
     top_category_score = {}

@@ -423,8 +423,37 @@ div.sub_header
 #hp_intro
   display: none
 
+.more_container
+  display: table
+  margin: auto
+  padding: 10px 0px 5px 0px
+
 .idea_detail_more
+  display: inline-block
+  font-size: 12px
   text-align: center
+  color: #fff
+  background-color: #f00
+  background-image: url("/assets/icons/more_button_bg.png")
+  background-repeat: repeat-x
+  background-position: 0 0
+  margin: 0px 5px 4px 0px
+  padding: 0px 5px 12px 5px
+  -webkit-border-radius: 5px !important
+  -moz-border-radius: 5px !important
+  border-radius: 5px !important
+  behavior: url(/assets/PIE.htc)
+  float: left
+  &:hover,&:focus
+    cursor: pointer
+  a
+    &:visited
+      color: #fff !important
+    &:hover
+      color: #dddddd !important
+
+.idea_detail_more a
+  color: #fff
 
 .activity_x
   float: right

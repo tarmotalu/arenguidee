@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120518175547) do
+ActiveRecord::Schema.define(:version => 20120522134822) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -948,6 +948,7 @@ ActiveRecord::Schema.define(:version => 20120518175547) do
     t.string   "locale"
     t.integer  "level",             :default => 0
     t.datetime "synced_at"
+    t.string   "type"
   end
 
   add_index "tr8n_translation_keys", ["key"], :name => "index_tr8n_translation_keys_on_key", :unique => true

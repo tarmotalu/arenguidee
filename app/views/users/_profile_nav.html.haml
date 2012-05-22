@@ -1,6 +1,6 @@
 .profile_menu
   %ul
-    %li
+    %li.highlight
       = link_to_unless_current tr("Profile", "view/users/_profile_nav"), @user
     - if @user.endorsements_count > 5
       %li

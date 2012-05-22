@@ -1,4 +1,4 @@
-= render :partial => "import_nav", :locals => {:user => current_user }
+= render :partial => "user_contacts/import_nav", :locals => {:user => current_user }
 - if not @users
   %p= tr("You are not following anyone yet.", "view/user_contacts/following")
 - else

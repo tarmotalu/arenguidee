@@ -26,4 +26,5 @@
         = f.submit tr("Save point", "view/revisions/new"), :id => "submit", :class => "yellow_button"
       = link_to tr("Cancel this revision", "view/revisions/new"), @point
   .col-3
-    = render :partial => "points/authors", :locals => {:users => @point.authors }
+    .col-content
+      = render :partial => "points/authors", :locals => {:users => @point.authors }

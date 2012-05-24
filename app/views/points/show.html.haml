@@ -13,7 +13,8 @@
         .point_source
           = tr("Source:", "view/points/show")
           %a{:href => @point.website_link}= truncate(@point.website_link,:length=>70)
-      %p= tr("Recent activity on this point", "view/points/show")
+      .point_feed_header
+        = tr("Recent activity on this point", "view/points/show")
       - for activity in @point.activities.active.by_recently_created.find(:all, :limit => 10)
         = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_noself" }
   .col-3

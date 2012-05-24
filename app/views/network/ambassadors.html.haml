@@ -6,7 +6,8 @@
     %thead
       %tr
         %th.rank= tr("Rank", "view/network/index")
-        %th.week= tr("Week", "view/network/index")
+        %th.week= tr("Change", "view/network/index")
+    %tbody
       - @users.each_with_index do |user, rank|
         %tr
           %td #{rank+1}

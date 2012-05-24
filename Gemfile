@@ -4,8 +4,9 @@ gem 'rails', '3.2.3'
 gem 'rails-i18n'
 gem 'mysql2'
 gem "recaptcha", :require => "recaptcha/rails"
-gem 'capistrano_colors'
-gem 'rvm-capistrano'
+gem 'capistrano', require: false
+gem 'capistrano_colors', require: false
+gem 'rvm-capistrano', require: false
 gem 'haml', '3.1.4'
 gem 'haml-rails'
 gem 'nokogiri'

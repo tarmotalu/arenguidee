@@ -292,6 +292,7 @@ DEPENDENCIES
   airbrake
   auto_html (= 1.5.1)
   awesome_print
+  capistrano
   capistrano_colors
   ckeditor (= 3.6.3)
   daemons

@@ -4,7 +4,6 @@
 require 'will_paginate/array'
 
 class ApplicationController < ActionController::Base
-  #include Tr8n::CommonMethods
   include AuthenticatedSystem
   include FaceboxRender
 
@@ -37,7 +36,6 @@ class ApplicationController < ActionController::Base
   before_filter :check_referral, :unless => [:is_robot?]
   before_filter :check_suspension, :unless => [:is_robot?]
   before_filter :update_loggedin_at, :unless => [:is_robot?]
-  before_filter :init_tr8n
   before_filter :check_google_translate_setting
   before_filter :check_missing_user_parameters, :except=>[:destroy]
 

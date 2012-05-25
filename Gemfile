@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.3'
-
+gem 'rails-i18n'
 gem 'mysql2'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'capistrano_colors'
@@ -27,6 +27,7 @@ gem 'oauth', '>= 0.3.1'
 gem "twitter-auth", :git => "git://github.com/benders/twitter-auth.git", :branch => "rails_3", :require => "twitter_auth/engine"
 gem 'hpricot', '>= 0.6'
 gem 'will_paginate'
+gem 'will-paginate-i18n'
 gem 'mogli', '>= 0.0.33'
 gem 'facebooker2', '>= 0.0.16'
 gem 'dalli'
@@ -43,8 +44,6 @@ gem "airbrake"
 gem 'jquery-rjs', :git => "git://github.com/bikeexchange/jquery-rjs.git"
 gem 'pry-rails'
 gem 'awesome_print'
-
-#gem 'multi_json', '1.1.0'
 
 group :development do
   gem 'rails-dev-boost'
@@ -63,34 +62,10 @@ group :test do
   gem 'factory_girl_rails'
 end
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
-
   gem 'uglifier', '>= 1.0.3'
   gem 'jquery-ui-rails'
   gem 'execjs'
   gem 'therubyracer', :platforms => :ruby
 end
-
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'

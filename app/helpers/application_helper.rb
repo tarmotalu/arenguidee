@@ -1,8 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 
 module ApplicationHelper
-  include Tr8n::BaseHelper
-
   def current_facebook_user_if_on_facebook
     ret_user = nil
     begin

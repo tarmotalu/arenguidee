@@ -21,7 +21,7 @@ SocialInnovation::Application.routes.draw do
     member do
       get :email
       get :picture
-      post :picture_save
+      put :picture_save
     end
   end
 
@@ -78,7 +78,7 @@ SocialInnovation::Application.routes.draw do
     collection do
       get :signups
       get :picture
-      post :picture_save
+      put :picture_save
       get :legislators
       post :legislators_save
       get :delete

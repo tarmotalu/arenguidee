@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
 
   require 'paperclip'
 
+  attr_accessible :buddy_icon
+
   scope :active, :conditions => "users.status in ('pending','active')"
   scope :at_least_one_endorsement, :conditions => "users.endorsements_count > 0"
   scope :newsletter_subscribed, :conditions => "users.report_frequency != 0 and users.email is not null and users.email <> ''"

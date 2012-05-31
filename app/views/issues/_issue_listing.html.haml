@@ -1,7 +1,7 @@
 - for issue in issues
   .idea_listing
     %span.idea_name
-      %a{:href => "/issues/#{issue.slug}"}= tr(issue.title, "model/category")
+      = tr(issue.title, "model/category")
     - if issue.attribute_present?("description")
       = h(issue.description)
     .idea_action

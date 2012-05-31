@@ -11,6 +11,8 @@
         %a.signin{:href => "login"}
           = tr("Sign in")
       - else
+        %a.notifications{:href => "notifications"}
+          = tr("Notifications")
         %a.profile{:href => "profile"}
           = current_user.login
     %li.add
@@ -52,7 +54,7 @@
           $(".notifications").toggleClass("menu-open");
       });
 
-      $("#sib_notifications_box").mouseup(function() {
+      $("#sib_notifications").mouseup(function() {
           return false
       });
       $(document).mouseup(function(e) {

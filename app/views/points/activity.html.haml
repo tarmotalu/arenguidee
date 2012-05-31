@@ -1,7 +1,9 @@
-= render :partial => "points/header"
 .col-group
   .col-8.col-offset-1
     .col-content
+      = render :partial => "points/header"
+      %h2= @point.name
+      %p= @point.content_html
       - if logged_in? and params[:action] == 'discussions'
         #new_activities
         = render :partial => "bulletins/form", :locals => {:activity => Activity.new, :comment => Comment.new }

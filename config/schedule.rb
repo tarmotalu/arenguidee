@@ -19,7 +19,7 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, "/home/yrpri/sites/social-innovation/master/shared/log/cron_log.log"
+set :output, "/home/db-demo/sites/social-innovation/shared/log/cron_log.log"
 
 every 5.minutes do
   rake "schedule:fix_top_endorsements"
@@ -32,7 +32,7 @@ end
 every :reboot do
   rake "ts:index"
   rake "ts:start"
-  command "cd /home/yrpri/sites/social-innovation/master/current; RAILS_ENV=production ruby script/delayed_job start RAILS_ENV=production"
+  command "cd /home/db-demo/sites/social-innovation/current; RAILS_ENV=production ruby script/delayed_job start"
 end
 
 every 50.minutes do

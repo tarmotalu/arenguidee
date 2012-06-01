@@ -94,6 +94,7 @@ class Idea < ActiveRecord::Base
   
   define_index do
     indexes name
+    indexes description
     indexes category.name, :facet=>true, :as=>"category_name"
     has sub_instance_id, :as=>:sub_instance_id, :type => :integer
     where "ideas.status in ('published','inactive')"

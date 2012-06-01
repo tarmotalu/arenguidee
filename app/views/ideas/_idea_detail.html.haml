@@ -53,4 +53,4 @@
         .col-full
           .col-content
             .more_container
-              .idea_detail_more= link_to tr("More", "view/ideas/idea_detail"), idea_path(@idea)
+              = link_to tr("More", "view/ideas/idea_detail"), idea_path(@idea), class: "idea_detail_more"

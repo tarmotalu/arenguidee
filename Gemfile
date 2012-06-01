@@ -1,12 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.3'
+gem 'rails', '3.2.5'
 gem 'rails-i18n'
 gem 'mysql2'
 gem "recaptcha", :require => "recaptcha/rails"
-gem 'capistrano_colors'
-gem 'rvm-capistrano'
-gem 'haml', '3.1.4'
+gem 'capistrano', require: false
+gem 'capistrano_colors', require: false
+gem 'rvm-capistrano', require: false
+gem 'haml'
 gem 'haml-rails'
 gem 'nokogiri'
 gem 'tidy-ext'
@@ -17,7 +18,8 @@ gem 'whenever', :require => false
 gem 'geoip'
 gem 'htmlentities'
 gem 'auto_html', '1.5.1'
-gem 'delayed_job', '2.1.4'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 gem 'rmagick','2.12.2'
 gem 'daemons'
 gem 'paperclip'
@@ -47,7 +49,7 @@ gem 'awesome_print'
 
 group :development do
   gem 'rails-dev-boost'
-  gem 'rails_view_annotator', :git => "git://github.com/duncanbeevers/rails_view_annotator.git"
+  gem 'rails_view_annotator'
 end
 
 group :production do

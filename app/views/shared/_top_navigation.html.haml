@@ -13,6 +13,8 @@
       - else
         %a.profile{:href => "profile"}
           = current_user.login
+        %a.notifications{:href => "notifications"}
+          = tr("3")
     %li.add
       %a.button{:href => "/ideas/new"}
         = tr("New idea")
@@ -52,7 +54,7 @@
           $(".notifications").toggleClass("menu-open");
       });
 
-      $("#sib_notifications_box").mouseup(function() {
+      $("#sib_notifications").mouseup(function() {
           return false
       });
       $(document).mouseup(function(e) {

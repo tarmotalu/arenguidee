@@ -16,12 +16,6 @@ GIT
       rails (~> 3.2)
 
 GIT
-  remote: git://github.com/duncanbeevers/rails_view_annotator.git
-  revision: e4e6661fc0957b78f7e2536297c2e3b1e826894b
-  specs:
-    rails_view_annotator (0.0.6)
-
-GIT
   remote: git://github.com/rbjarnason/tr8n.git
   revision: 9505c0fa23989783c3217803130ac497c1152ce5
   specs:
@@ -115,7 +109,7 @@ GEM
     gem_plugin (0.2.3)
     geoip (1.1.2)
     googlecharts (1.6.8)
-    haml (3.1.4)
+    haml (3.1.6)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
       activesupport (~> 3.0)
@@ -213,6 +207,7 @@ GEM
     rails-dev-boost (0.1.1)
     rails-i18n (0.6.4)
       i18n (~> 0.5)
+    rails_view_annotator (0.0.6)
     railties (3.2.3)
       actionpack (= 3.2.3)
       activesupport (= 3.2.3)
@@ -306,7 +301,7 @@ DEPENDENCIES
   factory_girl_rails
   geoip
   googlecharts
-  haml (= 3.1.4)
+  haml
   haml-rails
   headless
   hpricot (>= 0.6)
@@ -328,7 +323,7 @@ DEPENDENCIES
   rails (= 3.2.3)
   rails-dev-boost
   rails-i18n
-  rails_view_annotator!
+  rails_view_annotator
   recaptcha
   rmagick (= 2.12.2)
   ruby-openid

@@ -7,7 +7,7 @@ gem "recaptcha", :require => "recaptcha/rails"
 gem 'capistrano', require: false
 gem 'capistrano_colors', require: false
 gem 'rvm-capistrano', require: false
-gem 'haml', '3.1.4'
+gem 'haml'
 gem 'haml-rails'
 gem 'nokogiri'
 gem 'tidy-ext'
@@ -49,7 +49,7 @@ gem 'awesome_print'
 
 group :development do
   gem 'rails-dev-boost'
-  gem 'rails_view_annotator', :git => "git://github.com/duncanbeevers/rails_view_annotator.git"
+  gem 'rails_view_annotator'
 end
 
 group :production do

@@ -188,7 +188,7 @@ class PointsController < ApplicationController
     respond_to do |format|
       if @point.update_attributes(params[:point])
         flash[:notice] = tr("Saved {point_name}", "controller/points", :point_name => @point.name)
-        format.html { redirect_to(@point) }
+        format.html { redirect_to(@idea) }
       else
         format.html { render :action => "edit" }
       end

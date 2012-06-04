@@ -1,5 +1,33 @@
 .col-group
   .col-10.col-offset-1
     .col-content
-      %h1= tr("About {instance_name}", "view/about/index", :instance_name => tr(current_instance.name, "Name from database"))
-      %b= tr("Enjoy!", "view/about/index")
+      %h1= tr("About {instance_name} BrainStorm", "view/about/index", :instance_name => tr(current_instance.name, "Name from database"))
+      %br
+      %ul
+        %li
+          %b= tr("Socialise Innovation with BrainStorm!", "view/about/index")
+        %li
+          = tr("Brainstorm offers a new way to discuss, debate and communicate ideas within your organisation.", "view/about/index")
+        %li
+          = tr("We are adapting ideas from social networking tools and focusing them to generate innovation.", "view/about/index")
+
+      %br
+      %ul
+        %li
+          %b= tr("How it works", "view/about/index")
+        %li
+          = tr("Users can:", "view/about/index")
+        %li
+          = tr("Put forth their ideas", "view/about/index")
+        %li
+          = tr("Add arguments for and against all ideas", "view/about/index")
+        %li
+          = tr("Engage in discussions about ideas", "view/about/index")
+        %li
+          = tr("Support or oppose ideas and arguments", "view/about/index")
+        %li
+          = tr("The end result is that top ideas and arguments are collated for management to improve and progress the company", "view/about/index")
+
+
+
+

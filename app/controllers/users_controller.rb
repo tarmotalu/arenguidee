@@ -51,6 +51,7 @@ class UsersController < ApplicationController
   end
 
   def disable_facebook
+   #TODO: THis needs to be implemented
 #    @user = current_user
 #    @user.facebook_uid=nil
 #    @user.save(:validate => false)

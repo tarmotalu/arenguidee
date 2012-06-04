@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120524210353) do
+ActiveRecord::Schema.define(:version => 20120604172854) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -648,6 +648,7 @@ ActiveRecord::Schema.define(:version => 20120524210353) do
     t.text     "message_for_new_idea"
     t.string   "parent_tag"
     t.text     "message_to_users"
+    t.string   "google_analytics_code"
   end
 
   add_index "sub_instances", ["short_name"], :name => "short_name"

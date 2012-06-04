@@ -107,6 +107,10 @@ class Idea < ActiveRecord::Base
       'No category'
     end
   end
+
+  def help_with_this
+
+  end
     
   validates_length_of :name, :within => 5..60, :too_long => tr("has a maximum of 60 characters", "model/idea"),
                                                :too_short => tr("please enter more than 5 characters", "model/idea")

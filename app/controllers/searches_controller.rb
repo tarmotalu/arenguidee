@@ -21,4 +21,6 @@ class SearchesController < ApplicationController
       format.json { render :json => @ideas.to_json(:except => [:user_agent,:ip_address,:referrer]) }
     end
   end
+
+  #TODO: We need a new method here for handling the search
 end

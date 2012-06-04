@@ -16,7 +16,7 @@
               = f.error_messages :header_message => tr("Please review", "view/points/new"), :message => tr("We need a change to your point", "view/points/new")
               .add_point_field
                 .field_box
-                  = f.text_field :name, :size => 50, :maxlength => 60
+                  = f.text_field :name, :size => 65, :maxlength => 60
               .field
                 .field_label
                   #point_supports.field_label
@@ -31,12 +31,12 @@
                   %span#pointContentDown
                   = tr("characters left", "view/points/new")
                 .field_box
-                  = f.text_area :content, :id => 'pointContent', :button => 'submit', :rows => 5, :cols => 60, :maxLength => 500
+                  = f.text_area :content, :id => 'pointContent', :button => 'submit', :rows => 5, :cols => 70, :maxLength => 500
                 %span.characters
                 .field
                   %p= tr("Other people will be able to edit your points, similar to Wikipedia","views/ideas/form")
               .field
                 .field_label= tr("Include a website source link", "view/points/new")
                 .field_box
-                  = f.text_field :website, :size => 50
+                  = f.text_field :website, :size => 60
               = f.submit tr("Save point", "view/points/new"), :id => "submit", :class => "submit_button"

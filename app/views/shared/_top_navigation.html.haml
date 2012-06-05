@@ -12,9 +12,13 @@
           = tr("Sign in")
       - else
         %a.profile{:href => "profile"}
-          = current_user.login
-        %a.notifications{:href => "notifications"}
-          = tr("3")
+          %div
+            = current_user.login
+          %div
+            = image_tag current_user.buddy_icon.url(:icon_48), :border => 0, :alt => "", :size => "30x30"
+        - if true or current_user.unread_notifications_count > 0
+          %a.notifications{:href => "notifications"}
+            = current_user.unread_notifications_count
     %li.add
       %a.button{:href => "/ideas/new"}
         = tr("New idea")

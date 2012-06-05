@@ -9,9 +9,7 @@
               = tr("Comment deleted. The author received a warning for violating the <a href='/about/rules'>site rules</a>", "view/comments/_show")
           - else
             / Comment box
-            .comment_box
-              .point_avatar
-                = render :partial => "users/pic_48", :locals => {:user => comment.user}
+            = render :partial => "users/pic_48", :locals => {:user => comment.user}
     .col-11
       .col-content
         = link_to(comment.user.login, comment.user)

@@ -1,7 +1,8 @@
-- if current_instance.has_google_analytics?
+- if SubInstance.current and SubInstance.current.google_analytics_code
   :javascript
     var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', '#{SubInstance.current.google_analytics_code if SubInstance.current}']);
+    _gaq.push(['_setAccount', '#{SubInstance.current.google_analytics_code}']);
+    _gaq.push(['_setDomainName', '#{current_instance.domain_name}']);
     _gaq.push(['_trackPageview']);
 
     (function() {

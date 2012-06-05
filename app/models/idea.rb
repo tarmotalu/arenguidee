@@ -526,7 +526,7 @@ class Idea < ActiveRecord::Base
     size = p2.endorsements.active_and_inactive.length
     up_size = p2.endorsements.active_and_inactive.endorsing.length
     down_size = p2.endorsements.active_and_inactive.opposing.length
-    Idea.update_all("endorsements_count = #{size}, up_endorsements_count = #{up_size}, down_endorsements_count = #{down_size}", ["id = ?",p2.id])
+    Idea.update(p2.id, endorsements_count: size, up_endorsements_count: up_size, down_endorsements_count: down_size)
 
     # look for the activities that should be removed entirely
     for a in Activity.find(:all, :conditions => ["idea_id = ? and type in ('ActivityIdeaDebut','ActivityIdeaNew','ActivityIdeaRenamed','ActivityIdeaFlag','ActivityIdeaFlagInappropriate','ActivityIdeaOfficialStatusCompromised','ActivityIdeaOfficialStatusFailed','ActivityIdeaOfficialStatusIntheworks','ActivityIdeaOfficialStatusSuccessful','ActivityIdeaRising1','ActivityIssueIdea1','ActivityIssueIdeaControversial1','ActivityIssueIdeaOfficial1','ActivityIssueIdeaRising1')",self.id])

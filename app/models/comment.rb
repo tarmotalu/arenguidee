@@ -68,10 +68,12 @@ class Comment < ActiveRecord::Base
     end
     if self.activity.comments_count == 1 # this is the first comment, so need to update the discussions_count as appropriate
       if self.activity.has_point? 
-        Point.update_all("discussions_count = discussions_count + 1", "id=#{self.activity.point_id}")
+        point = Point.find(self.activity.point_id)
+        point.update_attribute("discussions_count", point.discussions_count + 1)
       end
       if self.activity.has_idea?
-        Idea.update_all("discussions_count = discussions_count + 1", "id=#{self.activity.idea_id}")
+        idea = Idea.find(self.activity.idea_id)
+        idea.update_attribute("discussions_count", idea.discussions_count + 1)
         if self.activity.idea.attribute_present?("cached_issue_list")
           for issue in self.activity.idea.issues
             issue.increment!(:discussions_count)

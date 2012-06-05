@@ -1,3 +1,5 @@
+/[if lt IE 9]
+  = javascript_include_tag "css3-mediaqueries"
 - if ['color_schemes'].include?(params[:controller])
   = javascript_include_tag "colorpicker.js"
 = javascript_include_tag "application"

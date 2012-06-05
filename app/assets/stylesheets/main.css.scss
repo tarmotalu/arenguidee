@@ -721,8 +721,7 @@ body {
 }
 .main {
   zoom: 1;
-  //padding-top: 95px;
-  padding-top: 10px;
+  padding-top: 95px;
   position: relative;
 }
 .main:after {
@@ -754,7 +753,7 @@ body {
 
 */
 .header {
-  //position: fixed;
+  position: fixed;
   left: 0;
   right: 0;
   height: 80px;
@@ -838,8 +837,7 @@ body {
 
 */
 .nav-main {
-  //position: fixed;
-  float: left;
+  position: fixed;
   width: 6em;
   top: 6em;
   margin-left: -7em;
@@ -942,6 +940,15 @@ body {
     position: absolute;
     left: 0.5em;
     top: 1em;
+  }
+}
+
+@media screen and (max-height: 400px) {
+  .header {
+    position: relative;
+  }
+  .main {
+    padding-top: 15px;
   }
 }
 /*

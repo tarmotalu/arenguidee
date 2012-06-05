@@ -11,6 +11,6 @@
             .new_comment_facebook
               .senda
                 %span{:id => "submit_span_#{activity.id}"}
-                  = f.submit tr("Send comment", "view/comments/_new_inline"), :disable_with => escape_t(tr("Sending","Ajax")), :class => "submit_button"
+                  = f.submit tr("Send comment", "view/comments/_new_inline"), "data-disable-with" => escape_t(tr("Sending","Ajax")), :class => "submit_button"
                 %span{:id => "loading_span_#{activity.id}", :style => "display: none;"}
                   = image_tag("submit-loader.gif")

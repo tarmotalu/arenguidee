@@ -18,7 +18,7 @@
         = tr("What's happening?", "view/bulletins/_form")
     = form_for comment, :remote=>true,                |
       :url => bulletins_url,                          |
-      :disable_with=>escape_t(tr("Sending","Ajax")),  |
+      "data-disable-with"=>escape_t(tr("Sending","Ajax")),  |
       'data-loader-name' => "horizontal_small" do |f| |
       = f.error_messages
       = f.text_area :content, :size => "70x2", :id => "bulletin_content"

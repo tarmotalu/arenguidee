@@ -10,12 +10,12 @@ require "whenever/capistrano"
 
 ssh_options[:forward_agent] = true
 set :application, "social_innovation_internal"
-set :domain, "db-demo.idea-synergy.com"
+set :domain, "yrpri2.org"
 set :scm, "git"
 set :repository, "git@github.com:rbjarnason/social_innovation_internal.git"
 set :use_sudo, false
-set :deploy_to, "/home/db-demo/sites/#{application}"
-set :user, "db-demo"
+set :deploy_to, "/home/yrpri2/sites/#{application}"
+set :user, "yrpri2"
 set :deploy_via, :remote_cache
 set :shared_children, shared_children + %w[config db/sphinx assets]
 

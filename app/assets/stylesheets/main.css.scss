@@ -721,7 +721,8 @@ body {
 }
 .main {
   zoom: 1;
-  padding-top: 95px;
+  //padding-top: 95px;
+  padding-top: 10px;
   position: relative;
 }
 .main:after {
@@ -753,7 +754,7 @@ body {
 
 */
 .header {
-  position: fixed;
+  //position: fixed;
   left: 0;
   right: 0;
   height: 80px;
@@ -816,7 +817,8 @@ body {
   -webkit-border-radius: 1px;
   -moz-border-radius: 1px;
   border-radius: 1px;
-  border: 1px solid #DDD;
+  border: 1px solid #ccc;
+  color: #bbb;
   -webkit-box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.05);
@@ -836,7 +838,8 @@ body {
 
 */
 .nav-main {
-  position: fixed;
+  //position: fixed;
+  float: left;
   width: 6em;
   top: 6em;
   margin-left: -7em;

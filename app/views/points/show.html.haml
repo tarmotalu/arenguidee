@@ -7,8 +7,9 @@
   .col-8
     .col-content
       = render :partial => "points/header", locals: { quality: quality }
+      .point_name= @point.name
       .point_content_detail
-        = @point.content_html
+        %p= @point.content_html
       - if @point.has_website?
         .point_source
           = tr("Source:", "view/points/show")
@@ -18,5 +19,6 @@
       - for activity in @point.activities.active.by_recently_created.find(:all, :limit => 10)
         = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_noself" }
   .col-3
-    = render :partial => "points/authors", :locals => {:users => @point.authors }
-    = render :partial => "points/left_nav"
+    .col-content
+      = render :partial => "points/authors", :locals => {:users => @point.authors }
+      = render :partial => "points/left_nav"

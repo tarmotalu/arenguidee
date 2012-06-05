@@ -17,7 +17,7 @@ set :use_sudo, false
 set :deploy_to, "/home/db-demo/sites/#{application}"
 set :user, "db-demo"
 set :deploy_via, :remote_cache
-set :shared_children, shared_children + %w[config db/sphinx assets]
+set :shared_children, shared_children + %w[config db/sphinx assets db/hourly_backup db/daily_backup db/weekly_backup]
 
 role :app, domain
 role :web, domain

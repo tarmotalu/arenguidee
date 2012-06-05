@@ -46,3 +46,15 @@ end
 every 6.hours do
   rake "schedule:fix_counts"
 end
+
+every 1.hour do
+  command "cd /home/db-demo/sites/social-innovation/current; bundle exec backup perform -t hourly_backup --config_file config/backup.rb --data-path db --log-path log --tmp-path tmp"
+end
+
+every 1.day do
+  command "cd /home/db-demo/sites/social-innovation/current; bundle exec backup perform -t daily_backup --config_file config/backup.rb --data-path db --log-path log --tmp-path tmp"
+end
+
+every 1.week do
+  command "cd /home/db-demo/sites/social-innovation/current; bundle exec backup perform -t weekly_backup --config_file config/backup.rb --data-path db --log-path log --tmp-path tmp"
+end

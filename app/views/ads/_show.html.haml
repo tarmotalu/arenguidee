@@ -32,14 +32,15 @@
                 'data-loader-name' => "no_loader",                                                                                                                        |
                 :class => "idea_add_link_small", :title => tr("I oppose this, and want to add my opposition to my idea list", "view/ads/_show")                        |
           - unless ad.new_record?
-            .other_button_small
-              %span.tag_button.tag_scale{:id => "notification_show_#{ad.idea.id}_skip"}
-                = link_to tr("Skip", "view/ads/_show"), skip_idea_ad_path(ad.idea,ad),                                                  |
-                  :method => :post,                                                                                                             |
-                  :remote=>true,                                                                                                                |
-                  'data-disable-with' => '<span class="tag_scale idea_add_working"><img src="/assets/ajax/horizontal_small.gif" /></span>', |
-                  'data-loader-name' => "no_loader",                                                                                                                      |
-                  :class => "idea_add_link_small", :title => tr("Skip this, I'm not interested'", "view/ads/_show")
+            - if current_user
+              .other_button_small
+                %span.tag_button.tag_scale{:id => "notification_show_#{ad.idea.id}_skip"}
+                  = link_to tr("Skip", "view/ads/_show"), skip_idea_ad_path(ad.idea,ad),                                                  |
+                    :method => :post,                                                                                                             |
+                    :remote=>true,                                                                                                                |
+                    'data-disable-with' => '<span class="tag_scale idea_add_working"><img src="/assets/ajax/horizontal_small.gif" /></span>', |
+                    'data-loader-name' => "no_loader",                                                                                                                      |
+                    :class => "idea_add_link_small", :title => tr("Skip this, I'm not interested'", "view/ads/_show")
     %div.ad_counts
       .notification_show_counts
         = render :partial => "ideas/endorsement_count", :locals => {:idea => ad.idea }

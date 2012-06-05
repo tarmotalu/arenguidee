@@ -1,9 +1,13 @@
 .col-group
-  .col-8.col-offset-1
+  .col-1
+    .col_content= render partial: "points/nav"
+  .col-8
     .col-content
       = render :partial => "points/header"
-      %h2= @point.name
-      %p= @point.content_html
+      .point_name
+        %p= @point.name
+      .point_content_detail
+        %p= @point.content_html
       - if logged_in? and params[:action] == 'discussions'
         #new_activities
         = render :partial => "bulletins/form", :locals => {:activity => Activity.new, :comment => Comment.new }
@@ -14,4 +18,5 @@
         = will_paginate(@activities)
   .col-3
     .col-content
-      = render :partial => "revisions/revisions"
+      = render :partial => "points/authors", :locals => {:users => @point.authors }
+      = render :partial => "points/left_nav"

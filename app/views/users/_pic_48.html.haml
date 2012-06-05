@@ -1,4 +1,4 @@
-.border_miss_avatar48
+.border_miss_avatar48{:style=>"height: 48px;width=48px"}
   - if user.has_picture?
     = image_tag user.buddy_icon.url(:icon_48), :size => "48x48", :width=>"48", :border => 0, :alt => "Click to add picture"
   - elsif user.facebook_id

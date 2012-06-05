@@ -1,3 +1,15 @@
+def compile_asset?
+  # ignores any filename that begins with '_' (e.g. sass partials)
+  # all other css/js/sass/image files are processed
+  if File.basename(path) =~ /^[^_].*\.\w+$/
+    puts "Compiling: #{path}"
+    true
+  else
+    puts "Ignoring: #{path}"
+    false
+  end
+end
+
 SocialInnovation::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 

@@ -942,6 +942,15 @@ body {
     top: 1em;
   }
 }
+
+@media screen and (max-height: 400px) {
+  .header {
+    position: relative;
+  }
+  .main {
+    padding-top: 15px;
+  }
+}
 /*
 
 	Content

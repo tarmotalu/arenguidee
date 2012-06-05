@@ -5,7 +5,7 @@
     $(function(){
         $('#action_insert').replaceWith($('#idea_flag_#{idea.id.to_s}'));
     });
+  %div{style: 'float: right;'}= render :partial=>"ideas/report_content", :locals=>{:idea=>idea}
 .category
-  = render :partial=>"ideas/report_content", :locals=>{:idea=>idea}
 %p
   = idea.description

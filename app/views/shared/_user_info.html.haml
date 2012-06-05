@@ -6,6 +6,7 @@
         = render :partial => "users/pic_48", :locals => {:user => current_user}
     - if logged_in?
       %span.profile_name= current_user.name
+      %br
       %ul
         %li
           = link_to tr("Profile","views/shares/_user_info"), current_user
@@ -71,7 +72,7 @@
             = link_to tr("Unverified users", "view/network/_nav"), :controller => "network", :action => "unverified"
           %li
             \&middot;
-          = link_to tr("Warnings users", "view/network/_nav"), :controller => "network", :action => "warnings"
+            = link_to tr("Warnings users", "view/network/_nav"), :controller => "network", :action => "warnings"
         %li
           \&middot;
           = link_to tr("Suspended users", "view/network/_nav"), :controller => "network", :action => "suspended"

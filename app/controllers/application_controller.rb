@@ -47,15 +47,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  JS_ESCAPE_MAP = {
-        '\\'    => '\\\\',
-        '</'    => '<\/',
-        "\r\n"  => '\n',
-        "\n"    => '\n',
-        "\r"    => '\n',
-        '"'     => '\\"',
-        "'"     => "\\'" }
- 
   def action_cache_path
     params.merge({:geoblocked=>@geoblocked, :host=>request.host, :country_code=>@country_code,
                   :locale=>session[:locale], :google_translate=>session[:enable_google_translate],
@@ -140,14 +131,6 @@ class ApplicationController < ActionController::Base
   def unfrozen_instance(object)
     eval "#{object.class}.where(:id=>object.id).first"
   end
-        
-  def escape_javascript(javascript)
-    if javascript
-      javascript.gsub(/(\\|<\/|\r\n|[\n\r"'])/) { JS_ESCAPE_MAP[$1] }
-    else
-      ''
-    end
-  end  
 
   # Will either fetch the current sub_instance or return nil if there's no subdomain
   def current_sub_instance

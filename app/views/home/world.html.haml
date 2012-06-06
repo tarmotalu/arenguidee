@@ -30,8 +30,8 @@
         document.getElementById('info').innerHTML = "";
       });
 
-
-      kmlLayer = new google.maps.KmlLayer('http://yrpri.org/map13.xml', {preserveViewport: true, suppressInfoWindows: true} );
+      // 0cddff
+      kmlLayer = new google.maps.KmlLayer('http://yrpri.org/map15.xml', {preserveViewport: true, suppressInfoWindows: true} );
       kmlLayer.setMap(map);
 
       google.maps.event.addListener(kmlLayer, 'click', openIW);

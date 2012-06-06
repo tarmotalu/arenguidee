@@ -46,6 +46,7 @@ class IdeasController < ApplicationController
     @page_title = tr("Your ideas at {instance_name}", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
     @ideas = @user.endorsements.active.by_position.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
     @rss_url = yours_ideas_url(:format => 'rss')
+    get_endorsements
     respond_to do |format|
       format.html
       format.rss { render :action => "list" }
@@ -59,6 +60,7 @@ class IdeasController < ApplicationController
   def yours_top
     @page_title = tr("Your ideas ranked highest by {instance_name} members", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
     @ideas = current_user.endorsements.active.by_idea_position.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
+    get_endorsements
     respond_to do |format|
       format.html { render :action => "yours" }
       format.xml { render :xml => @endorsements.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
@@ -70,6 +72,7 @@ class IdeasController < ApplicationController
   def yours_lowest
     @page_title = tr("Your ideas ranked lowest by {instance_name} members", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
     @ideas = current_user.endorsements.active.by_idea_lowest_position.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
+    get_endorsements
     respond_to do |format|
       format.html { render :action => "yours" }
       format.xml { render :xml => @endorsements.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }

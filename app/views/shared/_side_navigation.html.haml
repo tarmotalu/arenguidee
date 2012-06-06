@@ -16,8 +16,17 @@
   - nav = 0
 %div#sib_side_nav
   %ul
-    %li
-      = link_to :controller => "home" do
+    - if current_instance.domain_name.include?("yrpri") and SubInstance.current and SubInstance.current.iso_country
+      %li
+        = link_to :controller => "home", :action=> "index" do
+          = image_tag SubInstance.current.iso_country.large_flag_image
+      %li
+        = link_to :controller => "home", :action=> "world" do
+          = raw "<div class='sprite_clip #{controller_name=="home" ? "home_pos_selected" : "home_pos"}'></div>"
+          %span.label
+            = tr("World","Menu system")
+    - else
+      = link_to :controller => "home", :action=>current_instance.domain_name.include?("yrpri") ? "world" : "index" do
         = raw "<div class='sprite_clip #{controller_name=="home" ? "home_pos_selected" : "home_pos"}'></div>"
         %span.label
           = tr("Home","Menu system")

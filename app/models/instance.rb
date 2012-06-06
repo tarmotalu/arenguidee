@@ -1,5 +1,4 @@
 class Instance < ActiveRecord::Base
-
   require 'paperclip'
   
   scope :active, :conditions => "status = 'active'"
@@ -12,7 +11,19 @@ class Instance < ActiveRecord::Base
   belongs_to :color_scheme
   
   belongs_to :picture
-  
+
+  has_attached_file :top_banner, :styles => { :icon_full => "1024x80#" }
+  validates_attachment_size :top_banner, :less_than => 5.megabytes
+  validates_attachment_content_type :top_banner, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+
+  has_attached_file :menu_strip, :styles => { :icon_full => "5x50#" }
+  validates_attachment_size :menu_strip, :less_than => 5.megabytes
+  validates_attachment_content_type :menu_strip, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+
+  has_attached_file :menu_strip_side, :styles => { :icon_full => "100x300#" }
+  validates_attachment_size :menu_strip_side, :less_than => 5.megabytes
+  validates_attachment_content_type :menu_strip_side, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+
   has_attached_file :logo, :styles => { :icon_96 => "96x96#", :icon_140  => "140x140#", :icon_180 => "180x180#", :medium => "450x" }
   
   validates_attachment_size :logo, :less_than => 5.megabytes

@@ -31,7 +31,7 @@
       });
 
 
-      kmlLayer = new google.maps.KmlLayer('http://yrpri.org/map10.xml', {preserveViewport: true, suppressInfoWindows: true} );
+      kmlLayer = new google.maps.KmlLayer('http://yrpri.org/map13.xml', {preserveViewport: true, suppressInfoWindows: true} );
       kmlLayer.setMap(map);
 
       google.maps.event.addListener(kmlLayer, 'click', openIW);
@@ -89,7 +89,3 @@
   - if sub_instance
     = tr("No idea has been created for the European Union and EEA - be the first by clicking here: ","welcome")
     = link_to sub_instance.show_url, sub_instance.show_url
-
-= render :partial => "shared/language_selection_master"
-= tr("Explore other countries ideas","welcome")
-= render :partial => "home/country_options"

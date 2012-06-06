@@ -24,10 +24,11 @@ GIT
       thor
 
 GIT
-  remote: git://github.com/rbjarnason/tr8n.git
-  revision: 9505c0fa23989783c3217803130ac497c1152ce5
+  remote: git://github.com/hinrik/tr8n.git
+  revision: 339ceb76ab8b0d29a4e0f373ae1a0cafd72d8ce3
+  branch: social_innovation
   specs:
-    tr8n (3.1.8)
+    tr8n (3.2.3)
       coffee-script
       kaminari
       rails (>= 3.1.0)

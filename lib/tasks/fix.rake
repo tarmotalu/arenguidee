@@ -896,11 +896,44 @@ namespace :fix do
   desc "Seed desc"
   task :seed_descriptions => :environment do
     Idea.all.each do |idea|
-      text = "#{idea.points.first.content_html[0..253]}..."
+      text = "#{idea.points.first.content_html[0..272]}.."
       idea.description = text
       idea.save
     end
+  end
 
+  desc "Parse xml map"
+  task :parse_xml_map => :environment do
+    doc = Nokogiri::HTML(File.open(Rails.root+"public/world_countries_kml.xml"))
+    all_iso_countries = Tr8n::IsoCountry.all.map {|c| c.country_english_name}
+    all_found = []
+    all_not_found = []
+    doc.xpath('//placemark').each_with_index do |x,i|
+      puts x.search("name").text
+      if country = Tr8n::IsoCountry.find_by_country_english_name(x.search("name").text)
+        puts "FOUND"
+        all_found << x.search("name").text
+        all_coords = []
+        x.search("coordinates").each do |coord|
+          all_coords << coord.text
+        end
+        puts country.map_coordinates = all_coords.to_s
+        country.save
+      else
+        puts "NOT FOUND"
+        all_not_found << x.search("name").text
+      end
+      puts x.search("coordinates").text.strip
+    end
+    puts "Found #{all_found.length}"
+    puts "-----------------------------------------------"
+    puts all_found
+    puts "Not Found #{all_not_found.length}"
+    puts "-----------------------------------------------"
+    puts all_not_found
+    puts "Missing #{(all_iso_countries-all_found).length}"
+    puts "-----------------------------------------------"
+    puts (all_iso_countries-all_found).sort
   end
 
   desc "Update idea change logs"

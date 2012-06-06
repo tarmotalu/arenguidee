@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120604172854) do
+ActiveRecord::Schema.define(:version => 20120606165835) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -731,6 +731,7 @@ ActiveRecord::Schema.define(:version => 20120604172854) do
     t.string   "country_english_name", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "map_coordinates"
   end
 
   add_index "tr8n_iso_countries", ["code"], :name => "index_tr8n_iso_countries_on_code"

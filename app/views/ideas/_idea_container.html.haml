@@ -11,11 +11,11 @@
           %li
             %div.sib_position
               = render :partial => "ideas/idea_rank", :locals => {:idea => idea }
-    .col-9
+    .col-7
       .col-content
         %div.sib_idea
           = render :partial => "ideas/about_idea", :locals => {:idea => idea }
-    .col-2
+    .col-4
       .col-content
         %div.sib_debate_buttons
           = render :partial => "ideas/debate_buttons", :locals => {:idea => idea, :endorsement => endorsement, :region=>"idea_inline", :force_debate_to_new=>@ideas ? false : true }

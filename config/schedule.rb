@@ -48,7 +48,6 @@ every 6.hours do
 end
 
 every 1.hour do
-<<<<<<< HEAD
   command "cd /home/yrpri2/sites/social-innovation/current; bundle exec backup perform -t hourly_backup --config_file config/backup.rb --data-path db --log-path log --tmp-path tmp"
 end
 
@@ -58,15 +57,4 @@ end
 
 every 1.week do
   command "cd /home/yrpri2/sites/social-innovation/current; bundle exec backup perform -t weekly_backup --config_file config/backup.rb --data-path db --log-path log --tmp-path tmp"
-=======
-  command "cd /home/db-demo/sites/social-innovation/current; bundle exec backup perform -t hourly_backup --config_file config/backup.rb --data-path db --log-path log --tmp-path tmp"
-end
-
-every 1.day do
-  command "cd /home/db-demo/sites/social-innovation/current; bundle exec backup perform -t daily_backup --config_file config/backup.rb --data-path db --log-path log --tmp-path tmp"
-end
-
-every 1.week do
-  command "cd /home/db-demo/sites/social-innovation/current; bundle exec backup perform -t weekly_backup --config_file config/backup.rb --data-path db --log-path log --tmp-path tmp"
->>>>>>> hinrik/master
 end

@@ -23,11 +23,7 @@ Backup::Model.new(:hourly_backup, 'Backup the database') do
   database MySQL
   compress_with Gzip
   store_with Local do |storage|
-<<<<<<< HEAD
     storage.keep = 96
-=======
-    storage.keep = 24
->>>>>>> hinrik/master
   end
 end
 
@@ -36,11 +32,7 @@ Backup::Model.new(:daily_backup, 'Backup the database') do
   database MySQL
   compress_with Gzip
   store_with Local do |storage|
-<<<<<<< HEAD
     storage.keep = 30
-=======
-    storage.keep = 7
->>>>>>> hinrik/master
   end
 end
 
@@ -49,10 +41,6 @@ Backup::Model.new(:weekly_backup, 'Backup the database') do
   database MySQL
   compress_with Gzip
   store_with Local do |storage|
-<<<<<<< HEAD
     storage.keep = 208
-=======
-    storage.keep = 12
->>>>>>> hinrik/master
   end
 end

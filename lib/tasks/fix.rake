@@ -896,7 +896,6 @@ namespace :fix do
   desc "Seed desc"
   task :seed_descriptions => :environment do
     Idea.all.each do |idea|
-<<<<<<< HEAD
       text = "#{idea.points.first.content_html[0..272]}.."
       idea.description = text
       idea.save
@@ -935,13 +934,6 @@ namespace :fix do
     puts "Missing #{(all_iso_countries-all_found).length}"
     puts "-----------------------------------------------"
     puts (all_iso_countries-all_found).sort
-=======
-      text = "#{idea.points.first.content_html[0..253]}..."
-      idea.description = text
-      idea.save
-    end
-
->>>>>>> hinrik/master
   end
 
   desc "Update idea change logs"

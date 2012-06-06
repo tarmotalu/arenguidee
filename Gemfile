@@ -40,7 +40,7 @@ gem 'jquery-rails'
 gem 'ckeditor', '3.6.3'
 gem 'kaminari'
 gem 'will_filter'
-gem 'tr8n', :git => "git://github.com/rbjarnason/tr8n.git"
+gem 'tr8n', :git => "git://github.com/hinrik/tr8n.git", :branch => "social_innovation"
 gem 'workflow'
 gem "airbrake"
 gem 'jquery-rjs', :git => "git://github.com/bikeexchange/jquery-rjs.git"

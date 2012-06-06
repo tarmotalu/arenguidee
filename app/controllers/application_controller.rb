@@ -117,6 +117,7 @@ class ApplicationController < ActionController::Base
     @inline_translations_enabled = false
 
     if logged_in? and Tr8n::Config.current_user_is_translator?
+      Tr8n::Config.current_translator.reload # workaround for broken tr8n
       unless Tr8n::Config.current_translator.blocked?
         @inline_translations_allowed = true
         @inline_translations_enabled = Tr8n::Config.current_translator.enable_inline_translations?

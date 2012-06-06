@@ -17,7 +17,7 @@
 %div#sib_side_nav
   %ul
     - if current_instance.domain_name.include?("yrpri") and SubInstance.current and SubInstance.current.iso_country
-      %li
+      %li.flag
         = link_to :controller => "home", :action=> "index" do
           = image_tag SubInstance.current.iso_country.large_flag_image
       %li

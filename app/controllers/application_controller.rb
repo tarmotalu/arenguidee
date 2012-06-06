@@ -47,15 +47,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  JS_ESCAPE_MAP = {
-        '\\'    => '\\\\',
-        '</'    => '<\/',
-        "\r\n"  => '\n',
-        "\n"    => '\n',
-        "\r"    => '\n',
-        '"'     => '\\"',
-        "'"     => "\\'" }
- 
   def action_cache_path
     params.merge({:geoblocked=>@geoblocked, :host=>request.host, :country_code=>@country_code,
                   :locale=>session[:locale], :google_translate=>session[:enable_google_translate],
@@ -126,6 +117,7 @@ class ApplicationController < ActionController::Base
     @inline_translations_enabled = false
 
     if logged_in? and Tr8n::Config.current_user_is_translator?
+      Tr8n::Config.current_translator.reload # workaround for broken tr8n
       unless Tr8n::Config.current_translator.blocked?
         @inline_translations_allowed = true
         @inline_translations_enabled = Tr8n::Config.current_translator.enable_inline_translations?
@@ -140,14 +132,6 @@ class ApplicationController < ActionController::Base
   def unfrozen_instance(object)
     eval "#{object.class}.where(:id=>object.id).first"
   end
-        
-  def escape_javascript(javascript)
-    if javascript
-      javascript.gsub(/(\\|<\/|\r\n|[\n\r"'])/) { JS_ESCAPE_MAP[$1] }
-    else
-      ''
-    end
-  end  
 
   # Will either fetch the current sub_instance or return nil if there's no subdomain
   def current_sub_instance

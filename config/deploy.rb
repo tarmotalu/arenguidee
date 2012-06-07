@@ -46,12 +46,6 @@ end
 after 'deploy:finalize_update' do
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/* #{current_release}/config/"
   run "ln -nfs #{deploy_to}/#{shared_dir}/db/sphinx #{current_release}/db/sphinx"
-  run "ln -nfs #{deploy_to}/#{shared_dir}/config/yrprirsakey.pem #{current_release}/config/yrprirsakey.pem"
-  run "ln -nfs #{deploy_to}/#{shared_dir}/config/yrprirsacert.pem #{current_release}/config/yrprirsacert.pem"
-  run "ln -s   #{deploy_to}/#{shared_dir}/config/contacts.yml #{current_release}/config/contacts.yml"
-  run "ln -s   #{deploy_to}/#{shared_dir}/config/facebooker.yml #{current_release}/config/facebooker.yml"
-  run "ln -s   #{deploy_to}/#{shared_dir}/config/newrelic.yml #{current_release}/config/newrelic.yml"
-  run "ln -nfs #{deploy_to}/#{shared_dir}/config/twitter_auth.yml #{current_release}/config/twitter_auth.yml"
   run "ln -nfs #{deploy_to}/#{shared_dir}/assets #{current_release}/public/assets"
   run "ln -nfs /mnt/shared/system #{current_release}/public/system"
 end

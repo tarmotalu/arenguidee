@@ -25,7 +25,7 @@ GIT
 
 GIT
   remote: git://github.com/hinrik/tr8n.git
-  revision: 339ceb76ab8b0d29a4e0f373ae1a0cafd72d8ce3
+  revision: 06e2af691017665b8f4e851ada0076a5cfa3c3f8
   branch: social_innovation
   specs:
     tr8n (3.2.3)

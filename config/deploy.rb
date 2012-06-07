@@ -13,8 +13,10 @@ set :application, "social_innovation_internal"
 set :domain, "yrpri.org"
 set :scm, "git"
 set :repository, "git@github.com:rbjarnason/social_innovation_internal.git"
+set :selected_branch, "yrpri2"
+set :branch, "#{selected_branch}"
 set :use_sudo, false
-set :deploy_to, "/home/yrpri/sites/#{application}"
+set :deploy_to, "/home/yrpri/sites/#{application}/#{selected_branch}"
 set :user, "yrpri"
 set :deploy_via, :remote_cache
 set :shared_children, shared_children + %w[config db/sphinx assets db/hourly_backup db/daily_backup db/weekly_backup]

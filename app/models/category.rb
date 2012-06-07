@@ -11,7 +11,23 @@ class Category < ActiveRecord::Base
   end
   
   def to_url
-    "/issues/#{self.name.parameterize_full[0..60]}"
+    "/issues/#{id}-#{self.name.parameterize_full[0..60]}"
+  end
+
+  def show_url
+    to_url
+  end
+
+  def idea_ids
+    ideas.published.collect{|p| p.id}
+  end
+
+  def points_count
+    Point.published.count(:conditions => ["idea_id in (?)",idea_ids])
+  end
+
+  def discussions_count
+    Activity.active.discussions.for_all_users.by_recently_updated.count(:conditions => ["idea_id in (?)",idea_ids])
   end
   
   def self.for_sub_instance

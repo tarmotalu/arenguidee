@@ -717,7 +717,7 @@ class IdeasController < ApplicationController
           else
             page << "alert('error');"
           end
-          page.replace_html 'your_ideas_container', :partial => "ideas/yours"
+          #page.replace_html 'your_ideas_container', :partial => "ideas/yours"
         end
       }
     end

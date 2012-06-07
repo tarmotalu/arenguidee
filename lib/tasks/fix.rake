@@ -62,6 +62,15 @@ def change_to_mysql_text(text)
 end
 
 namespace :fix do
+  desc 'it2'
+  task :it2 => :environment do
+    Tagging.update_all("taggable_type='Idea' where taggable_type='Priority'")
+    Notification.update_all("notifiable_type='Idea' where notifiable_type='Priority'")
+    ['General', 'Localization', 'User interface', 'Data sources'].each do |name|
+      category = Category.find_by_name(name)
+      category.destroy
+    end
+  end
 
   desc "it"
   task :it => :environment do

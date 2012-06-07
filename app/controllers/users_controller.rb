@@ -455,7 +455,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js {
         render :update do |page|
-          page.replace_html 'your_ideas_container', :partial => "ideas/yours"
+          #page.replace_html 'your_ideas_container', :partial => "ideas/yours"
         end
       }
     end
@@ -477,7 +477,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js {
         render :update do |page|
-          page.replace_html 'your_ideas_container', :partial => "ideas/yours"
+          #page.replace_html 'your_ideas_container', :partial => "ideas/yours"
           #page.replace_html 'your_ideas_container', order.inspect
         end
       }

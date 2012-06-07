@@ -892,7 +892,7 @@ body {
   -moz-opacity: 1;
   opacity: 1;
 }
-@media screen and (max-width: 1248px) {
+@media screen and (max-width: 58px) {
   .nav-main {
     position: relative;
     width: auto;
@@ -943,12 +943,18 @@ body {
   }
 }
 
-@media screen and (max-height: 400px) {
+@media screen and (max-height: 700px) {
   .header {
     position: relative;
+    margin: 0 auto;
+    border: none;
   }
   .main {
     padding-top: 15px;
+  }
+  .nav-main {
+     position: relative;
+     float: left;
   }
 }
 /*

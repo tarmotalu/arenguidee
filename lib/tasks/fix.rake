@@ -94,7 +94,7 @@ namespace :fix do
       %w[priorities ideas],
       %w[governments instances],
       %w[priority_charts idea_charts],
-      %w[priority_status_change_logs, idea_status_change_logs]
+      %w[priority_status_change_logs idea_status_change_logs]
     ]
 
     action_rename = %w[ActivityPriorityNew ActivityPriorityFlagInappropriate ActivityPriorityFlag ActivityPriorityBury ActivityPriorityCommentNew ActivityPriority1

@@ -10,12 +10,12 @@ require "whenever/capistrano"
 
 ssh_options[:forward_agent] = true
 set :application, "social_innovation_internal"
-set :domain, "yrpri2.org"
+set :domain, "yrpri.org"
 set :scm, "git"
 set :repository, "git@github.com:rbjarnason/social_innovation_internal.git"
 set :use_sudo, false
-set :deploy_to, "/home/yrpri2/sites/#{application}"
-set :user, "yrpri2"
+set :deploy_to, "/home/yrpri/sites/#{application}"
+set :user, "yrpri"
 set :deploy_via, :remote_cache
 set :shared_children, shared_children + %w[config db/sphinx assets db/hourly_backup db/daily_backup db/weekly_backup]
 
@@ -43,7 +43,15 @@ end
 
 after 'deploy:finalize_update' do
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/* #{current_release}/config/"
-  run "ln -nfs #{deploy_to}/#{shared_dir}/system #{current_release}/public/system"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/db/sphinx #{current_release}/db/sphinx"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/config/yrprirsakey.pem #{current_release}/config/yrprirsakey.pem"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/config/yrprirsacert.pem #{current_release}/config/yrprirsacert.pem"
+  run "ln -s   #{deploy_to}/#{shared_dir}/config/contacts.yml #{current_release}/config/contacts.yml"
+  run "ln -s   #{deploy_to}/#{shared_dir}/config/facebooker.yml #{current_release}/config/facebooker.yml"
+  run "ln -s   #{deploy_to}/#{shared_dir}/config/newrelic.yml #{current_release}/config/newrelic.yml"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/config/twitter_auth.yml #{current_release}/config/twitter_auth.yml"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/assets #{current_release}/public/assets"
+  run "ln -nfs /mnt/shared/system #{current_release}/public/system"
 end
 
 namespace :delayed_job do

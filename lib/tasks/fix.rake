@@ -62,6 +62,34 @@ def change_to_mysql_text(text)
 end
 
 namespace :fix do
+  desc 'show_broken_points'
+  task :show_broken_points => :environment do
+    Idea.unscoped.all.each do |idea|
+      Point.unscoped.where(idea_id: idea.id).all.each do |point|
+        if point.sub_instance_id != idea.sub_instance_id
+          puts "point #{point.id} has sub_instance_id of #{point.sub_instance_id} instead of #{idea.sub_instance_id}"
+        end
+      end
+    end
+  end
+
+  desc 'fix_broken_points'
+  task :fix_broken_points => :environment do
+    Idea.unscoped.all.each do |idea|
+      Point.unscoped.where(idea_id: idea.id).all.each do |point|
+        if point.sub_instance_id != idea.sub_instance_id
+          point.sub_instance_id = idea.sub_instance.id
+          point.save(validate: false)
+        end
+      end
+    end
+  end
+
+  desc 'clear_tr8n'
+  task :clear_tr8n => :environment do
+    Tr8n::Translation.delete_all
+  end
+
   desc 'it2'
   task :it2 => :environment do
     Tagging.update_all("taggable_type='Idea' where taggable_type='Priority'")

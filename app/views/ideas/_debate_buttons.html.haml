@@ -3,6 +3,7 @@
 - down_endorser_link = (link_to (idea.down_endorsements_count.to_s).html_safe, idea.show_opposers_url).html_safe
 - up_endorser_link = idea.up_endorsements_count.to_s
 - down_endorser_link = idea.down_endorsements_count.to_s
+- points_count = idea.points.where(sub_instance_id: idea.sub_instance_id).count
 
 %span{:class => "idea_#{idea.id.to_s}_button_small", :id => "idea_#{idea.id.to_s}_button_small"}
   - unless @geoblocked
@@ -24,11 +25,11 @@
           .idea_add
             - if not force_debate_to_new
               %a{:link=>"#", :class => "idea_add_link"}
-                = tr("DEBATE", "view/ideas")+" (#{idea.points.count})"
+                = tr("DEBATE", "view/ideas")+" (#{points_count})"
                 .idea_debate_spinner{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
             - else
               = link_to new_idea_point_path(idea), {:class => "idea_add_link"} do
-                = tr("DEBATE", "view/ideas")+" (#{idea.points.count})"
+                = tr("DEBATE", "view/ideas")+" (#{idea.points.where(sub_instance_id: idea.sub_instance_id).count})"
         .oppose_grey
           .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
             = link_to endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1, :force_debate_to_new=>force_debate_to_new), |
@@ -57,11 +58,11 @@
           .idea_add
             - if not force_debate_to_new
               %a{:link=>"#", :class => "idea_add_link"}
-                = tr("DEBATE", "view/ideas")+" (#{idea.points.count})"
+                = tr("DEBATE", "view/ideas")+" (#{points_count})"
                 .idea_debate_spinner{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
             - else
               = link_to new_idea_point_path(idea), {:class => "idea_add_link"} do
-                = tr("DEBATE", "view/ideas")+" (#{idea.points.count})"
+                = tr("DEBATE", "view/ideas")+" (#{points_count})"
         .oppose_button
           .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
             = link_to endorsement_path(endorsement, :region => region, :force_debate_to_new=>force_debate_to_new),     |
@@ -90,11 +91,11 @@
         .idea_add
           - if not force_debate_to_new
             %a{:link=>"#", :class => "idea_add_link"}
-              = tr("DEBATE", "view/ideas")+" (#{idea.points.count})"
+              = tr("DEBATE", "view/ideas")+" (#{points_count})"
               .idea_debate_spinner{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
           - else
             = link_to new_idea_point_path(idea), {:class => "idea_add_link"} do
-              = tr("DEBATE", "view/ideas")+" (#{idea.points.count})".html_safe
+              = tr("DEBATE", "view/ideas")+" (#{points_count})".html_safe
       .oppose_button
         .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
           = link_to endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => -1, :force_debate_to_new=>force_debate_to_new), |

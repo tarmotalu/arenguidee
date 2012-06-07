@@ -1014,7 +1014,7 @@ class IdeasController < ApplicationController
     end
     
     def load_endorsement
-      @idea = Idea.find(params[:id])
+      @idea = Idea.unscoped.find(params[:id])
       if @idea.status == 'removed' or @idea.status == 'abusive'
         flash[:notice] = tr("That idea was deleted", "controller/ideas")
         redirect_to "/"
@@ -1044,12 +1044,12 @@ class IdeasController < ApplicationController
 
     def setup_top_points(limit)
       @point_value = 0
-      @points_top_up = @idea.points.published.by_helpfulness.up_value.limit(limit)
-      @points_top_down = @idea.points.published.by_helpfulness.down_value.limit(limit)
-      @points_new_up = @idea.points.published.by_recently_created.up_value.limit(limit).reject {|p| @points_top_up.include?(p)}
-      @points_new_down = @idea.points.published.by_recently_created.down_value.limit(limit).reject {|p| @points_top_down.include?(p)}
-      @total_up_points = @idea.points.published.up_value.count
-      @total_down_points = @idea.points.published.down_value.count
+      @points_top_up = Point.unscoped.where(idea_id: @idea.id).published.by_helpfulness.up_value.limit(limit)
+      @points_top_down = Point.unscoped.where(idea_id: @idea.id).published.by_helpfulness.down_value.limit(limit)
+      @points_new_up = Point.unscoped.where(idea_id: @idea.id).published.by_recently_created.up_value.limit(limit).reject {|p| @points_top_up.include?(p)}
+      @points_new_down = Point.unscoped.where(idea_id: @idea.id).published.by_recently_created.down_value.limit(limit).reject {|p| @points_top_down.include?(p)}
+      @total_up_points = Point.unscoped.where(idea_id: @idea.id).published.up_value.count
+      @total_down_points = Point.unscoped.where(idea_id: @idea.id).published.down_value.count
       @total_up_points_new = [0,@total_up_points-@points_top_up.length].max
       @total_down_points_new = [0,@total_down_points-@points_top_down.length].max
       get_qualities([@points_new_up,@points_new_down,@points_top_up,@points_top_down])

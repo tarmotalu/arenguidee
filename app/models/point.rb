@@ -94,7 +94,6 @@ class Point < ActiveRecord::Base
     state :published do
       event :remove, transitions_to: :removed
       event :bury, transitions_to: :buried
-      event :abusive, transitions_to: :abusive
       event :remove, transitions_to: :removed
     end
     state :draft do
@@ -112,10 +111,9 @@ class Point < ActiveRecord::Base
       event :unbury, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
       event :unbury, transitions_to: :draft
     end
-    state :abusive
   end
 
-  def on_abusive_entry(new_state, event)
+  def do_abusive!
     self.last_author.do_abusive!(notifications)
     self.update_attribute(:flags_count, 0)
   end

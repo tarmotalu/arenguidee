@@ -46,6 +46,8 @@ end
 after 'deploy:finalize_update' do
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/* #{current_release}/config/"
   run "ln -nfs #{deploy_to}/#{shared_dir}/db/sphinx #{current_release}/db/sphinx"
+  run "mkdir #{current_release}/lib/geoip"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/geoip/GeoIP.dat #{current_release}/lib/geoip/GeoIP.dat"
   run "ln -nfs #{deploy_to}/#{shared_dir}/assets #{current_release}/public/assets"
   run "ln -nfs /mnt/shared/system #{current_release}/public/system"
 end
@@ -62,7 +64,7 @@ after "deploy", "delayed_job:restart"
 namespace :deploy do
   namespace :assets do
     task :precompile, :roles => :web, :except => { :no_release => true } do
-      if true or capture("cd #{latest_release} && #{source.local.log(source.next_revision(current_revision))} vendor/assets/ app/assets/ lib/assets/ | wc -l").to_i > 0
+      if capture("cd #{latest_release} && #{source.local.log(source.next_revision(current_revision))} vendor/assets/ app/assets/ lib/assets/ | wc -l").to_i > 0
         run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
       else
         logger.info "No changes on assets. Skipping pre-compilation."

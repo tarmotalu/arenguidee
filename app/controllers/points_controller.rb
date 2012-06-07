@@ -313,7 +313,7 @@ class PointsController < ApplicationController
 
   def abusive
     @point = Point.find(params[:id])
-    @point.do_abusive
+    @point.do_abusive!
     @point.remove!
     respond_to do |format|
       format.js {

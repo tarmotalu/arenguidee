@@ -130,7 +130,6 @@ class Idea < ActiveRecord::Base
       event :remove, transitions_to: :removed
       event :bury, transitions_to: :buried
       event :deactivate, transitions_to: :inactive
-      event :abusive, transitions_to: :abusive
     end
     state :passive do
       event :publish, transitions_to: :published
@@ -154,7 +153,6 @@ class Idea < ActiveRecord::Base
     state :inactive do
       event :remove, transitions_to: :removed
     end
-    state :abusive
   end
 
   def to_param
@@ -677,7 +675,7 @@ class Idea < ActiveRecord::Base
     latest_idea_process_txt.html_safe if latest_idea_process_txt
   end
 
-  def on_abusive_entry(new_state, event)
+  def do_abusive!
     self.user.do_abusive!(notifications)
     self.update_attribute(:flags_count, 0)
   end

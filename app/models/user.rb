@@ -1073,7 +1073,7 @@ class User < ActiveRecord::Base
     return 'mysql'
   end
   
-  def on_abusive_entry(new_state, event, parent_notifications)
+  def do_abusive!(parent_notifications)
      if self.warnings_count == 0 # this is their first warning, get a warning message
       parent_notifications << NotificationWarning1.new(:recipient => self)
     elsif self.warnings_count == 1 # 2nd warning

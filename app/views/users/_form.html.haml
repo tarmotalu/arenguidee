@@ -88,7 +88,9 @@
         = recaptcha_tags :ssl => true
         %br/
         = check_box("user", "terms")
-        = tr("I accept the terms.", "view/users/_form")
+        = tr(" I promise to honor the ", "view/users/_form")
+        %a{:href => '/about/rules', :target => '_new'}>= tr(" rules.", "view/users/_form")
+        %br/
         %br/
         - if @idea
           - if @value == 1

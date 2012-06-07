@@ -856,7 +856,7 @@ class IdeasController < ApplicationController
 
   def abusive
     @idea = Idea.find(params[:id])
-    @idea.do_abusive
+    @idea.do_abusive!
     @idea.remove!
     respond_to do |format|
       format.js {

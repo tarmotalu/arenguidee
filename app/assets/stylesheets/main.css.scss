@@ -252,18 +252,6 @@
 .center-block {
   margin: 0 auto;
 }
-@media screen and (max-width: 768px) {
-  .col-group [class*="col-"] {
-    width: auto;
-    float: none;
-  }
-  .col-group .col-content {
-    margin: 0;
-  }
-  .col-group [class*="offset-"] {
-    margin-left: 0;
-  }
-}
 .clear {
   zoom: 1;
 }
@@ -786,7 +774,7 @@ body {
   margin: 0 0.5em;
 }
 .header .nav li {
-  padding-right: 1em;
+  padding-right: 15px;
 }
 .header .nav .add a {
   position: relative;
@@ -935,13 +923,21 @@ body {
     text-align: left;
   }
   .nav-main li a .label {
-    padding: 0 0 0 3em;
+    //padding: 0 0 0 3em;
+    text-align: center;
     font-size: 1.3333333333333333em;
   }
   .nav-main li a img {
     position: absolute;
     left: 0.5em;
     top: 1em;
+  }
+  .nav-main li a .sprite_clip_flag img {
+    position: relative !important;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    margin-top: -8px
   }
 }
 @media screen and (max-width: 1248px) {
@@ -975,7 +971,8 @@ body {
   .nav-main ul li {
     margin: 0;
     float: left;
-    width: 16.666666666666668%;
+    //width: 16.666666666666668%;
+    width: 14%;
     line-height: 2.25em;
     text-align: left;
   }
@@ -985,13 +982,21 @@ body {
     text-align: left;
   }
   .nav-main li a .label {
-    padding: 0 0 0 3em;
+    //padding: 0 0 0 3em;
+    text-align: center;
     font-size: 1.3333333333333333em;
   }
   .nav-main li a img {
     position: absolute;
     left: 0.5em;
     top: 1em;
+  }
+  .nav-main li a .sprite_clip_flag img {
+    position: relative !important;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    margin-top: -8px
   }
 }
 
@@ -1001,6 +1006,18 @@ body {
   }
   .main {
     padding-top: 15px;
+  }
+  .nav-main li a img {
+    position: absolute;
+    left: 0.5em;
+    top: 1em;
+  }
+  .nav-main li a .sprite_clip_flag img {
+    position: relative !important;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    margin-top: -8px
   }
 }
 /*

@@ -5,6 +5,15 @@ class HomeController < ApplicationController
                 :cache_path => proc {|c| c.action_cache_path},
                 :expires_in => 5.minutes
 
+  caches_action :world,
+                :if => proc {|c| c.do_action_cache? },
+                :cache_path => proc {|c| c.action_cache_path},
+                :expires_in => 5.minutes
+
+  caches_action :map,
+                :cache_path => proc {|c| c.action_cache_path},
+                :expires_in => 15.seconds
+
   def index
     @page_title = tr("Overview","home")
     @ideas = @new_ideas = Idea.published.newest.limit(3)

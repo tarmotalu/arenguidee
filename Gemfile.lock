@@ -115,6 +115,7 @@ GEM
       factory_girl (~> 3.3.0)
       railties (>= 3.0.0)
     ffi (1.0.11)
+    fssm (0.2.9)
     gem_plugin (0.2.3)
     geoip (1.1.2)
     googlecharts (1.6.8)
@@ -310,6 +311,7 @@ DEPENDENCIES
   execjs
   facebooker2 (>= 0.0.16)
   factory_girl_rails
+  fssm
   geoip
   googlecharts
   haml

@@ -31,7 +31,7 @@
       });
 
       // 0cddff
-      kmlLayer = new google.maps.KmlLayer('http://yrpri.org/map15.xml', {preserveViewport: true, suppressInfoWindows: true} );
+      kmlLayer = new google.maps.KmlLayer('/home/map?keytime=#{rand(99999999)}', {preserveViewport: true, suppressInfoWindows: true} );
       kmlLayer.setMap(map);
 
       google.maps.event.addListener(kmlLayer, 'click', openIW);

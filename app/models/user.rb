@@ -878,11 +878,11 @@ class User < ActiveRecord::Base
     self.twitter_secret
   end
   
-  if TwitterAuth.oauth?
-    include TwitterAuth::OauthUser
-  else
-     include TwitterAuth::BasicUser
-  end
+  #if TwitterAuth.oauth?
+  #  include TwitterAuth::OauthUser
+  #else
+  #   include TwitterAuth::BasicUser
+  #end
 
   def twitter
     if TwitterAuth.oauth?

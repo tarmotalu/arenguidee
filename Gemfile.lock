@@ -1,13 +1,4 @@
 GIT
-  remote: git://github.com/benders/twitter-auth.git
-  revision: 2e2327d460800e4dd59c8618d3db727336937306
-  branch: rails_3
-  specs:
-    twitter-auth (0.1.22)
-      ezcrypto (>= 0.7.2)
-      oauth (>= 0.3.1)
-
-GIT
   remote: git://github.com/bikeexchange/jquery-rjs.git
   revision: d30b959e133f4457cad6452885638cc55b2b70f7
   specs:
@@ -105,7 +96,6 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    ezcrypto (0.7.2)
     facebooker2 (0.0.16)
       mogli (>= 0.0.33)
       ruby-hmac
@@ -348,7 +338,6 @@ DEPENDENCIES
   tidy-ext
   tr8n!
   turn (~> 0.8.3)
-  twitter-auth!
   uglifier
   watir-webdriver
   whenever

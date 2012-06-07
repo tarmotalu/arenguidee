@@ -26,7 +26,7 @@ gem 'paperclip'
 gem 'sunlight', '>= 0.9'
 gem 'googlecharts'
 gem 'oauth', '>= 0.3.1'
-gem "twitter-auth", :git => "git://github.com/benders/twitter-auth.git", :branch => "rails_3", :require => "twitter_auth/engine"
+#gem "twitter-auth", :git => "git://github.com/benders/twitter-auth.git", :branch => "rails_3", :require => "twitter_auth/engine"
 gem 'hpricot', '>= 0.6'
 gem 'will_paginate'
 gem 'will-paginate-i18n'

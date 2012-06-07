@@ -1,3 +1,8 @@
+ActionMailer::Base.smtp_settings = {
+  :address              => "localhost",
+  :enable_starttls_auto => false
+}
+
 if Rails.env.development?
   class DevelopmentMailInterceptor  
     def self.delivering_email(message)  

@@ -1,6 +1,22 @@
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.all
+//= require jquery.ui.core
+//= require jquery.ui.widget
+//= require jquery.ui.mouse
+//= require jquery.ui.position
+//= require jquery.ui.draggable
+//= require jquery.ui.droppable
+//= require jquery.ui.resizable
+//= require jquery.ui.selectable
+//= require jquery.ui.sortable
+//= require jquery.ui.accordion
+//= require jquery.ui.autocomplete
+//= require jquery.ui.button
+//= require jquery.ui.dialog
+//= require jquery.ui.slider
+//= require jquery.ui.tabs
+//= require jquery.ui.progressbar
+//= require jquery.effects.all
 //= require facebox
 //= require jquery.NobleCount.min
 //= require jquery.timeago
@@ -16,6 +32,7 @@
 //= require jquery.pop
 //= require jquery.dd
 //= require jquery.autoSuggest
+//= require jquery.tipsy
 //= require msdropdown
 //= require_self
 

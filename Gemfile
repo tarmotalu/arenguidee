@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.5'
 gem 'rails-i18n'
 gem 'mysql2'
-gem 'fssm'
 gem "recaptcha", :require => "recaptcha/rails"
 gem 'capistrano', require: false
 gem 'capistrano_colors', require: false

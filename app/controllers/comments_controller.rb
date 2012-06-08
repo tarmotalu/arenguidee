@@ -224,7 +224,7 @@ class CommentsController < ApplicationController
   
   protected
   def get_activity
-    @activity = Activity.find(params[:activity_id])
+    @activity = Activity.unscoped.find(params[:activity_id])
   end  
   
 end

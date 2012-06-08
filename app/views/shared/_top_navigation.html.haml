@@ -18,9 +18,9 @@
             %div.notify_box
               %a.notifications{:href => "notifications"}
                 = current_user.unread_notifications_count
-            %a.profile{:href => "profile"}
-              %div
-                = current_user.login
+          %a.profile{:href => "profile"}
+            %div
+              = current_user.login
     %li.add
       %a.button{:href => "/ideas/new"}
         = tr("New idea")

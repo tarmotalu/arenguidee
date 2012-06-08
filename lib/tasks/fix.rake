@@ -62,6 +62,69 @@ def change_to_mysql_text(text)
 end
 
 namespace :fix do
+  desc 'rename_activities'
+  task :rename_activities => :environment do
+    renames = {
+      'CapitalGovernmentNew' => 'CapitalInstanceNew',
+      'IssuePriority1' => 'IssueIdea1',
+      'PriorityDebut' => 'IdeaDebut',
+      'IssuePriorityRising1' => 'IssueIdeaRising1',
+    }
+    renames.each do |old, new|
+      puts "UPDATE activities SET type='Activity#{new}' where type='Activity#{old}';"
+    end
+  end
+
+  desc 'show_broken_activities'
+  task :show_broken_activities => :environment do
+    Activity.unscoped.all.each do |activity|
+      if activity.idea_id
+        idea = Idea.unscoped.find(activity.idea_id)
+        if activity.sub_instance_id != idea.sub_instance_id
+          puts "activity #{activity.id} has sub_instance_id of #{activity.sub_instance_id} instead of #{idea.sub_instance_id} like its Idea"
+        end
+      elsif activity.point_id
+        point = Point.unscoped.find(activity.point_id)
+        if activity.sub_instance_id != point.sub_instance_id
+          puts "activity #{activity.id} has sub_instance_id of #{activity.sub_instance_id} instead of #{point.sub_instance_id} like its Point"
+        end
+      elsif activity.ad_id
+        ad = Ad.unscoped.find(activity.ad_id)
+        if activity.sub_instance_id != ad.sub_instance_id
+          puts "activity #{activity.id} has sub_instance_id of #{activity.sub_instance_id} instead of #{ad.sub_instance_id} like its Ad"
+        end
+      end
+    end
+  end
+
+  desc 'fix_broken_activities'
+  task :fix_broken_activities => :environment do
+    Activity.unscoped.all.each do |activity|
+      if activity.idea_id
+        idea = Idea.unscoped.find(activity.idea_id)
+        if activity.sub_instance_id != idea.sub_instance_id
+          puts "activity #{activity.id} has sub_instance_id of #{activity.sub_instance_id} instead of #{idea.sub_instance_id} like its Idea"
+          activity.sub_instance_id = idea.sub_instance_id
+          activity.save
+        end
+      elsif activity.point_id
+        point = Point.unscoped.find(activity.point_id)
+        if activity.sub_instance_id != point.sub_instance_id
+          puts "activity #{activity.id} has sub_instance_id of #{activity.sub_instance_id} instead of #{point.sub_instance_id} like its Point"
+          activity.sub_instance_id = point.sub_instance_id
+          activity.save
+        end
+      elsif activity.ad_id
+        ad = Ad.unscoped.find(activity.ad_id)
+        if activity.sub_instance_id != ad.sub_instance_id
+          puts "activity #{activity.id} has sub_instance_id of #{activity.sub_instance_id} instead of #{ad.sub_instance_id} like its Ad"
+          activity.sub_instance_id = ad.sub_instance_id
+          activity.save
+        end
+      end
+    end
+  end
+
   desc 'show_broken_points'
   task :show_broken_points => :environment do
     Idea.unscoped.all.each do |idea|
@@ -78,8 +141,9 @@ namespace :fix do
     Idea.unscoped.all.each do |idea|
       Point.unscoped.where(idea_id: idea.id).all.each do |point|
         if point.sub_instance_id != idea.sub_instance_id
+          puts "point #{point.id} has sub_instance_id of #{point.sub_instance_id} instead of #{idea.sub_instance_id}"
           point.sub_instance_id = idea.sub_instance.id
-          point.save(validate: false)
+          point.save
         end
       end
     end

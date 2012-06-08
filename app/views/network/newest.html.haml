@@ -25,5 +25,6 @@
                   = tr("#1 idea:", "view/network/index")
                   - if user.top_endorsement.is_down?
                     %span.opposed= tr("Opposing", "view/network/index")
-                  = link_to user.top_endorsement.idea.name, user.top_endorsement.idea
+                  - idea = Idea.unscoped.find(user.top_endorsement.idea_id)
+                  = link_to idea.name, idea
   = will_paginate(@users)

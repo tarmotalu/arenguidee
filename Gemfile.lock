@@ -325,7 +325,7 @@ DEPENDENCIES
   rails-dev-boost
   rails-i18n
   rails_view_annotator
-  recaptcha
+  recaptcha (= 0.3.4)
   rmagick (= 2.12.2)
   ruby-openid
   ruby-prof

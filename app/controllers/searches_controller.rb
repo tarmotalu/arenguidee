@@ -12,7 +12,11 @@ class SearchesController < ApplicationController
       elsif params[:class]
         @search_results = @facets.for(:class=>params[:class].to_s)
       else
-        @search_results = ThinkingSphinx.search @query, :with => {:sub_instance_id => SubInstance.current ? SubInstance.current.id : 0}, :star => true, :retry_stale => true, :page => params[:page]
+        if params[:global]
+          @search_results = ThinkingSphinx.search @query, :star => true, :retry_stale => true, :page => params[:page]
+        else
+          @search_results = ThinkingSphinx.search @query, :with => {:sub_instance_id => SubInstance.current.id }, :star => true, :retry_stale => true, :page => params[:page]
+        end
       end
     end
     respond_to do |format|

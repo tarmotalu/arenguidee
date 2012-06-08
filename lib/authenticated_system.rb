@@ -138,7 +138,8 @@ module AuthenticatedSystem
     # Called from #current_user. Then try to login from facebook
     def login_from_facebook
       begin
-        Rails.logger.info("LOGIN: before #{DateTime.now}")
+        randnr = rand(100)
+        Rails.logger.info("LOGIN(#{randnr}): BEFORE #{DateTime.now}")
         if current_facebook_user
           Rails.logger.info("LOGIN: after #{DateTime.now} ")
           Rails.logger.info("LOGIN: fbuid #{current_facebook_user.id}")
@@ -162,6 +163,7 @@ module AuthenticatedSystem
             return false
           end
         end
+        Rails.logger.info("LOGIN(#{randnr}): AFTER #{DateTime.now}")
       rescue Mogli::Client::OAuthException
         Rails.logger.error("Mogli::Client::OAuthException")
         return false

@@ -15,7 +15,7 @@ class HomeController < ApplicationController
                 :expires_in => 15.seconds
 
   def index
-    if current_instance.layout.include?("yrpri") and (not request.subdomains.any? or request.subdomains[0] == 'www')
+    if current_instance.domain_name.include?("yrpri") and (not request.subdomains.any? or request.subdomains[0] == 'www')
       redirect_to :action=>"world"
     else
       @page_title = tr("Overview","home")

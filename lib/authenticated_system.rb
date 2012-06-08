@@ -163,7 +163,7 @@ module AuthenticatedSystem
             return false
           end
         end
-        Rails.logger.info("LOGIN(#{randnr}): AFTER #{DateTime.now}")
+        #Rails.logger.info("LOGIN(#{randnr}): AFTER #{DateTime.now}")
       rescue Mogli::Client::OAuthException
         Rails.logger.error("Mogli::Client::OAuthException")
         return false

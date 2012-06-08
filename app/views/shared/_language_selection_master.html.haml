@@ -6,8 +6,8 @@
       - if @inline_translations_enabled
         %strong
           %br/
-          = link_to_function(trla("Stop translating BrainStorm"), "tr8nLanguageSelector.toggleInlineTranslations();")
+          = link_to_function(trla("Stop translating"), "tr8nLanguageSelector.toggleInlineTranslations();")
         %br/
       - else
         %br/
-        = link_to_function(trla("Start translating BrainStorm"), "tr8nLanguageSelector.toggleInlineTranslations();")
+        = link_to_function(trla("Start translating"), "tr8nLanguageSelector.toggleInlineTranslations();")

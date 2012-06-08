@@ -39,14 +39,13 @@
 
 #map_canvas{:style => "height:300px; width:100%;"}
 
-
 - if @country_sub_instance_ideas.any?
   %div.home_welcome
     %h1.home_h1
       - sub_instance=SubInstance.find_by_iso_country_id(@iso_country.id)
       = link_to sub_instance.show_url do
-        = image_tag @iso_country.large_flag_image, :border=>0
-        = tr(@iso_country.country_english_name,"welcome")
+        %div.countryflag= image_tag @iso_country.large_flag_image, :border=>0
+        %div.country= tr(@iso_country.country_english_name,"welcome")
     - @country_sub_instance_ideas.each do |idea|
       = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
       %div
@@ -61,8 +60,8 @@
     %h1.home_h1
       - sub_instance=SubInstance.find_by_short_name("world")
       = link_to sub_instance.show_url do
-        = image_tag "tr8n/flags/64/_united-nations.png", :border=>0
-        = tr("The Worlds Top Priorities","welcome")
+        %div.countryflag= image_tag "tr8n/flags/64/_united-nations.png", :border=>0
+        %div.country= tr("The Worlds Top Priorities","welcome")
     %h1.home_h1
     - @world_ideas.each do |idea|
       = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
@@ -79,13 +78,13 @@
     %h1.home_h1
       - sub_instance=SubInstance.find_by_short_name("eu")
       = link_to sub_instance.show_url do
-        = image_tag "tr8n/flags/64/_european-union.png", :border=>0
-        = tr("European Union and EEA Top Priorities","welcome")
+        %div.countryflag= image_tag "tr8n/flags/64/_european-union.png", :border=>0
+        %div.country= tr("European Union and EEA Top Priorities","welcome")
     - @eu_eea_ideas.each do |idea|
       = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
       %div
         %div{:id => "idea_detail_#{idea.id}"}
 - else
   - if sub_instance
-    = tr("No idea has been created for the European Union and EEA - be the first by clicking here: ","welcome")
-    = link_to sub_instance.show_url, sub_instance.show_url
+    %div.country= tr("No idea has been created for the European Union and EEA - be the first by clicking here: ","welcome")
+    %div.country= link_to sub_instance.show_url, sub_instance.show_url

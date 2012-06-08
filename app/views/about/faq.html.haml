@@ -5,14 +5,14 @@
         %h1
           = tr("Answers to Frequently Asked Questions", "view/about/br_faq")
         %p
-          = tr("<a name=\"remove_endorsement\"></a><b>Q: What is {instance_name} BrainStorm?</b>", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
-          %br= tr("A: {instance_name} BrainStorm is a website that allows people from all over the world to prioritise which issues matter the most to them", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
+          = tr("<a name=\"remove_endorsement\"></a><b>Q: What is {instance_name} ?</b>", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
+          %br= tr("A: {instance_name}  is a website that allows people from all over the world to prioritise which issues matter the most to them", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
         %p
-          = tr("<a name=\"remove_endorsement\"></a><b>Q: Can everyone use {instance_name} BrainStorm?</b>", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
+          = tr("<a name=\"remove_endorsement\"></a><b>Q: Can everyone use {instance_name} ?</b>", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
           %br= tr("A: Yes, everyone can view everything without logging in but you need to create a free account to participate", "view/about/faq")
         %p
           = tr("<a name=\"remove_endorsement\"></a><b>Q: What happens to the ideas?</b>", "view/about/faq")
-          %br= tr("A: That is really up to the people and the rulers. {instance_name} BrainStorm is not affiliated with any instance but our hope is that local politicians will see how much they have to gain by fulfilling the will of their people.", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
+          %br= tr("A: That is really up to the people and the rulers. {instance_name}  is not affiliated with any instance but our hope is that local politicians will see how much they have to gain by fulfilling the will of their people.", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
         %p
           = tr("<a name=\"remove_endorsement\"></a><b>Q: What are the rules?</b>", "view/about/faq")
           %br= tr("A: See <a href=\"/about/rules\">the rules</a> for detailed information.", "view/about/faq")
@@ -27,7 +27,7 @@
 
         %p
           = tr("<a name=\"typo\"></a><b>Q: How can I fix a typo or mis-spelling in my idea?</b>", "view/about/faq")
-          %br= tr("A: If no one else has endorsed it yet, you can simply click on \"rename this idea\" in the \"Action\" menu on that idea's page and fix the error.  Otherwise, post a bulletin of what is messed up and click \"flag for review\" on the \"Action\" menu to bring it to {instance_name} BrainStorm attention.", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
+          %br= tr("A: If no one else has endorsed it yet, you can simply click on \"rename this idea\" in the \"Action\" menu on that idea's page and fix the error.  Otherwise, post a bulletin of what is messed up and click \"flag for review\" on the \"Action\" menu to bring it to {instance_name}  attention.", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
 
         %p
           = tr("<a name=\"numbers\"></a><b>Q: What are the big \"rank\" numbers next to the ideas?</b>", "view/about/faq")
@@ -43,7 +43,7 @@
 
         %p
           = tr("<a name=\"index\"></a><b>Q: What is the \"[my name] Index\"?</b>", "view/about/faq")
-          %br= tr("A: Think of your ideas as a stock portfolio, or a mutual fund.  That index represents how your ideas are moving up and down in the rankings, just like the stock markets.  At a glance, you can see whether your ideas are becoming more important, or less.The \"volume\" you see underneath is how many endorsements or oppositions people made at {instance_name} BrainStorm that day.", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
+          %br= tr("A: Think of your ideas as a stock portfolio, or a mutual fund.  That index represents how your ideas are moving up and down in the rankings, just like the stock markets.  At a glance, you can see whether your ideas are becoming more important, or less.The \"volume\" you see underneath is how many endorsements or oppositions people made at {instance_name}  that day.", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
 
         %p
           = tr("<a name=\"idea_chart\"></a><b>Q: The chart on each idea's page?</b>", "view/about/faq")
@@ -51,14 +51,14 @@
 
         %p
           = tr("<a name=\"pc\"></a><b>Q: What is \"sp\"?</b>", "view/about/faq")
-          %br= tr("A: Social Points.  It's a way to track your influence at {instance_name} BrainStorm, and determine the \"<a href=\"/network\">most influential</a>\" chart. You can spend your Social points by <a href=\"/ideas/ads\">putting ads</a> for your favorite ideas at the top of all the {instance_name} BrainStorm pages, or proposing acquisitions.", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
+          %br= tr("A: Social Points.  It's a way to track your influence at {instance_name} , and determine the \"<a href=\"/network\">most influential</a>\" chart. You can spend your Social points by <a href=\"/ideas/ads\">putting ads</a> for your favorite ideas at the top of all the {instance_name}  pages, or proposing acquisitions.", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
 
         %p.list
           = tr("<a name=\"earnpc\"></a><b>Q: How do I earn Social points (sp)?</b>", "view/about/faq")
           = tr("<ul><li><span class=\"pc\">+1sp</span> when someone follows you. <span class=\"pc\">-1sp</span> when someone ignores you.", "view/about/faq")
           = tr("<li><span class=\"pc\">+1sp</span> if either endorsers or opposers find your talking point helpful.", "view/about/faq")
           = tr("<li>an additional<span class=\"pc\">+1sp</span> if <i>both</i> endorsers and opposers find your talking point helpful.", "view/about/faq")
-          = tr("<li><span class=\"pc\">+5sp</span> when someone accepts your invitation to join {instance_name} BrainStorm.", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
+          = tr("<li><span class=\"pc\">+5sp</span> when someone accepts your invitation to join {instance_name} .", "view/about/faq", :instance_name => tr(current_instance.name,"Name from database"))
           = tr("<li><span class=\"pc\">+?sp</span> when an acquisition you proposed is approved by 70%+, you will receive double the pc you spent proposing the acquisition.</ul>", "view/about/faq")
 
         %p.list

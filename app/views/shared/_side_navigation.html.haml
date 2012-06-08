@@ -28,12 +28,19 @@
             = image_tag SubInstance.current.iso_country.large_flag_image, :size=>"50x50"
           %span.label
             = tr("Home","Menu system")
+    - elsif current_instance.domain_name.include?("yrpri")
+      %li
+        = link_to :controller => "home", :action=>current_instance.domain_name.include?("yrpri") ? "world" : "index" do
+          = raw "<div class='sprite_clip #{controller_name=="home" ? "home_pos_selected" : "home_pos"}'></div>"
+          %span.label
+            = tr("World","Menu system")
     - else
       %li
         = link_to :controller => "home", :action=>current_instance.domain_name.include?("yrpri") ? "world" : "index" do
           = raw "<div class='sprite_clip #{controller_name=="home" ? "home_pos_selected" : "home_pos"}'></div>"
           %span.label
             = tr("Home","Menu system")
+
     %li
       = link_to :controller => "ideas", :action=>"index" do
         = raw "<div class='sprite_clip #{controller_name=="ideas" ? "ideas_pos_selected" : "ideas_pos"}'></div>"

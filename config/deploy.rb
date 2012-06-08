@@ -39,8 +39,8 @@ before 'deploy:update_code' do
 end
 
 after 'deploy:update_code' do
-  #thinking_sphinx.configure
-  #thinking_sphinx.rebuild
+  thinking_sphinx.configure
+  thinking_sphinx.rebuild
 end
 
 after 'deploy:finalize_update' do

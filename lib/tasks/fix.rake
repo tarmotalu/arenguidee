@@ -62,6 +62,30 @@ def change_to_mysql_text(text)
 end
 
 namespace :fix do
+  desc 'duplicate_emails'
+  task :duplicate_emails => :environment do
+    User.transaction do
+      User.find(:all, :group => [:email], :having => "count(*) > 1").each do |dupe|
+        dupe_users = User.find(:all, :conditions => {:email => dupe.email})
+        if dupe.email
+          good_user = dupe_users.pop
+          puts "keeping user #{good_user.id}'s email of #{dupe.email}"
+        end
+        dupe_users.each do |dupe_user|
+          random_string = (0...8).map{65.+(rand(25)).chr}.joi
+          if dupe.email
+            new_email = "#{random_string}.#{dupe.email}"
+          else
+            new_email = "#{random_string}@example.com"
+          end
+          puts "changing user #{dupe_user.id}'s email of #{dupe.email} to #{new_email}"
+          dupe_user.email = new_email
+          dupe_user.save(validate: false)
+        end
+      end
+    end
+  end
+
   desc 'fixdesc'
   task :fixdesc => :environment do
     Idea.unscoped.all.each do |idea|

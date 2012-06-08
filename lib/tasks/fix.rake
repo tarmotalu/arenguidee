@@ -62,6 +62,19 @@ def change_to_mysql_text(text)
 end
 
 namespace :fix do
+  desc 'fixdesc'
+  task :fixdesc => :environment do
+    Idea.unscoped.all.each do |idea|
+      if idea.points.where(sub_instance_id: idea.sub_instance_id).first
+        puts idea.points.where(sub_instance_id: idea.sub_instance_id).first.content_html
+        idea.description = idea.points.where(sub_instance_id: idea.sub_instance_id).first.content_html
+        idea.save
+      else
+        puts "NO POINT FOR #{idea.id}"
+      end
+    end
+  end
+
   desc 'rename_activities'
   task :rename_activities => :environment do
     renames = {

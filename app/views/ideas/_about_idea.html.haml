@@ -1,5 +1,5 @@
 .idea_name{:id => "idea_#{idea.id}_name"}
-  = link_to_unless_current tg(h(idea.name)), idea.show_url, :class => "idea_name_link"
+  = link_to_unless_current tg(h("#{idea.position}. #{idea.name}")), idea.show_url, :class => "idea_name_link"
   = render :partial=>"ideas/flagged", :locals=>{:idea=>idea}
   :javascript
     $(function(){

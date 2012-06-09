@@ -91,8 +91,8 @@ namespace :fix do
     Idea.unscoped.all.each do |idea|
       if idea.points.where(sub_instance_id: idea.sub_instance_id).first
         puts idea.points.where(sub_instance_id: idea.sub_instance_id).first.content_html
-        idea.description = idea.points.where(sub_instance_id: idea.sub_instance_id).first.content_html
-        idea.save
+        idea.description = idea.points.where(sub_instance_id: idea.sub_instance_id).first.content
+        idea.save(:validate=>false)
       else
         puts "NO POINT FOR #{idea.id}"
       end

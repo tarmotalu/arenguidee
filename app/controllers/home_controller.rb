@@ -40,7 +40,7 @@ class HomeController < ApplicationController
   end
 
   def world
-    if request.subdomains.any? or request.subdomains[0] != 'www'
+    if request.subdomains.any? and request.subdomains[0] != 'www'
       redirect_to "http://www.yrpri.org/home/world"
     else
       @position_in_idea_name = true

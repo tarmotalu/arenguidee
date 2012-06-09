@@ -61,7 +61,7 @@ class Point < ActiveRecord::Base
   end
   
   def category_name
-    if idea.category
+    if idea and idea.category
       idea.category.name
     else
       'No category'

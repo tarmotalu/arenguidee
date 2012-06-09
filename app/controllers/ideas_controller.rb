@@ -366,37 +366,41 @@ class IdeasController < ApplicationController
   
   # GET /ideas/1
   def show
-    @page_title = @idea.name
-    @show_only_last_process = false
-    @point_value = 0
-    @points_top_up = @idea.points.published.by_helpfulness.up_value.five
-    @points_top_down = @idea.points.published.by_helpfulness.down_value.five
-    @points_new_up = @idea.points.published.by_recently_created.up_value.five.reject {|p| @points_top_up.include?(p)}
-    @points_new_down = @idea.points.published.by_recently_created.down_value.five.reject {|p| @points_top_down.include?(p)}
-    @total_up_points = @idea.points.published.up_value.count
-    @total_down_points = @idea.points.published.down_value.count
-    @total_up_points_new = [0,@total_up_points-@points_top_up.length].max
-    @total_down_points_new = [0,@total_down_points-@points_top_down.length].max
-    get_qualities([@points_new_up,@points_new_down,@points_top_up,@points_top_down])
-
-    @activities = @idea.activities.active.top_discussions.for_all_users :include => :user
-    if logged_in? and @endorsement
-      if @endorsement.is_up?
-        @relationships = @idea.relationships.endorsers_endorsed.by_highest_percentage.find(:all, :include => :other_idea).group_by {|o|o.other_idea}
-      elsif @endorsement.is_down?
-        @relationships = @idea.relationships.opposers_endorsed.by_highest_percentage.find(:all, :include => :other_idea).group_by {|o|o.other_idea}
-      end
+    if @idea.sub_instance_id != SubInstance.current.id
+      redirect_to @idea.show_url
     else
-      @relationships = @idea.relationships.who_endorsed.by_highest_percentage.find(:all, :include => :other_idea).group_by {|o|o.other_idea}
-    end
-    @endorsements = nil
-    if logged_in? # pull all their endorsements on the ideas shown
-      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @relationships.collect {|other_idea, relationship| other_idea.id},current_user.id])
-    end    
-    respond_to do |format|
-      format.html { render :action => "show" }
-      format.xml { render :xml => @idea.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @idea.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+      @page_title = @idea.name
+      @show_only_last_process = false
+      @point_value = 0
+      @points_top_up = @idea.points.published.by_helpfulness.up_value.five
+      @points_top_down = @idea.points.published.by_helpfulness.down_value.five
+      @points_new_up = @idea.points.published.by_recently_created.up_value.five.reject {|p| @points_top_up.include?(p)}
+      @points_new_down = @idea.points.published.by_recently_created.down_value.five.reject {|p| @points_top_down.include?(p)}
+      @total_up_points = @idea.points.published.up_value.count
+      @total_down_points = @idea.points.published.down_value.count
+      @total_up_points_new = [0,@total_up_points-@points_top_up.length].max
+      @total_down_points_new = [0,@total_down_points-@points_top_down.length].max
+      get_qualities([@points_new_up,@points_new_down,@points_top_up,@points_top_down])
+
+      @activities = @idea.activities.active.top_discussions.for_all_users :include => :user
+      if logged_in? and @endorsement
+        if @endorsement.is_up?
+          @relationships = @idea.relationships.endorsers_endorsed.by_highest_percentage.find(:all, :include => :other_idea).group_by {|o|o.other_idea}
+        elsif @endorsement.is_down?
+          @relationships = @idea.relationships.opposers_endorsed.by_highest_percentage.find(:all, :include => :other_idea).group_by {|o|o.other_idea}
+        end
+      else
+        @relationships = @idea.relationships.who_endorsed.by_highest_percentage.find(:all, :include => :other_idea).group_by {|o|o.other_idea}
+      end
+      @endorsements = nil
+      if logged_in? # pull all their endorsements on the ideas shown
+        @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @relationships.collect {|other_idea, relationship| other_idea.id},current_user.id])
+      end
+      respond_to do |format|
+        format.html { render :action => "show" }
+        format.xml { render :xml => @idea.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @idea.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+      end
     end
   end
 

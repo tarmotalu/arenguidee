@@ -33,13 +33,13 @@
                       - translated_option = translate_facet_option(option)
                       - if translated_option==params[:category_name]
                         %li
-                          %b= link_to "#{tr(translated_option, "model/category")} (#{count})".html_safe, "/search?q=#{@query}&#{facet}=#{option}"
+                          %b= link_to "#{tr(translated_option, "model/category")} (#{count})".html_safe, "/search?q=#{@query}&#{facet}=#{option}#{params[:global] ? "&global=#{params[:global]}" : ""}"
                       - elsif option==params[:class]
                         %li
-                          %b= link_to "#{translated_option.humanize} (#{count})".html_safe, "/search?q=#{@query}&#{facet}=#{option}"
+                          %b= link_to "#{translated_option.humanize} (#{count})".html_safe, "/search?q=#{@query}&#{facet}=#{option}#{params[:global] ? "&global=#{params[:global]}" : ""}"
                       - else
                         %li
-                          = link_to "#{tr(translated_option, "model/category")} (#{count})".html_safe, "/search?q=#{@query}&#{facet}=#{option}"
+                          = link_to "#{tr(translated_option, "model/category")} (#{count})".html_safe, "/search?q=#{@query}&#{facet}=#{option}#{params[:global] ? "&global=#{params[:global]}" : ""}"
           - else
             = tr("No search results","search")
     .col-10

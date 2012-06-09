@@ -40,7 +40,7 @@ class HomeController < ApplicationController
 
   def world
     @page_title = tr("{instance_name} Worldwide","shared/language_selection_master",:instance_name => tr(current_instance.name,"Name from database"))
-    @ideas = @world_ideas = Idea.unscoped.where(:sub_instance_id=>SubInstance.find_by_short_name("world").id).published.top_rank.limit(3)
+    @ideas = @world_ideas = Idea.unscoped.where(:sub_instance_id=>SubInstance.find_by_short_name("united-nations").id).published.top_rank.limit(3)
     @eu_eea_ideas = Idea.unscoped.where(:sub_instance_id=>SubInstance.find_by_short_name("eu").id).published.top_rank.limit(3)
     @country_sub_instance = SubInstance.where(:iso_country_id=>@iso_country.id).first if @iso_country
     if @country_sub_instance

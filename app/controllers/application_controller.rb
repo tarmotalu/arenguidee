@@ -154,7 +154,7 @@ class ApplicationController < ActionController::Base
       end
     end
     @current_sub_instance ||= SubInstance.find_by_short_name(request.subdomains.first)
-    @current_sub_instance ||= SubInstance.find_by_short_name("world")
+    @current_sub_instance ||= SubInstance.find_by_short_name("united-nations")
     @current_sub_instance ||= SubInstance.find_by_short_name("default")
     SubInstance.current = @current_sub_instance
   end

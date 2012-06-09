@@ -61,7 +61,7 @@
       - sub_instance=SubInstance.find_by_short_name("united-nations")
       = link_to sub_instance.show_url do
         %div.countryflag= image_tag "tr8n/flags/64/_united-nations.png", :border=>0
-        %div.country= tr("The Worlds Top Priorities","welcome")
+        %div.country= tr("United Nations Top Priorities","welcome")
     %h1.home_h1
     - @world_ideas.each do |idea|
       = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}

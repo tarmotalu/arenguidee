@@ -16,6 +16,9 @@
       = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
       %div
         %div{:id => "idea_detail_#{idea.id}"}
+- else
+  .home_welcome
+    %h2= tr("No idea has been created for {country}", 'home', country: tr(SubInstance.current.name,"welcome"))
 - if @top_ideas.any?
   %div.home_welcome{:style=>"margin-top: 10px; padding-top: 10px;"}
     %h1.home_h1

@@ -56,10 +56,14 @@ class EndorsementsController < ApplicationController
       @endorsement = current_user.endorsements.find(params[:id])
     end
     return unless @endorsement
-    @idea = @endorsement.idea
+    Idea.unscoped {
+      @idea = @endorsement.idea
+    }
     eid = @endorsement.id
     @endorsement.destroy
-    @idea.reload
+    Idea.unscoped {
+      @idea.reload
+    }
     respond_to do |format|
       format.js {
         render :update do |page|

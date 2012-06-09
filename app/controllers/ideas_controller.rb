@@ -191,6 +191,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/top
   def top
+    @position_in_idea_name = true
     @page_title = tr("Top ideas", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     @ideas = Idea.published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
@@ -206,6 +207,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/top_24hr
   def top_24hr
+    @position_in_idea_name = true
     @page_title = tr("Top ideas past 24 hours", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     @ideas = Idea.published.top_24hr.paginate :page => params[:page], :per_page => params[:per_page]
@@ -221,6 +223,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/top_7days
   def top_7days
+    @position_in_idea_name = true
     @page_title = tr("Top ideas past 7 days", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     @ideas = Idea.published.top_7days.paginate :page => params[:page], :per_page => params[:per_page]
@@ -236,6 +239,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/top_30days
   def top_30days
+    @position_in_idea_name = true
     @page_title = tr("Top ideas past 30 days", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     @ideas = Idea.published.top_30days.paginate :page => params[:page], :per_page => params[:per_page]
@@ -251,6 +255,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/rising
   def rising
+    @position_in_idea_name = true
     @page_title = tr("Ideas rising in the rankings", "controller/ideas")
     @rss_url = rising_ideas_url(:format => 'rss')
     @ideas = Idea.published.rising.paginate :page => params[:page], :per_page => params[:per_page]
@@ -266,6 +271,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/falling
   def falling
+    @position_in_idea_name = true
     @page_title = tr("Ideas falling in the rankings", "controller/ideas")
     @rss_url = falling_ideas_url(:format => 'rss')
     @ideas = Idea.published.falling.paginate :page => params[:page], :per_page => params[:per_page]
@@ -281,6 +287,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/controversial
   def controversial
+    @position_in_idea_name = true
     @page_title = tr("Most controversial ideas", "controller/ideas")
     @rss_url = controversial_ideas_url(:format => 'rss')
     @ideas = Idea.published.controversial.paginate :page => params[:page], :per_page => params[:per_page]
@@ -296,6 +303,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/finished
   def finished
+    @position_in_idea_name = true
     @page_title = tr("Ideas in progress", "controller/ideas")
     @rss_url = finished_ideas_url(:format => 'rss')
     @ideas = Idea.finished.not_removed.by_most_recent_status_change.paginate :page => params[:page], :per_page => params[:per_page]
@@ -328,6 +336,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/newest
   def newest
+    @position_in_idea_name = true
     @page_title = tr("Newest ideas", "controller/ideas")
     @rss_url = newest_ideas_url(:format => 'rss')
     @ideas = Idea.published.newest.paginate :page => params[:page], :per_page => params[:per_page]

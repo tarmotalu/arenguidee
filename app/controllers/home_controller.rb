@@ -15,6 +15,7 @@ class HomeController < ApplicationController
                 :expires_in => 15.seconds
 
   def index
+    @position_in_idea_name = true
     if current_instance.domain_name.include?("yrpri") and (not request.subdomains.any? or request.subdomains[0] == 'www')
       redirect_to :action=>"world"
     else
@@ -39,6 +40,7 @@ class HomeController < ApplicationController
   end
 
   def world
+    @position_in_idea_name = true
     @page_title = tr("{instance_name} Worldwide","shared/language_selection_master",:instance_name => tr(current_instance.name,"Name from database"))
     @ideas = @world_ideas = Idea.unscoped.where(:sub_instance_id=>SubInstance.find_by_short_name("united-nations").id).published.top_rank.limit(3)
     @eu_eea_ideas = Idea.unscoped.where(:sub_instance_id=>SubInstance.find_by_short_name("eu").id).published.top_rank.limit(3)

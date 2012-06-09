@@ -1,3 +1,5 @@
+- idea = Idea.unscoped.find(point.idea_id)
+- other_idea = point.has_other_idea? ? Idea.unscoped.find(point.other_idea_id) : nil
 .point{:id => point.id}
   .col-group
     .col-1
@@ -15,16 +17,16 @@
             %span.opposed= tr("opposed", "view/points/_show_full")
           - if point.is_up?
             %span.opposed= tr("supported", "view/points/_show_full")
-          = link_to point.idea.name, point.idea
-          = official_status(point.idea)
+          = link_to idea.name, idea
+          = official_status(idea)
         .point_content_wrapper
           .point_name
             = link_to_unless_current h(point.name), point
           - if point.has_other_idea?
             .point_other
-              = tr("Supporting {idea_name}", "view/points/_show_full", :idea_name => link_to(point.other_idea.name, point.other_idea))
+              = tr("Supporting {idea_name}", "view/points/_show_full", :idea_name => link_to(other_idea.name, other_idea))
           .point_content
-            - if revision
+            - if revision && revision.content_diff
               = tg(revision.content_diff)
             - else
               = tg(point.content_html)

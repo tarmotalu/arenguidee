@@ -191,6 +191,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/top
   def top
+    @position_in_idea_name = true
     @page_title = tr("Top ideas", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     @ideas = Idea.published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
@@ -206,6 +207,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/top_24hr
   def top_24hr
+    @position_in_idea_name = true
     @page_title = tr("Top ideas past 24 hours", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     @ideas = Idea.published.top_24hr.paginate :page => params[:page], :per_page => params[:per_page]
@@ -221,6 +223,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/top_7days
   def top_7days
+    @position_in_idea_name = true
     @page_title = tr("Top ideas past 7 days", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     @ideas = Idea.published.top_7days.paginate :page => params[:page], :per_page => params[:per_page]
@@ -236,6 +239,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/top_30days
   def top_30days
+    @position_in_idea_name = true
     @page_title = tr("Top ideas past 30 days", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     @ideas = Idea.published.top_30days.paginate :page => params[:page], :per_page => params[:per_page]
@@ -251,6 +255,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/rising
   def rising
+    @position_in_idea_name = true
     @page_title = tr("Ideas rising in the rankings", "controller/ideas")
     @rss_url = rising_ideas_url(:format => 'rss')
     @ideas = Idea.published.rising.paginate :page => params[:page], :per_page => params[:per_page]
@@ -266,6 +271,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/falling
   def falling
+    @position_in_idea_name = true
     @page_title = tr("Ideas falling in the rankings", "controller/ideas")
     @rss_url = falling_ideas_url(:format => 'rss')
     @ideas = Idea.published.falling.paginate :page => params[:page], :per_page => params[:per_page]
@@ -281,6 +287,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/controversial
   def controversial
+    @position_in_idea_name = true
     @page_title = tr("Most controversial ideas", "controller/ideas")
     @rss_url = controversial_ideas_url(:format => 'rss')
     @ideas = Idea.published.controversial.paginate :page => params[:page], :per_page => params[:per_page]
@@ -296,6 +303,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/finished
   def finished
+    @position_in_idea_name = true
     @page_title = tr("Ideas in progress", "controller/ideas")
     @rss_url = finished_ideas_url(:format => 'rss')
     @ideas = Idea.finished.not_removed.by_most_recent_status_change.paginate :page => params[:page], :per_page => params[:per_page]
@@ -328,6 +336,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/newest
   def newest
+    @position_in_idea_name = true
     @page_title = tr("Newest ideas", "controller/ideas")
     @rss_url = newest_ideas_url(:format => 'rss')
     @ideas = Idea.published.newest.paginate :page => params[:page], :per_page => params[:per_page]
@@ -662,7 +671,7 @@ class IdeasController < ApplicationController
   # POST /ideas/1/endorse
   def endorse
     @value = (params[:value]||1).to_i
-    @idea = Idea.find(params[:id])
+    @idea = Idea.unscoped.find(params[:id])
     if not logged_in?
       session[:idea_id] = @idea.id
       session[:value] = @value
@@ -675,10 +684,10 @@ class IdeasController < ApplicationController
       @endorsement = @idea.oppose(current_user,request,current_sub_instance,@referral)
     end
     if params[:ad_id]    
-      @ad = Ad.find(params[:ad_id])
+      @ad = Ad.unscoped.find(params[:ad_id])
       @ad.vote(current_user,@value,request) if @ad
     else
-      @ad = Ad.find_by_idea_id_and_status(@idea.id,'active')
+      @ad = Ad.unscoped.find_by_idea_id_and_status(@idea.id,'active')
       if @ad and @ad.shown_ads.find_by_user_id(current_user.id)
         @ad.vote(current_user,@value,request) 
       end
@@ -697,9 +706,9 @@ class IdeasController < ApplicationController
             page.replace 'endorser_link', render(:partial => "ideas/endorser_link")
             page.replace 'opposer_link', render(:partial => "ideas/opposer_link")
             if @value == 1          
-              @activity = ActivityEndorsementNew.find_by_idea_id_and_user_id(@idea.id,current_user.id, :order => "created_at desc")
+              @activity = ActivityEndorsementNew.unscoped.find_by_idea_id_and_user_id(@idea.id,current_user.id, :order => "created_at desc")
             else
-              @activity = ActivityOppositionNew.find_by_idea_id_and_user_id(@idea.id,current_user.id, :order => "created_at desc")
+              @activity = ActivityOppositionNew.unscoped.find_by_idea_id_and_user_id(@idea.id,current_user.id, :order => "created_at desc")
             end            
             if @activity and not params[:no_activites]
               page.insert_html :top, 'activities', render(:partial => "activities/show", :locals => {:activity => @activity, :suffix => "_noself"})

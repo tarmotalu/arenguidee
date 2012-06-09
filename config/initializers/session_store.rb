@@ -1,6 +1,6 @@
 # Be sure to restart your server when you modify this file.
 
-SocialInnovation::Application.config.session_store :cookie_store, key: Rails.application.config.database_configuration[Rails.env]["session_key"]
+SocialInnovation::Application.config.session_store :cookie_store, key: Rails.application.config.database_configuration[Rails.env]["session_key"],  :domain => ".#{Instance.last.domain_name}"
 
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information

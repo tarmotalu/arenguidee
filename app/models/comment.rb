@@ -25,6 +25,7 @@ class Comment < ActiveRecord::Base
   define_index do
     indexes content
     indexes category_name, :facet=>true, :as=>"category_name"
+    indexes updated_at, :sortable => true
     has sub_instance_id, :as=>:sub_instance_id, :type => :integer
     where "comments.status = 'published'"
   end

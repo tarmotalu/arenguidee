@@ -47,6 +47,7 @@ class Point < ActiveRecord::Base
     indexes name
     indexes content
     indexes idea.category.name, :facet=>true, :as=>"category_name"
+    indexes updated_at, :sortable => true
     has sub_instance_id, :as=>:sub_instance_id, :type => :integer
     where "points.status = 'published'"    
   end

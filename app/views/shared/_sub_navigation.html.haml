@@ -3,7 +3,14 @@
     %span
       = controller_name == "points" ? tr("Debate","sub_nav") + " :" : tr(controller_name.camelize,"sub_nav") + " :"
     %span
-    - if @selected_sub_nav_name
+    - if controller_name == "issues"
+      - if action_name == "index"
+        %a.subnav.pulldown_trigger{:href => "subnav"}
+          %span= tr('All', "view/issues")
+      - else
+        %a.subnav.pulldown_trigger{:href => "subnav"}
+          %span= tr(@category.name, "model/category").titleize
+    - elsif @selected_sub_nav_name
       %a.subnav.pulldown_trigger{:href => "subnav"}
         %span
           = @selected_sub_nav_name

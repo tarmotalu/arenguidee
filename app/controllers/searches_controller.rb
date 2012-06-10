@@ -17,9 +17,9 @@ class SearchesController < ApplicationController
         @search_results = @facets.for(:class=>params[:class].to_s)
       else
         if params[:global]
-          @search_results = ThinkingSphinx.search @query, :order => :updated_at_sort, :sort_mode => :desc, :star => true, :retry_stale => true, :page => params[:page]
+          @search_results = ThinkingSphinx.search @query, :order => :updated_at, :sort_mode => :desc, :star => true, :retry_stale => true, :page => params[:page]
         else
-          @search_results = ThinkingSphinx.search @query, :order => :updated_at_sort, :sort_mode => :desc, :with => {:sub_instance_id => SubInstance.current.id }, :star => true, :retry_stale => true, :page => params[:page]
+          @search_results = ThinkingSphinx.search @query, :order => :updated_at, :sort_mode => :desc, :with => {:sub_instance_id => SubInstance.current.id }, :star => true, :retry_stale => true, :page => params[:page]
         end
       end
     end

@@ -148,11 +148,15 @@ class PointsController < ApplicationController
   # GET /ideas/1/points/new
   def new
     load_endorsement
-    @point = @idea.points.new
-    @page_title = tr("Add a point to {idea_name}", "controller/points", :idea_name => @idea.name)
-    @point.value = @endorsement.value if @endorsement
-    respond_to do |format|
-      format.html # new.html.erb
+    if @idea.sub_instance_id != SubInstance.current.id
+      redirect_to "#{@idea.show_url}/points/new#{params[:support] ? "?support=true" : ""}"
+    else
+      @point = @idea.points.new
+      @page_title = tr("Add a point to {idea_name}", "controller/points", :idea_name => @idea.name)
+      @point.value = @endorsement.value if @endorsement
+      respond_to do |format|
+        format.html # new.html.erb
+      end
     end
   end
 
@@ -353,7 +357,7 @@ class PointsController < ApplicationController
 
   private
     def load_endorsement
-      @idea = Idea.find(params[:idea_id])
+      @idea = Idea.unscoped.find(params[:idea_id])
       @endorsement = nil
       if logged_in? # pull all their endorsements on the ideas shown
         @endorsement = @idea.endorsements.active.find_by_user_id(current_user.id)

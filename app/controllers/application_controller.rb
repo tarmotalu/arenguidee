@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
   
   # switch to the right database for this instance
   before_filter :check_for_localhost
+  before_filter :setup_geoblocking
   before_filter :check_subdomain
   before_filter :check_geoblocking
 
@@ -154,12 +155,16 @@ class ApplicationController < ActionController::Base
       end
     end
     @current_sub_instance ||= SubInstance.find_by_short_name(request.subdomains.first)
+    if @iso_country
+      Rails.logger.info ("Setting sub instance to iso countr #{@iso_country.id}")
+      @current_sub_instance ||= SubInstance.where(:iso_country_id=>@iso_country.id).first
+    end
     @current_sub_instance ||= SubInstance.find_by_short_name("united-nations")
     @current_sub_instance ||= SubInstance.find_by_short_name("default")
     SubInstance.current = @current_sub_instance
   end
   
-  def check_geoblocking
+  def setup_geoblocking
     if File.exists?(Rails.root.join("lib/geoip/GeoIP.dat"))
       @country_code = Thread.current[:country_code] = (session[:country_code] ||= GeoIP.new(Rails.root.join("lib/geoip/GeoIP.dat")).country(request.remote_ip)[3]).downcase
     else
@@ -167,6 +172,9 @@ class ApplicationController < ActionController::Base
     end
     @country_code = "is" if @country_code == nil or @country_code == "--"
     @iso_country = Tr8n::IsoCountry.find_by_code(@country_code.upcase)
+  end
+
+  def check_geoblocking
     Rails.logger.info("Geoip country: #{@country_code} - locale #{session[:locale]} - #{current_user ? (current_user.email ? current_user.email : current_user.login) : "Anonymous"}")
     Rails.logger.info(request.user_agent)
     if SubInstance.current and SubInstance.current.geoblocking_enabled

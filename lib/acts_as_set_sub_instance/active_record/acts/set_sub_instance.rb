@@ -8,12 +8,12 @@ module ActiveRecord
       module ClassMethods
         # Not with idea accos
         def default_scope
-          if not ["activities","comments","tags","users","groups","ideas","points","ads","r"].include?(table_name)
+          if not ["activities","comments","tags","users","groups","ideas","points","ads","r","categories"].include?(table_name)
             # Do nothing
           elsif table_name=="users"
             # Do nothing for now
-          elsif Thread.current[:current_user] and Thread.current[:current_user].is_admin?
-            where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil)
+          elsif table_name=="categories"
+            where(:sub_instance_id=>Category.where(:sub_instance_id=>SubInstance.current.id).count>0 ? SubInstance.current.id : nil)
           elsif table_name=="groups"
             where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil)
           elsif table_name=="ideas"

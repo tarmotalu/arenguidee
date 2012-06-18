@@ -6,6 +6,17 @@ class Category < ActiveRecord::Base
   validates_attachment_size :icon, :less_than => 5.megabytes
   validates_attachment_content_type :icon, :content_type => ['image/png']
 
+  acts_as_set_sub_instance :table_name=>"categories"
+
+  def self.default_or_sub_instance
+    if Category.count>0
+      Category.all
+    else
+      Category.unscoped.where("sub_instance_id IS NULL").all
+    end
+  end
+
+
   def i18n_name
     tr(self.name, "model/category")
   end

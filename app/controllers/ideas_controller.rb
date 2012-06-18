@@ -782,6 +782,7 @@ class IdeasController < ApplicationController
       end
     end
     respond_to do |format|
+      params[:idea][:group] = nil if params[:idea][:group]==""
       if params[:idea][:name] and @idea.update_attributes(params[:idea]) and @previous_name != params[:idea][:name]
         # already renamed?
         @activity = ActivityIdeaRenamed.find_by_user_id_and_idea_id(current_user.id,@idea.id)

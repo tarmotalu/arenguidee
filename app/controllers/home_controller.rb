@@ -19,7 +19,7 @@ class HomeController < ApplicationController
     if current_instance.domain_name.include?("yrpri") and (not request.subdomains.any? or request.subdomains[0] == 'www')
       redirect_to :action=>"world"
     else
-      @page_title = tr("Overview","home")
+      @page_title = SubInstance.current.name
       @ideas = @new_ideas = Idea.published.newest.limit(3)
       @top_ideas = Idea.published.top_rank.limit(3).reject{|idea| @new_ideas.include?(idea)}
       @random_ideas = Idea.published.by_random.limit(3).reject{|idea| @new_ideas.include?(idea) or @top_ideas.include?(idea)}

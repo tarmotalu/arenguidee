@@ -30,11 +30,6 @@
             = tr("Home","Menu system")
     - elsif current_instance.domain_name.include?("yrpri")
       %li
-        = link_to :controller => "home", :action=>current_instance.domain_name.include?("yrpri") ? "world" : "index" do
-          = raw "<div class='sprite_clip #{controller_name=="home" ? "home_pos_selected" : "home_pos"}'></div>"
-          %span.label
-            = tr("World","Menu system")
-      %li
         = link_to :controller => "home", :action=> "index" do
           .sprite_clip_flag
             = image_tag SubInstance.current.logo.url(:icon_50), :border => 0, :size=>"50x50"
@@ -73,9 +68,16 @@
         = raw "<div class='sprite_clip #{controller_name=="issues" ? "categories_pos_selected" : "categories_pos"}'></div>"
         %span.label
           = tr("Categories", "view/shared/_menu")
+    - if current_instance.domain_name.include?("yrpri") and not SubInstance.current.iso_country
+      %li
+        = link_to :controller => "home", :action=>current_instance.domain_name.include?("yrpri") ? "world" : "index" do
+          = raw "<div class='sprite_clip #{controller_name=="home" ? "home_pos_selected" : "home_pos"}'></div>"
+          %span.label
+            = tr("World","Menu system")
+
 - if nav == 1
 - elsif nav == 6
-  - if ['instances','color_schemes','admin','pages','tags'].include?(params[:controller])
+  - if ['instances','color_schemes','admin','pages','tags'].incl  ude?(params[:controller])
     = #render :partial => "admin/nav"
   - elsif ['sub_instances'].include?(params[:controller]) and logged_in?
     = #render :partial => "sub_instances/nav"

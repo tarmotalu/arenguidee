@@ -32,8 +32,8 @@ class AboutController < ApplicationController
     elsif params[:id] == 'sub_instance_from_ideas_to_action'
       @page_title = tr("From ideas to action", "controller/about")
       render :action => 'sub_instance_from_ideas_to_action'
-    elsif @page = Page.find_by_short_name(params[:id])
-      @page_title = @page.name
+    #elsif @page = Page.find_by_short_name(params[:id])
+    #  @page_title = @page.name
     else
       render file: "/public/404.html", status: :not_found, layout: false
     end

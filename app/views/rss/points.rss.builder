@@ -7,7 +7,7 @@ xml.rss :version => "2.0" do
     for point in @points
       xml.item do
         xml.title point.name
-        xml.description render :partial => "points/show_full", :locals => {:point => point, :quality => nil, :revision => nil}
+        xml.description render :partial => "points/show_full", :formats => [:html], :locals => {:point => point, :quality => nil, :revision => nil}
         xml.pubDate point.created_at.to_s(:rfc822)
         xml.author point.author_sentence
         xml.link point_url(point)

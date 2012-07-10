@@ -238,12 +238,9 @@ class IssuesController < ApplicationController
   def setup_menu_items
     @items ||= begin
       items = Hash.new
-      categories = Category.all.collect { |category| t = Tag.find_by_name(category.name) }.select { |t| t != nil }
-      categories.each_with_index do |category, idx|
-        items[idx] = [tr(category.name, "model/category"), issue_url(category.slug)]
+      Category.all.each_with_index do |category, idx|
+        items[idx] = [tr(category.name, "model/category"), category.show_url]
       end
-      Rails.logger.debug "FOOBAR"
-      Rails.logger.debug items.inspect
       items
     end
   end

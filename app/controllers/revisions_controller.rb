@@ -111,7 +111,7 @@ class RevisionsController < ApplicationController
   
   protected
   def get_point
-    @point = Point.find(params[:point_id])
+    @point = Point.unscoped.find(params[:point_id])
     @idea = @point.idea
   end
   

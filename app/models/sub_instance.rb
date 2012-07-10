@@ -36,7 +36,7 @@ class SubInstance < ActiveRecord::Base
   workflow_column :status
   workflow do
     state :passive do
-      event :registered, transitions_to: :pending
+      event :register, transitions_to: :pending
       event :suspend, transitions_to: :suspended
       event :remove, transitions_to: :removed
     end

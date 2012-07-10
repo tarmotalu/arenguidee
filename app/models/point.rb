@@ -46,8 +46,8 @@ class Point < ActiveRecord::Base
   define_index do
     indexes name
     indexes content
-    indexes idea.category.name, :facet=>true, :as=>"category_name"
-    indexes updated_at, :sortable => true
+    has idea.category.name, :facet=>true, :as=>"category_name"
+    has updated_at
     has sub_instance_id, :as=>:sub_instance_id, :type => :integer
     where "points.status = 'published'"    
   end
@@ -61,8 +61,8 @@ class Point < ActiveRecord::Base
   end
   
   def category_name
-    if idea and idea.category
-      idea.category.name
+    if idea_id and Idea.unscoped.find(idea_id).category
+      Idea.unscoped.find(idea_id).category.name
     else
       'No category'
     end

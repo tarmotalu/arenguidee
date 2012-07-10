@@ -118,7 +118,7 @@ class UserMailer < ActionMailer::Base
          :reply_to => Instance.current.admin_email,
          :from => "#{tr(Instance.current.name,"Name from database")} <#{Instance.current.admin_email}>",
          :subject => tr("Your new temporary password","email") do |format|
-           format.text { render :text=>convert_to_text(render_to_string("new_password"), formats: [:html]) }
+           format.text { render :text=>convert_to_text(render_to_string("new_password", formats: [:html])) }
            format.html
          end
   end

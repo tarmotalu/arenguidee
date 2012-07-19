@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120618205644) do
+ActiveRecord::Schema.define(:version => 20120719122127) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -1105,7 +1105,6 @@ ActiveRecord::Schema.define(:version => 20120618205644) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_comments_subscribed",      :default => false
-    t.boolean  "is_votes_subscribed",         :default => false
     t.boolean  "is_point_changes_subscribed", :default => false
     t.boolean  "is_messages_subscribed",      :default => false
     t.boolean  "is_followers_subscribed",     :default => true

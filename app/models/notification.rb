@@ -117,18 +117,6 @@ class Notification < ActiveRecord::Base
 
 end
 
-class NotificationChangeVote < Notification
-  
-  def name
-    tr("Voting has started on {new_idea_name} acquiring {idea_name}", "model/notification", :idea_name => notifiable.change.idea_name, :new_idea_name => notifiable.change.new_idea.name)
-  end
-  
-  def is_recipient_subscribed?
-    recipient.is_votes_subscribed?
-  end  
-  
-end
-
 class NotificationChangeProposed < Notification
   
   def name

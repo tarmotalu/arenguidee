@@ -10,5 +10,9 @@
     });
   %div{style: 'float: right;'}= render :partial=>"ideas/report_content", :locals=>{:idea=>idea}
 .category
+- if action_name == 'show' and idea.idea_revisions_count > 1
+  .small_text
+    = tr("by {author_sentence}", "view/points/_short_list", :author_sentence => idea.author_sentence)
+    = tr("added {time_ago}", "view/points/_short_list", :time_ago => time_ago(idea.created_at))
 %p
   = idea.description

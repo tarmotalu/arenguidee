@@ -394,6 +394,7 @@ class User < ActiveRecord::Base
       self.report_frequency = 0
       self.is_comments_subscribed = false
       self.is_point_changes_subscribed = false      
+      self.is_idea_changes_subscribed = false      
       self.is_followers_subscribed = false
       self.is_finished_subscribed = false      
       self.is_messages_subscribed = false
@@ -402,6 +403,7 @@ class User < ActiveRecord::Base
       self.report_frequency = 0
       self.is_comments_subscribed = true
       self.is_point_changes_subscribed = true
+      self.is_idea_changes_subscribed = true
       self.is_followers_subscribed = true 
       self.is_finished_subscribed = true           
       self.is_messages_subscribed = true

@@ -14,6 +14,8 @@
         - else
           = link_to tr("{count} discussions", "view/ideas/_nav", :count => @idea.discussions_count), discussions_idea_url(@idea)
 
+      %li
+        = link_to tr("{count} revisions", "view/ideas/_nav", :count => @idea.idea_revisions_count), idea_idea_revision_url(@idea,@idea.idea_revision_id)
     - if false and @idea.changes_count > 0 or params[:controller] == 'changes'
       %li
         = link_to tr("M&A", "view/ideas/_nav"), idea_changes_url(@idea)
@@ -29,7 +31,7 @@
         - if logged_in?
           - if (current_user.id == @idea.user_id and @idea.endorsements_count < 2) or current_user.is_admin?
             %li
-              = link_to tr("Edit", "view/ideas/_nav"), edit_idea_url(@idea), :title => tr("Edit this idea", "view/ideas/_nav"), :class => "qtip_left"
+              = link_to tr("Edit", "view/ideas/_nav"), new_idea_idea_revision_url(@idea), :title => tr("Edit this idea", "view/ideas/_nav"), :class => "qtip_left"
           - if current_user.is_admin?
             %li
               = link_to tr("Update status", "view/ideas/_nav"), update_status_idea_url(@idea), :title => tr("Update this idea's status", "view/ideas/_nav"), :class => "qtip_left"

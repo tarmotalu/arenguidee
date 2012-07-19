@@ -1,8 +1,8 @@
-= render :partial => "header"
+= render :partial => "ideas/header"
 .col-group
   .col-1
     .col-content
-      = render :partial => "nav"
+      = render :partial => "ideas/nav"
   .col-11
     .col-content
       = form_for(@idea) do |f|
@@ -32,5 +32,8 @@
             = tr("Category", "view/users/_form_long")
           .field_box
             = f.select :category, options_for_select_simple(Category.all.collect{|s|[s.i18n_name,s.id]}, @idea.category.id)
+        .field
+          .field_label= tr("Description", "view/ideas/form")
+          .field_box= f.text_area :description
         %br/
         = f.submit tr("Save idea", "view/ideas/edit"), :class => "yellow_button"

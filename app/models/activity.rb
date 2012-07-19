@@ -38,6 +38,7 @@ class Activity < ActiveRecord::Base
   belongs_to :tag
   belongs_to :point
   belongs_to :revision
+  belongs_to :idea_revision
   belongs_to :capital
   belongs_to :ad
 
@@ -524,6 +525,18 @@ class ActivityPointDeleted < Activity
   end
 end
 
+
+class ActivityIdeaRevisionDescription < Activity
+  def name
+    tr("{user_name} revised {idea_name}", "model/activity", :user_name => user.name, :idea_name => idea.name)
+  end
+end
+
+class ActivityIdeaRevisionName < Activity
+  def name
+    tr("{user_name} changed the idea's title to {idea_name}", "model/activity", :user_name => user.name, :idea_name => idea.name)
+  end
+end
 class ActivityPointRevisionContent < Activity
   def name
     tr("{user_name} revised {point_name}", "model/activity", :user_name => user.name, :point_name => point.name)

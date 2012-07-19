@@ -262,6 +262,18 @@ class NotificationPointRevision < Notification
   
 end
 
+class NotificationIdeaRevision < Notification
+  
+  def name
+    tr("{sender_name} revised {idea_name}", "model/notification", :sender_name => sender.name, :idea_name => notifiable.name)
+  end
+  
+  def is_recipient_subscribed?
+    recipient.is_idea_changes_subscribed?
+  end  
+  
+end
+
 class NotificationIdeaFinished < Notification
   
   def name

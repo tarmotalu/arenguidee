@@ -53,11 +53,13 @@ Install Bundler
 $ gem install bundler
 ````
 
-Install thinking-sphinx
+Install thinking-sphinx, memcached, and imagemagick
 
 ````bash
-$ sudo aptitude install sphinxsearch
+$ sudo aptitude install sphinxsearch memcached imagemagick
 ````
+
+You will also need to have an smtpd running on the machine.
 
 Set up social-innovation
 ----------------------------

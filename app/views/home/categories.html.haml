@@ -1,11 +1,8 @@
 - for category in @categories
   .idea_listing
-    %span.idea_name
+    %span
       %a{:href => "#{category.to_url}"}
         = tr(category.name, "model/category")
       - category.ideas.top_three.each do |idea|
-        <br>
-        = link_to idea.name, idea.show_url
-        <br>
-        = idea.description
+        = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
 

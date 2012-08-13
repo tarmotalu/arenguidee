@@ -17,7 +17,7 @@
           - if current_user.unread_notifications_count > 0
             %div.notify_box
               %a.notifications{:href => "notifications"}
-                = current_user.unread_notifications_count
+                %span= current_user.unread_notifications_count
           %a.profile{:href => "profile"}
             %div
               = current_user.login

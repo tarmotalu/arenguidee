@@ -35,7 +35,7 @@ class AboutController < ApplicationController
     #elsif @page = Page.find_by_short_name(params[:id])
     #  @page_title = @page.name
     else
-      render file: "/public/404.html", status: :not_found, layout: false
+      render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
     end
   end
 end

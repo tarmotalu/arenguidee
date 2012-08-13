@@ -40,6 +40,7 @@ class Idea < ActiveRecord::Base
   scope :falling_24hr, :conditions => "ideas.position_24hr_delta < 0"
   
   scope :finished, :conditions => "ideas.official_status in (-2,-1,2)"
+  scope :revised, :conditions => "idea_revisions_count > 1"
   
   scope :by_user_id, lambda{|user_id| {:conditions=>["user_id=?",user_id]}}
   scope :item_limit, lambda{|limit| {:limit=>limit}}
@@ -59,7 +60,10 @@ class Idea < ActiveRecord::Base
   belongs_to :sub_instance
   belongs_to :category
   belongs_to :group
+  belongs_to :idea_revision
   
+  has_many :idea_revisions, :dependent => :destroy
+  has_many :author_users, :through => :idea_revisions, :select => "distinct users.*", :source => :user, :class_name => "User"
   has_many :relationships, :dependent => :destroy
   has_many :incoming_relationships, :foreign_key => :other_idea_id, :class_name => "Relationship", :dependent => :destroy
   
@@ -164,6 +168,26 @@ class Idea < ActiveRecord::Base
     self.name
   end
   
+  def setup_revision
+    IdeaRevision.create_from_idea(self)
+  end
+
+  def author_user
+    self.author_users.order("idea_revisions.created_at ASC").first
+  end
+
+  def last_author
+    self.author_users.order("idea_revisions.created_at DESC").last
+  end
+  
+  def authors
+    idea_revisions.count(:group => :user, :order => "count_all desc")
+  end
+  
+  def editors
+    idea_revisions.count(:group => :user, :conditions => ["idea_revisions.user_id <> ?", user_id], :order => "count_all desc")
+  end
+
   def endorse(user,request=nil,sub_instance=nil,referral=nil)
     return false if not user
     sub_instance = nil if sub_instance and sub_instance.id == 1 # don't log sub_instance if it's the default
@@ -691,7 +715,6 @@ class Idea < ActiveRecord::Base
   def on_published_entry(new_state = nil, event = nil)
     self.published_at = Time.now
     save(:validate => false) if persisted?
-    ActivityIdeaNew.create(:user => user, :idea => self)
   end
   
   def on_removed_entry(new_state, event)
@@ -701,6 +724,9 @@ class Idea < ActiveRecord::Base
       end
     end
     self.removed_at = Time.now
+    for r in idea_revisions
+      r.remove!
+    end
     save(:validate => false)
   end
 

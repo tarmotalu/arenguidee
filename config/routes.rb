@@ -141,6 +141,7 @@ SocialInnovation::Application.routes.draw do
       get :random
       get :newest
       get :untagged
+      get :revised
   	end
     resources :changes do
       member do
@@ -151,6 +152,11 @@ SocialInnovation::Application.routes.draw do
         get :activities
       end
       resources :votes
+    end
+    resources :idea_revisions do
+      member do
+        get :clean
+      end
     end
     resources :points
     resources :ads do

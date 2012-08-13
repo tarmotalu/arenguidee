@@ -72,7 +72,7 @@ namespace :fix do
           puts "keeping user #{good_user.id}'s email of #{dupe.email}"
         end
         dupe_users.each do |dupe_user|
-          random_string = (0...8).map{65.+(rand(25)).chr}.joi
+          random_string = (0...8).map{65.+(rand(25)).chr}.join
           if dupe.email
             new_email = "#{random_string}.#{dupe.email}"
           else

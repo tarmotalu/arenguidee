@@ -23,7 +23,7 @@
           %span.label
             = tr("World","Menu system")
       %li
-        = link_to :controller => "home", :action=> "index" do
+        = link_to SubInstance.current.show_url do
           .sprite_clip_flag
             = image_tag SubInstance.current.iso_country.large_flag_image, :size=>"50x50"
           %span.label

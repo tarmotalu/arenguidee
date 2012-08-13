@@ -14,6 +14,9 @@ class AboutController < ApplicationController
     elsif params[:id] == 'faq'
       @page_title = tr("Answers to Frequently Asked Questions at {instance_name}", "controller/about", :instance_name => tr(current_instance.name,"Name from database"))
       render :action => "faq"
+    elsif params[:id] == 'intro'
+      @page_title = tr("Introduction to {instance_name}", "controller/about", :instance_name => tr(current_instance.name,"Name from database"))
+      render :action => "intro"
     elsif params[:id] == 'contributors'
       @page_title = tr("Contributors to {instance_name}", "controller/about", :instance_name => tr(current_instance.name,"Name from database"))
       render :action => "contributors"

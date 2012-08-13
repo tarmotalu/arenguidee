@@ -8,6 +8,7 @@
               = image_tag SubInstance.current.top_banner.url(:icon_full), :size => "1024x80", :border => 0
             - else
               = image_tag current_instance.top_banner.url(:icon_full), :size => "1024x80", :border => 0
+          %div.header_submenu
             - if SubInstance.current.sub_link_header and SubInstance.current.sub_link_header!=""
               = SubInstance.current.sub_link_header.html_safe
           %p.hide

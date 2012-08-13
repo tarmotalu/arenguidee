@@ -10,7 +10,7 @@ class IdeasController < ApplicationController
 
   before_filter :setup_filter_dropdown
 
-  caches_action :index, :top, :top_24hr, :top_7days, :top_30days,
+  caches_action :revised, :index, :top, :top_24hr, :top_7days, :top_30days,
                 :ads, :controversial, :rising, :newest, :finished, :show,
                 :top_points, :discussions, :endorsers, :opposers, :activities,
                 :if => proc {|c| c.do_action_cache?},
@@ -364,6 +364,16 @@ class IdeasController < ApplicationController
     end  
   end  
   
+  def revised
+    @page_title = tr("Recently revised ideas", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @revisions = IdeaRevision.published.by_recently_created.find(:all, :include => :idea, :conditions => "ideas.revisions_count > 1").paginate :page => params[:page], :per_page => params[:per_page]
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => @revisions.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
+      format.json { render :json => @revisions.to_json(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
+    end    
+  end 
+
   # GET /ideas/1
   def show
     if @idea.sub_instance_id != SubInstance.current.id
@@ -639,10 +649,12 @@ class IdeasController < ApplicationController
     @saved = @idea.save
     
     if @saved
+      @idea.setup_revision
       first_point = @idea.points.first
       first_point.setup_revision
       first_point.reload
       @endorsement = @idea.endorse(current_user,request,current_sub_instance,@referral)
+      IdeaRevision.create_from_idea(@idea,request.remote_ip,request.env['HTTP_USER_AGENT'])
       quality = first_point.point_qualities.find_or_create_by_user_id_and_value(current_user.id, true)
       if current_user.endorsements_count > 24
         session[:endorsement_page] = (@endorsement.position/25).to_i+1
@@ -1086,6 +1098,7 @@ class IdeasController < ApplicationController
       @items[3]=[tr("Top Active 7 days", "view/ideas"), top_7days_ideas_url]
       @items[4]=[tr("Top Active 30 days", "view/ideas"), top_30days_ideas_url]
       @items[6]=[tr("New", "view/ideas"), newest_ideas_url]
+      @items[7]=[tr("Recently revised", "view/ideas"), revised_ideas_url]
       @items[8]=[tr("Random", "view/ideas"), random_ideas_url]
       @items[9]=[tr("In Progress", "view/ideas"), finished_ideas_url]
       @items[10]=[tr("Controversial", "view/ideas"), controversial_ideas_url]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120618205644) do
+ActiveRecord::Schema.define(:version => 20120719122834) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20120618205644) do
     t.datetime "changed_at"
     t.integer  "idea_status_change_log_id"
     t.integer  "group_id"
+    t.integer  "idea_revision_id"
   end
 
   add_index "activities", ["activity_id"], :name => "activity_activity_id"
@@ -272,6 +273,23 @@ ActiveRecord::Schema.define(:version => 20120618205644) do
   add_index "idea_charts", ["date_year", "date_month", "date_day"], :name => "idea_chart_date_index"
   add_index "idea_charts", ["idea_id"], :name => "idea_chart_idea_index"
 
+  create_table "idea_revisions", :force => true do |t|
+    t.integer  "idea_id"
+    t.integer  "user_id"
+    t.string   "status",           :limit => 50
+    t.string   "name",             :limit => 60
+    t.text     "description"
+    t.datetime "published_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "ip_address",       :limit => 16
+    t.string   "user_agent",       :limit => 150
+    t.text     "name_diff"
+    t.text     "description_diff"
+    t.integer  "other_idea_id"
+    t.text     "description_html"
+  end
+
   create_table "idea_status_change_logs", :force => true do |t|
     t.integer  "idea_id"
     t.datetime "created_at"
@@ -339,6 +357,9 @@ ActiveRecord::Schema.define(:version => 20120618205644) do
     t.string   "finished_status_subject"
     t.date     "finished_status_date"
     t.integer  "group_id"
+    t.integer  "idea_revision_id"
+    t.string   "author_sentence"
+    t.integer  "idea_revisions_count",                    :default => 0
   end
 
   add_index "ideas", ["category_id"], :name => "index_ideas_on_category_id"
@@ -1105,12 +1126,12 @@ ActiveRecord::Schema.define(:version => 20120618205644) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_comments_subscribed",      :default => false
-    t.boolean  "is_votes_subscribed",         :default => false
     t.boolean  "is_point_changes_subscribed", :default => false
     t.boolean  "is_messages_subscribed",      :default => false
     t.boolean  "is_followers_subscribed",     :default => true
     t.boolean  "is_finished_subscribed",      :default => true
     t.boolean  "is_admin_subscribed",         :default => false
+    t.boolean  "is_idea_changes_subscribed",  :default => false
   end
 
   create_table "user_charts", :force => true do |t|
@@ -1269,6 +1290,8 @@ ActiveRecord::Schema.define(:version => 20120618205644) do
     t.string   "my_gender"
     t.integer  "report_frequency",                            :default => 2
     t.boolean  "is_capital_subscribed",                       :default => true
+    t.integer  "idea_revisions_count",                        :default => 0
+    t.boolean  "is_idea_changes_subscribed",                  :default => false
   end
 
   add_index "users", ["facebook_uid"], :name => "index_users_on_facebook_uid"

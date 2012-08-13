@@ -23,8 +23,8 @@
                     = f.radio_button(:value, 1, :checked=>params[:support] ? "checked" : "nil")
                     = tr("Yes, this point supports this idea","views/ideas/form")
                   #point_opposes.field_label
-                    = f.radio_button(:value, -1, :checked=>params[:support] ?  "nil" : "checked")
-                    = tr("Not, this point is against this idea","views/ideas/form")
+                    = f.radio_button(:value, -1, :checked=> "nil")
+                    = tr("No, this point is against this idea","views/ideas/form")
               .field
                 .field
                   = tr("Explain your point.", "view/points/new")

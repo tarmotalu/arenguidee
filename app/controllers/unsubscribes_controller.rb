@@ -10,7 +10,6 @@ class UnsubscribesController < ApplicationController
     @page_title = tr("Your email report settings", "controller/unsubscribes")     
     @unsubscribe = Unsubscribe.new
     @unsubscribe.is_comments_subscribed = true
-    @unsubscribe.is_votes_subscribed = true
     @unsubscribe.report_frequency = 2
     @unsubscribe.is_point_changes_subscribed = true
     @unsubscribe.is_followers_subscribed = true

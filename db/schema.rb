@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120813162734) do
+ActiveRecord::Schema.define(:version => 20120813181523) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -684,6 +684,7 @@ ActiveRecord::Schema.define(:version => 20120813162734) do
     t.string   "google_analytics_code"
     t.string   "custom_css"
     t.text     "sub_link_header"
+    t.boolean  "use_category_home_page",                      :default => false
   end
 
   add_index "sub_instances", ["short_name"], :name => "short_name"

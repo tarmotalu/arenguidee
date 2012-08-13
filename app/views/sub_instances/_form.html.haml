@@ -100,6 +100,9 @@
   .field_label= tr("Sub link header", "view/instances/edit")
   .field_box= f.text_area :sub_link_header, :rows => 7, :cols=>90
 
+%p
+  %label{:for => "default_locale"}= tr("Use category homepage", "view/sub_instances/_form")
+  = f.check_box :use_category_home_page
 = f.check_box :is_daily_summary
 = tr("Email me a weekly summary of activity", "view/sub_instances/_form")
 %br/

@@ -29,7 +29,7 @@
               = debate_text+" (#{points_count})"
               .idea_debate_spinner{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
           - else
-            = link_to new_idea_point_path(idea), {:class => "idea_add_link"} do
+            = link_to idea.new_point_url, {:class => "idea_add_link"} do
               = debate_text+" (#{idea.points.where(sub_instance_id: idea.sub_instance_id).count})"
       - unless @geoblocked
         .oppose_grey
@@ -64,7 +64,7 @@
               = debate_text+" (#{points_count})"
               .idea_debate_spinner{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
           - else
-            = link_to new_idea_point_path(idea), {:class => "idea_add_link"} do
+            = link_to idea.new_point_url, {:class => "idea_add_link"} do
               = debate_text+" (#{points_count})"
       - unless @geoblocked
         .oppose_button
@@ -99,7 +99,7 @@
             = debate_text+" (#{points_count})"
             .idea_debate_spinner{:id => "idea_debate_spinner_debate_#{idea.id.to_s}"}
         - else
-          = link_to new_idea_point_path(idea), {:class => "idea_add_link"} do
+          = link_to idea.new_point_url, {:class => "idea_add_link"} do
             = debate_text+" (#{points_count})".html_safe
     - unless @geoblocked
       .oppose_button

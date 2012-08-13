@@ -20,6 +20,8 @@ class Idea < ActiveRecord::Base
 
   scope :top_rank, :order => "ideas.score desc, ideas.position asc"
 
+  scope :top_three, :order => "ideas.score desc, ideas.position asc", :limit=>3
+
   scope :top_24hr, :conditions => "ideas.position_endorsed_24hr IS NOT NULL", :order => "ideas.position_endorsed_24hr asc"
   scope :top_7days, :conditions => "ideas.position_endorsed_7days IS NOT NULL", :order => "ideas.position_endorsed_7days asc"
   scope :top_30days, :conditions => "ideas.position_endorsed_30days IS NOT NULL", :order => "ideas.position_endorsed_30days asc"

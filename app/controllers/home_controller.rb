@@ -5,6 +5,11 @@ class HomeController < ApplicationController
                 :cache_path => proc {|c| c.action_cache_path},
                 :expires_in => 5.minutes
 
+  caches_action :categories,
+                :if => proc {|c| c.do_action_cache? },
+                :cache_path => proc {|c| c.action_cache_path},
+                :expires_in => 5.minutes
+
   caches_action :world,
                 :if => proc {|c| c.do_action_cache? },
                 :cache_path => proc {|c| c.action_cache_path},
@@ -13,6 +18,11 @@ class HomeController < ApplicationController
   caches_action :map,
                 :cache_path => proc {|c| c.action_cache_path},
                 :expires_in => 15.seconds
+
+  def categories
+    @categories = Category.all
+    @page_title = SubInstance.current.name
+  end
 
   def index
     @position_in_idea_name = true

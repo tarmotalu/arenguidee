@@ -16,7 +16,7 @@ class HomeController < ApplicationController
 
   def index
     @position_in_idea_name = true
-    if current_instance.domain_name.include?("yrpri") and (not request.subdomains.any? or request.subdomains[0] == 'www')
+    if current_instance.domain_name.include?("yrpri") and (not request.subdomains.any? or request.subdomains[0] == 'www' and not params[:sub_instance_short_name])
       redirect_to :action=>"world"
     else
       @page_title = SubInstance.current.name

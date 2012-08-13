@@ -96,6 +96,10 @@
 .field
   .field_label= tr("Message to users", "view/instances/edit")
   .field_box= f.text_area :message_to_users, :rows => 7, :cols=>60
+.field
+  .field_label= tr("Sub link header", "view/instances/edit")
+  .field_box= f.text_area :sub_link_header, :rows => 7, :cols=>90
+
 = f.check_box :is_daily_summary
 = tr("Email me a weekly summary of activity", "view/sub_instances/_form")
 %br/

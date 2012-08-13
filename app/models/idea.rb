@@ -658,6 +658,15 @@ class Idea < ActiveRecord::Base
       Instance.current.homepage_url + 'ideas/' + to_param
     end
   end
+
+  def new_point_url(args = {})
+    supp = args[:support] ? "?support=#{args[:support]}" : ""
+    if self.sub_instance_id
+      self.sub_instance.url('ideas/' + to_param + '/points/new' + supp)
+    else
+      Instance.current.homepage_url + 'ideas/' + to_param
+    end
+  end
   
   def show_discussion_url
     show_url + '/discussions'

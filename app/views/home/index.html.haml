@@ -8,6 +8,8 @@
     po.src = 'https://apis.google.com/js/plusone.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   });
+- if SubInstance.current.message_to_users and SubInstance.current.message_to_users!=""
+  = render :partial=>"/shared/top_message_box", :locals=> {:message_text => SubInstance.current.message_to_users.html_safe }
 - if @new_ideas.any?
   %div.home_welcome
     %h1.home_h1

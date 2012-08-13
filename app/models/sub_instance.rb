@@ -64,6 +64,18 @@ class SubInstance < ActiveRecord::Base
 
   belongs_to :iso_country, :class_name => 'Tr8n::IsoCountry', :foreign_key => :iso_country_id
 
+  def url(path)
+    base_url = Instance.current.homepage_url + path
+    if Rails.env.development?
+      if path =~ /\?/
+        final_url = base_url + "&sub_instance_short_name=#{self.short_name}"
+      else
+        final_url = base_url + "?sub_instance_short_name=#{self.short_name}"
+      end
+    end
+    return final_url
+  end
+
   def shorten_name
     self.short_name.gsub(/[^a-z0-9]+/i, '-')
   end

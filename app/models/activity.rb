@@ -537,6 +537,13 @@ class ActivityIdeaRevisionName < Activity
     tr("{user_name} changed the idea's title to {idea_name}", "model/activity", :user_name => user.name, :idea_name => idea.name)
   end
 end
+
+class ActivityIdeaRevisionCategory < Activity
+  def name
+    tr("{user_name} changed the idea's category to {category_name}", "model/activity", :user_name => user.name, :category_name => idea.category.name)
+  end
+end
+
 class ActivityPointRevisionContent < Activity
   def name
     tr("{user_name} revised {point_name}", "model/activity", :user_name => user.name, :point_name => point.name)

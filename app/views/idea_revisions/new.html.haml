@@ -3,7 +3,7 @@
   .col-1
     .col-content
       = render :partial => "ideas/nav"
-  .col-11
+  .col-8
     .col-content
       = form_for(:idea_revision, url: idea_idea_revisions_path(@idea)) do |f|
         = f.error_messages
@@ -12,6 +12,11 @@
             = tr("Idea name", "view/ideas/edit")
           .field_box
             = f.text_field :name, :size => 40, :maxlength => 60, :id => "dontautocompletethis", value: @idea.name
+        .field
+          .field_label
+            = tr("Category", "view/users/_form_long")
+          .field_box
+            = f.select :category_id, options_for_select_simple(Category.all.collect{|s|[s.i18n_name,s.id]}, @idea.category.id)
         - if current_sub_instance and current_sub_instance.required_tags
           .field
             .field_label
@@ -24,3 +29,6 @@
           .field_box= f.text_area :description, value: @idea.description
         %br/
         = f.submit tr("Save idea", "view/ideas/edit"), :class => "yellow_button"
+  .col-3
+    .col-content
+      = render partial: "idea_revisions/idea_revisions"

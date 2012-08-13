@@ -5,6 +5,7 @@ class IdeaRevision < ActiveRecord::Base
 
   belongs_to :idea
   belongs_to :user
+  belongs_to :category
     
   has_many :activities
   has_many :notifications, :as => :notifiable, :dependent => :destroy
@@ -64,6 +65,10 @@ class IdeaRevision < ActiveRecord::Base
       if idea.name != self.name
         changed = true
         ActivityIdeaRevisionName.create(:user => user, :idea => idea, :idea_revision => self)
+      end
+      if idea.category != self.category
+        changed = true
+        ActivityIdeaRevisionCategory.create(:user => user, :idea => idea, :idea_revision => self)
       end
     end    
     if changed

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120813181523) do
+ActiveRecord::Schema.define(:version => 20120813192845) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -288,6 +288,7 @@ ActiveRecord::Schema.define(:version => 20120813181523) do
     t.text     "description_diff"
     t.integer  "other_idea_id"
     t.text     "description_html"
+    t.integer  "category_id"
   end
 
   create_table "idea_status_change_logs", :force => true do |t|

@@ -1,5 +1,7 @@
 class IdeaRevision < ActiveRecord::Base
-
+  class << self
+    include HTMLDiff
+  end
   scope :published, :conditions => "idea_revisions.status = 'published'"
   scope :by_recently_created, :order => "idea_revisions.created_at desc"  
 
@@ -45,10 +47,10 @@ class IdeaRevision < ActiveRecord::Base
     begin
       Timeout::timeout(5) do   #times out after 5 seconds
         if idea.description
-          self.description_diff = HTMLDiff.diff(idea.description,self.description).html_safe
+          self.description_diff = IdeaRevision.diff(idea.description, self.description).html_safe
         end
         if idea.name
-          self.name_diff = HTMLDiff.diff(idea.name,self.name).html_safe
+          self.name_diff = IdeaRevision.diff(idea.name,self.name).html_safe
         end
       end
     rescue Timeout::Error

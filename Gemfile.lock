@@ -119,6 +119,7 @@ GEM
     highline (1.6.12)
     hike (1.2.1)
     hpricot (0.8.6)
+    htmldiff (0.0.1)
     htmlentities (4.3.1)
     httmultiparty (0.3.8)
       httparty (>= 0.7.3)
@@ -306,6 +307,7 @@ DEPENDENCIES
   haml-rails
   headless
   hpricot (>= 0.6)
+  htmldiff
   htmlentities
   jquery-rails
   jquery-rjs!

@@ -29,6 +29,7 @@
                 .field_label
                   = tr("Select category", "views/ideas/form")
                 %select#category_id{:name => "[idea][category_id]"}
+                  %option{:selected => (@idea.category_id ? false : true)}
                   - Category.default_or_sub_instance.each do |category|
                     %option{:title => category.icon.url(:icon_25,), :value => category.id, :selected=>(@idea.category and @idea.category_id==category.id) ? true : false}
                       = tr(category.name,"from_database")

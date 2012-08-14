@@ -1,5 +1,7 @@
 class Revision < ActiveRecord::Base
-
+  class << self
+    include HTMLDiff
+  end
   scope :published, :conditions => "revisions.status = 'published'"
   scope :by_recently_created, :order => "revisions.created_at desc"  
 
@@ -44,7 +46,7 @@ class Revision < ActiveRecord::Base
     self.auto_html_prepare
     begin
       Timeout::timeout(5) do   #times out after 5 seconds
-        self.content_diff = HTMLDiff.diff(point.content,self.content).html_safe
+        self.content_diff = Revision.diff(point.content,self.content).html_safe
       end
     rescue Timeout::Error
     end    

@@ -156,6 +156,7 @@ class IdeaRevision < ActiveRecord::Base
     r.idea = idea
     r.user = idea.user
     r.name = idea.name
+    r.category = idea.category
     r.name_diff = idea.name
     r.description = idea.description
     r.description_diff = idea.description

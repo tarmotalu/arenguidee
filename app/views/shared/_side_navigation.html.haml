@@ -58,7 +58,7 @@
         %span.label
           = tr("Feed", "view/shared/_menu")
     %li
-      = link_to :controller => "users" do
+      = link_to :controller => "network", :action=>"newest" do
         = raw "<div class='sprite_clip #{["users","network"].include?(controller_name) ? "people_pos_selected" : "people_pos"}'></div>"
         %span.label
           = tr("Network", "view/shared/_menu")

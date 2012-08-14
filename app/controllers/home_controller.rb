@@ -22,6 +22,20 @@ class HomeController < ApplicationController
   def categories
     @categories = Category.all
     @page_title = SubInstance.current.name
+    @endorsements = nil
+    @ideas = []
+    @ideas << @categories.first.ideas.first if @categories and @categories.first and @categories.first.ideas and @categories.first.ideas.first
+    if logged_in? # pull all their endorsements on the ideas shown
+      all_ideas = []
+      @categories.each do |category|
+       category.ideas.top_three.each do |idea|
+         all_ideas << idea
+       end
+      end
+      @endorsements = current_user.endorsements.active.find(:all, :conditions => ["idea_id in (?)", all_ideas.collect {|c| c.id}])
+    end
+    last = params[:last].blank? ? Time.now + 1.second : Time.parse(params[:last])
+    @activities = Activity.active.top.feed(last).for_all_users.with_20
   end
 
   def index

@@ -34,15 +34,16 @@
                       = tr(category.name,"from_database")
           .col-half
             .col-content
-              #idea_group
-                .field_label
-                  = tr("Select group", "views/ideas/form")
-                %select#group_id{:name => "[idea][group_id]"}
-                  %option{:value => "", :selected=>(@idea.group_id==nil) ? true : false}
-                    = tr("Public","views_ideas_form")
-                  - current_user.groups.uniq.each do |group|
-                    %option{:value => group.id, :selected=>(@idea.group_id and @idea.group_id==group.id) ? true : false}
-                      = tr(group.name,"from_database")
+              - unless current_instance.domain_name.include?("yrpri")
+                #idea_group
+                  .field_label
+                    = tr("Select group", "views/ideas/form")
+                  %select#group_id{:name => "[idea][group_id]"}
+                    %option{:value => "", :selected=>(@idea.group_id==nil) ? true : false}
+                      = tr("Public","views_ideas_form")
+                    - current_user.groups.uniq.each do |group|
+                      %option{:value => group.id, :selected=>(@idea.group_id and @idea.group_id==group.id) ? true : false}
+                        = tr(group.name,"from_database")
         .field
           %em
             %p= tr("Please describe your idea as neutrally as you can. You have plenty space to convince others here on your right.", "views/ideas/form")

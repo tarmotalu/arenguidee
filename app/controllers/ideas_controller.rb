@@ -649,7 +649,6 @@ class IdeasController < ApplicationController
     @saved = @idea.save
     
     if @saved
-      @idea.setup_revision
       first_point = @idea.points.first
       first_point.setup_revision
       first_point.reload

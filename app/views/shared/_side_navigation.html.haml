@@ -18,11 +18,6 @@
   %ul
     - if current_instance.domain_name.include?("yrpri") and SubInstance.current and SubInstance.current.iso_country
       %li
-        = link_to :controller => "home", :action=> "world" do
-          = raw "<div class='sprite_clip #{controller_name=="home" ? "home_pos_selected" : "home_pos"}'></div>"
-          %span.label
-            = tr("World","Menu system")
-      %li
         = link_to SubInstance.current.show_url do
           .sprite_clip_flag
             = image_tag SubInstance.current.iso_country.large_flag_image, :size=>"50x50"
@@ -71,6 +66,12 @@
     - if current_instance.domain_name.include?("yrpri") and not SubInstance.current.iso_country
       %li
         = link_to :controller => "home", :action=>current_instance.domain_name.include?("yrpri") ? "world" : "index" do
+          = raw "<div class='sprite_clip #{controller_name=="home" ? "home_pos_selected" : "home_pos"}'></div>"
+          %span.label
+            = tr("World","Menu system")
+    - if current_instance.domain_name.include?("yrpri") and SubInstance.current and SubInstance.current.iso_country
+      %li
+        = link_to :controller => "home", :action=> "world" do
           = raw "<div class='sprite_clip #{controller_name=="home" ? "home_pos_selected" : "home_pos"}'></div>"
           %span.label
             = tr("World","Menu system")

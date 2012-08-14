@@ -11,7 +11,7 @@
           .field_label
             = tr("Idea name", "view/ideas/edit")
           .field_box
-            = f.text_field :name, :size => 40, :maxlength => 60, :id => "dontautocompletethis", value: @idea.name
+            = f.text_field :name, :size => 60, :maxlength => 60, :id => "dontautocompletethis", value: @idea.name
         .field
           .field_label
             = tr("Category", "view/users/_form_long")
@@ -26,7 +26,7 @@
               %span.Chapter_name= tr(sub_instance_tag, "views/ideas/form")
         .field
           .field_label= tr("Description", "view/ideas/form")
-          .field_box= f.text_area :description, value: @idea.description
+          .field_box= f.text_area :description, value: @idea.description, cols: 58
         %br/
         = f.submit tr("Save idea", "view/ideas/edit"), :class => "yellow_button"
   .col-3

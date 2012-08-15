@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120813192845) do
+ActiveRecord::Schema.define(:version => 20120815134557) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -686,6 +686,9 @@ ActiveRecord::Schema.define(:version => 20120813192845) do
     t.string   "custom_css"
     t.text     "sub_link_header"
     t.boolean  "use_category_home_page",                      :default => false
+    t.boolean  "hide_description",                            :default => false
+    t.boolean  "hide_world_icon",                             :default => false
+    t.integer  "idea_name_max_length",                        :default => 60
   end
 
   add_index "sub_instances", ["short_name"], :name => "short_name"

@@ -14,14 +14,6 @@
   .col-group
     .col-6.col-inset
       .col-content
-        %h1
-          = tr("Create a new idea", "views/ideas/form")
-        #your_idea.field_label
-          = tr("What is your idea?", "views/ideas/form")
-        %span.idea_name
-          = f.text_field :name, :maxlength => 60, :autocomplete =>"off"
-        #idea_suggestions{ style: "display: none;" }
-          = tr("Some ideas already exist with similar names", "view/ideas/_form")
         .col-group
           .col-half
             .col-content
@@ -45,15 +37,27 @@
                     - current_user.groups.uniq.each do |group|
                       %option{:value => group.id, :selected=>(@idea.group_id and @idea.group_id==group.id) ? true : false}
                         = tr(group.name,"from_database")
-        .field
-          %em
-            %p= tr("Please describe your idea as neutrally as you can. You have plenty space to convince others here on your right.", "views/ideas/form")
-          %span.characters
-            = tr("Explain your idea - ", "view/ideas/_form")
-            %span#ideaContentDown
-            = tr("characters left", "view/ideas/_form")
-          .field_box
-            = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 4, :class=>"col_text_area", :maxLength => 300
+        %h1
+          = tr("Create a new idea", "views/ideas/form")
+        #your_idea.field_label
+        %span.characters
+          = tr("What is your idea?", "views/ideas/form")
+          %span#ideaNameContentDown
+          = tr("characters left", "view/ideas/_form")
+        %span.idea_name
+          = f.text_area :name, :id => 'ideaNameContent', :button => 'submit', :rows => 2, :class=>"col_text_area", :maxLength => SubInstance.current.idea_name_max_length
+        #idea_suggestions{ style: "display: none;" }
+          = tr("Some ideas already exist with similar names", "view/ideas/_form")
+        - unless SubInstance.current.hide_description
+          .field
+            %em
+              %p= tr("Please describe your idea as neutrally as you can. You have plenty space to convince others here on your right.", "views/ideas/form")
+            %span.characters
+              = tr("Explain your idea - ", "view/ideas/_form")
+              %span#ideaContentDown
+              = tr("characters left", "view/ideas/_form")
+            .field_box
+              = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 4, :class=>"col_text_area", :maxLength => 300
     .col-6.col-inset
       .col-content
         %h1
@@ -93,21 +97,6 @@
         %div{:style=>"text-align: center;"}
           = submit_tag tr("Submit your idea and point", "view/ideas/_form"), :class => "submit_button"
 :javascript
-  jQuery("input#idea_name").autocomplete({
-          minLength: 10,
-          source: "/ideas.js",
-          search: function(event, ui) {
-              $('#idea_suggestions ul').empty();
-          },
-          open: function(event, ui) { $('#idea_suggestions').show(); },
-          close: function(event, ui) { $('#idea_suggestions').hide(); },
-      }).data('autocomplete')._renderItem = function (ul, item) {
-          return $('<li/>')
-          .data('item.autocomplete', item)
-          .append(item.value)
-          .appendTo($('#idea_suggestions ul'));
-      };
-
   $(document).ready(function(e) {
     try {
       $("#category_id").msDropDown({visibleRows:7});
@@ -123,3 +112,21 @@
         alert(e.message);
       }
   });
+
+  jQuery("#ideaNameContent").NobleCount('#ideaNameContentDown',{ on_negative: 'go_red', on_positive: 'go_green', max_chars: #{SubInstance.current.idea_name_max_length} });
+
+  jQuery("input#ideaNameContent").autocomplete({
+          minLength: 10,
+          source: "/ideas.js",
+          search: function(event, ui) {
+              $('#idea_suggestions ul').empty();
+          },
+          open: function(event, ui) { $('#idea_suggestions').show(); },
+          close: function(event, ui) { $('#idea_suggestions').hide(); },
+      }).data('autocomplete')._renderItem = function (ul, item) {
+          return $('<li/>')
+          .data('item.autocomplete', item)
+          .append(item.value)
+          .appendTo($('#idea_suggestions ul'));
+      };
+

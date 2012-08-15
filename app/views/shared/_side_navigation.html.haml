@@ -34,7 +34,7 @@
           .sprite_clip_flag
             = image_tag SubInstance.current.logo.url(:icon_50), :border => 0, :size=>"50x50"
           %span.label
-            = SubInstance.current.name
+            = tr("Home","Menu system")
     - else
       %li
         = link_to :controller => "home", :action=>current_instance.domain_name.include?("yrpri") ? "world" : "index" do
@@ -68,7 +68,7 @@
         = raw "<div class='sprite_clip #{controller_name=="issues" ? "categories_pos_selected" : "categories_pos"}'></div>"
         %span.label
           = tr("Categories", "view/shared/_menu")
-    - if current_instance.domain_name.include?("yrpri") and not SubInstance.current.iso_country
+    - if current_instance.domain_name.include?("yrpri") and not SubInstance.current.iso_country and not SubInstance.current.hide_world_icon==true
       %li
         = link_to :controller => "home", :action=>current_instance.domain_name.include?("yrpri") ? "world" : "index" do
           = raw "<div class='sprite_clip #{controller_name=="home" ? "home_pos_selected" : "home_pos"}'></div>"

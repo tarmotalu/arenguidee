@@ -103,6 +103,16 @@
 %p
   %label{:for => "default_locale"}= tr("Use category homepage", "view/sub_instances/_form")
   = f.check_box :use_category_home_page
+%p
+  %label{:for => "default_locale"}= tr("Hide idea description", "view/sub_instances/_form")
+  = f.check_box :hide_description
+%p
+  %label{:for => "default_locale"}= tr("Hide world icon", "view/sub_instances/_form")
+  = f.check_box :hide_world_icon
+%p
+  %label{:for => "max length idea name"}= tr("Max length of idea name", "view/sub_instances/_form")
+  = f.text_field :idea_name_max_length
+
 = f.check_box :is_daily_summary
 = tr("Email me a weekly summary of activity", "view/sub_instances/_form")
 %br/

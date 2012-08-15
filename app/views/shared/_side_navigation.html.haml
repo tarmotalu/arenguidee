@@ -34,7 +34,7 @@
           .sprite_clip_flag
             = image_tag SubInstance.current.logo.url(:icon_50), :border => 0, :size=>"50x50"
           %span.label
-            = SubInstance.current.name
+            = tr("Home","Menu system")
     - else
       %li
         = link_to :controller => "home", :action=>current_instance.domain_name.include?("yrpri") ? "world" : "index" do

@@ -4,8 +4,10 @@
   .idea_listing
     %span
       %h4
+        = tr("Category:", "model/category") + " "
         %a{:href => "#{category.to_url}"}
-          = tr("Category:", "model/category") + " " + tr(category.name, "model/category")
+          = tr(category.name, "model/category")
+        = raw "(<a href='/ideas/new?category_id=#{category.id}'>"+tr("new idea","model/category")+"</a>)"
       - category.ideas.top_three.each do |idea|
         = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
 - unless @activities.blank?

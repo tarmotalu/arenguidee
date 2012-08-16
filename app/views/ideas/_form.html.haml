@@ -15,6 +15,8 @@
     .col-6.col-inset
       .col-content
         .col-group
+          %h1
+            = tr("Create a new idea", "views/ideas/form")
           .col-half
             .col-content
               #idea_category
@@ -37,8 +39,6 @@
                     - current_user.groups.uniq.each do |group|
                       %option{:value => group.id, :selected=>(@idea.group_id and @idea.group_id==group.id) ? true : false}
                         = tr(group.name,"from_database")
-        %h1
-          = tr("Create a new idea", "views/ideas/form")
         #your_idea.field_label
         %span.characters
           = tr("What is your idea?", "views/ideas/form")
@@ -71,7 +71,7 @@
           .field
             .field_label
               #point_supports
-                = point_form.radio_button :value, 1, :checked=>(params.has_key?(:support) && params[:support] == "true" ? true : false)
+                = point_form.radio_button :value, 1, :checked=>(params.has_key?(:support) && params[:support] == "true" ? true : (params.has_key?(:support) && params[:support] == "false") ? false : true)
                 %span.point_supports_label= tr("Yes, this point supports this idea", "views/ideas/form")
               #point_opposes
                 = point_form.radio_button :value, -1, :checked=>(params.has_key?(:support) && params[:support] == "false" ? true : false)

@@ -71,10 +71,10 @@
           .field
             .field_label
               #point_supports
-                = point_form.radio_button :value, 1, :checked=>true
+                = point_form.radio_button :value, 1, :checked=>(params.has_key?(:support) && params[:support] == "true" ? true : false)
                 %span.point_supports_label= tr("Yes, this point supports this idea", "views/ideas/form")
               #point_opposes
-                = point_form.radio_button :value, -1
+                = point_form.radio_button :value, -1, :checked=>(params.has_key?(:support) && params[:support] == "false" ? true : false)
                 %span.point_opposes_label= tr("No, this point is against this idea", "views/ideas/form")
           .field
             %em

@@ -20,10 +20,12 @@
               .field
                 .field_label
                   #point_supports.field_label
-                    = f.radio_button(:value, 1, :checked=>params[:support] ? "checked" : "nil")
+                    - Rails.logger.debug "DEBUG VALUE"
+                    - Rails.logger.debug params[:support]
+                    = f.radio_button(:value, 1, :checked=>(params.has_key?(:support) && params[:support] == "true" ? true : false))
                     = tr("Yes, this point supports this idea","views/ideas/form")
                   #point_opposes.field_label
-                    = f.radio_button(:value, -1, :checked=> "nil")
+                    = f.radio_button(:value, -1, :checked=>(params.has_key?(:support) && params[:support] == "false" ? true : false))
                     = tr("No, this point is against this idea","views/ideas/form")
               .field
                 .field

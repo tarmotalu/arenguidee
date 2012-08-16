@@ -11,7 +11,13 @@
           .field_label
             = tr("Idea name", "view/ideas/edit")
           .field_box
-            = f.text_field :name, :size => 60, :maxlength => 60, :id => "dontautocompletethis", value: @idea.name
+            #your_idea.field_label
+            %span.characters
+              = tr("What is your idea?", "views/ideas/form")
+              %span#ideaNameContentDown
+              = tr("characters left", "view/ideas/_form")
+            %span.idea_name
+              = f.text_area :name, :id => 'ideaNameContent', :button => 'submit', :rows => 2, :class=>"col_text_area", :value=>@idea.name, :maxLength => SubInstance.current.idea_name_max_length
         .field
           .field_label
             = tr("Category", "view/users/_form_long")
@@ -32,3 +38,6 @@
   .col-3
     .col-content
       = render partial: "idea_revisions/idea_revisions"
+:javascript
+  jQuery("#ideaNameContent").NobleCount('#ideaNameContentDown',{ on_negative: 'go_red', on_positive: 'go_green', max_chars: #{SubInstance.current.idea_name_max_length} });
+

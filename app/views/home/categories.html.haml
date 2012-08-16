@@ -5,7 +5,7 @@
     %span
       %h4
         %a{:href => "#{category.to_url}"}
-        = tr(category.name, "model/category")
+          = tr("Category:", "model/category") + " " + tr(category.name, "model/category")
       - category.ideas.top_three.each do |idea|
         = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
 - unless @activities.blank?

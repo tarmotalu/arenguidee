@@ -68,12 +68,12 @@ class SubInstance < ActiveRecord::Base
     base_url = Instance.current.homepage_url + path
     if Rails.env.development?
       if path =~ /\?/
-        final_url = base_url + "&sub_instance_short_name=#{self.short_name}"
+        return base_url + "&sub_instance_short_name=#{self.short_name}"
       else
-        final_url = base_url + "?sub_instance_short_name=#{self.short_name}"
+        return base_url + "?sub_instance_short_name=#{self.short_name}"
       end
     end
-    return final_url
+    return base_url
   end
 
   def shorten_name

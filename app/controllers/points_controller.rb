@@ -149,7 +149,7 @@ class PointsController < ApplicationController
   def new
     load_endorsement
     if @idea.sub_instance_id != SubInstance.current.id
-      redirect_to "#{@idea.show_url}/points/new#{params[:support] ? "?support=true" : ""}"
+      redirect_to "#{@idea.show_url}/points/new#{params.has_key?(:support) ? "?support=#{params[:support]}" : ""}"
     else
       @point = @idea.points.new
       @page_title = tr("Add a point to {idea_name}", "controller/points", :idea_name => @idea.name)

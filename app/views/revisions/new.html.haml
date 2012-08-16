@@ -5,7 +5,7 @@
       = render :partial => "points/nav"
   .col-8
     .col-content
-      %p= tr("<p>Aðstoðaðu við að gera þessar umræður betri, skilvirkari eða bættu við upplýsingum:</p>", "view/revisions/new")
+      %p= tr("<p>You can help the debate by adding your point.</p>", "view/revisions/new")
       = form_for :revision, :url => point_revisions_path(@point)  do |f|
         = f.error_messages :header_message => tr("Please review", "view/revisions/new"), :message => tr("We need a change to your point", "view/revisions/new")
         %p= tr("Summarize your point in <span class='small'>60 characters</span>", "view/revisions/new")

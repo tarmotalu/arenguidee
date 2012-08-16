@@ -6,7 +6,7 @@
           = link_to tr("Full text", "view/points/_nav"), point_url(@point)
       %li.tab2
         %span.tab_header
-          = link_to tr("Edit", "view/points/_nav"), new_point_revision_url(@point)
+          = link_to tr("Edit point", "view/points/_nav"), new_point_revision_url(@point)
       %li.tab3
         %span.tab_header
           = link_to tr("{count} revisions", "view/points/_nav", :count => @point.revisions_count), point_revision_url(@point,@point.revision_id)

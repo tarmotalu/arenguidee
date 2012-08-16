@@ -24,7 +24,7 @@
     - if current_user and current_user.capitals_count>0 and @idea.status == 'published'
       %li
         = link_to tr("Buy an ad", "view/ideas/_nav"), new_idea_ad_url(@idea), :title => tr("Spend some of your {currency_name} to put this idea at the top of the page for everyone to consider.", "view/ideas/_nav", :currency_name => tr(current_instance.currency_name.downcase,"Currency name from database")), :class => "qtip_left"
-    - if current_user
+    - if current_user and current_user.is_admin?
       %li
         = link_to tr("Edit idea", "view/ideas/_nav"), new_idea_idea_revision_url(@idea), :title => tr("Edit this idea", "view/ideas/_nav"), :class => "qtip_left"
     - if current_user and current_user.is_admin?

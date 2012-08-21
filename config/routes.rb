@@ -251,7 +251,6 @@ SocialInnovation::Application.routes.draw do
   resources :passwords
   resources :unsubscribes
   resources :notifications
-  resources :pages
   resources :about
   resources :tags
   resource :session

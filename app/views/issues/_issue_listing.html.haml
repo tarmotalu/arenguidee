@@ -6,7 +6,7 @@
       = h(issue.description)
     .idea_action
       %a{:href => "#{issue.to_url}"}
-        = tr("{count} ideas", "view/issues/index", :count => issue.ideas.count)
+        = tr("{count} ideas", "view/issues/index", :count => issue.ideas.published.count)
       - if issue.points_count > 0
         \&middot;
         %a{:href => "#{issue.to_url}/points"}

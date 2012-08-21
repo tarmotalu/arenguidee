@@ -29,8 +29,6 @@
           - if logged_in? and current_user.is_admin? and SubInstance.current
             %li
               \&middot; #{link_to tr("SubInstance settings", "view/shared/_menu"), edit_sub_instance_url(SubInstance.current)}
-            - if logged_in? and current_user.is_admin? and SubInstance.current
-              \&middot; #{link_to tr("SubInstance account", "view/shared/_menu"), edit_sub_instance_url(SubInstance.current)}
             %li
               \&middot; #{link_to tr("Logo", "view/shared/_menu"), picture_sub_instance_path(SubInstance.current)}
             %li

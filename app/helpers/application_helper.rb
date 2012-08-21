@@ -149,7 +149,7 @@ module ApplicationHelper
       end 
     end     
     return "" if r.empty?
-    tr('Notifications: {sentence}', "notifications", :sentence => r.to_sentence)
+    tr('<b>Notifications:</b><br /> {sentence}', "notifications", :sentence => r.to_sentence)
   end
   
   def messages_sentence(messages)

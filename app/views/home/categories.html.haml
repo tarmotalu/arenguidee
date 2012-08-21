@@ -7,6 +7,7 @@
         = tr("Category:", "model/category") + " "
         %a{:href => "#{category.to_url}"}
           = tr(category.name, "model/category")
+        %span.small_text{:style=>""}
           = "(#{category.ideas.count}) "
         %span.small_text{:style=>""}
           = raw "<a href='/ideas/new?category_id=#{category.id}'>&nbsp;"+tr("Add new idea","model/category")+"</a>"

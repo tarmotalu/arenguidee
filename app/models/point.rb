@@ -15,7 +15,7 @@ class Point < ActiveRecord::Base
   scope :down_value, :conditions => "points.value < 0"    
   scope :by_recently_created, :order => "points.created_at desc"
   scope :by_recently_updated, :order => "points.updated_at desc"  
-  scope :flagged, :conditions => "flags_count > 0" 
+  scope :flagged, :conditions => "points.flags_count > 0"
   scope :published, :conditions => "points.status = 'published'"
   scope :unpublished, :conditions => "points.status not in ('published','abusive')"
 

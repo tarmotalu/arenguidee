@@ -4,7 +4,7 @@
       = render partial: "ideas/nav"
   .col-8
     .col-content
-      - if @revision.attribute_present?("description_diff") or @revision.attribute_present?("description_diff")
+      - if @revision.attribute_present?("name_diff") or @revision.attribute_present?("description_diff")
         %p.notice
           = tr("This shows the changes from the previous revision. You can also <a href='{clean_url}'>see the clean version</a>", "view/revisions/show", :clean_url => clean_idea_idea_revision_url(@idea,@revision))
         - if @revision.attribute_present?("name_diff")

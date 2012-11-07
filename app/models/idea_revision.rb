@@ -98,7 +98,7 @@ class IdeaRevision < ActiveRecord::Base
   end
   
   def on_removed_entry(new_state, event)
-    idea.decrement!(:idea_revisions_count)
+    Idea.unscoped.find(idea_id).decrement!(:idea_revisions_count)
     user.decrement!(:idea_revisions_count)    
   end
   

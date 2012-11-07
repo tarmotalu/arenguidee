@@ -24,6 +24,10 @@ module ActiveRecord
           elsif table_name=="activities"
             where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil).
             where("activities.group_id IS NULL OR activities.group_id IN (#{(Thread.current[:current_user] and not Thread.current[:current_user].groups.empty?) ? Thread.current[:current_user].groups.map{|g| g.id}.to_s.gsub("[","").gsub("]","") : "-1"})")
+          elsif table_name=="ads"
+            where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil)
+          elsif table_name=="points"
+            where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil)
           else
             where(:sub_instance_id=>SubInstance.current ? SubInstance.current.id : nil).
             where("ideas.group_id IS NULL OR ideas.group_id IN (#{(Thread.current[:current_user] and not Thread.current[:current_user].groups.empty?) ? Thread.current[:current_user].groups.map{|g| g.id}.to_s.gsub("[","").gsub("]","") : "-1"})").

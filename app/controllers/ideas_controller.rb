@@ -366,7 +366,8 @@ class IdeasController < ApplicationController
   
   def revised
     @page_title = tr("Recently revised ideas", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
-    @revisions = IdeaRevision.published.by_recently_created.find(:all, :include => :idea, :conditions => "ideas.revisions_count > 1").paginate :page => params[:page], :per_page => params[:per_page]
+    @ideas = Idea.published.revised.by_recently_revised.uniq.paginate :page => params[:page], :per_page => params[:per_page]
+    get_endorsements
     respond_to do |format|
       format.html
       format.xml { render :xml => @revisions.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }

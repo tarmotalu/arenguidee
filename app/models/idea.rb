@@ -43,6 +43,7 @@ class Idea < ActiveRecord::Base
   
   scope :finished, :conditions => "ideas.official_status in (-2,-1,2)"
   scope :revised, :conditions => "idea_revisions_count > 1"
+  scope :by_recently_revised, :joins => :idea_revisions, :order => "idea_revisions.created_at DESC"
   
   scope :by_user_id, lambda{|user_id| {:conditions=>["user_id=?",user_id]}}
   scope :item_limit, lambda{|limit| {:limit=>limit}}

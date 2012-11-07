@@ -401,7 +401,7 @@ class Idea < ActiveRecord::Base
       refund = 1 if refund > 0 and refund < 1
       refund = refund.abs.to_i
       if refund
-        user.increment!(:capital_count, refund)
+        user.increment!(:capitals_count, refund)
         ActivityCapitalAdRefunded.create(:user => user, :idea => self, :capital => CapitalAdRefunded.create(:recipient => user, :amount => refund))
       end
     end
@@ -739,6 +739,7 @@ class Idea < ActiveRecord::Base
     for r in idea_revisions
       r.remove!
     end
+    deactivate_ads_and_refund
     save(:validate => false)
   end
 

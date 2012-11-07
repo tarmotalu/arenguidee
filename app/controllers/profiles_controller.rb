@@ -23,7 +23,7 @@ class ProfilesController < ApplicationController
     end
     @profile = Profile.new
     respond_to do |format|
-      format.html { render :action => "profiles/edit" }
+      format.html { render :action => "edit" }
       format.xml  { render :xml => @profile }
     end
   end

@@ -27,6 +27,16 @@
                   - Category.default_or_sub_instance.each do |category|
                     %option{:title => category.icon.url(:icon_25,), :value => category.id, :selected=>((@idea.category and @idea.category_id==category.id) or (params[:category_id] and params[:category_id].to_i==category.id)) ? true : false}
                       = tr(category.name,"from_database")
+              - if current_sub_instance and current_sub_instance.required_tags
+                #idea_tag
+                  .field_label
+                    = tr("Select tag", "views/ideas/form")
+                    %span.red *
+                  - first_tag = true
+                  - current_sub_instance.required_tags.split(',').each do |sub_instance_tag|
+                    = f.radio_button :idea_type, sub_instance_tag, required: false, checked: first_tag
+                    %span.Chapter_name= tr(sub_instance_tag, "views/ideas/form")
+                    - first_tag = false
           .col-half
             .col-content
               - unless current_instance.domain_name.include?("yrpri")
@@ -41,7 +51,9 @@
                         = tr(group.name,"from_database")
         #your_idea.field_label
         %span.characters
-          = tr("What is your idea?", "views/ideas/form")
+          %span.form_header
+            = tr("What is your idea?", "views/ideas/form")
+          \-
           %span#ideaNameContentDown
           = tr("characters left", "view/ideas/_form")
         %span.idea_name
@@ -53,7 +65,9 @@
             %em
               %p= tr("Please describe your idea as neutrally as you can. You have plenty space to convince others here on your right.", "views/ideas/form")
             %span.characters
-              = tr("Explain your idea - ", "view/ideas/_form")
+              %span.form_header
+                = tr("Explain your idea", "view/ideas/_form")
+              \-
               %span#ideaContentDown
               = tr("characters left", "view/ideas/_form")
             .field_box
@@ -77,15 +91,16 @@
                 = point_form.radio_button :value, -1, :checked=>(params.has_key?(:support) && params[:support] == "false" ? true : false)
                 %span.point_opposes_label= tr("No, this point is against this idea", "views/ideas/form")
           .field
-            %em
-              %p= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")
-          .field
             %span.characters
-              = tr("Explain your point - ", "view/ideas/_form")
+              %span.form_header
+                = tr("Explain your point - ", "view/ideas/_form")
               %span#pointContentDown
               = tr("characters left", "view/ideas/_form")
             .field_box
               = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"col_text_area", :rows => 5, :maxLength => 500
+            .field
+              %em
+                %p= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")
             .field
               .field_label
                 = tr("Add a link to an external website", "views/ideas/form")

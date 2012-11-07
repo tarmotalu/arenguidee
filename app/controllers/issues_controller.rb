@@ -8,22 +8,13 @@ class IssuesController < ApplicationController
   def index
     @page_title =  tr("Categories", "controller/issues")
     @categories = Category.all
-    #@categories = Category.all.collect { |category| t = Tag.find_by_name(category.name) }.select { |t| t != nil }
-    #@sub_instance_tags = []
-    #if current_sub_instance.required_tags
-    #  sub_instance_tags = {}
-    #  SubInstance.all.each do |sub_instance|
-    #    sub_instance.required_tags.split(',').each do |tag|
-    #      sub_instance_tags[tag] = true
-    #    end
-    #  end
-    #  @sub_instance_tags = sub_instance_tags.keys.collect { |t| Tag.find_by_name(t) }
-    #end
-    #if default_tags and default_tags.length>1
-    #  @issues = Tag.not_in_default_tags(@sub_instance_tags.collect { |t| t.slug }).not_in_default_tags(@categories.collect { |c| c.slug }).not_in_default_tags(default_tags).most_ideas.paginate(:page => params[:page], :per_page => params[:per_page])
-    #else
-    #  @issues = Tag.not_in_default_tags(@sub_instance_tags.collect { |t| t.slug }).not_in_default_tags(@categories.collect { |c| c.slug }).most_ideas.paginate(:page => params[:page], :per_page => params[:per_page])
-    #end
+    @sub_instance_tags = []
+    if current_sub_instance.required_tags
+      @sub_instance_tags = current_sub_instance.required_tags.split(',').collect do |tag|
+        Tag.find_by_name(tag)
+      end
+    end
+
     respond_to do |format|
       format.html {
         if current_instance.tags_page == 'cloud'

@@ -56,22 +56,19 @@
               \&middot; #{link_to tr("Logo", "view/shared/_menu"), picture_sub_instance_path(SubInstance.current)}
             %li
               \&middot; #{link_to tr("Email list", "view/shared/_menu"), email_sub_instance_path(SubInstance.current)}
-          - if current_user.is_admin?
-            %li
-            \&middot;
-            = link_to tr("Instance settings", "view/shared/_menu"), edit_instance_url(current_instance)
-            %li
-            \&middot;
-            = link_to tr("Categories", "view/shared/_menu"), "/categories"
           %li
-            \&middot;
-            \#{link_to tr("Settings", "view/shared/_menu"), edit_instance_url(current_instance)}
+          \&middot;
+          = link_to tr("Instance settings", "view/shared/_menu"), edit_instance_url(current_instance)
+          %li
+          \&middot;
+          = link_to tr("Instance categories", "view/shared/_menu"), "/categories"
           %li
             \&middot;
             \#{link_to tr("All Flagged", "view/shared/_menu"), "/admin/all_flagged"}
-          %li
-            - if current_instance.is_tags?
-              \&middot; #{link_to current_instance.tags_name.pluralize.titleize, tags_url}
+          - if current_instance.is_tags?
+            %li
+              \&middot;
+              = link_to tr("SubInstance", "view/shared/_menu") + " " + current_instance.tags_name.pluralize.titleize, tags_url
           %li
             \&middot; #{link_to tr("API keys", "view/shared/_menu"), apis_instance_url(current_instance)}
           %li

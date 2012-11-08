@@ -58,3 +58,7 @@ end
 every 1.week do
   command "cd /home/yrpri/sites/social_innovation_internal/yrpri2/current; bundle exec backup perform -t weekly_backup --config_file config/backup.rb --data-path db --log-path log --tmp-path tmp"
 end
+
+every 1.month do
+  command "cd /home/yrpri/sites/social_innovation_internal/yrpri2/current; bundle exec backup perform -t monthly_backup --config_file config/backup.rb --data-path db --log-path log --tmp-path tmp"
+end

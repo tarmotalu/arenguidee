@@ -13,14 +13,15 @@
     .col-content
       %h4= tr("Here, you can find ideas organized by categories, and add your own.", "view/issues/index")
       = render partial: 'issue_listing', locals: { issues: @categories }
-  - if current_sub_instance.required_tags
-    - if not @sub_instance_tags.empty?
-      .col-half
-        .col-content
-          %h4= tr("Here, you can find ideas organized by tags.", "view/issues/index")
-          - issues = @sub_instance_tags
-          - issues.unshift(Tag.find_by_slug('betri-hverfi')) if Instance.current.layout == 'better_reykjavik'
-          = render partial: 'issue_listing', locals: { issues: issues }
+-#  - if current_sub_instance.required_tags
+-#    - if not @sub_instance_tags.empty?
+-#      .col-half
+-#        .col-content
+-#          %h4= tr("Here, you can find ideas organized by tags.", "view/issues/index")
+-#          - issues = @sub_instance_tags
+-#          - issues.unshift(Tag.find_by_slug('betri-hverfi')) if Instance.current.layout == 'better_reykjavik'
+-#          = render partial: 'issue_listing', locals: { issues: issues }
+
 -#      - if not current_sub_instance
 -#        %h3= tr("By neighborhood", "views/issues/index")
 -#        - if Instance.current.default_tags_checkbox and not current_sub_instance

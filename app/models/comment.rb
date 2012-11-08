@@ -55,6 +55,7 @@ class Comment < ActiveRecord::Base
     else
       self.category_name = tr('No category','search')
     end
+    self.save
   end
   
   def on_published_entry(new_state = nil, event = nil)

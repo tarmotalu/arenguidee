@@ -62,6 +62,35 @@ def change_to_mysql_text(text)
 end
 
 namespace :fix do
+  desc 'comment_category'
+  task :comment_category => :environment do
+    Comment.transaction do
+      Comment.unscoped.where(category_name: "no cat").each do |comment|
+        activity = Activity.unscoped.find(comment.activity_id)
+        if activity.idea_id
+          idea = Idea.unscoped.find(activity.idea_id)
+          if idea.category_id
+            category = Category.unscoped.find_by_id(idea.category_id)
+            if category
+              comment.category_name = category.name
+              comment.save
+            end
+          end
+        elsif activity.point_id
+          point = Point.unscoped.find(activity.point_id)
+          idea = Idea.unscoped.find(point.idea_id)
+          if idea.category_id
+            category = Category.unscoped.find_by_id(idea.category_id)
+            if category
+              comment.category_name = category.name
+              comment.save
+            end
+          end
+        end
+      end
+    end
+  end
+
   desc 'duplicate_emails'
   task :duplicate_emails => :environment do
     User.transaction do

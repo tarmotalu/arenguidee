@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120815134557) do
+ActiveRecord::Schema.define(:version => 20121114141611) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -683,7 +683,7 @@ ActiveRecord::Schema.define(:version => 20120815134557) do
     t.string   "parent_tag"
     t.text     "message_to_users"
     t.string   "google_analytics_code"
-    t.string   "custom_css"
+    t.text     "custom_css"
     t.text     "sub_link_header"
     t.boolean  "use_category_home_page",                      :default => false
     t.boolean  "hide_description",                            :default => false

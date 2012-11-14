@@ -43,7 +43,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/yours
   def yours
-    @page_title = tr("Your ideas at {instance_name}", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Your ideas at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @ideas = @user.endorsements.active.by_position.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
     @rss_url = yours_ideas_url(:format => 'rss')
     get_endorsements
@@ -58,7 +58,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/yours_top
   def yours_top
-    @page_title = tr("Your ideas ranked highest by {instance_name} members", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Your ideas ranked highest by {sub_instance_name} members", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @ideas = current_user.endorsements.active.by_idea_position.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
     get_endorsements
     respond_to do |format|
@@ -70,7 +70,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/yours_lowest
   def yours_lowest
-    @page_title = tr("Your ideas ranked lowest by {instance_name} members", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Your ideas ranked lowest by {sub_instance_name} members", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @ideas = current_user.endorsements.active.by_idea_lowest_position.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
     get_endorsements
     respond_to do |format|
@@ -82,7 +82,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/yours_created
   def yours_created
-    @page_title = tr("Ideas you created at {instance_name}", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Ideas you created at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @ideas = @user.created_ideas.published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
     get_endorsements
     respond_to do |format|
@@ -96,7 +96,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/network
   def network
-    @page_title = tr("Your network's ideas", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Your network's ideas", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @rss_url = network_ideas_url(:format => 'rss')
     if @user.followings_count > 0
       @ideas = Endorsement.active.find(:all,
@@ -118,7 +118,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/yours_finished
   def yours_finished
-    @page_title = tr("Your ideas in progress at {instance_name}", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Your ideas in progress at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @ideas = @user.endorsements.finished.find(:all, :order => "ideas.status_changed_at desc", :include => :idea).paginate :page => params[:page], :per_page => params[:per_page]
     respond_to do |format|
       format.html { render :action => "yours" }
@@ -136,7 +136,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/ads
   def ads
-    @page_title = tr("Ads running at {instance_name}", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Ads running at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @ads = Ad.active_first.paginate :include => [:user, :idea], :page => params[:page], :per_page => params[:per_page]
     respond_to do |format|
       format.html
@@ -147,7 +147,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/yours_ads
   def yours_ads
-    @page_title = tr("Your ads", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Your ads", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @ads = current_user.ads.active_first.paginate :include => [:user, :idea], :page => params[:page], :per_page => params[:per_page]
     respond_to do |format|
       format.html
@@ -158,7 +158,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/consider
   def consider
-    @page_title = tr("Ideas you should consider", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Ideas you should consider", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @ideas = current_user.recommend(25)
     if @ideas.empty?
       flash[:error] = tr("You need to endorse a few things before we can recommend other ideas for you to consider. Here are a few random ideas to get started.", "controller/ideas")
@@ -176,7 +176,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/official
   def official
-    @page_title = tr("{official_user_name} ideas", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"), :official_user_name => current_instance.official_user.name.possessive)
+    @page_title = tr("{official_user_name} ideas", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"), :official_user_name => current_instance.official_user.name.possessive)
     @rss_url = official_ideas_url(:format => 'rss')
     @ideas = Idea.published.official_endorsed.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
     get_endorsements
@@ -365,7 +365,7 @@ class IdeasController < ApplicationController
   end  
   
   def revised
-    @page_title = tr("Recently revised ideas", "controller/ideas", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Recently revised ideas", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @ideas = Idea.published.revised.by_recently_revised.uniq.paginate :page => params[:page], :per_page => params[:per_page]
     get_endorsements
     respond_to do |format|
@@ -588,6 +588,7 @@ class IdeasController < ApplicationController
   # GET /ideas/new
   # GET /ideas/new.xml
   def new
+    @page_title = tr("New idea at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @idea = Idea.new unless @idea
     @idea.points.build
 

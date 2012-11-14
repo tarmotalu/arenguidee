@@ -15,7 +15,7 @@ class PointsController < ApplicationController
   end
  
   def your_index
-    @page_title = tr("Your points", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Your points", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @points = Point.published.by_recently_created.paginate :conditions => ["user_id = ?", current_user.id], :include => :idea, :page => params[:page], :per_page => params[:per_page]
     get_qualities
     respond_to do |format|
@@ -26,7 +26,7 @@ class PointsController < ApplicationController
   end
   
   def newest
-    @page_title = tr("Newest points", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Newest points", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @points = Point.published.by_recently_created.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
     @rss_url = url_for :only_path => false, :format => "rss"
     get_qualities
@@ -39,7 +39,7 @@ class PointsController < ApplicationController
   end  
   
   def for_and_against
-  	@page_title = tr("Points for and against", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
+  	@page_title = tr("Points for and against", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @idea=Idea.find(params[:id])
   	@points_new_up = @idea.points.published.by_recently_created.up_value.five
   	@points_new_down = @idea.points.published.by_recently_created.down_value.five
@@ -73,14 +73,14 @@ class PointsController < ApplicationController
   		@yesno = "Nei"
   	end
   	
-  	@page_title = tr("Points for and against", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
+  	@page_title = tr("Points for and against", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
   	respond_to do |format|
   		format.html { render :action => "all_points" }
   	end
   end
   
   def your_ideas
-    @page_title = tr("Points on {instance_name}", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Points on {sub_instance_name}", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     if current_user.endorsements_count > 0    
       if current_user.up_endorsements_count > 0 and current_user.down_endorsements_count > 0
         @points = Point.published.by_recently_created.paginate :conditions => ["(points.idea_id in (?) and points.endorser_helpful_count > 0) or (points.idea_id in (?) and points.opposer_helpful_count > 0)",current_user.endorsements.active_and_inactive.endorsing.collect{|e|e.idea_id}.uniq.compact,current_user.endorsements.active_and_inactive.opposing.collect{|e|e.idea_id}.uniq.compact], :include => :idea, :page => params[:page], :per_page => params[:per_page]
@@ -101,7 +101,7 @@ class PointsController < ApplicationController
   end 
  
   def revised
-    @page_title = tr("Recently revised points", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Recently revised points", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @revisions = Revision.published.by_recently_created.find(:all, :include => :point, :conditions => "points.revisions_count > 1").paginate :page => params[:page], :per_page => params[:per_page]
     @qualities = nil
     if logged_in? and @revisions.any? # pull all their qualities on the points shown

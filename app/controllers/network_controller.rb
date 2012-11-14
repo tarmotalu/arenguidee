@@ -16,7 +16,7 @@ class NetworkController < ApplicationController
   end
 
   def influential
-    @page_title = tr("Meet the most influential people at {instance_name}", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Meet the most influential people at {sub_instance_name}", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     if current_instance.users_count < 100
       @users = User.active.at_least_one_endorsement.by_capital.paginate :page => params[:page], :per_page => params[:per_page]
     else
@@ -30,7 +30,7 @@ class NetworkController < ApplicationController
   end
 
   def talkative
-    @page_title = tr("Most talkative at {instance_name}", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Most talkative at {sub_instance_name}", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @users = User.active.by_talkative.paginate :page => params[:page], :per_page => params[:per_page]
     respond_to do |format|
       format.html
@@ -40,7 +40,7 @@ class NetworkController < ApplicationController
   end  
   
   def ambassadors
-    @page_title = tr("Ambassadors at {instance_name}", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Ambassadors at {sub_instance_name}", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @users = User.active.by_invites_accepted.paginate :page => params[:page], :per_page => params[:per_page]
     respond_to do |format|
       format.html
@@ -50,7 +50,7 @@ class NetworkController < ApplicationController
   end  
   
   def twitterers
-    @page_title = tr("Twitterers at {instance_name}", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Twitterers at {sub_instance_name}", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @users = User.active.at_least_one_endorsement.twitterers.by_twitter_count.paginate :page => params[:page], :per_page => params[:per_page]
     respond_to do |format|
       format.html
@@ -60,7 +60,7 @@ class NetworkController < ApplicationController
   end  
 
   def unverified
-    @page_title = tr("Unverified accounts", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Unverified accounts", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @users = User.pending.by_recently_created.paginate :page => params[:page], :per_page => 100
     respond_to do |format|
       format.html { render :action => "list" }
@@ -70,7 +70,7 @@ class NetworkController < ApplicationController
   end
   
   def warnings
-    @page_title = tr("Warnings", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Warnings", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @users = User.warnings.by_recently_loggedin.paginate :page => params[:page], :per_page => 100
     respond_to do |format|
       format.html
@@ -80,7 +80,7 @@ class NetworkController < ApplicationController
   end
 
   def suspended
-    @page_title = tr("Suspended accounts", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Suspended accounts", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @users = User.suspended.by_suspended_at.paginate :page => params[:page], :per_page => 100
     respond_to do |format|
       format.html { render :action => "list" }
@@ -90,7 +90,7 @@ class NetworkController < ApplicationController
   end
   
   def probation
-    @page_title = tr("Accounts on probation", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Accounts on probation", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @users = User.probation.by_probation_at.paginate :page => params[:page], :per_page => 100
     respond_to do |format|
       format.html { render :action => "list" }
@@ -100,7 +100,7 @@ class NetworkController < ApplicationController
   end  
   
   def deleted
-    @page_title = tr("Deleted accounts", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Deleted accounts", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @users = User.removed.by_removed_at.paginate :page => params[:page], :per_page => 100
     respond_to do |format|
       format.html { render :action => "list" }
@@ -110,7 +110,7 @@ class NetworkController < ApplicationController
   end  
 
   def newest
-    @page_title = tr("New members at {instance_name}", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("New members at {instance_name}", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @users = User.active.at_least_one_endorsement.by_recently_created.paginate :page => params[:page], :per_page => params[:per_page]
     respond_to do |format|
       format.html
@@ -140,7 +140,7 @@ class NetworkController < ApplicationController
     else
       @sub_instances = SubInstance.find(:all, :conditions => "logo_file_name is not null", :order => "rand()")
     end
-    @page_title = tr("Meet our sub_instances", "controller/network", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Meet our sub_instances", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     respond_to do |format|
       format.html
       format.xml { render :xml => @sub_instances.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
@@ -149,7 +149,7 @@ class NetworkController < ApplicationController
   end  
 
   def following
-    @page_title = tr("People you're following at {instance_name}", "controller/contacts", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("People you're following at {sub_instance_name}", "controller/contacts", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     unless current_following_ids.empty?
       @users = User.active.by_capital.find(:all, :conditions => ["id in (?)",current_following_ids]) #:page => params[:page], :per_page => params[:per_page]
     end

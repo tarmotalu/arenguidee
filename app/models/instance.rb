@@ -105,20 +105,16 @@ class Instance < ActiveRecord::Base
   
   def homepage_url(sub_instance=nil)
     if Thread.current[:localhost_override]
-      'http://' + Thread.current[:localhost_override] + '/'
+      '//' + Thread.current[:localhost_override] + '/'
     else
       if p = sub_instance or (p = SubInstance.current)
-        if p.short_name=="db-demo"
-          'https://' + p.short_name + '.' + base_url + '/'
-        else
-          'http://' + p.short_name + '.' + base_url + '/'
-        end
+        '//' + p.short_name + '.' + base_url + '/'
       else
-        'http://' + base_url + '/'
+        '//' + base_url + '/'
       end
     end
   end
-  
+
   def name_with_tagline
     return name unless attribute_present?("tagline")
     name + ": " + tagline

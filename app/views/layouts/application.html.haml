@@ -17,6 +17,10 @@
     .page
       = render :partial => "shared/top_banner"
       .main
+        .col-group
+          .col-12
+            .col-content
+              = render :partial => "sub_instances/message_to_users"
         .nav.nav-main
           = render :partial => "shared/side_navigation"
         #content.content

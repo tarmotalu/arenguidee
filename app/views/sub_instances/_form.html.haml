@@ -24,6 +24,30 @@
   %br/
   = f.text_field :google_analytics_code
 %p
+  %label{:for => "sub_instance_left_link_url"}= tr("Url of left-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :left_link_url
+%p
+  %label{:for => "sub_instance_left_link_position"}= tr("Position of left-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :left_link_position
+%p
+  %label{:for => "sub_instance_left_link_width"}= tr("Width of left-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :left_link_width
+%p
+  %label{:for => "sub_instance_right_link_url"}= tr("Url of right-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :right_link_url
+%p
+  %label{:for => "sub_instance_right_link_position"}= tr("Position of right-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :right_link_position
+%p
+  %label{:for => "sub_instance_right_link_width"}= tr("Width of right-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :right_link_width
+%p
   %label{:for => "sub_instance_website"}= tr("Link to your homepage", "view/sub_instances/_form")
   %br/
   = f.text_field :website

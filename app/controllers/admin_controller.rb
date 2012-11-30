@@ -51,23 +51,6 @@ class AdminController < ApplicationController
     end
   end
 
-  def fav_icon
-    @page_title = tr("Change favicon for {instance_name}", "controller/admin", :instance_name => tr(current_instance.name,"Name from database"))
-  end
-
-  def fav_icon_save
-    @instance = current_instance
-    respond_to do |format|
-      @instance = unfrozen_instance(@instance)
-      if @instance.update_attributes(params[:instance])
-        flash[:notice] = tr("Picture uploaded successfully", "controller/admin")
-        format.html { redirect_to(:action => :fav_icon) }
-      else
-        format.html { render :action => "fav_icon" }
-      end
-    end
-  end
-  
   def buddy_icon
     @page_title = tr("Change buddy icon for {instance_name}", "controller/admin", :instance_name => tr(current_instance.name,"Name from database"))
   end

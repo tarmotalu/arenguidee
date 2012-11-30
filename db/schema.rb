@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121129115845) do
+ActiveRecord::Schema.define(:version => 20121130163619) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -458,6 +458,10 @@ ActiveRecord::Schema.define(:version => 20121129115845) do
     t.string   "menu_strip_side_content_type", :limit => 30
     t.integer  "menu_strip_side_file_size"
     t.datetime "menu_strip_side_updated_at"
+    t.string   "favicon_file_name"
+    t.string   "favicon_content_type",         :limit => 30
+    t.integer  "favicon_file_size"
+    t.datetime "favicon_updated_at"
   end
 
   add_index "instances", ["domain_name"], :name => "index_instances_on_domain_name"

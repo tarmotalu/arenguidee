@@ -12,6 +12,9 @@ class Instance < ActiveRecord::Base
   
   belongs_to :picture
 
+  has_attached_file :favicon, :styles => { :icon_full => "16x16" }
+  validates_attachment_content_type :favicon, :content_type => ['image/x-icon', 'image/vnd.microsoft.icon']
+
   has_attached_file :top_banner, :styles => { :icon_full => "1024x80#" }
   validates_attachment_size :top_banner, :less_than => 5.megabytes
   validates_attachment_content_type :top_banner, :content_type => ['image/jpeg', 'image/png', 'image/gif']

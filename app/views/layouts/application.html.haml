@@ -4,7 +4,7 @@
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
     %title= @page_title || tr(current_instance.name,"Name from database")
-    - if current_instance.favicon
+    - if current_instance.favicon.present?
       = favicon_link_tag(current_instance.favicon.url(:icon_full))
     = render :partial => "shared/description"
     = render :partial => "shared/head"

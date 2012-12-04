@@ -509,13 +509,13 @@ class FeedController < ApplicationController
     @items = Hash.new
     @items[1]=[tr("Top", "view/feed/_nav"), url_for(:controller => "feed", :action => "top")]
     #@items[2]=[tr("Everything", "view/feed/_nav"), url_for(:controller => "feed", :action => "activities")]
-    @items[3]=[tr("Discussions", "view/feed/_nav"), url_for(:controller => "feed", :action => "discussions")]
+    @items[3]=[tr("All discussions", "view/feed/_nav"), url_for(:controller => "feed", :action => "discussions")]
     #@items[4]=[tr("Points", "view/feed/_nav"), url_for(:controller => "feed", :action => "points")]
     @items[7]=[tr("All Social Points", "view/feed/_nav"), url_for(:controller => "feed", :action => "capital")]
     if logged_in?
-      @items[8]=[tr("Yours", "view/feed/_nav"), url_for(:controller => "feed", :action => "your_discussions")]
-      @items[9]=[tr("Your ideas", "view/feed/_nav"), url_for(:controller => "feed", :action => "your_idea_discussions")]
-      @items[10]=[tr("Ideas you created", "view/feed/_nav"), url_for(:controller => "feed", :action => "your_ideas_created_discussions")]
+      @items[8]=[tr("Your discussions", "view/feed/_nav"), url_for(:controller => "feed", :action => "your_discussions")]
+      @items[9]=[tr("Discussions on your ideas", "view/feed/_nav"), url_for(:controller => "feed", :action => "your_idea_discussions")]
+      @items[10]=[tr("Discussions on ideas you created", "view/feed/_nav"), url_for(:controller => "feed", :action => "your_ideas_created_discussions")]
       if current_user.followings_count > 0
         @items[11]=[tr("Your network", "view/feed/_nav"), url_for(:controller => "feed", :action => "your_network_discussions")]
       end

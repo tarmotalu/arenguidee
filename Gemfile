@@ -4,8 +4,7 @@ gem 'rails', '3.2.9'
 gem 'rails-i18n'
 gem 'mysql2'
 gem "recaptcha", :require => "recaptcha/rails"
-gem 'capistrano', require: false
-gem 'capistrano_colors', require: false
+gem 'capistrano', require: false, github: "capistrano/capistrano"
 gem 'rvm-capistrano', require: false
 gem 'haml'
 gem 'haml-rails'
@@ -72,4 +71,5 @@ group :assets do
   gem 'jquery-ui-rails'
   gem 'execjs'
   gem 'therubyracer', :platforms => :ruby
+  gem 'turbo-sprockets-rails3'
 end

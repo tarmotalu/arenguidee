@@ -1,6 +1,5 @@
 set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"")
 require "rvm/capistrano"
-require 'capistrano_colors'
 require 'bundler/capistrano'
 require 'airbrake/capistrano'
 require "thinking_sphinx/deploy/capistrano"
@@ -60,19 +59,3 @@ namespace :delayed_job do
 end
 
 after "deploy", "delayed_job:restart"
-
-namespace :deploy do
-  namespace :assets do
-    task :precompile, :roles => :web, :except => { :no_release => true } do
-      if capture("cd #{latest_release} && #{source.local.log(source.next_revision(current_revision))} vendor/assets/ app/assets/ lib/assets/ | wc -l").to_i > 0
-        run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile"
-      else
-        logger.info "No changes on assets. Skipping pre-compilation."
-      end
-    end
-
-    task :cleanup, :roles => :web do
-      run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake assets:clean"
-    end
-  end
-end

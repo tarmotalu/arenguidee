@@ -7,6 +7,17 @@ GIT
       rails (~> 3.2)
 
 GIT
+  remote: git://github.com/capistrano/capistrano.git
+  revision: 3626f26d0111c1a60cb20a9b606d45d2a68ae3d0
+  specs:
+    capistrano (2.13.5)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
+
+GIT
   remote: git://github.com/hinrik/backup.git
   revision: 288f82de2b85f90407a6cb168954933f80690e2d
   specs:
@@ -67,13 +78,6 @@ GEM
       rinku (~> 1.5.0)
     awesome_print (1.0.2)
     builder (3.0.4)
-    capistrano (2.12.0)
-      highline
-      net-scp (>= 1.0.0)
-      net-sftp (>= 2.0.0)
-      net-ssh (>= 2.0.14)
-      net-ssh-gateway (>= 1.1.0)
-    capistrano_colors (0.5.5)
     childprocess (0.3.2)
       ffi (~> 1.0.6)
     chronic (0.6.7)
@@ -116,7 +120,7 @@ GEM
       railties (~> 3.0)
     hashie (1.1.0)
     headless (0.3.1)
-    highline (1.6.12)
+    highline (1.6.15)
     hike (1.2.1)
     hpricot (0.8.6)
     htmldiff (0.0.1)
@@ -166,7 +170,7 @@ GEM
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
       net-ssh (>= 2.0.9)
-    net-ssh (2.5.2)
+    net-ssh (2.6.2)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     newrelic_rpm (3.3.5)
@@ -264,6 +268,9 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
+    turbo-sprockets-rails3 (0.3.2)
+      railties (> 3.2.8, < 4.0.0)
+      sprockets (>= 2.0.0)
     turn (0.8.3)
       ansi
     tzinfo (0.3.35)
@@ -292,8 +299,7 @@ DEPENDENCIES
   auto_html (= 1.5.1)
   awesome_print
   backup!
-  capistrano
-  capistrano_colors
+  capistrano!
   ckeditor (= 3.6.3)
   daemons
   dalli
@@ -340,6 +346,7 @@ DEPENDENCIES
   thinking-sphinx
   tidy-ext
   tr8n!
+  turbo-sprockets-rails3
   turn (~> 0.8.3)
   uglifier
   watir-webdriver

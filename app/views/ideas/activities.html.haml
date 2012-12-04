@@ -5,6 +5,8 @@
       = render :partial => "nav"
   .col-11
     #activities
+      - if action_name == 'discussions' and @activities.empty?
+        = tr('No discussions yet.', 'view/ideas/activites')
       - for activity in @activities
         = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_noself"}
     %p

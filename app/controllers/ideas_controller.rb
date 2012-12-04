@@ -525,9 +525,9 @@ class IdeasController < ApplicationController
   def discussions
     @page_title = tr("Discussions on {idea_name}", "controller/ideas", :idea_name => @idea.name)
     @activities = @idea.activities.active.discussions.by_recently_updated.for_all_users.paginate :page => params[:page], :per_page => 10
-    if @activities.empty? # pull all activities if there are no discussions
-      @activities = @idea.activities.active.paginate :page => params[:page]
-    end
+    #if @activities.empty? # pull all activities if there are no discussions
+    #  @activities = @idea.activities.active.paginate :page => params[:page]
+    #end
     respond_to do |format|
       format.html { render :action => "activities" }
       format.xml { render :xml => @activities.to_xml(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }

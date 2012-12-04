@@ -3,7 +3,7 @@
   .col-1
     .col-content
       = render :partial => "ideas/nav"
-  .col-8
+  .col-6
     .col-content
       = form_for(:idea_revision, url: idea_idea_revisions_path(@idea)) do |f|
         = f.error_messages
@@ -39,7 +39,7 @@
             = f.text_area :description, id: 'ideaDescriptionContent', value: @idea.description, cols: 58
         %br/
         = f.submit tr("Save idea", "view/ideas/edit"), :class => "yellow_button"
-  .col-3
+  .col-3.col-offset-2
     .col-content
       = render partial: "idea_revisions/idea_revisions"
 :javascript

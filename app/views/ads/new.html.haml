@@ -34,15 +34,15 @@
                   = current_instance.currency_short_name
                 %td.per_user_cost{:valign => "top"}
                   \=
-                  %span#ad_per_user_cost= render :partial => "ads/per_user_cost", :locals => {:ad => @ad}
+                  %span#encouragement_per_user_cost= render :partial => "ads/per_user_cost", :locals => {:ad => @ad}
           .field
             = tr("At this price, your ad will be", "view/ads/new")
-            %span#ad_ranking= render :partial => "ads/ranking", :locals => {:ad => @ad}
+            %span#encouragement_ranking= render :partial => "ads/ranking", :locals => {:ad => @ad}
           = f.submit tr("Save and publish your Ad", "view/ads/new"), :id => "submit", :class => "yellow_button"
         %br/
         %h2= tr("Ad Preview","ad/new")
         %br/
-        #ad_preview
+        #encouragement_preview
         :javascript
           //
           function sendForm() {
@@ -57,7 +57,7 @@
             sendForm();
           }, 0.5);
 
-          $('#ad_cost').delayedObserver(function() {
+          $('#encouragement_cost').delayedObserver(function() {
             sendForm();
           }, 0.5);
           //

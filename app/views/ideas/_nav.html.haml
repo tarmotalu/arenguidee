@@ -1,35 +1,35 @@
 .idea_menu
   %ul
-    %li
-      = link_to tr("Idea overview", "view/ideas/_nav"), @idea
+    %li.highlight
+      = link_to_unless_current tr("Idea overview", "view/ideas/_nav"), @idea
       - if @idea.points_count > 0
         %li
-          = link_to tr("{count} points", "view/ideas/_nav", :count => @idea.points_count), top_points_idea_url(@idea)
+          = link_to_unless_current tr("{count} points", "view/ideas/_nav", :count => @idea.points_count), top_points_idea_url(@idea)
       - else
         %li
-          = link_to tr("New point", "view/ideas/_nav"), @idea.new_point_url(support: true), :title => tr("Can you make a compelling point for or against this idea in less than 500 characters?", "view/ideas/_nav")
+          = link_to_unless_current tr("New point", "view/ideas/_nav"), @idea.new_point_url(support: true), :title => tr("Can you make a compelling point for or against this idea in less than 500 characters?", "view/ideas/_nav")
       %li
         - if @idea.discussions_count == 0
-          = link_to tr("Discussions", "view/ideas/_nav"), discussions_idea_url(@idea)
+          = link_to_unless_current tr("Discussions", "view/ideas/_nav"), discussions_idea_url(@idea)
         - else
-          = link_to tr("{count} discussions", "view/ideas/_nav", :count => @idea.discussions_count), discussions_idea_url(@idea)
+          = link_to_unless_current tr("{count} discussions", "view/ideas/_nav", :count => @idea.discussions_count), discussions_idea_url(@idea)
 
       %li
-        = link_to tr("{count} revisions", "view/ideas/_nav", :count => @idea.idea_revisions_count), idea_idea_revision_url(@idea,@idea.idea_revision_id)
+        = link_to_unless_current tr("{count} revisions", "view/ideas/_nav", :count => @idea.idea_revisions_count), idea_idea_revision_url(@idea,@idea.idea_revision_id)
     - if false and @idea.changes_count > 0 or params[:controller] == 'changes'
       %li
-        = link_to tr("M&A", "view/ideas/_nav"), idea_changes_url(@idea)
+        = link_to_unless_current tr("M&A", "view/ideas/_nav"), idea_changes_url(@idea)
     %li
-      = link_to tr("Feed", "view/ideas/_nav"), activities_idea_url(@idea)
+      = link_to_unless_current tr("Feed", "view/ideas/_nav"), activities_idea_url(@idea)
     - if current_user and current_user.capitals_count>0 and @idea.status == 'published'
       %li
-        = link_to tr("Buy an ad", "view/ideas/_nav"), new_idea_ad_url(@idea), :title => tr("Spend some of your {currency_name} to put this idea at the top of the page for everyone to consider.", "view/ideas/_nav", :currency_name => tr(current_instance.currency_name.downcase,"Currency name from database")), :class => "qtip_left"
+        = link_to_unless_current tr("Buy an ad", "view/ideas/_nav"), new_idea_ad_url(@idea), :title => tr("Spend some of your {currency_name} to put this idea at the top of the page for everyone to consider.", "view/ideas/_nav", :currency_name => tr(current_instance.currency_name.downcase,"Currency name from database")), :class => "qtip_left"
     - if current_user and current_user.is_admin?
       %li
-        = link_to tr("Edit idea", "view/ideas/_nav"), new_idea_idea_revision_url(@idea), :title => tr("Edit this idea", "view/ideas/_nav"), :class => "qtip_left"
+        = link_to_unless_current tr("Edit idea", "view/ideas/_nav"), new_idea_idea_revision_url(@idea), :title => tr("Edit this idea", "view/ideas/_nav"), :class => "qtip_left"
     - if current_user and current_user.is_admin?
       %li
-        = link_to tr("Update status", "view/ideas/_nav"), update_status_idea_url(@idea), :title => tr("Update this idea's status", "view/ideas/_nav"), :class => "qtip_left"
+        = link_to_unless_current tr("Update status", "view/ideas/_nav"), update_status_idea_url(@idea), :title => tr("Update this idea's status", "view/ideas/_nav"), :class => "qtip_left"
       %li
-        = link_to tr("Delete", "view/ideas/_nav"), @idea, :title => tr("Permanently delete this idea", "view/ideas/_nav"), :confirm => tr("Are you sure you want to permanently delete {idea_name}?", "view/ideas/_nav", :idea_name => @idea.name), :method => :delete
+        = link_to_unless_current tr("Delete", "view/ideas/_nav"), @idea, :title => tr("Permanently delete this idea", "view/ideas/_nav"), :confirm => tr("Are you sure you want to permanently delete {idea_name}?", "view/ideas/_nav", :idea_name => @idea.name), :method => :delete
 = render partial: 'ideas/chart'

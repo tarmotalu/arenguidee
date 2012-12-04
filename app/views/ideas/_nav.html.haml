@@ -31,5 +31,5 @@
       %li
         = link_to_unless_current tr("Update status", "view/ideas/_nav"), update_status_idea_url(@idea), :title => tr("Update this idea's status", "view/ideas/_nav"), :class => "qtip_left"
       %li
-        = link_to_unless_current tr("Delete", "view/ideas/_nav"), @idea, :title => tr("Permanently delete this idea", "view/ideas/_nav"), :confirm => tr("Are you sure you want to permanently delete {idea_name}?", "view/ideas/_nav", :idea_name => @idea.name), :method => :delete
+        = link_to tr("Delete", "view/ideas/_nav"), @idea, :title => tr("Permanently delete this idea", "view/ideas/_nav"), :confirm => tr("Are you sure you want to permanently delete {idea_name}?", "view/ideas/_nav", :idea_name => @idea.name), :method => :delete
 = render partial: 'ideas/chart'

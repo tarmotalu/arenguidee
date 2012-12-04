@@ -46,6 +46,36 @@
             = f.file_field :menu_strip_side
             %br/
           .field
+            %label{:for => "left_link_url"}= tr("Url of left-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :left_link_url
+            %br/
+          .field
+            %label{:for => "left_link_position"}= tr("Position of left-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :left_link_position
+            %br/
+          .field
+            %label{:for => "left_link_width"}= tr("Width of left-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :left_link_width
+            %br/
+          .field
+            %label{:for => "right_link_url"}= tr("Url of right-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :right_link_url
+            %br/
+          .field
+            %label{:for => "right_link_position"}= tr("Position of right-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :right_link_position
+            %br/
+          .field
+            %label{:for => "right_link_width"}= tr("Width of right-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :right_link_width
+            %br/
+          .field
             .field_label
               = tr("Prompt", "view/instances/edit")
             .field_box

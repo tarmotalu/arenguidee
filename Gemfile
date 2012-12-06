@@ -48,6 +48,7 @@ gem 'awesome_print'
 gem 'backup', :require => false
 gem 'htmldiff'
 gem 'acts_as_list'
+gem 'html5shiv-rails'
 
 group :development do
   gem 'rails-dev-boost'

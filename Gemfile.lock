@@ -125,6 +125,8 @@ GEM
     highline (1.6.15)
     hike (1.2.1)
     hpricot (0.8.6)
+    html5shiv-rails (0.0.2)
+      railties (>= 3.2.0, < 5.0)
     htmldiff (0.0.1)
     htmlentities (4.3.1)
     httmultiparty (0.3.8)
@@ -316,6 +318,7 @@ DEPENDENCIES
   haml-rails
   headless
   hpricot (>= 0.6)
+  html5shiv-rails
   htmldiff
   htmlentities
   jquery-rails

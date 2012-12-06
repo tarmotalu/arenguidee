@@ -47,6 +47,7 @@ gem 'pry-rails'
 gem 'awesome_print'
 gem 'backup', :require => false
 gem 'htmldiff'
+gem 'acts_as_list'
 
 group :development do
   gem 'rails-dev-boost'

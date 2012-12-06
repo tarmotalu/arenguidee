@@ -59,6 +59,7 @@ GEM
     activesupport (3.2.9)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    acts_as_list (0.1.9)
     addressable (2.2.8)
     airbrake (3.1.1)
       activesupport
@@ -290,6 +291,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_list
   airbrake
   auto_html (= 1.5.1)
   awesome_print

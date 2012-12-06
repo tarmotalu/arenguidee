@@ -18,6 +18,12 @@ GIT
       net-ssh-gateway (>= 1.1.0)
 
 GIT
+  remote: git://github.com/hinrik/rails_view_annotator.git
+  revision: 28ebcbffffd1b8fce88efffbc7fc7e97fb52f93c
+  specs:
+    rails_view_annotator (0.0.7)
+
+GIT
   remote: git://github.com/hinrik/tr8n.git
   revision: 1c07febc752c04e7bc31a3bc0587bd5eb26af4d9
   branch: social_innovation
@@ -208,7 +214,6 @@ GEM
     rails-dev-boost (0.1.1)
     rails-i18n (0.7.1)
       i18n (~> 0.5)
-    rails_view_annotator (0.0.7)
     railties (3.2.9)
       actionpack (= 3.2.9)
       activesupport (= 3.2.9)
@@ -330,7 +335,7 @@ DEPENDENCIES
   rails (= 3.2.9)
   rails-dev-boost
   rails-i18n
-  rails_view_annotator
+  rails_view_annotator!
   recaptcha
   rmagick (= 2.12.2)
   ruby-openid

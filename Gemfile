@@ -39,19 +39,20 @@ gem 'jquery-rails'
 gem 'ckeditor', '3.6.3'
 gem 'kaminari'
 gem 'will_filter'
-gem 'tr8n', :git => "git://github.com/hinrik/tr8n.git", :branch => "social_innovation"
+gem 'tr8n', github: "hinrik/tr8n", :branch => "social_innovation"
 gem 'workflow'
 gem "airbrake"
-gem 'jquery-rjs', :git => "git://github.com/bikeexchange/jquery-rjs.git"
+gem 'jquery-rjs', github: "bikeexchange/jquery-rjs"
 gem 'pry-rails'
 gem 'awesome_print'
 gem 'backup', :require => false
 gem 'htmldiff'
 gem 'acts_as_list'
+gem 'html5shiv-rails'
 
 group :development do
   gem 'rails-dev-boost'
-  gem 'rails_view_annotator'
+  gem 'rails_view_annotator', github: "hinrik/rails_view_annotator"
 end
 
 group :production do

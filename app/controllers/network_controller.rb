@@ -110,7 +110,7 @@ class NetworkController < ApplicationController
   end  
 
   def newest
-    @page_title = tr("New members at {instance_name}", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
+    @page_title = tr("New members at {sub_instance_name}", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @users = User.active.at_least_one_endorsement.by_recently_created.paginate :page => params[:page], :per_page => params[:per_page]
     respond_to do |format|
       format.html

@@ -18,6 +18,12 @@ GIT
       net-ssh-gateway (>= 1.1.0)
 
 GIT
+  remote: git://github.com/hinrik/rails_view_annotator.git
+  revision: 28ebcbffffd1b8fce88efffbc7fc7e97fb52f93c
+  specs:
+    rails_view_annotator (0.0.7)
+
+GIT
   remote: git://github.com/hinrik/tr8n.git
   revision: 1c07febc752c04e7bc31a3bc0587bd5eb26af4d9
   branch: social_innovation
@@ -119,6 +125,8 @@ GEM
     highline (1.6.15)
     hike (1.2.1)
     hpricot (0.8.6)
+    html5shiv-rails (0.0.2)
+      railties (>= 3.2.0, < 5.0)
     htmldiff (0.0.1)
     htmlentities (4.3.1)
     httmultiparty (0.3.8)
@@ -208,7 +216,6 @@ GEM
     rails-dev-boost (0.1.1)
     rails-i18n (0.7.1)
       i18n (~> 0.5)
-    rails_view_annotator (0.0.7)
     railties (3.2.9)
       actionpack (= 3.2.9)
       activesupport (= 3.2.9)
@@ -311,6 +318,7 @@ DEPENDENCIES
   haml-rails
   headless
   hpricot (>= 0.6)
+  html5shiv-rails
   htmldiff
   htmlentities
   jquery-rails
@@ -330,7 +338,7 @@ DEPENDENCIES
   rails (= 3.2.9)
   rails-dev-boost
   rails-i18n
-  rails_view_annotator
+  rails_view_annotator!
   recaptcha
   rmagick (= 2.12.2)
   ruby-openid

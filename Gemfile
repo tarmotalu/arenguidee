@@ -45,7 +45,7 @@ gem "airbrake"
 gem 'jquery-rjs', :git => "git://github.com/bikeexchange/jquery-rjs.git"
 gem 'pry-rails'
 gem 'awesome_print'
-gem 'backup', :require => false, :git => "git://github.com/hinrik/backup.git"
+gem 'backup', :require => false
 gem 'htmldiff'
 
 group :development do

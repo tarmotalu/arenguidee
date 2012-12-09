@@ -53,6 +53,8 @@ gem 'html5shiv-rails'
 group :development do
   gem 'rails-dev-boost'
   gem 'rails_view_annotator', github: "hinrik/rails_view_annotator"
+  gem 'binding_of_caller'
+  gem 'better_errors'
 end
 
 group :production do

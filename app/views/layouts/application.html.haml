@@ -10,7 +10,8 @@
     = render :partial => "shared/head"
     = render :partial => "shared/javascripts"
     = render :partial => "shared/css"
-    = render :partial => "shared/analytics"
+    - if Rails.env.production?
+      = render :partial => "shared/analytics"
     - if controller_name == "ideas" and action_name == "show"
       = render :partial=>"ideas/fb_og_tags"
     = tr8n_scripts_tag

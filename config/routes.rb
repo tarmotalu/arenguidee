@@ -1,6 +1,5 @@
 SocialInnovation::Application.routes.draw do
 
-  mount Ckeditor::Engine => '/ckeditor'
   mount WillFilter::Engine => "/will_filter"
   mount Tr8n::Engine => "/tr8n"
 

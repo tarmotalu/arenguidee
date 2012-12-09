@@ -8,8 +8,6 @@ gem 'capistrano', require: false, github: "capistrano/capistrano"
 gem 'rvm-capistrano', require: false
 gem 'haml'
 gem 'haml-rails'
-gem 'nokogiri'
-gem 'tidy-ext'
 gem "ruby-openid"
 gem "rack-openid"
 gem 'kgio'
@@ -36,7 +34,6 @@ gem 'sys-filesystem'
 gem 'thinking-sphinx'
 gem 'mongrel', '>= 1.2.0.pre2'
 gem 'jquery-rails'
-gem 'ckeditor', '3.6.3'
 gem 'kaminari'
 gem 'will_filter'
 gem 'tr8n', github: "hinrik/tr8n", :branch => "social_innovation"

@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/capistrano/capistrano.git
-  revision: 3626f26d0111c1a60cb20a9b606d45d2a68ae3d0
+  revision: 3100b9118b1e85f7e7529c2b04c34f23c8c3e418
   specs:
     capistrano (2.13.5)
       highline
@@ -79,9 +79,9 @@ GEM
     backup (3.0.27)
       open4 (~> 1.3.0)
       thor (>= 0.15.4, < 2)
-    better_errors (0.0.7)
-      coderay
-      erubis
+    better_errors (0.2.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.7.0)
     binding_of_caller (0.6.8)
     builder (3.0.4)
     childprocess (0.3.6)
@@ -163,7 +163,7 @@ GEM
     mogli (0.0.29)
       hashie (~> 1.0.0)
       httparty (>= 0.4.3)
-    multi_json (1.4.0)
+    multi_json (1.5.0)
     multi_xml (0.5.1)
     mysql2 (0.3.11)
     net-scp (1.0.4)
@@ -218,7 +218,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    rake (10.0.2)
+    rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
     recaptcha (0.3.4)
@@ -240,7 +240,7 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.27.1)
+    selenium-webdriver (2.27.2)
       childprocess (>= 0.2.5)
       libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)

@@ -1,10 +1,13 @@
 = render :partial => "header"
-= render :partial => "nav"
-%p.margin-top
-  - if logged_in?
-    = render :partial => "bulletins/form", :locals => {:activity => Activity.new, :comment => Comment.new }
-  #activities
-    - for activity in @activities
-      = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_noself"}
-  %p
-    = will_paginate(@activities)
+.col-group
+  .col-1
+    .col-content
+      = render :partial => "nav"
+  .col-11
+    #activities
+      - if action_name == 'discussions' and @activities.empty?
+        = tr('No discussions yet.', 'view/ideas/activites')
+      - for activity in @activities
+        = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_noself"}
+    %p
+      = will_paginate(@activities)

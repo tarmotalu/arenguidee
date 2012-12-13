@@ -1,5 +1,4 @@
 class SubInstance < ActiveRecord::Base
-
   require 'paperclip'
   
   scope :active, :conditions => "status in ('pending','active')"
@@ -16,12 +15,11 @@ class SubInstance < ActiveRecord::Base
   validates_attachment_size :menu_strip, :less_than => 5.megabytes
   validates_attachment_content_type :menu_strip, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
-
   has_attached_file :menu_strip_side, :styles => { :icon_full => "100x300#" }
   validates_attachment_size :menu_strip_side, :less_than => 5.megabytes
   validates_attachment_content_type :menu_strip_side, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
-  has_attached_file :logo, :styles => { :icon_96 => "96x96#", :icon_140 => "140x140#", :icon_340_74 => "340x74#", :icon_214_32 => "214x32#", :icon_107_16 => "107x16#", :icon_53_8 => "53x8#", :icon_180 => "180x180#", :medium  => "450x" }
+  has_attached_file :logo, :styles => { :icon_50 => "50x50#", :icon_96 => "96x96#", :icon_140 => "140x140#", :icon_340_74 => "340x74#", :icon_214_32 => "214x32#", :icon_107_16 => "107x16#", :icon_53_8 => "53x8#", :icon_180 => "180x180#", :medium  => "450x" }
     
   validates_attachment_size :logo, :less_than => 5.megabytes
   validates_attachment_content_type :logo, :content_type => ['image/jpeg', 'image/png', 'image/gif']
@@ -38,7 +36,7 @@ class SubInstance < ActiveRecord::Base
   workflow_column :status
   workflow do
     state :passive do
-      event :registered, transitions_to: :pending
+      event :register, transitions_to: :pending
       event :suspend, transitions_to: :suspended
       event :remove, transitions_to: :removed
     end
@@ -65,6 +63,18 @@ class SubInstance < ActiveRecord::Base
   #before_validation :shorten_name
 
   belongs_to :iso_country, :class_name => 'Tr8n::IsoCountry', :foreign_key => :iso_country_id
+
+  def url(path)
+    base_url = Instance.current.homepage_url + path
+    if Rails.env.development?
+      if path =~ /\?/
+        return base_url + "&sub_instance_short_name=#{self.short_name}"
+      else
+        return base_url + "?sub_instance_short_name=#{self.short_name}"
+      end
+    end
+    return base_url
+  end
 
   def shorten_name
     self.short_name.gsub(/[^a-z0-9]+/i, '-')
@@ -94,14 +104,18 @@ class SubInstance < ActiveRecord::Base
 
   validates_length_of       :short_name,    :within => 2..50, :message => tr("should be between 2 and 50 characters.","")
   validates_uniqueness_of   :short_name, :case_sensitive => false, :message => tr("is already taken.","")
-  validates_length_of       :name, :within => 2..30, :message => tr("should be within 3 and 30 characters.","")
+  validates_length_of       :name, :within => 2..50, :message => tr("should be within 3 and 50 characters.","")
 
   ReservedShortnames = %w[admin blog ftp mail pop pop3 imap smtp stage stats status www localize feedback facebook]
   validates_exclusion_of :short_name, :in => ReservedShortnames, :message => tr('is already taken',"")
 
-  def self.current  
-    Thread.current[:sub_instance]
-  end  
+  def self.current
+    if Thread.current[:sub_instance]
+      Thread.current[:sub_instance]
+    else
+      Thread.current[:sub_instance] = SubInstance.first
+    end
+  end
 
   def self.current_id
     if Thread.current[:sub_instance]
@@ -116,7 +130,7 @@ class SubInstance < ActiveRecord::Base
   end
 
   def geoblocking_disabled_for?(country_code)
-    self.geoblocking_open_countries.split.include?(country_code)
+    self.geoblocking_open_countries.split(',').include?(country_code)
   end
 
   def clean_urls

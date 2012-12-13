@@ -4,10 +4,14 @@
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
     %title= @page_title || tr(current_instance.name,"Name from database")
+    - if current_instance.favicon.present?
+      = favicon_link_tag(current_instance.favicon.url(:icon_full))
     = render :partial => "shared/description"
     = render :partial => "shared/head"
     = render :partial => "shared/javascripts"
     = render :partial => "shared/css"
+    - if Rails.env.production?
+      = render :partial => "shared/analytics"
     - if controller_name == "ideas" and action_name == "show"
       = render :partial=>"ideas/fb_og_tags"
     = tr8n_scripts_tag
@@ -16,14 +20,21 @@
     .page
       = render :partial => "shared/top_banner"
       .main
+        .col-group
+          .col-12
+            .col-content
+              = render :partial => "sub_instances/message_to_users"
         .nav.nav-main
           = render :partial => "shared/side_navigation"
         #content.content
           .content-wrap.col-group
             .col-12
               .col-content
-                = render :partial => "ads/pick"
                 = flash_div :warning, :notice, :error
-                = render :partial => "shared/sub_navigation"
+                - unless controller_name == "home" && action_name == "world"
+                  = render :partial => "ads/pick"
+                  = render :partial => "shared/sub_navigation"
                 = yield :layout
+      = render :partial => "shared/facebook_footer"
+      = render :partial => "shared/google_plus_footer"
 

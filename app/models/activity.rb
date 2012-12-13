@@ -7,7 +7,6 @@ class Activity < ActiveRecord::Base
   scope :for_all_users, :conditions => "is_user_only=false"
 
   scope :discussions, :conditions => "activities.comments_count > 0"
-  scope :changes, :conditions => "change_id is not null"
   scope :points, :conditions => "type like 'ActivityPoint%'", :order => "activities.created_at desc"
   scope :capital, :conditions => "type like '%Capital%'"
   scope :interesting, :conditions => "type in ('ActivityIdeaMergeProposal','ActivityIdeaAcquisitionProposal') or comments_count > 0"
@@ -39,6 +38,7 @@ class Activity < ActiveRecord::Base
   belongs_to :tag
   belongs_to :point
   belongs_to :revision
+  belongs_to :idea_revision
   belongs_to :capital
   belongs_to :ad
 
@@ -64,7 +64,7 @@ class Activity < ActiveRecord::Base
   end
 
   before_save :update_changed_at
-  
+
   def update_changed_at
     self.changed_at = Time.now unless self.attribute_present?("changed_at")
   end
@@ -102,13 +102,8 @@ class Activity < ActiveRecord::Base
   @@per_page = 25
 
   def commenters_count
-    comments.count(:group => :user, :order => "count_all desc")
+    comments.count(:order => "count_all desc")
   end  
-
-  def is_official_user?
-    return false unless Instance.current.has_official?
-    user_id == Instance.current.official_user_id
-  end
 
   def has_idea?
     attribute_present?("idea_id")
@@ -129,11 +124,7 @@ class Activity < ActiveRecord::Base
   def has_point?
     attribute_present?("point_id")
   end
-  
-  def has_change?
-    attribute_present?("change_id")
-  end
-  
+
   def has_capital?
     attribute_present?("capital_id")
   end  
@@ -520,6 +511,25 @@ end
 class ActivityPointDeleted < Activity
   def name
     tr("{user_name} deleted {point_name}", "model/activity", :user_name => user.name, :point_name => point.name)
+  end
+end
+
+
+class ActivityIdeaRevisionDescription < Activity
+  def name
+    tr("{user_name} revised {idea_name}", "model/activity", :user_name => user.name, :idea_name => idea.name)
+  end
+end
+
+class ActivityIdeaRevisionName < Activity
+  def name
+    tr("{user_name} changed the idea's title to {idea_name}", "model/activity", :user_name => user.name, :idea_name => idea.name)
+  end
+end
+
+class ActivityIdeaRevisionCategory < Activity
+  def name
+    tr("{user_name} changed the idea's category to {category_name}", "model/activity", :user_name => user.name, :category_name => idea.category.name)
   end
 end
 

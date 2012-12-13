@@ -15,8 +15,8 @@ class PointsController < ApplicationController
   end
  
   def your_index
-    @page_title = tr("Your points", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
-    @points = Point.filtered.published.by_recently_created.paginate :conditions => ["user_id = ?", current_user.id], :include => :idea, :page => params[:page], :per_page => params[:per_page]
+    @page_title = tr("Your points", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
+    @points = Point.published.by_recently_created.paginate :conditions => ["user_id = ?", current_user.id], :include => :idea, :page => params[:page], :per_page => params[:per_page]
     get_qualities
     respond_to do |format|
       format.html { render :action => "index" }
@@ -26,8 +26,8 @@ class PointsController < ApplicationController
   end
   
   def newest
-    @page_title = tr("Newest points", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
-    @points = Point.filtered.published.by_recently_created.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
+    @page_title = tr("Newest points", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
+    @points = Point.published.by_recently_created.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
     @rss_url = url_for :only_path => false, :format => "rss"
     get_qualities
     respond_to do |format|
@@ -39,7 +39,7 @@ class PointsController < ApplicationController
   end  
   
   def for_and_against
-  	@page_title = tr("Points for and against", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
+  	@page_title = tr("Points for and against", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @idea=Idea.find(params[:id])
   	@points_new_up = @idea.points.published.by_recently_created.up_value.five
   	@points_new_down = @idea.points.published.by_recently_created.down_value.five
@@ -73,14 +73,14 @@ class PointsController < ApplicationController
   		@yesno = "Nei"
   	end
   	
-  	@page_title = tr("Points for and against", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
+  	@page_title = tr("Points for and against", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
   	respond_to do |format|
   		format.html { render :action => "all_points" }
   	end
   end
   
   def your_ideas
-    @page_title = tr("Points on {instance_name}", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Points on {sub_instance_name}", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     if current_user.endorsements_count > 0    
       if current_user.up_endorsements_count > 0 and current_user.down_endorsements_count > 0
         @points = Point.published.by_recently_created.paginate :conditions => ["(points.idea_id in (?) and points.endorser_helpful_count > 0) or (points.idea_id in (?) and points.opposer_helpful_count > 0)",current_user.endorsements.active_and_inactive.endorsing.collect{|e|e.idea_id}.uniq.compact,current_user.endorsements.active_and_inactive.opposing.collect{|e|e.idea_id}.uniq.compact], :include => :idea, :page => params[:page], :per_page => params[:per_page]
@@ -101,7 +101,7 @@ class PointsController < ApplicationController
   end 
  
   def revised
-    @page_title = tr("Recently revised points", "controller/points", :instance_name => tr(current_instance.name,"Name from database"))
+    @page_title = tr("Recently revised points", "controller/points", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @revisions = Revision.published.by_recently_created.find(:all, :include => :point, :conditions => "points.revisions_count > 1").paginate :page => params[:page], :per_page => params[:per_page]
     @qualities = nil
     if logged_in? and @revisions.any? # pull all their qualities on the points shown
@@ -131,11 +131,11 @@ class PointsController < ApplicationController
     end
     @points = nil
     if @idea.down_points_count > 1 and @point.is_down?
-      @points = @idea.points.published.down.by_recently_created.find(:all, :conditions => "id <> #{@point.id}", :include => :idea, :limit => 3)
+      @points = @idea.points.published.down.by_recently_created.find(:all, :conditions => "points.id <> #{@point.id}", :include => :idea, :limit => 3)
     elsif @idea.up_points_count > 1 and @point.is_up?
-      @points = @idea.points.published.up.by_recently_created.find(:all, :conditions => "id <> #{@point.id}", :include => :idea, :limit => 3)
+      @points = @idea.points.published.up.by_recently_created.find(:all, :conditions => "points.id <> #{@point.id}", :include => :idea, :limit => 3)
     elsif @idea.neutral_points_count > 1 and @point.is_neutral?
-      @points = @idea.points.published.neutral.by_recently_created.find(:all, :conditions => "id <> #{@point.id}", :include => :idea, :limit => 3)
+      @points = @idea.points.published.neutral.by_recently_created.find(:all, :conditions => "points.id <> #{@point.id}", :include => :idea, :limit => 3)
     end
     get_qualities if @points and @points.any?
     respond_to do |format|
@@ -148,11 +148,15 @@ class PointsController < ApplicationController
   # GET /ideas/1/points/new
   def new
     load_endorsement
-    @point = @idea.points.new
-    @page_title = tr("Add a point to {idea_name}", "controller/points", :idea_name => @idea.name)
-    @point.value = @endorsement.value if @endorsement
-    respond_to do |format|
-      format.html # new.html.erb
+    if @idea.sub_instance_id != SubInstance.current.id
+      redirect_to "#{@idea.show_url}/points/new#{params.has_key?(:support) ? "?support=#{params[:support]}" : ""}"
+    else
+      @point = @idea.points.new
+      @page_title = tr("Add a point to {idea_name}", "controller/points", :idea_name => @idea.name)
+      @point.value = @endorsement.value if @endorsement
+      respond_to do |format|
+        format.html # new.html.erb
+      end
     end
   end
 
@@ -188,7 +192,7 @@ class PointsController < ApplicationController
     respond_to do |format|
       if @point.update_attributes(params[:point])
         flash[:notice] = tr("Saved {point_name}", "controller/points", :point_name => @point.name)
-        format.html { redirect_to(@point) }
+        format.html { redirect_to(@idea) }
       else
         format.html { render :action => "edit" }
       end
@@ -241,7 +245,7 @@ class PointsController < ApplicationController
         render :update do |page|
           if params[:region] == "point_detail"
             page.replace_html 'point_' + @point.id.to_s + '_helpful_button', render(:partial => "points/button", :locals => {:point => @point, :quality => @quality })
-            page.replace_html 'point_' + @point.id.to_s + '_helpful_chart', render(:partial => "points/helpful_chart", :locals => {:point => @point })
+            #page.replace_html 'point_' + @point.id.to_s + '_helpful_chart', render(:partial => "points/helpful_chart", :locals => {:point => @point })
           elsif params[:region] = "point_inline"
 #            page.select("point_" + @point.id.to_s + "_quality").each { |item| item.replace_html(render(:partial => "points/button_small", :locals => {:point => @point, :quality => @quality, :idea => @point.idea}) ) }
             page.replace_html 'point_' + @point.id.to_s + '_quality', render(:partial => "points/button_small", :locals => {:point => @point, :quality => @quality, :idea => @point.idea})
@@ -265,7 +269,7 @@ class PointsController < ApplicationController
         render :update do |page|
           if params[:region] == "point_detail"
             page.replace_html 'point_' + @point.id.to_s + '_helpful_button', render(:partial => "points/button", :locals => {:point => @point, :quality => @quality })
-            page.replace_html 'point_' + @point.id.to_s + '_helpful_chart', render(:partial => "points/helpful_chart", :locals => {:point => @point })
+            #page.replace_html 'point_' + @point.id.to_s + '_helpful_chart', render(:partial => "points/helpful_chart", :locals => {:point => @point })
           elsif params[:region] = "point_inline"
 #            page.select("point_" + @point.id.to_s + "_quality").each { |item| item.replace_html(render(:partial => "points/button_small", :locals => {:point => @point, :quality => @quality, :idea => @point.idea}) ) }
             page.replace_html 'point_' + @point.id.to_s + '_quality', render(:partial => "points/button_small", :locals => {:point => @point, :quality => @quality, :idea => @point.idea})
@@ -313,7 +317,7 @@ class PointsController < ApplicationController
 
   def abusive
     @point = Point.find(params[:id])
-    @point.do_abusive
+    @point.do_abusive!
     @point.remove!
     respond_to do |format|
       format.js {
@@ -353,7 +357,7 @@ class PointsController < ApplicationController
 
   private
     def load_endorsement
-      @idea = Idea.find(params[:idea_id])
+      @idea = Idea.unscoped.find(params[:idea_id])
       @endorsement = nil
       if logged_in? # pull all their endorsements on the ideas shown
         @endorsement = @idea.endorsements.active.find_by_user_id(current_user.id)
@@ -372,7 +376,7 @@ class PointsController < ApplicationController
       @items[1]=[tr("Newest Points", "view/points"), newest_points_url]
       @items[2]=[tr("Recently revised", "view/points"), revised_points_url]
       if logged_in?
-        @items[3]=[tr("Your priorities points", "view/ideas"), your_ideas_points_url]
+        @items[3]=[tr("Your ideas' points", "view/ideas"), your_ideas_points_url]
       end
       @items
     end

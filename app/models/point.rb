@@ -15,7 +15,7 @@ class Point < ActiveRecord::Base
   scope :down_value, :conditions => "points.value < 0"    
   scope :by_recently_created, :order => "points.created_at desc"
   scope :by_recently_updated, :order => "points.updated_at desc"  
-  scope :flagged, :conditions => "flags_count > 0" 
+  scope :flagged, :conditions => "points.flags_count > 0"
   scope :published, :conditions => "points.status = 'published'"
   scope :unpublished, :conditions => "points.status not in ('published','abusive')"
 
@@ -46,7 +46,8 @@ class Point < ActiveRecord::Base
   define_index do
     indexes name
     indexes content
-    indexes idea.category.name, :facet=>true, :as=>"category_name"
+    has idea.category.name, :facet=>true, :as=>"category_name"
+    has updated_at
     has sub_instance_id, :as=>:sub_instance_id, :type => :integer
     where "points.status = 'published'"    
   end
@@ -60,8 +61,8 @@ class Point < ActiveRecord::Base
   end
   
   def category_name
-    if idea.category
-      idea.category.name
+    if idea_id and Idea.unscoped.find(idea_id).category
+      Idea.unscoped.find(idea_id).category.name
     else
       'No category'
     end
@@ -94,7 +95,7 @@ class Point < ActiveRecord::Base
     state :published do
       event :remove, transitions_to: :removed
       event :bury, transitions_to: :buried
-      event :abusive, transitions_to: :abusive
+      event :remove, transitions_to: :removed
     end
     state :draft do
       event :publish, transitions_to: :published
@@ -111,10 +112,9 @@ class Point < ActiveRecord::Base
       event :unbury, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
       event :unbury, transitions_to: :draft
     end
-    state :abusive
   end
 
-  def on_abusive_entry(new_state, event)
+  def do_abusive!
     self.last_author.do_abusive!(notifications)
     self.update_attribute(:flags_count, 0)
   end
@@ -135,7 +135,7 @@ class Point < ActiveRecord::Base
   
   def on_removed_entry(new_state, event)
     remove_counts
-    activities.each do |a|
+    activities.active.each do |a|
       a.remove!
     end
     #capital_earned = capitals.sum(:amount)
@@ -206,11 +206,11 @@ class Point < ActiveRecord::Base
   end
 
   def authors
-    revisions.count(:group => :user, :order => "count_all desc")
+    revisions.count(:order => "count_all desc")
   end
   
   def editors
-    revisions.count(:group => :user, :conditions => ["revisions.user_id <> ?", user_id], :order => "count_all desc")
+    revisions.count(:conditions => ["revisions.user_id <> ?", user_id], :order => "count_all desc")
   end  
   
   def is_up?

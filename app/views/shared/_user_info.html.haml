@@ -1,71 +1,103 @@
 #sib_profile
   #user_info_box
-    %table{:width => "100%"}
-      %tr
-        %td
-          #user_info_box_name_and_menu
-            %span.profile_name= current_user.name
-            %br/
-            = link_to tr("Profile","views/shares/_user_info"), current_user
-            |
-            \#{link_to tr("Settings","views/shares/_user_info"), :controller=>"settings"} |
-            - if current_facebook_user_if_on_facebook and current_user.facebook_uid
-              = fb_logout_link(tr("Logout","view/shared/_user_info"), 'http://'+request.host+"/sessions/destroy")
-            - else
-              = link_to tr("Logout", "view/shared/_user_info"), "/sessions/destroy"
-          %br/
-        %td
-          #user_info_box_picture
-            = link_to :controller=>"settings", :action=>"picture" do
-              = render :partial => "users/pic_48", :locals => {:user => current_user}
-      %tr
-        %td{:style=>"colspan 2"}
+    #user_info_box_name_and_menu
+    #user_info_box_picture
+      = link_to :controller=>"settings", :action=>"picture" do
+        = render :partial => "users/pic_48", :locals => {:user => current_user}
+    - if logged_in?
+      %span.profile_name= current_user.name
+      %br
+      %ul
+        %li
+          = link_to tr("Profile","views/shares/_user_info"), current_user
+          |
+          \#{link_to tr("Settings","views/shares/_user_info"), :controller=>"settings"} |
+        %li
+          = link_to tr("Groups","views/shares/_user_info"), groups_path
+          |
+          - if current_facebook_user_if_on_facebook and current_user.facebook_uid
+            = fb_logout_link(tr("Logout","view/shared/_user_info"), 'http://'+request.host+"/sessions/destroy")
+          - else
+            = link_to tr("Logout", "view/shared/_user_info"), "/sessions/destroy"
+      - if logged_in? && current_user.is_admin?
+        #next_steps_box
+          %h4= tr("Get started:", "view/shared/_notifications", :instance_name => tr(current_instance.name,"Name from database"))
+          %ol
+            - if current_user.followings_count < 2
+              - display_box = true
+              %li= link_to tr("Find people you know", "view/shared/_notifications"), user_contacts_path(current_user)
+            - if current_user.referrals_count == 0
+              - display_box = true
+              - if current_facebook_user_if_on_facebook
+                %li= link_to tr("Invite your Facebook friends", "view/shared/_notifications"), :controller => "facebook", :action => "invite"
+              - else
+                %li= link_to tr("Invite people to join", "view/shared/_notifications"), new_user_contact_url(current_user)
+            - if not current_user.has_picture? and not current_user.has_facebook?
+              - display_box = true
+              %li= link_to tr("Add your picture", "view/shared/_notifications"), picture_settings_url
+            - if not current_user.profile
+              - display_box = true
+              %li= link_to tr("Add your bio", "view/shared/_notifications"), new_user_profile_url(current_user)
+            - if current_user.points_count < 2 and current_user.endorsements_count > 2
+              - display_box = true
+            - if current_user.comments_count < 2 and current_user.endorsements_count > 2
+              - display_box = true
+              %li= link_to tr("Join the discussion on your ideas", "view/shared/_notifications"), :controller => "feed", :action => "your_idea_discussions"
+        %ul
+          %li.menu_header.menu_margin
+            = tr("Admin settings", "view/shared/_menu")
+          %li
           - if logged_in? and current_user.is_admin?
-            %ul#menu
-              %li.tab6.mega
-                %span.tab_header
-                  = link_to tr("Settings", "view/shared/_menu"), "#"
-                .tab_body
-                  - if logged_in? and current_user.is_admin?
-                    .tab_subhead
-                      = link_to tr("Setup a sub_instance", "view/shared/_menu"), sub_instances_url
-                  - if logged_in? and current_user.is_admin? and SubInstance.current
-                    .tab_subhead
-                      = link_to tr("SubInstance settings", "view/shared/_menu"), edit_sub_instance_url(SubInstance.current)
-                  .tab_sublinks
-                    - if logged_in? and current_user.is_admin? and SubInstance.current
-                      = link_to tr("SubInstance account", "view/shared/_menu"), edit_sub_instance_url(SubInstance.current)
-                      \&middot; #{link_to tr("Logo", "view/shared/_menu"), picture_sub_instance_path(SubInstance.current)}
-                      \&middot; #{link_to tr("Email list", "view/shared/_menu"), email_sub_instance_path(SubInstance.current)}
-                  - if current_user.is_admin?
-                    .tab_subhead
-                      = link_to tr("Nation settings", "view/shared/_menu"), edit_instance_url(current_instance)
-                    .tab_sublinks
-                      = link_to tr("Categories", "view/shared/_menu"), "/categories"
-                      \&middot;
-                      \#{link_to tr("Settings", "view/shared/_menu"), edit_instance_url(current_instance)}
-                      \&middot;
-                      \#{link_to tr("All Flagged", "view/shared/_menu"), "/admin/all_flagged"}
-                      \&middot;
-                      - if current_instance.is_tags?
-                        \&middot; #{link_to current_instance.tags_name.pluralize.titleize, tags_url}
-                      \&middot; #{link_to tr("API keys", "view/shared/_menu"), apis_instance_url(current_instance)}
-                      %br/
-                      = link_to tr("Pages", "view/shared/_menu"), pages_url
-                      \&middot;
-                      %br/
-                      = link_to tr("Graphics", "view/shared/_menu"), :controller => "admin", :action => "picture"
-                      \&middot; #{link_to tr("Colors", "view/shared/_menu"), color_schemes_url}
-                      %br/
-                      = link_to tr("Unverified users", "view/network/_nav"), :controller => "network", :action => "unverified"
-                      %br/
-                      = link_to tr("Warnings users", "view/network/_nav"), :controller => "network", :action => "warnings"
-                      %br/
-                      = link_to tr("Suspended users", "view/network/_nav"), :controller => "network", :action => "suspended"
-                      %br/
-                      = link_to tr("Probation users", "view/network/_nav"), :controller => "network", :action => "probation"
-                      %br/
-                      = link_to tr("Deleted users", "view/network/_nav"), :controller => "network", :action => "deleted"
+            \&middot; #{link_to tr("Setup a sub_instance", "view/shared/_menu"), sub_instances_url}
+          - if logged_in? and current_user.is_admin? and SubInstance.current
+            %li
+              \&middot; #{link_to tr("SubInstance settings", "view/shared/_menu"), edit_sub_instance_url(SubInstance.current)}
+            %li
+              \&middot; #{link_to tr("Logo", "view/shared/_menu"), picture_sub_instance_path(SubInstance.current)}
+            %li
+              \&middot; #{link_to tr("Email list", "view/shared/_menu"), email_sub_instance_path(SubInstance.current)}
+          %li
+          \&middot;
+          = link_to tr("Instance settings", "view/shared/_menu"), edit_instance_url(current_instance)
+          %li
+          \&middot;
+          = link_to tr("Instance categories", "view/shared/_menu"), "/categories"
+          %li
+            \&middot;
+            \#{link_to tr("All Flagged", "view/shared/_menu"), "/admin/all_flagged"}
+          - if current_instance.is_tags?
+            %li
+              \&middot;
+              = link_to tr("SubInstance", "view/shared/_menu") + " " + current_instance.tags_name.pluralize.titleize, tags_url
+          %li
+            \&middot; #{link_to tr("API keys", "view/shared/_menu"), apis_instance_url(current_instance)}
+          %li
+            \&middot;
+            = link_to tr("Logo", "view/admin/_nav"), :controller => "admin", :action => "picture"
+          %li
+            \&middot;
+            = link_to tr("Buddy Icon", "view/admin/_nav"), :controller => "admin", :action => "buddy_icon"
+          %li
+            \&middot;
+            = link_to tr("Fav Icon", "view/admin/_nav"), :controller => "admin", :action => "fav_icon"
+          %li
+            \&middot;
+            = link_to tr("Colors", "view/shared/_menu"), color_schemes_url
+          %li
+            \&middot;
+            = link_to tr("Unverified users", "view/network/_nav"), :controller => "network", :action => "unverified"
+          %li
+            \&middot;
+            = link_to tr("Warnings users", "view/network/_nav"), :controller => "network", :action => "warnings"
+        %li
+          \&middot;
+          = link_to tr("Suspended users", "view/network/_nav"), :controller => "network", :action => "suspended"
+        %li
+          \&middot;
+          = link_to tr("Probation users", "view/network/_nav"), :controller => "network", :action => "probation"
+        %li
+          \&middot;
+          = link_to tr("Deleted users", "view/network/_nav"), :controller => "network", :action => "deleted"
 
     - if current_user.warnings_count > 0
       #warning

@@ -1,5 +1,4 @@
 class Instance < ActiveRecord::Base
-
   require 'paperclip'
   
   scope :active, :conditions => "status = 'active'"
@@ -12,11 +11,31 @@ class Instance < ActiveRecord::Base
   belongs_to :color_scheme
   
   belongs_to :picture
-  
+
+  has_attached_file :favicon, :styles => { :icon_full => "16x16" }
+  validates_attachment_content_type :favicon, :content_type => ['image/x-icon', 'image/vnd.microsoft.icon']
+
+  has_attached_file :top_banner, :styles => { :icon_full => "1024x80#" }
+  validates_attachment_size :top_banner, :less_than => 5.megabytes
+  validates_attachment_content_type :top_banner, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+
+  has_attached_file :menu_strip, :styles => { :icon_full => "5x50#" }
+  validates_attachment_size :menu_strip, :less_than => 5.megabytes
+  validates_attachment_content_type :menu_strip, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+
+  has_attached_file :menu_strip_side, :styles => { :icon_full => "100x300#" }
+  validates_attachment_size :menu_strip_side, :less_than => 5.megabytes
+  validates_attachment_content_type :menu_strip_side, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+
   has_attached_file :logo, :styles => { :icon_96 => "96x96#", :icon_140  => "140x140#", :icon_180 => "180x180#", :medium => "450x" }
   
   validates_attachment_size :logo, :less_than => 5.megabytes
   validates_attachment_content_type :logo, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+
+  has_attached_file :email_banner
+
+  validates_attachment_size :email_banner, :less_than => 5.megabytes
+  validates_attachment_content_type :email_banner, :content_type => ['image/jpeg', 'image/png', 'image/gif']
     
   belongs_to :buddy_icon_old, :class_name => "Picture"
   has_attached_file :buddy_icon, :styles => { :icon_24 => "24x24#", :icon_48  => "48x48#", :icon_96 => "96x96#" }
@@ -91,14 +110,14 @@ class Instance < ActiveRecord::Base
     if Thread.current[:localhost_override]
       'http://' + Thread.current[:localhost_override] + '/'
     else
-      if p = sub_instance or p = SubInstance.current
+      if p = sub_instance or (p = SubInstance.current)
         'http://' + p.short_name + '.' + base_url + '/'
       else
         'http://' + base_url + '/'
       end
     end
   end
-  
+
   def name_with_tagline
     return name unless attribute_present?("tagline")
     name + ": " + tagline
@@ -106,7 +125,7 @@ class Instance < ActiveRecord::Base
   
   def update_counts
     self.users_count = User.count
-    self.ideas_count = Idea.published.filtered.count
+    self.ideas_count = Idea.published.count
     self.endorsements_count = Endorsement.active_and_inactive.count
     self.sub_instances_count = SubInstance.active.count
     self.points_count = Point.published.count
@@ -154,6 +173,10 @@ class Instance < ActiveRecord::Base
     attribute_present?("picture_id")
   end
   
+  def has_email_banner?
+    attribute_present?("email_banner_file_name")
+  end
+
   def has_fav_icon?
     attribute_present?("fav_icon_file_name")
   end

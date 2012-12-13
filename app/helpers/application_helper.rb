@@ -38,8 +38,9 @@ module ApplicationHelper
    end
  end
 
- def options_for_select_simple(options,selected=nil)
+ def options_for_select_simple(options,selected=nil,blank=nil)
     out = ""
+    out+="<option value=\"\"#{selected==nil ? "selected" : ""}>#{blank}</option>" if blank
     options.each do |a,b|
       out+="<option value=\"#{b}\"#{b==selected ? "selected" : ""}>#{a}</option>"
     end
@@ -148,7 +149,7 @@ module ApplicationHelper
       end 
     end     
     return "" if r.empty?
-    tr('Notifications: {sentence}', "notifications", :sentence => r.to_sentence)
+    tr('<b>Notifications:</b><br /> {sentence}', "notifications", :sentence => r.to_sentence)
   end
   
   def messages_sentence(messages)
@@ -220,11 +221,11 @@ module ApplicationHelper
 
   def official_status(idea)
   	if idea.is_failed?
-  		out = '<span class="opposed">' + idea.official_status_name + '</span>'
+  		out = '<span class="status_opposed">' + idea.official_status_name + '</span>'
   	elsif idea.is_successful?
-  		out = '<span class="endorsed">' + idea.official_status_name + '</span>'
+  		out = '<span class="status_endorsed">' + idea.official_status_name + '</span>'
   	elsif idea.is_compromised?
-  		out = '<span class="compromised">' + idea.official_status_name + '</span>'
+  		out = '<span class="status_in_progress">' + idea.official_status_name + '</span>'
   	elsif idea.is_intheworks?
   		out = '<span>' + idea.official_status_name + '</span>'
     else

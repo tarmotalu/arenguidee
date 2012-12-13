@@ -5,7 +5,7 @@ class AdsController < ApplicationController
   
   # GET /ideas/1/ads
   def index
-    @ads = @idea.ads.filtered.by_recently_created.paginate :page => params[:page], :per_page => params[:per_page]
+    @ads = @idea.ads.by_recently_created.paginate :page => params[:page], :per_page => params[:per_page]
     @page_title = tr("All ads for {idea_name}", "controller/ads", :idea_name => @idea.name)
     respond_to do |format|
       format.html { redirect_to idea_url(@idea) }
@@ -63,9 +63,9 @@ class AdsController < ApplicationController
     respond_to do |format|    
       format.js {
         render :update do |page|
-          page.replace_html 'ad_preview', render(:partial => "ads/show", :locals => {:ad => @ad, :endorsement => Endorsement.new})
-          page.replace_html 'ad_per_user_cost', render(:partial => "ads/per_user_cost", :locals => {:ad => @ad})
-          page.replace_html 'ad_ranking', render(:partial => "ads/ranking", :locals => {:ad => @ad})
+          page.replace_html 'encouragement_preview', render(:partial => "ads/show", :locals => {:ad => @ad, :endorsement => Endorsement.new})
+          page.replace_html 'encouragement_per_user_cost', render(:partial => "ads/per_user_cost", :locals => {:ad => @ad})
+          page.replace_html 'encouragement_ranking', render(:partial => "ads/ranking", :locals => {:ad => @ad})
         end
       }
     end

@@ -26,6 +26,56 @@
             .field_box
               = f.text_field :target, :size => 40, :maxlength => 30
           .field
+            %label{:for => "favicon_image"}= tr("Favicon", "view/sub_instances/_form")
+            %br/
+            = f.file_field :favicon
+            %br/
+          .field
+            %label{:for => "top_banner_image"}= tr("Top Banner Image", "view/sub_instances/_form")
+            %br/
+            = f.file_field :top_banner
+            %br/
+          .field
+            %label{:for => "menu_strip_image"}= tr("Menu Strip Image Thin", "view/sub_instances/_form")
+            %br/
+            = f.file_field :menu_strip
+            %br/
+          .field
+            %label{:for => "menu_strip_side_image"}= tr("Menu Strip Side Image", "view/sub_instances/_form")
+            %br/
+            = f.file_field :menu_strip_side
+            %br/
+          .field
+            %label{:for => "left_link_url"}= tr("Url of left-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :left_link_url
+            %br/
+          .field
+            %label{:for => "left_link_position"}= tr("Position of left-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :left_link_position
+            %br/
+          .field
+            %label{:for => "left_link_width"}= tr("Width of left-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :left_link_width
+            %br/
+          .field
+            %label{:for => "right_link_url"}= tr("Url of right-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :right_link_url
+            %br/
+          .field
+            %label{:for => "right_link_position"}= tr("Position of right-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :right_link_position
+            %br/
+          .field
+            %label{:for => "right_link_width"}= tr("Width of right-side banner link", "view/sub_instances/_form")
+            %br/
+            = f.text_field :right_link_width
+            %br/
+          .field
             .field_label
               = tr("Prompt", "view/instances/edit")
             .field_box
@@ -52,6 +102,11 @@
             .field_label
               Language:
               \#{f.select :language_code, [1, 2, 3]}
+          - if @instance.has_email_banner?
+            = image_tag @instance.email_banner.url(), :border => 0
+          .field
+            .field_label= tr("Email banner", "view/instances/edit")
+            .field_box= f.file_field :email_banner
         %td{:style => "padding-left: 20px;", :valign => "top"}
           .field
             .field_label
@@ -130,4 +185,4 @@
             .field_box
               = f.check_box :is_tags
               = tr("Enable {tags_name}", "view/instances/edit", :tags_name => current_instance.tags_name.pluralize.downcase)
-    = f.submit tr("Save Nation Settings", "view/instances/edit"), :class => "submit_button"
+    = f.submit tr("Save Instance", "view/instances/edit"), :class => "submit_button"

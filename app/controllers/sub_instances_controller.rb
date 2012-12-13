@@ -57,9 +57,10 @@ class SubInstancesController < ApplicationController
     @page_title = tr("SubInstance with {instance_name}", "controller/sub_instances", :instance_name => tr(current_instance.name,"Name from database"))
     respond_to do |format|
       if @sub_instance.save
-        @sub_instance.register!
+        create_new_tags(@sub_instance.required_tags.split(','))
+        #@sub_instance.register!
         current_user.update_attribute(:sub_instance_id,@sub_instance.id)
-        @sub_instance.activate!
+        #@sub_instance.activate!
         flash[:notice] = tr("Thanks for sub_instanceing with us!", "controller/sub_instances")
         session[:goal] = 'sub_instance'
         format.html { redirect_to 'http://' + @sub_instance.short_name + '.' + current_instance.base_url + picture_sub_instance_path(@sub_instance)}
@@ -76,6 +77,7 @@ class SubInstancesController < ApplicationController
     @page_title = tr("SubInstance settings", "controller/sub_instances")
     respond_to do |format|
       if @sub_instance.update_attributes(params[:sub_instance])
+        create_new_tags(@sub_instance.required_tags.split(','))
         flash[:notice] = tr("Saved settings", "controller/sub_instances")
         format.html { 
           if not @sub_instance.has_picture?
@@ -123,6 +125,15 @@ class SubInstancesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to(sub_instances_url) }
+    end
+  end
+
+  private
+
+  def create_new_tags(tags)
+    @sub_instance.required_tags.split(',').each do |tag|
+      next if Tag.find_by_name(tag)
+      Tag.create(name: tag)
     end
   end
 

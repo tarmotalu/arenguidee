@@ -9,7 +9,7 @@
 %p
   %label{:for => "sub_instance_name"}= tr("Title or Organization name", "view/sub_instances/_form")
   %br/
-  = f.text_field :name, :size => 30, :maxlength => 30
+  = f.text_field :name, :size => 30, :maxlength => 50
   %br/
   %span.small= tr("(example: Donate Life America)", "view/sub_instances/_form")
 %p
@@ -18,6 +18,35 @@
   = f.text_field :name_variations_data, :size => 50, :maxlength => 300
   %br/
   %span.small (hér er,um,frá,til,stutt_útgáfa_fyrir_að_búa_til_hugmynd)
+%p
+  %label{:for => "sub_instance_website"}
+    = tr("Google Analytics Code", "view/sub_instances/_form")
+  %br/
+  = f.text_field :google_analytics_code
+%p
+  %label{:for => "sub_instance_left_link_url"}= tr("Url of left-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :left_link_url
+%p
+  %label{:for => "sub_instance_left_link_position"}= tr("Position of left-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :left_link_position
+%p
+  %label{:for => "sub_instance_left_link_width"}= tr("Width of left-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :left_link_width
+%p
+  %label{:for => "sub_instance_right_link_url"}= tr("Url of right-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :right_link_url
+%p
+  %label{:for => "sub_instance_right_link_position"}= tr("Position of right-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :right_link_position
+%p
+  %label{:for => "sub_instance_right_link_width"}= tr("Width of right-side banner link", "view/sub_instances/_form")
+  %br/
+  = f.text_field :right_link_width
 %p
   %label{:for => "sub_instance_website"}= tr("Link to your homepage", "view/sub_instances/_form")
   %br/
@@ -38,6 +67,11 @@
   = f.text_field :geoblocking_open_countries
   %br/
 %p
+  %label{:for => "logo"}= tr("Logo", "view/sub_instances/_form")
+  %br/
+  = f.file_field :logo
+  %br/
+%p
   %label{:for => "top_banner_image"}= tr("Top Banner Image", "view/sub_instances/_form")
   %br/
   = f.file_field :top_banner
@@ -51,6 +85,11 @@
   %label{:for => "menu_strip_side_image"}= tr("Menu Strip Side Image", "view/sub_instances/_form")
   %br/
   = f.file_field :menu_strip_side
+  %br/
+%p
+  %label{:for => "required_tags"}= tr("Required tags", "view/sub_instances/_form")
+  %br/
+  = f.text_field :required_tags
   %br/
 %p
   %label{:for => "default_tags"}= tr("Default category", "view/sub_instances/_form")
@@ -74,12 +113,35 @@
   %br/
 .field
   .field_label
+    = tr("Custom css (not sass!)", "view/instances/edit")
+  .field_box
+    = f.text_area :custom_css, :rows => 7, :cols=>60
+.field
+  .field_label
     = tr("Message for new idea", "view/instances/edit")
   .field_box
-    = f.text_area :message_for_new_idea, :rows => 7, :cols=>20
+    = f.text_area :message_for_new_idea, :rows => 5, :cols=>60
+  %br/
 .field
   .field_label= tr("Message to users", "view/instances/edit")
-  .field_box= f.text_area :message_to_users, :rows => 7, :cols=>20
+  .field_box= f.text_area :message_to_users, :rows => 7, :cols=>60
+.field
+  .field_label= tr("Sub link header", "view/instances/edit")
+  .field_box= f.text_area :sub_link_header, :rows => 7, :cols=>90
+
+%p
+  %label{:for => "default_locale"}= tr("Use category homepage", "view/sub_instances/_form")
+  = f.check_box :use_category_home_page
+%p
+  %label{:for => "default_locale"}= tr("Hide idea description", "view/sub_instances/_form")
+  = f.check_box :hide_description
+%p
+  %label{:for => "default_locale"}= tr("Hide world icon", "view/sub_instances/_form")
+  = f.check_box :hide_world_icon
+%p
+  %label{:for => "max length idea name"}= tr("Max length of idea name", "view/sub_instances/_form")
+  = f.text_field :idea_name_max_length
+
 = f.check_box :is_daily_summary
 = tr("Email me a weekly summary of activity", "view/sub_instances/_form")
 %br/

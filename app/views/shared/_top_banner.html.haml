@@ -1,7 +1,33 @@
 .header
   .header-wrap
-    %div
-    = image_tag SubInstance.current.top_banner.url(:icon_full), :size => "1024x80", :border => 0
-    %p.hide
-      %a{:href => "#content"} Skipt to content
-    = render :partial => "shared/top_navigation"
+    .col-group
+      .col-12
+        .col-content
+          %div
+            - unless SubInstance.current.top_banner.to_s.include?("missing.png")
+              = image_tag SubInstance.current.top_banner.url(:icon_full), :size => "1024x80", :border => 0
+              - if left_url = (SubInstance.current.left_link_url or Instance.current.left_link_url)
+                - left_pos = SubInstance.current.left_link_position or Instance.current.left_link_position
+                - left_width = SubInstance.current.left_link_width or Instance.current.left_link_width
+                %a.header_link{href: left_url, style: "left: #{left_pos}px; width: #{left_width}px;"}
+              - if right_url = (SubInstance.current.right_link_url or Instance.current.right_link_url)
+                - right_pos = SubInstance.current.right_link_position or Instance.current.right_link_position
+                - right_width = SubInstance.current.right_link_width or Instance.current.right_link_width
+                %a.header_link{href: right_url, style: "left: #{right_pos}px; width: #{right_width}px;"}
+            - else
+              = image_tag current_instance.top_banner.url(:icon_full), :size => "1024x80", :border => 0
+          %div.header_submenu
+            - if SubInstance.current.sub_link_header and SubInstance.current.sub_link_header!=""
+              = SubInstance.current.sub_link_header.html_safe
+          %p.hide
+            %a{:href => "#content"} Skip to content
+      .col-group
+        .col-3
+          .col-content
+          &nbsp;
+        .col-7
+          .col-content
+            = render :partial => "shared/top_navigation"
+        .col-2
+          .col-content
+            %a{:id=>"link_to_cf", :href=>"http://citizens.is/", :style=>"position-top:0px;float:right;height:80px;width:100px;"}

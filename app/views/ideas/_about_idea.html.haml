@@ -1,11 +1,18 @@
 .idea_name{:id => "idea_#{idea.id}_name"}
-  = link_to_unless_current tg(h(idea.name)), idea.show_url, :class => "idea_name_link"
+  - if @position_in_idea_name
+    = link_to_unless_current "#{idea.position}. #{tg(idea.name)}".html_safe, idea.show_url, :class => "idea_name_link"
+  - else
+    = link_to_unless_current tg(idea.name).html_safe, idea.show_url, :class => "idea_name_link"
   = render :partial=>"ideas/flagged", :locals=>{:idea=>idea}
   :javascript
     $(function(){
         $('#action_insert').replaceWith($('#idea_flag_#{idea.id.to_s}'));
     });
+  %div{style: 'float: right;'}= render :partial=>"ideas/report_content", :locals=>{:idea=>idea}
 .category
-  = render :partial=>"ideas/report_content", :locals=>{:idea=>idea}
+- if action_name == 'show' and idea.idea_revisions_count > 1
+  .small_text
+    = tr("by {author_sentence}", "view/points/_short_list", :author_sentence => idea.author_sentence)
+    = tr("added {time_ago}", "view/points/_short_list", :time_ago => time_ago(idea.created_at))
 %p
   = idea.description

@@ -5,7 +5,7 @@ class ActivitiesController < ApplicationController
   
   def index
     if request.format != 'html'
-      @activities = Activity.active.filtered.by_recently_created.paginate :page => params[:page], :per_page => params[:per_page]
+      @activities = Activity.active.by_recently_created.paginate :page => params[:page], :per_page => params[:per_page]
     end
     respond_to do |format|
       format.html { redirect_to :controller => "feed", :action => "activities" } # redirect to all activity
@@ -14,8 +14,6 @@ class ActivitiesController < ApplicationController
     end    
   end
 
-  # GET /activities/1
-  # GET /activities/1.xml
   def show
     @activity = Activity.find(params[:id])
     respond_to do |format|
@@ -25,7 +23,6 @@ class ActivitiesController < ApplicationController
     end    
   end
   
-  #GET /activities/1/unhide
   def unhide
     @activity = Activity.find(params[:id])    
     respond_to do |format|

@@ -53,11 +53,13 @@ Install Bundler
 $ gem install bundler
 ````
 
-Install thinking-sphinx
+Install thinking-sphinx, memcached, and imagemagick
 
 ````bash
-$ sudo aptitude install sphinxsearch
+$ sudo aptitude install sphinxsearch memcached imagemagick
 ````
+
+You will also need to have an smtpd running on the machine.
 
 Set up social-innovation
 ----------------------------
@@ -107,7 +109,7 @@ Testing social-innovation
 First set up the test database and start the test server
 
 ````bash
-$ RAILS_ENV=test bundle exec rake db:create db:schema:load tr8n:init tr8n:import_and_setup_iso_3166
+$ RAILS_ENV=test bundle exec rake db:drop db:create db:schema:load tr8n:init tr8n:import_and_setup_iso_3166
 $ bundle exec rails server -e test
 ````
 

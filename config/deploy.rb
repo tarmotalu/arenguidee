@@ -1,4 +1,4 @@
-set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"")
+set :rvm_ruby_string, 'ruby-1.9.3-p327'
 require "rvm/capistrano"
 require 'bundler/capistrano'
 require 'airbrake/capistrano'
@@ -8,17 +8,17 @@ set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
 
 ssh_options[:forward_agent] = true
-set :application, "social_innovation_internal"
-set :domain, "yrpri.org"
+set :application, "rahvakogu_staging"
+set :domain, "rahvakogu.ee"
 set :scm, "git"
-set :repository, "git@github.com:rbjarnason/social_innovation_internal.git"
-set :selected_branch, "yrpri2"
+set :repository, "git@217.146.75.17:/var/git/social_innovation.git"
+set :selected_branch, "master"
 set :branch, "#{selected_branch}"
 set :use_sudo, false
-set :deploy_to, "/home/yrpri/sites/#{application}/#{selected_branch}"
-set :user, "yrpri"
+set :deploy_to, "/var/www/#{application}"
+set :user, "www-data"
 set :deploy_via, :remote_cache
-set :shared_children, shared_children + %w[config db/sphinx assets db/hourly_backup db/daily_backup db/weekly_backup]
+# set :shared_children, shared_children + %w[config db/sphinx assets db/hourly_backup db/daily_backup db/weekly_backup]
 
 role :app, domain
 role :web, domain

@@ -104,9 +104,6 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    facebooker2 (0.0.12)
-      mogli (>= 0.0.12)
-      ruby-hmac
     factory_girl (4.1.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.1.0)
@@ -308,7 +305,6 @@ DEPENDENCIES
   delayed_job
   delayed_job_active_record
   execjs
-  facebooker2
   factory_girl_rails
   geoip
   googlecharts

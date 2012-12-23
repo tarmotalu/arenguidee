@@ -18,6 +18,7 @@ set :use_sudo, false
 set :deploy_to, "/var/www/#{application}"
 set :user, "www-data"
 set :deploy_via, :remote_cache
+set :rails_env, "staging"
 # set :shared_children, shared_children + %w[config db/sphinx assets db/hourly_backup db/daily_backup db/weekly_backup]
 
 role :app, domain

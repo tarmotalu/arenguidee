@@ -73,18 +73,18 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
         sign_in(:user, @user)        
       else # Authentication was successful, but user is not registered in the system
         alert = t('sessions.new.not_registered', :username => omniauth['user_info']['name'])
-        redirect = new_user_session_path
+        redirect = new_session_path
       end
     else
       alert = t('sessions.new.invalid_user_info')
-      redirect = new_user_session_path
+      redirect = new_session_path
     end
 
   respond_to do |format|
     format.html do
       flash[:alert] = alert if alert
       flash[:notice] = notice if notice
-      redirect_to redirect
+      redirect_to redirect, :alert => flash[:alert]
     end
     format.js do
       render :json => {:alert => alert, :notice => notice, :redirect => redirect}

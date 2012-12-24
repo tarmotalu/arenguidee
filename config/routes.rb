@@ -23,6 +23,8 @@ SocialInnovation::Application.routes.draw do
       put :picture_save
     end
   end
+  
+  devise_for :users, :controllers => {:sessions => 'sessions', :omniauth_callbacks => 'authentications'}, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
 
   resources :users do
   	resource :password

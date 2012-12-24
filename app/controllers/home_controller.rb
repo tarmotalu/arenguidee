@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
-
+  skip_before_filter :authenticate_user!
+  
   caches_action :index,
                 :if => proc {|c| c.do_action_cache? },
                 :cache_path => proc {|c| c.action_cache_path},

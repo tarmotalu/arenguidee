@@ -4,10 +4,7 @@
 require 'will_paginate/array'
 
 class ApplicationController < ActionController::Base
-  include AuthenticatedSystem
   include FaceboxRender
-
-  include Facebooker2::Rails::Controller
 
   require_dependency "activity.rb"
   require_dependency "relationship.rb"   
@@ -18,7 +15,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   
   # Make these methods visible to views as well
-  helper_method :current_facebook_user, :instance_cache, :current_sub_instance, :current_user_endorsements, :current_idea_ids, :current_following_ids, :current_ignoring_ids, :current_following_facebook_uids, :current_instance, :current_tags, :facebook_session, :is_robot?, :js_help
+  helper_method :current_facebook_user, :instance_cache, :current_sub_instance, :current_user_endorsements, :current_idea_ids, :current_following_ids, :current_ignoring_ids, :current_following_facebook_uids, :current_instance, :current_tags, :facebook_session, :is_robot?, :js_help, :logged_in?
   
   # switch to the right database for this instance
   before_filter :check_for_localhost
@@ -26,6 +23,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_subdomain
   before_filter :check_geoblocking
 
+  before_filter :authenticate_user!
   before_filter :session_expiry
   before_filter :update_activity_time
 
@@ -48,6 +46,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   protected
+  
+  def logged_in?
+    current_user.present?
+  end
 
   def action_cache_path
     params.merge({:geoblocked=>@geoblocked, :host=>request.host, :country_code=>@country_code,

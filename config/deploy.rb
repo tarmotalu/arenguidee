@@ -52,6 +52,33 @@ after 'deploy:finalize_update' do
   run "ln -nfs /mnt/shared/system #{current_release}/public/system"
 end
 
+namespace :log do
+  desc 'Show application logs from server'
+  task :tail, :roles => :app do
+    run "tail -f -n100 #{shared_path}/log/#{rails_env}.log" do |channel, stream, data|
+      puts data
+      break if stream == :err    
+    end
+  end
+  
+  desc "Check production log files in TextMate™"
+  task :mate, :roles => :app do
+    require 'tempfile'
+    tmp = Tempfile.open('w')
+    logs = Hash.new { |h,k| h[k] = '' }
+
+    run "tail -n500 #{shared_path}/log/#{rails_env}.log" do |channel, stream, data|
+      logs[channel[:host]] << data
+      break if stream == :err
+    end
+
+    logs.each { |host, log| tmp.write("--- #{host} ---\n\n#{log}\n") }
+
+    exec "mate -w #{tmp.path}" 
+    tmp.close
+  end
+end
+
 namespace :delayed_job do
   desc "Restart the delayed_job process"
   task :restart, :roles => :app do

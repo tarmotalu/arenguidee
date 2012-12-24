@@ -2,6 +2,8 @@
 
 if Rails.env.development?
   SocialInnovation::Application.config.session_store :cookie_store, key: Rails.application.config.database_configuration[Rails.env]["session_key"]
+elsif Rails.env.staging?
+  SocialInnovation::Application.config.session_store ActionDispatch::Session::CacheStore, :expire_after => 20.minutes
 else
   SocialInnovation::Application.config.session_store :cookie_store, key: Rails.application.config.database_configuration[Rails.env]["session_key"],  :domain => ".#{Instance.last.domain_name}"
 end

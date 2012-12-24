@@ -12,7 +12,7 @@ set :application, "rahvakogu_staging"
 set :domain, "rahvakogu.ee"
 set :scm, "git"
 set :repository, "git@217.146.75.17:/var/git/social_innovation.git"
-set :selected_branch, "master"
+set :selected_branch, "eid"
 set :branch, "#{selected_branch}"
 set :use_sudo, false
 set :deploy_to, "/var/www/#{application}"
@@ -34,14 +34,14 @@ namespace :deploy do
   end
 end
 
-before 'deploy:update_code' do
-  thinking_sphinx.stop
-end
+# before 'deploy:update_code' do
+#   thinking_sphinx.stop
+# end
 
-after 'deploy:update_code' do
-  thinking_sphinx.configure
-  thinking_sphinx.rebuild
-end
+# after 'deploy:update_code' do
+#   thinking_sphinx.configure
+#   thinking_sphinx.rebuild
+# end
 
 after 'deploy:finalize_update' do
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/* #{current_release}/config/"

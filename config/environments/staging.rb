@@ -81,6 +81,6 @@ SocialInnovation::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   config.assets.precompile += [ method(:compile_asset?).to_proc ]
 
-  #config.cache_store = :dalli_store, '127.0.0.1:11211', { :namespace => "si_3_#{Rails.env}_#{Rails.application.config.database_configuration[Rails.env]["git_branch"]}",
-  #                                                        :compress => true, :compress_threshold => 64*1024 }
+  config.cache_store = :dalli_store, '127.0.0.1:11211', { :namespace => "rahvakogu_#{Rails.env}_#{Rails.application.config.database_configuration[Rails.env]["git_branch"]}",
+                                                         :compress => true, :compress_threshold => 64*1024 }
 end

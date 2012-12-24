@@ -49,7 +49,7 @@ after 'deploy:finalize_update' do
   run "mkdir #{current_release}/lib/geoip"
   run "ln -nfs #{deploy_to}/#{shared_dir}/geoip/GeoIP.dat #{current_release}/lib/geoip/GeoIP.dat"
   run "ln -nfs #{deploy_to}/#{shared_dir}/assets #{current_release}/public/assets"
-  run "ln -nfs /mnt/shared/system #{current_release}/public/system"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/system #{current_release}/public/system"
 end
 
 namespace :log do

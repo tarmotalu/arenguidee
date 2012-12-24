@@ -44,7 +44,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     end
 
     respond_to do |format|
-      format.html { redirect_to new_user_session_path }
+      format.html { redirect_to new_session_path }
       format.js { render :json => {:redirect => new_user_session_path} }
     end
   end

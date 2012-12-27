@@ -35,6 +35,7 @@
 //= require jquery.tipsy
 //= require msdropdown
 //= require_self
+//= require jquery.functions
 
 jQuery(function ($) {
   $.fn.extend({

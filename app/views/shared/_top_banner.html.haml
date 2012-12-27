@@ -1,16 +1,27 @@
 %header#header
-  = link_to image_tag('logo.png'), '/', :alt => "Rahvakogu"
+  = link_to image_tag('logo.png'), '/', :alt => "Rahvakogu", :class => :logo
 
   %nav#mainMenu
     - @categories.each do |category|
       = link_to category.name, category
-  %li.signin= link_to 'Sisene', '#', :class => 'logIn'
+  %li.signin= link_to 'Sisene', '#', :class => 'logIn signin'
 - if logged_in?
   = render :partial => "shared/user_info"
   = render :partial => "shared/notifications"
 - else
   = render :partial => "users/login"
+  
+:javascript
+  $(document).ready(function() {
 
+    $("a.signin").click(function(e) {
+        e.preventDefault();
+        $("#sib_login_form").toggle();
+        $(".signin").toggleClass("menu-open");
+    });
+
+
+  });
 
 
 / .header

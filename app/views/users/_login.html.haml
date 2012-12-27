@@ -10,6 +10,6 @@
           = image_submit_tag('idcard.gif', :class => 'id-card-img')
     - if current_instance.has_facebook_enabled? or current_instance.has_twitter_enabled? or current_instance.google_login_enabled
       %p
-    = render :partial => "shared/language_selection_master"
+    / = render :partial => "shared/language_selection_master"
     - if @geoblocked
       = render :partial=>"shared/geoblocking_info"

@@ -12,7 +12,9 @@ set :application, "rahvakogu_staging"
 set :domain, "rahvakogu.ee"
 set :scm, "git"
 set :repository, "git@217.146.75.17:/var/git/social_innovation.git"
-set :selected_branch, "views"
+
+set :selected_branch, "master"
+>>>>>>> master
 set :branch, "#{selected_branch}"
 set :use_sudo, false
 set :deploy_to, "/var/www/#{application}"

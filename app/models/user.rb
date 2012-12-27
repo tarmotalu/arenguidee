@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   scope :all_endorsers_and_opposers_for_idea, lambda { |idea_id| User.joins(:endorsements).where(endorsements: {idea_id: idea_id}); }
 
   belongs_to :picture
-  has_attached_file :buddy_icon, :styles => { :icon_24 => "24x24#", :icon_35 => "35x35#", :icon_48 => "48x48#", :icon_96 => "96x96#" }
+  has_attached_file :buddy_icon, :styles => { :icon_24 => "24x24#", :icon_40 => "40x40#", :icon_48 => "48x48#", :icon_96 => "96x96#" }
   
   validates_attachment_size :buddy_icon, :less_than => 5.megabytes
   validates_attachment_content_type :buddy_icon, :content_type => ['image/jpeg', 'image/png', 'image/gif','image/x-png','image/pjpeg']

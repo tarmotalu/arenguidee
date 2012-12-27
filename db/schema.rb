@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121204120445) do
+ActiveRecord::Schema.define(:version => 20121227173959) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -773,7 +773,6 @@ ActiveRecord::Schema.define(:version => 20121204120445) do
     t.string   "country_english_name", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "map_coordinates"
   end
 
   add_index "tr8n_iso_countries", ["code"], :name => "index_tr8n_iso_countries_on_code"
@@ -993,7 +992,6 @@ ActiveRecord::Schema.define(:version => 20121204120445) do
     t.string   "locale"
     t.integer  "level",             :default => 0
     t.datetime "synced_at"
-    t.string   "type"
   end
 
   add_index "tr8n_translation_keys", ["key"], :name => "index_tr8n_translation_keys_on_key", :unique => true
@@ -1125,6 +1123,7 @@ ActiveRecord::Schema.define(:version => 20121204120445) do
   add_index "tr8n_translators", ["created_at"], :name => "index_tr8n_translators_on_created_at"
   add_index "tr8n_translators", ["email", "password"], :name => "index_tr8n_translators_on_email_and_password"
   add_index "tr8n_translators", ["email"], :name => "index_tr8n_translators_on_email"
+  add_index "tr8n_translators", ["remote_id"], :name => "index_tr8n_translators_on_remote_id"
   add_index "tr8n_translators", ["user_id"], :name => "index_tr8n_translators_on_user_id"
 
   create_table "unsubscribes", :force => true do |t|

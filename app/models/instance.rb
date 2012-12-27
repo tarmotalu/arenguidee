@@ -156,8 +156,7 @@ class Instance < ActiveRecord::Base
   end
   
   def has_facebook_enabled?
-    return false unless is_facebook?
-    return true
+    return false 
   end
   
   def has_windows_enabled?

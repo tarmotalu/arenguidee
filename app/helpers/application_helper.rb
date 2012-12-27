@@ -3,7 +3,19 @@
 module ApplicationHelper
   include Tr8n::BaseHelper
 
+
+
   def current_facebook_user_if_on_facebook
+
+    return nil
+    # ret_user = nil
+    # begin
+    #   ret_user = current_facebook_user
+    # rescue Mogli::Client::OAuthException
+    #   return nil
+    # end
+    # ret_user
+
   end
 
   def my_simple_format(text, html_options={}, options={})

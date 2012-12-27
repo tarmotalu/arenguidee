@@ -108,6 +108,7 @@ GEM
       railties (~> 3.1)
       warden (~> 1.2.1)
     erubis (2.7.0)
+    eventmachine (1.0.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.1.0)
@@ -234,7 +235,6 @@ GEM
     rubinius-actor (0.0.2)
       rubinius-core-api
     rubinius-core-api (0.0.1)
-    ruby-hmac (0.4.0)
     ruby-openid (2.2.2)
     ruby-prof (0.11.2)
     rubyzip (0.9.9)
@@ -263,6 +263,10 @@ GEM
       ffi (>= 1.0.0)
     therubyracer (0.10.2)
       libv8 (~> 3.3.10)
+    thin (1.5.0)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     thinking-sphinx (2.0.13)
       activerecord (>= 3.0.3)
       builder (>= 2.1.2)
@@ -352,6 +356,7 @@ DEPENDENCIES
   sunlight
   sys-filesystem
   therubyracer (~> 0.10.2)
+  thin
   thinking-sphinx
   tr8n!
   turbo-sprockets-rails3

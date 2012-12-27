@@ -78,7 +78,7 @@ class SessionsController < ApplicationController
     reset_session
     Thread.current[:current_user] = nil
     flash[:notice] = tr("Logged out. Please come again soon.", "controller/sessions")
-    redirect_to root_path
+    redirect_to('/')
   end
   
 end

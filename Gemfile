@@ -51,6 +51,7 @@ gem 'acts_as_list'
 gem 'html5shiv-rails'
 
 group :development do
+  gem 'thin'
   gem 'rails-dev-boost'
   gem 'rails_view_annotator', github: "hinrik/rails_view_annotator"
   gem 'binding_of_caller'

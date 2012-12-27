@@ -4,7 +4,12 @@
   %nav#mainMenu
     - @categories.each do |category|
       = link_to category.name, category
-  %a.logIn{:href => ""} Sisene
+  %li.signin= link_to 'Sisene', '#', :class => 'logIn'
+- if logged_in?
+  = render :partial => "shared/user_info"
+  = render :partial => "shared/notifications"
+- else
+  = render :partial => "users/login"
 
 
 

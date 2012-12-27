@@ -63,7 +63,7 @@ class HomeController < ApplicationController
 
       last = params[:last].blank? ? Time.now + 1.second : Time.parse(params[:last])
       @activities = Activity.active.top.feed(last).for_all_users.with_20
-      @categories = Category.all
+
     end
   end
 

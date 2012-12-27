@@ -40,10 +40,32 @@ class ApplicationController < ActionController::Base
   before_filter :check_missing_user_parameters, :except=>[:destroy]
 
   before_filter :setup_inline_translation_parameters
+  before_filter :get_categories
 
   layout :get_layout
 
   protect_from_forgery
+
+  def is_admin? 
+      if logged_in? && current_user.is_admin?
+        true
+      else
+        false
+      end
+  end
+  
+  def admin_required
+    is_admin? || admin_denied
+  end
+  
+  def admin_denied
+    respond_to do |format|
+      format.html do
+        flash[:notice] = 'You must be an admin to do that.'
+        redirect_to forums_path
+      end
+    end
+  end
 
   protected
   
@@ -85,6 +107,10 @@ class ApplicationController < ActionController::Base
     #end
   end
 
+
+  def get_categories
+    @categories = Category.all
+  end
   def check_for_localhost
     if Rails.env.development?
       Thread.current[:localhost_override] = "#{request.host}:#{request.port}"

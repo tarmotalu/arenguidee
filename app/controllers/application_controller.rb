@@ -44,6 +44,30 @@ class ApplicationController < ActionController::Base
   layout :get_layout
 
   protect_from_forgery
+  helper_method :is_admin?
+
+  def is_admin? 
+      if logged_in? && current_user.is_admin?
+        true
+      else
+        false
+      end
+  end
+  
+  def admin_required
+    logger.warn('cufksd' + current_user.inspect)
+    is_admin? || admin_denied
+  end
+  
+  def admin_denied
+    respond_to do |format|
+      format.html do
+
+        flash[:notice] = 'You must be an admin to do that.'
+        redirect_to '/'
+      end
+    end
+  end
 
   protected
   
@@ -374,6 +398,15 @@ class ApplicationController < ActionController::Base
   end  
 
   def current_facebook_user_if_on_facebook
+
+    return nil
+    # ret_user = nil
+    # begin
+    #   ret_user = current_facebook_user
+    # rescue Mogli::Client::OAuthException
+    #   return nil
+    # end
+    # ret_user
   end
 
   # if they're logged in with our account, AND connected with facebook, but don't have their facebook uid added to their account yet

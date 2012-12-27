@@ -213,7 +213,7 @@ class User < ActiveRecord::Base
   end
   
   def new_user_signedup
-    ActivityUserNew.create(:user => self, :sub_instance => sub_instance)
+    Activity::ActivityUserNew.create(:user => self, :sub_instance => sub_instance)
     resend_activation if self.has_email? and self.is_pending? # and not self.identifier_url
   end
 

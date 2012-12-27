@@ -1,9 +1,16 @@
 !!!
-%html{:lang => I18n.locale, "xml:lang" => I18n.locale, :xmlns => "http://www.w3.org/1999/xhtml", "xmlns:fb" => "http://www.facebook.com/2008/fbml"}
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
   %head
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
-    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    %meta{:content => "Wiseman Interactive Oü  www.wiseman.ee", :name => "Author"}/
+    %link{:href => "static/styles/default.css", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "/assets/imgs/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
+
     %title= @page_title || tr(current_instance.name,"Name from database")
+
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    %title
     - if current_instance.favicon.present?
       = favicon_link_tag(current_instance.favicon.url(:icon_full))
     = render :partial => "shared/description"
@@ -17,6 +24,27 @@
     = tr8n_scripts_tag
   %body
     = csrf_meta_tag
+    %section#topBar
+      .inline
+        %a.active{:href => ""}
+          %b> Ettepanekute kogumine
+          01/2013
+        %span.arrow &nbsp;
+        %a{:href => ""}
+          %b> Analüüs
+          02/2013
+        %span.arrow &nbsp;
+        %a{:href => ""}
+          %b> Arutelupäev
+          03/2013
+        %span.arrow &nbsp;
+        %a{:href => ""}
+          %b> Seadusemuudatused
+          04/2013
+      / /inline
+    / /topBar
+
+
     .page
       = render :partial => "shared/top_banner"
       .main

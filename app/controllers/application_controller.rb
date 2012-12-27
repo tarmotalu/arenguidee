@@ -374,13 +374,6 @@ class ApplicationController < ActionController::Base
   end  
 
   def current_facebook_user_if_on_facebook
-    ret_user = nil
-    begin
-      ret_user = current_facebook_user
-    rescue Mogli::Client::OAuthException
-      return nil
-    end
-    ret_user
   end
 
   # if they're logged in with our account, AND connected with facebook, but don't have their facebook uid added to their account yet
@@ -406,7 +399,6 @@ class ApplicationController < ActionController::Base
   end
   
   def no_facebook?
-    return false if logged_in? and current_facebook_user_if_on_facebook
     return true
   end
   

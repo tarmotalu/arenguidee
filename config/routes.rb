@@ -24,7 +24,7 @@ SocialInnovation::Application.routes.draw do
     end
   end
   
-  devise_for :users, :controllers => {:sessions => 'sessions', :omniauth_callbacks => 'authentications'}, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
+  devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations', :omniauth_callbacks => 'authentications'}, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
 
   resources :users do
   	resource :password
@@ -264,7 +264,7 @@ SocialInnovation::Application.routes.draw do
 
   resource :open_id
 
-  match '/' => 'home#index'
+  match '/' => 'home#index', :as => :root
   match '/activate/:activation_code' => 'users#activate', :as => :activate, :activation_code => nil
   match '/signup' => 'users#new', :as => :signup
   match '/login' => 'sessions#new', :as => :login

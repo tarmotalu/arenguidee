@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :buddy_icon
 
-  devise :omniauthable, :omniauth_providers => [:mobileid, :idcard]
+  devise :omniauthable, :registerable, :omniauth_providers => [:idcard]
   
   scope :active, :conditions => "users.status in ('pending','active')"
   scope :at_least_one_endorsement, :conditions => "users.endorsements_count > 0"
@@ -105,8 +105,9 @@ class User < ActiveRecord::Base
   has_many :following_discussions, :dependent => :destroy
   has_many :following_discussion_activities, :through => :following_discussions, :source => :activity
 
-  validates_presence_of     :login, :message => tr("Please specify a name to be identified as on the site.", "model/user")
-  validates_length_of       :login, :within => 3..60
+  #validates_presence_of     :login, :message => tr("Please specify a name to be identified as on the site.", "model/user")
+  #validates_length_of       :login, :within => 3..60
+  validates :login, :presence => true, :length => { :is => 11 }, :uniqueness => true
   validates_presence_of     :first_name, :message => tr("Please specify your first name.", "model/user")
   validates_presence_of     :last_name, :message => tr("Please specify your first name.", "model/user")
   
@@ -134,7 +135,7 @@ class User < ActiveRecord::Base
   #validate :validate_age_group
   #validate :validate_gender
 
-  before_save :encrypt_password
+  #before_save :encrypt_password
   before_create :make_rss_code
   after_save :update_signups
   after_create :check_contacts
@@ -146,8 +147,19 @@ class User < ActiveRecord::Base
   attr_protected :remember_token, :remember_token_expired_at, :activation_code, :salt, :crypted_password, :twitter_token, :twitter_secret
   
   # Virtual attribute for the unencrypted password
-  attr_accessor :password, :sub_instance_ids, :terms
-
+  attr_accessor :sub_instance_ids, :terms
+  
+  def apply_omniauth(omniauth)
+    return if omniauth.blank?
+    
+    if omniauth['user_info'].present?
+      userinfo = omniauth['user_info']
+      self.email = userinfo['email'] if email.blank?
+      self.first_name = userinfo['first_name'] if self.first_name.blank?
+      self.last_name = userinfo['last_name'] if self.last_name.blank?      
+      self.login = userinfo['personal_code'] if login.blank?
+    end
+  end
 
   def validate_age_group
     unless allowed_for_age_group.include?(self.age_group)
@@ -232,8 +244,8 @@ class User < ActiveRecord::Base
   end
   
   def should_validate_password?
-    return false if has_twitter? or has_facebook? or not new_record?
-    return true
+    #return false if has_twitter? or has_facebook? or not new_record?
+    return false
   end
   
   def give_sub_instance_credit
@@ -855,7 +867,7 @@ class User < ActiveRecord::Base
   end  
   
   def has_facebook?
-    self.attribute_present?("facebook_uid")
+    false
   end
   
   def has_email?
@@ -1177,7 +1189,7 @@ class User < ActiveRecord::Base
     end
       
     def password_required?
-      !password.blank?
+      false
     end
     
     def make_activation_code

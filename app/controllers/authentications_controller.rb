@@ -54,7 +54,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
   def development_sign
     return unless Rails.env.development?
     ActiveRecord::IdentityMap.without do
-      authenticate_once('user_info' => {'personal_code' => '37612166024'})
+      authenticate_once('user_info' => {'personal_code' => '37612166024', 'first_name' => 'TARMO', 'last_name' => 'TALU'})
     end
   end
 
@@ -73,8 +73,9 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
         redirect = stored_location_for(:user) || root_path
         sign_in(:user, @user)        
       else # Authentication was successful, but user is not registered in the system
+        session[:omniauth] = omniauth
         alert = t('sessions.new.not_registered', :username => omniauth['user_info']['name'])
-        redirect = new_session_path
+        redirect = new_user_registration_url
       end
     else
       alert = t('sessions.new.invalid_user_info')

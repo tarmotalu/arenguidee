@@ -59,6 +59,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
   end
 
   def authenticate_once(omniauth = request.env["omniauth.auth"])
+    logger.info omniauth.inspect
     session[:omniauth] = nil
     notice, alert, redirect = nil, nil, nil
     provider = omniauth['provider'] if omniauth

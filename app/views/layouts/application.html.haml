@@ -42,8 +42,9 @@
           04/2013
 
     %section#outerContainer
-      #container= render :partial => "shared/top_banner"
-    = yield
+      #container
+        = render :partial => "shared/top_banner"
+        = yield
     / .main
     /   .col-group
     /     .col-12

@@ -5,7 +5,7 @@
       = link_to :controller=>"settings", :action=>"picture" do
         = render :partial => "users/pic_48", :locals => {:user => current_user}
     - if logged_in?
-      %span.profile_name= current_user.name
+      %span.profile_name= current_user.real_name
       %br
       %ul
         %li

@@ -58,6 +58,14 @@ class ApplicationController < ActionController::Base
     is_admin? || admin_denied
   end
   
+  def login_required
+    logged_in?
+  end
+  
+  def current_user_required
+    return logged_in?
+  end
+
   def admin_denied
     respond_to do |format|
       format.html do

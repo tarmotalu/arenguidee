@@ -387,7 +387,7 @@ class User < ActiveRecord::Base
   end
 
   def to_param
-    "#{id}-#{login.parameterize_full}"
+    "#{id}-#{real_name.parameterize_full}"
   end  
   
   cattr_reader :per_page

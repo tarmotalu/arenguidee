@@ -93,7 +93,7 @@ body.splashScreen{background:#fff;}
 
 #mainMenu{float:left; margin-top:42px;}
 #mainMenu a{float:left; color:#0077bb; font-family:Bebas; text-decoration:none; line-height:18px; padding-bottom:19px; margin-right:23px;}
-#mainMenu a:hover, #mainMenu a.active{background:url(../imgs/mainMenuUnderline.png) left bottom repeat-x; color:#ababab;}
+#mainMenu a:hover, #mainMenu a.active{background:url(image_path('mainMenuUnderline.png')) left bottom repeat-x; color:#ababab;}
 
 #rotator{float:left; position:relative; width:920px; height:238px; background:#0077bb; margin:0 0 30px 0; padding:20px; -webkit-border-radius:15px; border-radius:15px;}
 #rotator .video{width:420px; float:left;}

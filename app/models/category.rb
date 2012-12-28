@@ -7,6 +7,8 @@ class Category < ActiveRecord::Base
   validates_attachment_content_type :icon, :content_type => ['image/png']
 
   acts_as_set_sub_instance :table_name=>"categories"
+  extend FriendlyId
+  friendly_id :i18n_name, use: :slugged
 
   def self.default_or_sub_instance
     if Category.count>0

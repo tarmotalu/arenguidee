@@ -1,54 +1,55 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.9.rc3'
 gem 'rails-i18n'
 gem 'mysql2'
-gem "recaptcha", :require => "recaptcha/rails"
-gem 'capistrano', require: false, github: "capistrano/capistrano"
-gem 'rvm-capistrano', require: false
-gem 'sass'
-gem 'haml', '>= 3.2.0.rc.1'
-gem 'haml-rails'
-gem "ruby-openid"
-gem "rack-openid"
-gem 'kgio'
-gem 'whenever', :require => false
-gem 'geoip'
-gem 'htmlentities'
-gem 'auto_html', '1.5.1'
-gem 'delayed_job'
-gem 'delayed_job_active_record'
-gem 'rmagick'
-gem 'daemons'
-gem 'paperclip'
-gem 'sunlight'
-gem 'googlecharts'
-gem 'oauth'
-#gem "twitter-auth", :git => "git://github.com/benders/twitter-auth.git", :branch => "rails_3", :require => "twitter_auth/engine"
-gem 'hpricot'
-gem 'will_paginate'
-gem 'will-paginate-i18n'
-#gem 'mogli'
-#gem 'facebooker2'
-gem 'devise', '2.1.2'
-gem 'omniauth-idcard', '0.1.0'
 
-gem 'dalli'
-gem 'sys-filesystem'
-gem 'thinking-sphinx'
-gem 'jquery-rails'
-gem 'kaminari'
-gem 'will_filter'
-gem 'tr8n', github: "hinrik/tr8n", :branch => "social_innovation"
-gem 'workflow'
-gem "airbrake"
-gem 'jquery-rjs', github: "bikeexchange/jquery-rjs"
-gem 'pry-rails'
+#gem "twitter-auth", :git => "git://github.com/benders/twitter-auth.git", :branch => "rails_3", :require => "twitter_auth/engine"
+#gem 'facebooker2'
+#gem 'mogli'
+gem 'airbrake'
+gem 'rack-openid'
+gem 'recaptcha', :require => 'recaptcha/rails'
+gem 'ruby-openid'
+gem 'acts_as_list'
+gem 'auto_html', '1.5.1'
 gem 'awesome_print'
 gem 'backup', :require => false
-gem 'htmldiff'
-gem 'acts_as_list'
+gem 'capistrano', require: false, github: "capistrano/capistrano"
+gem 'daemons'
+gem 'dalli'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
+gem 'devise', '2.1.2'
+gem 'friendly_id', '4.0.9'
+gem 'geoip'
+gem 'googlecharts'
+gem 'haml', '>= 3.2.0.rc.1'
+gem 'haml-rails'
+gem 'hpricot'
 gem 'html5shiv-rails'
+gem 'htmldiff'
+gem 'htmlentities'
+gem 'jquery-rails'
+gem 'jquery-rjs', github: "bikeexchange/jquery-rjs"
+gem 'kaminari'
+gem 'kgio'
+gem 'oauth'
+gem 'omniauth-idcard', '0.1.0'
+gem 'paperclip'
+gem 'pry-rails'
+gem 'rmagick'
+gem 'rvm-capistrano', require: false
+gem 'sass'
+gem 'sunlight'
+gem 'sys-filesystem'
+gem 'thinking-sphinx'
+gem 'tr8n', github: "hinrik/tr8n", :branch => "social_innovation"
+gem 'whenever', :require => false
+gem 'will-paginate-i18n'
+gem 'will_filter'
+gem 'will_paginate'
+gem 'workflow'
 
 group :development do
   gem 'thin'

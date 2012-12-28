@@ -82,7 +82,7 @@ body.splashScreen{background:#fff;}
 #topBar .inline a{float:left; color:#8f8f8f; text-decoration:none; font-family:OpenSansRegular; font-size:11px; text-align:center; padding:10px 12px 9px 12px; line-height:120%;}
 #topBar .inline b{display:block; font-size:14px; font-weight:normal; line-height:120%; color:#cacaca;}
 #topBar .inline a.active{background:#333333;}
-#topBar .inline .arrow{float:left; width:49px; height:49px; background:url(../imgs/topBarArrow.png) no-repeat; overflow:hidden; text-indent:-999px;}
+#topBar .inline .arrow{float:left; width:49px; height:49px; background:url(image_path('topBarArrow.png')) no-repeat; overflow:hidden; text-indent:-999px;}
 
 #outerContainer{background:#fff; float:left; width:100%; min-width:960px;}
 #container{display:block; width:960px; margin:0 auto;}
@@ -123,7 +123,7 @@ box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 #problems .people{float:left; width:100%; padding:28px 0 25px 0; border-top:#ededed 2px solid; border-bottom:#ededed 2px solid;}
 #problems .people .item{float:left; margin-left:16px; width:176px; color:#575757; font-family:OpenSansRegular; text-decoration:none; font-size:12px; line-height:16px;}
 #problems .people .item .icon{float:left; position:relative; width:40px; height:40px; margin-right:10px;}
-#problems .people .item .icon .play{position:absolute; top:0; left:0; right:0; bottom:0; background:url(../imgs/play.png) center center no-repeat;}
+#problems .people .item .icon .play{position:absolute; top:0; left:0; right:0; bottom:0; background:url(image_path('imgs/play.png')) center center no-repeat;}
 #problems .people .item .desc{float:left; width:126px; margin-top:5px;}
 #problems .people .item .desc b{color:#000; font-weight:normal; font-family:OpenSansBold; }
 

@@ -3,7 +3,9 @@ SocialInnovation::Application.routes.draw do
   mount WillFilter::Engine => "/will_filter"
   mount Tr8n::Engine => "/tr8n"
 
-  resources :categories
+  resources :categories do
+    resources :ideas
+  end
 
   match '/groups/suggest_user' => 'groups#suggest_user'
 

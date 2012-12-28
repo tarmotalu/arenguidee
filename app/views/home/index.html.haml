@@ -121,7 +121,7 @@
     %p Ühiskondliku ruumi (sund)politiseerimise ja -parteistamise pidurdamine.
     %a{:href => ""} 321 ettepanekut
   / /column
-  %a.button{:href => ""} Tee oma ettepanek
+  = link_to "Tee oma ettepanek", new_idea_path, :class => :button
 / /proposal
 %section#problems
   %h1 Põhilised probleemid neis viies teemas:

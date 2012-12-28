@@ -128,7 +128,7 @@ box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 #problems .people .item .desc b{color:#000; font-weight:normal; font-family:OpenSansBold; }
 
 #proposal-bottom{float:left; width:100%; margin:0 0 50px 0; text-align:center;}
-#proposal-bottom h2{margin:0; font-family:OpenSansLight; font-weight:normal; font-size:24px; line-height:36px; margin:0 0 15px 0;}
+#proposal-bottom h2{margin:0; text-align: center; font-family:OpenSansLight; font-weight:normal; font-size:24px; line-height:36px; margin:0 0 15px 0;}
 #proposal-bottom .label{display:inline; font-family:OpenSansRegular; font-size:12px; line-height:12px; color:#fff;}
 #proposal-bottom .label .left{background:#cc0000;  padding:6px 10px;}
 #proposal-bottom .label .right{background:#000; padding:6px 10px;}

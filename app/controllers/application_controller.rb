@@ -142,7 +142,9 @@ class ApplicationController < ActionController::Base
 
   def get_categories
     @categories = Category.all
+    session[:locale] = "et"
   end
+  
   def check_for_localhost
     if Rails.env.development?
       Thread.current[:localhost_override] = "#{request.host}:#{request.port}"

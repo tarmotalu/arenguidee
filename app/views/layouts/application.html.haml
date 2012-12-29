@@ -29,8 +29,9 @@
     - if controller_name == "ideas" and action_name == "show"
       = render :partial=>"ideas/fb_og_tags"
     = tr8n_scripts_tag
-  %body
     = csrf_meta_tag
+  %body
+
     %section#topBar
       .inline
         %a.active{:href => ""}

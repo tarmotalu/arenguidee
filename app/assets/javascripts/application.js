@@ -34,9 +34,9 @@
 //= require jquery.autoSuggest
 //= require jquery.tipsy
 //= require msdropdown
+//= require rahvakogu
 //= require_self
 //= require jquery.functions
-//= require rahvakogu
 
 jQuery(function ($) {
   $.fn.extend({

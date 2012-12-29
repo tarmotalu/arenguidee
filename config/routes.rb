@@ -159,7 +159,9 @@ SocialInnovation::Application.routes.draw do
     resources :idea_revisions do
       member do
         get :clean
+        get :show
       end
+
     end
     resources :points
     resources :ads do

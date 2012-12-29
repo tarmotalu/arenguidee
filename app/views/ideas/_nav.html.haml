@@ -14,8 +14,9 @@
         - else
           = link_to_unless_current tr("{count} discussions", "view/ideas/_nav", :count => @idea.discussions_count), discussions_idea_url(@idea)
 
-      %li
-        = link_to_unless_current tr("{count} revisions", "view/ideas/_nav", :count => @idea.idea_revisions_count), idea_idea_revision_url(@idea,@idea.idea_revision_id)
+      - unless @idea.idea_revision.nil?
+        %li
+          = link_to_unless_current tr("{count} revisions", "view/ideas/_nav", :count => @idea.idea_revisions_count), idea_idea_revision_url(@idea,@idea.idea_revision_id)
     - if false and @idea.changes_count > 0 or params[:controller] == 'changes'
       %li
         = link_to_unless_current tr("M&A", "view/ideas/_nav"), idea_changes_url(@idea)

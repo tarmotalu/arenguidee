@@ -36,6 +36,7 @@
 //= require msdropdown
 //= require_self
 //= require jquery.functions
+//= require rahvakogu
 
 jQuery(function ($) {
   $.fn.extend({

@@ -11,6 +11,14 @@ development:
   airbrake_api_key: 00000000000000000000000000
   secret_token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   session_key: _your_app_session
+  mobile_id:
+    endpoint_url: https://openxades.org:8443/DigiDocService
+    authentication:
+      message_to_display: Autentimine
+      service_name: Testimine
+    sign:
+      message_to_display: Maksete allkirjastamine
+      service_name: Testimine
 test:
   adapter: mysql2
   encoding: utf8

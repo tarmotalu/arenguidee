@@ -1,10 +1,8 @@
 # -*- encoding : utf-8 -*-
 class AuthenticationsController < Devise::OmniauthCallbacksController
   skip_before_filter :verify_authenticity_token, :only => [:failure]
-  before_filter :development_sign, :only => [:failure]
+  #before_filter :development_sign, :only => [:failure]
   
-  layout 'sessions'
-
   def idcard
     authenticate_once(request.env['omniauth.auth'])
   end
@@ -22,7 +20,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
         format.html { render 'mobileid_readpin' }
         format.js do
           phase = request.env['omniauth.phase']
-          render :json => {:phase => phase, :message => t("authentications.mobile_id.status.#{phase}")}
+          render :json => {:phase => phase, :message => 'Sõnum on saadetud teie telefonile. Palun kontrollige koodi!'} # todo: add tr8n translation here
         end
       end
     end
@@ -45,7 +43,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
 
     respond_to do |format|
       format.html { redirect_to new_session_path }
-      format.js { render :json => {:redirect => new_user_session_path} }
+      format.js { render :json => {:redirect => new_session_path} }
     end
   end
 

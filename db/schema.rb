@@ -487,7 +487,7 @@ ActiveRecord::Schema.define(:version => 20121228213114) do
     t.integer  "height",       :limit => 8
     t.integer  "width",        :limit => 8
     t.string   "content_type", :limit => 100
-    t.binary   "data",         :limit => 16777215
+    t.binary   "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -634,12 +634,12 @@ ActiveRecord::Schema.define(:version => 20121228213114) do
     t.string   "name",                         :limit => 60
     t.string   "short_name",                   :limit => 50,                         :null => false
     t.integer  "picture_id"
-    t.integer  "is_optin",                     :limit => 1,   :default => 0,         :null => false
+    t.integer  "is_optin",                     :limit => 2,   :default => 0,         :null => false
     t.string   "optin_text",                   :limit => 60
     t.string   "privacy_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "is_active",                    :limit => 1,   :default => 1,         :null => false
+    t.integer  "is_active",                    :limit => 2,   :default => 1,         :null => false
     t.string   "status",                                      :default => "passive"
     t.integer  "users_count",                                 :default => 0
     t.string   "website"
@@ -776,6 +776,7 @@ ActiveRecord::Schema.define(:version => 20121228213114) do
     t.string   "country_english_name", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "map_coordinates"
   end
 
   add_index "tr8n_iso_countries", ["code"], :name => "index_tr8n_iso_countries_on_code"
@@ -995,6 +996,7 @@ ActiveRecord::Schema.define(:version => 20121228213114) do
     t.string   "locale"
     t.integer  "level",             :default => 0
     t.datetime "synced_at"
+    t.string   "type"
   end
 
   add_index "tr8n_translation_keys", ["key"], :name => "index_tr8n_translation_keys_on_key", :unique => true
@@ -1126,7 +1128,6 @@ ActiveRecord::Schema.define(:version => 20121228213114) do
   add_index "tr8n_translators", ["created_at"], :name => "index_tr8n_translators_on_created_at"
   add_index "tr8n_translators", ["email", "password"], :name => "index_tr8n_translators_on_email_and_password"
   add_index "tr8n_translators", ["email"], :name => "index_tr8n_translators_on_email"
-  add_index "tr8n_translators", ["remote_id"], :name => "index_tr8n_translators_on_remote_id"
   add_index "tr8n_translators", ["user_id"], :name => "index_tr8n_translators_on_user_id"
 
   create_table "unsubscribes", :force => true do |t|
@@ -1191,9 +1192,9 @@ ActiveRecord::Schema.define(:version => 20121228213114) do
     t.datetime "updated_at"
   end
 
-  add_index "user_rankings", ["created_at"], :name => "rankings_created_at_index"
-  add_index "user_rankings", ["user_id"], :name => "rankings_user_id"
-  add_index "user_rankings", ["version"], :name => "rankings_version_index"
+  add_index "user_rankings", ["created_at"], :name => "user_rankings_created_at_index"
+  add_index "user_rankings", ["user_id"], :name => "user_rankings_user_id"
+  add_index "user_rankings", ["version"], :name => "user_rankings_version_index"
 
   create_table "users", :force => true do |t|
     t.string   "login",                        :limit => 40
@@ -1307,7 +1308,7 @@ ActiveRecord::Schema.define(:version => 20121228213114) do
   add_index "users", ["facebook_uid"], :name => "index_users_on_facebook_uid"
   add_index "users", ["identifier_url"], :name => "index_users_on_identifier_url", :unique => true
   add_index "users", ["rss_code"], :name => "index_users_on_rss_code"
-  add_index "users", ["status"], :name => "status"
+  add_index "users", ["status"], :name => "users_status"
   add_index "users", ["sub_instance_id"], :name => "user_sub_instance_id"
   add_index "users", ["twitter_id"], :name => "index_users_on_twitter_id"
 

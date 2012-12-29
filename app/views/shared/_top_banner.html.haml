@@ -1,13 +1,14 @@
-%header#header
-  = link_to image_tag('logo.png'), '/', :alt => "Rahvakogu", :class => :logo
+%header#header{:class => controller.controller_name != 'home' ? "top-position" : false }
+  .inline
+    = link_to image_tag('logo.png'), '/', :alt => "Rahvakogu", :class => :logo
 
-  %nav#mainMenu
-    - @categories.each do |category|
-      = link_to category.name, new_category_idea_path(category)
-  - if logged_in?
-    %li.signin= link_to current_user.real_name, '#', :class => 'logIn profile'
-  - else
-    %li.signin= link_to 'Sisene', '#', :class => 'logIn signin'
+    %nav#mainMenu
+      - @categories.each do |category|
+        = link_to category.name, new_category_idea_path(category)
+    - if logged_in?
+      %li.signin= link_to 'Minu kontu', '#', :class => 'logIn profile my_account'
+    - else
+      %li.signin= link_to 'Sisene', '#', :class => 'logIn signin'
 - if logged_in?
   = render :partial => "shared/user_info"
   = render :partial => "shared/notifications"

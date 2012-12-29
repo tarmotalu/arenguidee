@@ -206,11 +206,13 @@ class Point < ActiveRecord::Base
   end
 
   def authors
-    revisions.count(:order => "count_all desc")
+    # revisions.count(:order => "count_all desc")
+    revisions.map(&:user)
   end
   
   def editors
-    revisions.count(:conditions => ["revisions.user_id <> ?", user_id], :order => "count_all desc")
+    # revisions.count(:conditions => ["revisions.user_id <> ?", user_id], :order => "count_all desc")
+    revisions.map(&:user).delete_if{|x| x.id == user_id}
   end  
   
   def is_up?

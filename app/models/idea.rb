@@ -183,11 +183,11 @@ class Idea < ActiveRecord::Base
   end
   
   def authors
-    idea_revisions.count(:order => "count_all desc")
+    idea_revisions.map(&:user) #(:order => "count_all desc")
   end
   
   def editors
-    idea_revisions.count(:conditions => ["idea_revisions.user_id <> ?", user_id], :order => "count_all desc")
+    idea_revisions.where("idea_revisions.user_id <> ?", user_id).map(&:user)
   end
 
   def endorse(user,request=nil,sub_instance=nil,referral=nil)

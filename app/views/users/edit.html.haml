@@ -17,10 +17,10 @@
           .field_label= tr("Email address", "view/users/edit")
           .field_box= f.text_field :email
           .small= tr("(Never shared without your permission)", "view/users/edit")
-        .field
-          .field_label= tr("How should you be identified on the site?", "view/users/edit")
-          .field_box= f.text_field :login, :maxlength => 40, :size => 30
-          .small= tr("(Can be your name, or a pseudonym)", "view/users/edit")
+        / .field
+        /   .field_label= tr("How should you be identified on the site?", "view/users/edit")
+        /   .field_box= f.text_field :login, :maxlength => 40, :size => 30
+        /   .small= tr("(Can be your name, or a pseudonym)", "view/users/edit")
         .field
           .field_box
             = f.check_box :is_mergeable

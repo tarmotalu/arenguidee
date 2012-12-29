@@ -9,5 +9,5 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   });
 .idea_listing{:id => "idea_#{@idea.id}"}
-  = render :partial => "ideas/idea_container", :locals => {:idea => @idea, :endorsement => @endorsement, :value => 0, :noaction=>true}
+  /= render :partial => "ideas/idea_container", :locals => {:idea => @idea, :endorsement => @endorsement, :value => 0, :noaction=>true}
 

@@ -84,8 +84,8 @@ class IdeaRevision < ActiveRecord::Base
     idea.idea_revision_id = self.id
     idea.name = self.name
     idea.category = self.category
-    idea.author_sentence = idea.author_user.login
-    idea.author_sentence += ", #{tr("changes","model/revision")} " + idea.user.real_name if idea.editors.size > 0
+    idea.author_sentence = idea.author_user.real_name
+    idea.author_sentence += ", #{tr("changes","model/revision")} " + idea.editors.first.user.real_name if idea.editors.size > 0
     idea.published_at = Time.now
     idea.save(:validate => false)
     save(:validate => false)

@@ -135,5 +135,8 @@ Devise.setup do |config|
   # you can configure them inside the config.warden block. The example below
   # allows you to setup OAuth, using http://github.com/roman/warden_oauth
   
+  mobileid_conf = Rails.application.config.database_configuration[Rails.env]["mobile_id"]
+  config.omniauth :mobileid, :service_name => mobileid_conf["authentication"]["service_name"], :message_to_display => mobileid_conf["authentication"]["message_to_display"], :logger => Logger.new('log/mobile_id.log'), :endpoint_url => mobileid_conf["endpoint_url"]
+    
   config.omniauth :idcard, :logger => Logger.new('log/id_card.log')  
 end

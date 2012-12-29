@@ -36,6 +36,7 @@ gem 'kaminari'
 gem 'kgio'
 gem 'oauth'
 gem 'omniauth-idcard', '0.1.0'
+gem 'omniauth-mobileid', '0.1.2'
 gem 'paperclip'
 gem 'pry-rails'
 gem 'rmagick', require: false

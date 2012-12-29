@@ -8,6 +8,14 @@
       = form_tag omniauth_authorize_path(:user, :idcard), :style => 'display: inline;' do
         %p
           = image_submit_tag('idcard.gif', :class => 'id-card-img')
+          
+      = image_tag 'mobileid.gif'      
+      = form_tag omniauth_authorize_path(:user, :mobileid), :style => 'display: inline;' do
+        %br
+        %label Telefon
+        = text_field_tag :phone, nil, :class => 'textbox', :autocomplete => :off
+        = submit_tag 'Sisene', :class => 'btn btn-blue btn-small'        
+          
     - if current_instance.has_facebook_enabled? or current_instance.has_twitter_enabled? or current_instance.google_login_enabled
       %p
     / = render :partial => "shared/language_selection_master"

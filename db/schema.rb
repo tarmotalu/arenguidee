@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227173959) do
+ActiveRecord::Schema.define(:version => 20121228213114) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -100,7 +100,10 @@ ActiveRecord::Schema.define(:version => 20121227173959) do
     t.datetime "icon_updated_at"
     t.text     "description"
     t.string   "sub_tags"
+    t.string   "slug"
   end
+
+  add_index "categories", ["slug"], :name => "index_categories_on_slug", :unique => true
 
   create_table "color_schemes", :force => true do |t|
     t.string   "nav_background",                :limit => 6,  :default => "f0f0f0"
@@ -290,7 +293,7 @@ ActiveRecord::Schema.define(:version => 20121227173959) do
   create_table "ideas", :force => true do |t|
     t.integer  "position",                                :default => 0,     :null => false
     t.integer  "user_id"
-    t.string   "name",                     :limit => 250
+    t.string   "name"
     t.text     "description"
     t.integer  "endorsements_count",                      :default => 0,     :null => false
     t.string   "status",                   :limit => 50
@@ -509,7 +512,7 @@ ActiveRecord::Schema.define(:version => 20121227173959) do
     t.integer  "value",                                   :default => 0
     t.integer  "revisions_count",                         :default => 0
     t.string   "status",                   :limit => 50
-    t.string   "name",                     :limit => 122
+    t.string   "name"
     t.text     "content"
     t.datetime "published_at"
     t.datetime "created_at"

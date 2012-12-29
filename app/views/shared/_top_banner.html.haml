@@ -3,7 +3,7 @@
 
   %nav#mainMenu
     - @categories.each do |category|
-      = link_to category.name, category
+      = link_to category.name, new_category_idea_path(category)
   - if logged_in?
     %li.signin= link_to current_user.real_name, '#', :class => 'logIn profile'
   - else

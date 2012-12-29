@@ -61,7 +61,7 @@
               %span#ideaContentDown
               = tr("characters left", "view/ideas/_form")
             .field_box
-              = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 4, :class=>"col_text_area", :maxLength => 300
+              = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 4, :class=>"col_text_area", :maxLength => 1000
     .col-6.col-inset
       .col-content
         %h1
@@ -87,7 +87,7 @@
               %span#pointContentDown
               = tr("characters left", "view/ideas/_form")
             .field_box
-              = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"col_text_area", :rows => 5, :maxLength => 500
+              = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"col_text_area", :rows => 5, :maxLength => 1000
             .field
               %em
                 %p= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")

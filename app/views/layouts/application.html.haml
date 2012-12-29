@@ -4,8 +4,8 @@
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %meta{:content => "Wiseman Interactive Oü  www.wiseman.ee", :name => "Author"}/
     %link{:href => "/static/imgs/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
-    %script{:language => "javascript", :src => "static/js/jquery-1.8.3.min.js", :type => "text/javascript"}
-    %script{:language => "javascript", :src => "static/js/jquery.functions.js", :type => "text/javascript"}
+
+
     %title
       Rahvakogu 
       = @page_title 
@@ -28,7 +28,7 @@
       = render :partial => "shared/analytics"
     - if controller_name == "ideas" and action_name == "show"
       = render :partial=>"ideas/fb_og_tags"
-    //= tr8n_scripts_tag
+    = tr8n_scripts_tag
   %body
     = csrf_meta_tag
     %section#topBar

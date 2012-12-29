@@ -90,7 +90,7 @@ test:
 qa:
   <<: *defaults
 
-stage:
+staging:
   <<: *defaults
 
 production:

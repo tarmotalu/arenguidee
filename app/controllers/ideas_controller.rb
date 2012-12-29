@@ -588,8 +588,10 @@ class IdeasController < ApplicationController
   # GET /ideas/new
   # GET /ideas/new.xml
   def new
+
     @page_title = tr("New idea at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @idea = Idea.new unless @idea
+    @idea.category = Category.find(params[:category_id]) if params[:category_id]
     @idea.points.build
 
     if @ideas

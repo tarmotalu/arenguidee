@@ -230,8 +230,9 @@ class ApplicationController < ActionController::Base
     else
       Rails.logger.error "No GeoIP.dat file"
     end
-    @country_code = "is" if @country_code == nil or @country_code == "--"
-    @iso_country = Tr8n::IsoCountry.find_by_code(@country_code.upcase)
+    @country_code = "ee" if @country_code == nil or @country_code == "--"
+
+    # @iso_country = Tr8n::IsoCountry.find_by_code(@country_code.upcase)
   end
 
   def check_geoblocking
@@ -257,6 +258,7 @@ class ApplicationController < ActionController::Base
   end
   
   def current_locale
+
     if params[:locale]
       session[:locale] = params[:locale]
       cookies.permanent[:last_selected_language] = session[:locale]

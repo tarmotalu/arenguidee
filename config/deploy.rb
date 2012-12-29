@@ -56,7 +56,7 @@ end
 namespace :log do
   desc 'Show application logs from server'
   task :tail, :roles => :app do
-    run "tail -f -n100 #{shared_path}/log/#{rails_env}.log" do |channel, stream, data|
+    run "tail -f -n100 #{shared_path}/log/#{rails_env}.log #{shared_path}/log/webservices.log" do |channel, stream, data|
       puts data
       break if stream == :err    
     end

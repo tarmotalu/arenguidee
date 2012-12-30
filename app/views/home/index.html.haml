@@ -1,4 +1,4 @@
-
+= render :partial => "shared/top_banner"
 %section#rotator
   .video
     %iframe{:allowfullscreen => "", :frameborder => "0", :height => "240", :src => "http://www.youtube.com/embed/dwravVF3keM?feature=player_detailpage", :width => "420"}
@@ -97,29 +97,30 @@
     %br/
     Koos teeme ettepanekud Riigikogule viie olulise seaduse muutmiseks.
   .column
-    %h2 RAHASTAMINE
-    %p Erakondade rahastamise ausus ja kontrollitavus, raha  mõjuvõimu kahandamine poliitilises otsuseprotsessis.
-    %a{:href => ""} 321 ettepanekut
+    %h2= link_to 'RAHASTAMINE', issue_path('rahastamine')
+    %p= @cat.select{|x| x.slug == 'rahastamine'}.first.description
+    = link_to pluralize(@cat.select{|x| x.slug == 'rahastamine'}.first.ideas.count, 'ettepanek')
+
+  .column
+    %h2= link_to 'KONKURENTS', issue_path('konkurents')
+    %p= @cat.select{|x| x.slug == 'konkurents'}.first.description
+    = link_to pluralize(@cat.select{|x| x.slug == 'konkurents'}.first.ideas.count, 'ettepanek')
   / /column
   .column
-    %h2 KONKURENTS
-    %p Erakondadevahelise ja -sisese konkurentsi ausus ja elavus.
-    %a{:href => ""} 321 ettepanekut
+    %h2= link_to 'MINU HÄÄL', issue_path('minu-haal')
+    %p= @cat.select{|x| x.slug == 'minu-haal'}.first.description
+    = link_to pluralize(@cat.select{|x| x.slug == 'minu-haal'}.first.ideas.count, 'ettepanek')
+
   / /column
   .column
-    %h2 MINU HÄÄL
-    %p Valija hääle kaalukus valimistulemuse otsustamisel.
-    %a{:href => ""} 321 ettepanekut
-  / /column
-  .column
-    %h2 KAASATUS
-    %p Kodanike aus kaasatus ja laialdasem osalemine poliitilises protsessis valimistevahelisel ajal.
-    %a{:href => ""} 321 ettepanekut
+    %h2= link_to 'KAASATUS', issue_path('kaasatus')
+    %p= @cat.select{|x| x.slug == 'kaasatus'}.first.description
+    = link_to pluralize(@cat.select{|x| x.slug == 'kaasatus'}.first.ideas.count, 'ettepanek')
   / /column
   .column.last-child
-    %h2 SUNDPOLITI- SEERIMINE
-    %p Ühiskondliku ruumi (sund)politiseerimise ja -parteistamise pidurdamine.
-    %a{:href => ""} 321 ettepanekut
+    %h2= link_to ' SUNDPOLITI- SEERIMINE', issue_path('sunpolitseerimine')
+    %p= @cat.select{|x| x.slug == 'sunpolitseerimine'}.first.description
+    = link_to pluralize(@cat.select{|x| x.slug == 'sunpolitseerimine'}.first.ideas.count, 'ettepanek')
   / /column
   = link_to "Tee oma ettepanek", new_idea_path, :class => :button
 / /proposal
@@ -179,15 +180,17 @@
   / /people
 / /problems
 %section#proposal-bottom
-  %h2
-    “Lubada Läti ja Vene ettevõtetele erakondade avalikku
-    %br>/
-    ja salajast rahastamist kasvõi kohe.”
+  - if @bottom_idea.empty?
+    No ideas yet.
+  - else
+    %h2
+      = "“#{@bottom_idea.first.name}”"
   .label
     %span.left Ettepanek
     %span.right
-      Sten Tamkivi,
-      %span.gray 20. jaanuar 2013
+      = @bottom_idea.first.author_sentence
+      = ","
+      %span.gray= l @bottom_idea.first.published_at.to_date, :format => :long
   / /label
   %br/
-  %a.showAll{:href => ""} Näita kõiki 3,102 ettepanekut
+  = link_to "Näita kõiki " + pluralize(Idea.published.count, "ettepanek"), ideas_path, :class => "showAll"

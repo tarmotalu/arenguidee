@@ -21,6 +21,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas
   def index
+
     if params[:term] and request.xhr?
       ideas = Idea.published.find(:all, :select => "ideas.name", :conditions => ["name LIKE ?", "%#{params[:term]}%"], :order => "endorsements_count desc")
       idea_links = []
@@ -194,7 +195,11 @@ class IdeasController < ApplicationController
     @position_in_idea_name = true
     @page_title = tr("Top ideas", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
-    @ideas = Idea.published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
+    if params[:category_id]
+      @ideas = Idea.by_category(params[:category_id]).published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
+    else
+      @ideas = Idea.published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
+    end
     get_endorsements
     respond_to do |format|
       format.html { render :action => "list" }

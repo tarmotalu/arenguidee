@@ -121,7 +121,7 @@ box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);}
 #proposal h1{float:left; width:960px; margin:0 -20px 24px -20px; padding:0 0 16px 0; text-align:center; font-family:OpenSansRegular; font-size:18px; line-height:24px; font-weight:normal; border-bottom:#dddddd 2px solid;}
 #proposal .column{float:left; width:160px; margin-right:30px; margin-bottom:25px;}
 #proposal .column.last-child{margin:0; float:right;}
-#proposal .column h2{margin:0 0 8px 0; font-family:Bebas; font-weight:normal; color:#0077bb; font-size:24px; line-height:24px; text-decoration:underline;}
+#proposal .column h2, #proposal .column h2 a {margin:0 0 8px 0; font-family:Bebas; font-weight:normal; color:#0077bb; font-size:24px; line-height:24px; text-decoration:underline;}
 #proposal .column p{font-size:12px; line-height:18px; color:#777777; margin:0 0 17px 0;}
 #proposal .column a{font-family:OpenSansBold; color:#0077bb; font-size:12px;}
 #proposal .button{display:block; clear:both; width:214px; background:#cc0000; color:#fff; text-align:center; text-decoration:none; height:49px; line-height:49px; -webkit-border-radius:99px; border-radius:99px; margin:0 auto -23px auto;
@@ -139,7 +139,7 @@ box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 #problems .people .item .desc b{color:#000; font-weight:normal; font-family:OpenSansBold; }
 
 #proposal-bottom{float:left; width:100%; margin:0 0 50px 0; text-align:center;}
-#proposal-bottom h2{margin:0; font-family:OpenSansLight; font-weight:normal; font-size:24px; line-height:36px; margin:0 0 15px 0;}
+#proposal-bottom h2{margin:0; text-align: center; font-family:OpenSansLight; font-weight:normal; font-size:24px; line-height:36px; margin:0 0 15px 0;}
 #proposal-bottom .label{display:inline; font-family:OpenSansRegular; font-size:12px; line-height:12px; color:#fff;}
 #proposal-bottom .label .left{background:#cc0000;  padding:6px 10px;}
 #proposal-bottom .label .right{background:#000; padding:6px 10px;}
@@ -198,7 +198,7 @@ box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);}
 .filterBar .rightSide a.active{font-family:OpenSansBold; text-decoration:none;}
 
 #propositions{float:left; width:100%; font-family:OpenSansRegular; padding-bottom:50px;}
-#propositions table{float:left; width:100%; border:none; padding:35px 0; border-bottom:#d9d9d9 1px solid;}
+#propositions table{float:left; display: block; width:100%; border:none; padding:35px 0; border-bottom:#d9d9d9 1px solid;}
 #propositions .head{float:left; width:100%; margin:0 0 13px 0;}
 #propositions .head img{float:left;}
 #propositions .head .desc{float:right; width:580px; color:#444444; font-size:12px;}

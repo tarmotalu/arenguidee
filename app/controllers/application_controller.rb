@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_subdomain
   before_filter :check_geoblocking
 
-  before_filter :authenticate_user!
+  # before_filter :authenticate_user!
   before_filter :session_expiry
   before_filter :update_activity_time
 
@@ -48,11 +48,11 @@ class ApplicationController < ActionController::Base
   helper_method :is_admin?
 
   def is_admin? 
-      if logged_in? && current_user.is_admin?
-        true
-      else
-        false
-      end
+    if logged_in? && current_user.is_admin?
+      true
+    else
+      false
+    end
   end
   
   def admin_required

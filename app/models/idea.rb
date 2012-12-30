@@ -44,7 +44,7 @@ class Idea < ActiveRecord::Base
   scope :finished, :conditions => "ideas.official_status in (-2,-1,2)"
   scope :revised, :conditions => "idea_revisions_count > 1"
   scope :by_recently_revised, :joins => :idea_revisions, :order => "idea_revisions.created_at DESC"
-  
+  scope :by_category, lambda {|cat| {:conditions => ["category_id=?",cat]}}
   scope :by_user_id, lambda{|user_id| {:conditions=>["user_id=?",user_id]}}
   scope :item_limit, lambda{|limit| {:limit=>limit}}
   scope :only_ids, :select => "ideas.id"
@@ -98,6 +98,9 @@ class Idea < ActiveRecord::Base
   acts_as_taggable_on :issues
   acts_as_list
   
+  before_save :strip_name
+
+
   define_index do
     indexes name
     indexes description
@@ -106,6 +109,10 @@ class Idea < ActiveRecord::Base
     has sub_instance_id, :as=>:sub_instance_id, :type => :integer
     where "ideas.status in ('published','inactive')"
   end  
+
+  def strip_name
+    name.strip!
+  end
 
   def category_name
     if category

@@ -52,7 +52,8 @@
 
 
     %section#outerContainer
-      = render :partial => "shared/top_banner"
+      - unless controller.controller_name == 'home'
+        = render :partial => "shared/top_banner"
       #container= yield
 
 

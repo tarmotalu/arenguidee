@@ -4,7 +4,7 @@
 
     %nav#mainMenu
       - @categories.each do |category|
-        = link_to category.name, new_category_idea_path(category)
+        = link_to category.name, issue_path(category)
     - if logged_in?
       %li.signin= link_to 'Minu kontu', '#', :class => 'logIn profile my_account'
     - else
@@ -14,7 +14,7 @@
   = render :partial => "shared/notifications"
 - else
   = render :partial => "users/login"
-  
+
 :javascript
   $(document).ready(function() {
 

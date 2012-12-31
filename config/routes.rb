@@ -55,7 +55,7 @@ SocialInnovation::Application.routes.draw do
   	  put :make_admin
   	  get :ads
   	  get :ideas
-  	  get :signups
+  	  #get :signups
   	  post :endorse
   	  get :reset_password
   	  get :resend_activation
@@ -251,7 +251,7 @@ SocialInnovation::Application.routes.draw do
     end
   end
 
-  resources :signups
+  #resources :signups
   resources :endorsements
   resources :passwords
   resources :unsubscribes

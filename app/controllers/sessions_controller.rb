@@ -7,13 +7,13 @@ class SessionsController < ApplicationController
   skip_before_filter :check_blast_click
 
   def new
-    @page_title = tr("Please sign in", "controller/sessions", :instance_name => tr(current_instance.name,"Name from database"))
-    @user = User.new
-    @signup = Signup.new    
-    respond_to do |format|
-      format.html
-      format.js { render_to_facebox }
-    end
+    # @page_title = tr("Please sign in", "controller/sessions", :instance_name => tr(current_instance.name,"Name from database"))
+    # @user = User.new
+    # @signup = Signup.new
+    # respond_to do |format|
+    #   format.html
+    #   format.js { render_to_facebox }
+    # end
   end
 
   def create

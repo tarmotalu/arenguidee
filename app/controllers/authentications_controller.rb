@@ -42,8 +42,8 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     end
 
     respond_to do |format|
-      format.html { redirect_to new_session_path }
-      format.js { render :json => {:redirect => new_session_path} }
+      format.html { redirect_to root_path }
+      format.js { render :json => {:redirect => root_path} }
     end
   end
 
@@ -77,7 +77,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
       end
     else
       alert = t('sessions.new.invalid_user_info')
-      redirect = new_session_path
+      redirect = root_path
     end
 
   respond_to do |format|

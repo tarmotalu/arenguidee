@@ -1,0 +1,17 @@
+= form_for (@page), :html => {:multipart => true } do  |f|
+  %p
+    Title of page:
+    = f.text_field :title
+  %p
+    Slug of page (changing will break old URLs)
+    = f.text_field :slug
+  %p
+    Body of page. HTML is OK.
+    = f.text_area :body
+  %p
+    Published?
+    = f.check_box :published
+  %p
+    Allow as standalone page in /pages/:slug URL (do not check for footer)
+    = f.check_box :standalone
+  = f.submit

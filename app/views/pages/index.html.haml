@@ -1,0 +1,17 @@
+%h2 static pages
+
+%table
+  %thead
+    %th #
+    %th title
+    %th actions
+  %tbody
+    - @pages.each do |page|
+      %tr
+        %td= page.id.to_s
+        %td= page.title
+        %td 
+          = link_to '[edit]', edit_page_path(page)
+          |
+          = link_to '[destroy]', page, :method => :delete, :confirm => 'Are you sure?'
+          

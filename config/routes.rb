@@ -143,6 +143,7 @@ SocialInnovation::Application.routes.draw do
       get :controversial
       get :random
       get :newest
+      get :bottom
       get :untagged
       get :revised
   	end
@@ -287,7 +288,7 @@ SocialInnovation::Application.routes.draw do
   match '/issues.:format' => 'issues#index'
   match '/issues/:id' => 'issues#show', as: 'issue'
   match '/issues/:id.:format' => 'issues#show'
-  match '/issues/:id/:action' => 'issues#index'
+  match '/issues/:id/:action' => 'issues#index', :as => :filtered_issue
   match '/issues/:id/:action.:format' => 'issues#index'
   match '/pictures/:short_name/:action/:id' => 'pictures#index'
   match ':controller' => '#index'

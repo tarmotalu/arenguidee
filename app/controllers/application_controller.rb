@@ -94,7 +94,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html do
         flash[:notice] = 'You must be an admin to do that.'
-        redirect_to forums_path
+        redirect_to '/'
       end
     end
   end

@@ -9,6 +9,7 @@ class IssuesController < ApplicationController
                                              # :opposed_top_points, :endorsed_top_points, :idea_detail, :top_points, :discussions, :everyone_points ]
 
   def index
+
     @page_title =  tr("Categories", "controller/issues")
     @categories = Category.all
     @sub_instance_tags = []
@@ -36,9 +37,16 @@ class IssuesController < ApplicationController
     #  flash[:error] = tr("That {tags_name} doesn't exist anymore", "controller/issues", :tags_name => current_instance.tags_name.downcase)
     #  redirect_to "/" and return
     #end
+    if params[:action] != 'show'
+      @filter = params[:action].to_s 
+      scpe = params[:action].to_sym
+    else
+      @filter = 'top'
+      scpe = :top
+    end
     @category = Category.find(params[:id])
     @page_title = tr("{tag_name} ideas", "controller/issues", :tag_name => tr(@category.name, "model/category").titleize)
-    @ideas = Idea.where(category_id: @category.id).published.top_rank.paginate(:page => params[:page], :per_page => params[:per_page])
+    @ideas = Idea.where(category_id: @category.id).published.send(scpe).paginate(:page => params[:page], :per_page => params[:per_page])
 
     get_endorsements
     respond_to do |format|
@@ -50,8 +58,11 @@ class IssuesController < ApplicationController
   end
 
   alias :top :show
+  alias :bottom :show
+  alias :newest :show
 
   def yours
+
     @category = Category.find(params[:id])
     @page_title = tr("Your {tag_name} ideas", "controller/issues", :tag_name => tr(@category.name, "model/category").titleize)
     @ideas = @user.ideas.where(category_id: @category.id).paginate :page => params[:page], :per_page => params[:per_page]
@@ -183,18 +194,18 @@ class IssuesController < ApplicationController
     end    
   end
 
-  def newest
-    @category = Category.find(params[:id])
-    @page_title = tr("New {tag_name} ideas", "controller/issues", :tag_name => tr(@category.name, "model/category").titleize)
-    @ideas = Idea.where(category_id: @category.id).published.newest.paginate :page => params[:page], :per_page => params[:per_page]
-    get_endorsements
-    respond_to do |format|
-      format.html { render :action => "list" }
-      format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
-      format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
-    end
-  end
+  # def newest
+  #   @category = Category.find(params[:id])
+  #   @page_title = tr("New {tag_name} ideas", "controller/issues", :tag_name => tr(@category.name, "model/category").titleize)
+  #   @ideas = Idea.where(category_id: @category.id).published.newest.paginate :page => params[:page], :per_page => params[:per_page]
+  #   get_endorsements
+  #   respond_to do |format|
+  #     format.html { render :action => "list" }
+  #     format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
+  #     format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
+  #     format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+  #   end
+  # end
   
   def discussions
     @category = Category.find(params[:id])

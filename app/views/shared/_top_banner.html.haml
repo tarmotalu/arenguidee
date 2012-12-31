@@ -4,7 +4,7 @@
 
     %nav#mainMenu
       - @categories.each do |category|
-        = link_to category.name, issue_path(category)
+        = link_to category.name, issue_path(category), :class => (@category.nil? ? false : (@category == category ? :active : false))
     - if logged_in?
       %li.signin= link_to 'Minu konto', '#', :class => 'logIn profile my_account'
     - else

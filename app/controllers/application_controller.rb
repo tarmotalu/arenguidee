@@ -143,6 +143,10 @@ class ApplicationController < ActionController::Base
   def get_categories
     @categories = Category.all
     session[:locale] = "et"
+    @footer = Page.where(:slug => 'footer')
+    unless @footer.empty?
+      @footer = @footer.first
+    end
   end
   
   def check_for_localhost

@@ -17,7 +17,7 @@ SocialInnovation::Application.routes.draw do
   match '/users/list_suspended' => 'users#list_suspended'
 
   resources :groups
-
+  resources :pages
   resources :sub_instances do
     member do
       get :email

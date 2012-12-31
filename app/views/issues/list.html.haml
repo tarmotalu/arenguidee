@@ -1,15 +1,55 @@
-#hp_intro= @page_title
-%p
+
+#text-1.cookieText
+  %a.closeButton{:href => "#"} &nbsp;
   %p
-    - if @ideas.any?
-      - if params[:action] == 'official'
-        = tr("This is the {official_user_name} agenda for {tag_name} as prioritized by all members", "view/issues/list", :tag_name => tr(@category.name, "model/category").titleize, :official_user_name => current_instance.official_user.name)
-      - elsif params[:action] == 'not_official'
-        = tr("These are our members' {tag_name} ideas NOT on {official_user_name} agenda", "view/issues/list", :tag_name => tr(@category.name, "model/category").titleize, :official_user_name => current_instance.official_user.name)
-      - elsif params[:action] == 'official_opposed'
-        = tr("These are our members' {tag_name} ideas that {official_user_name} opposes", "view/issues/list", :tag_name => tr(@category.name, "model/category").titleize, :official_user_name => current_instance.official_user.name)
-      - @ideas.each do |idea|
-        = render :partial => "ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
-      %p= will_paginate @ideas
-    - else
-      = tr("No ideas for {tag_name} yet", "view/issues/list", :tag_name => tr(@category.name, "model/category").titleize)
+    %b Mis on Rahvakogu?
+    Kui sa usud, et avalik arutelu on tähtis poliitika osa, siis tule ja mõtle kaasa!
+    %br/
+    Koos teeme ettepanekud Riigikogule viie olulise seaduse muutmiseks.
+    %a{:href => ""} Loe lähemalt
+/ /cookieText
+.filterBar
+  .leftSide
+    Teemas
+    = "\"#{@category.name}\""
+    on
+    = pluralize(@ideas.total_count, "ettepanek") + "."
+    = link_to 'Esita ka!', new_category_idea_path(@category)
+  / /leftSide
+  .rightSide
+    Järjesta
+    %a.active{:href => ""} aja
+    = " / "
+    %a{:href => ""} toetuse
+    = " / "
+    %a{:href => ""} vastuhäälte
+    = " / "
+    %a{:href => ""} arutelude
+    põhjal.
+#propositions
+  - if @ideas.any?
+    - @ideas.each do |idea|
+      %table{:cellpadding => "0", :cellspacing => "0"}
+        %tr
+          %td{:width => "636"}
+            .head
+              = image_tag idea.user.buddy_icon(:icon_40)
+              .desc
+                %h2
+                  = link_to idea.name, idea
+                  %span.red= "(#{idea.points.count})"
+                %span
+                  = idea.author_sentence
+                  %span.gray= time_ago_in_words(idea.published_at)
+            %p= idea.description
+          %td= raw "&nbsp;"
+          %td.vote-td
+            .vote
+              .thumb-up= idea.points.published.up_value.count
+              = render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+          %td.vote-td
+            .vote
+              .thumb-down= idea.points.published.down_value.count
+              = render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+  - else
+    = tr("No ideas for {tag_name} yet", "view/issues/list", :tag_name => tr(@category.name, "model/category").titleize)   

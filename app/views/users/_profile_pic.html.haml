@@ -1,6 +1,6 @@
 .profile_picture48
   - if @user.has_picture?
-    %a{:href => url_for(@user)}
+    %a{:href => picture_settings_url}
       = image_tag @user.buddy_icon.url(:icon_48), :size => "48x48", :border => 0
   - elsif current_facebook_user_if_on_facebook and @user.has_facebook?
     %a{:href => url_for(@user)}

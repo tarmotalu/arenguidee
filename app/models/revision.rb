@@ -95,7 +95,7 @@ class Revision < ActiveRecord::Base
     point.value = self.value
     point.name = self.name
     point.other_idea = self.other_idea
-    point.author_sentence = point.author_user.login
+    point.author_sentence = point.author_user.real_name
     point.author_sentence += ", #{tr("changes","model/revision")} " + point.revisions.map{|x| x.user}.collect{|a| a.real_name}.to_sentence if point.editors.size > 0
     point.published_at = Time.now
     point.save(:validate => false)

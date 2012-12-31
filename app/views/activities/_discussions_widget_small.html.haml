@@ -4,7 +4,7 @@
       - activity.comments.each do |comment|
         %li
           = link_to comment.show_url do
-            = h(comment.user.login)
+            = h(comment.user.real_name)
             \- #{time_ago(comment.created_at)}
           %br/
           = comment.content

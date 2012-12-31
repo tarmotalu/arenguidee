@@ -39,6 +39,7 @@ gem 'omniauth-idcard', '0.1.0'
 gem 'omniauth-mobileid', '0.1.2'
 gem 'paperclip'
 gem 'pry-rails'
+gem 'randumb'
 gem 'rmagick', require: false
 gem 'rvm-capistrano', require: false
 gem 'sass'

@@ -31,29 +31,29 @@
     = tr8n_scripts_tag
     = csrf_meta_tag
   %body
-
-    %section#topBar
-      .inline
-        %a.active{:href => ""}
-          %b> Ettepanekute kogumine
-          01/2013
-        %span.arrow &nbsp;
-        %a{:href => ""}
-          %b> Analüüs
-          02/2013
-        %span.arrow &nbsp;
-        %a{:href => ""}
-          %b> Arutelupäev
-          03/2013
-        %span.arrow &nbsp;
-        %a{:href => ""}
-          %b> Seadusemuudatused
-          04/2013
+    - if controller.controller_name == 'home'
+      %section#topBar
+        .inline
+          %a.active{:href => ""}
+            %b> Ettepanekute kogumine
+            01/2013
+          %span.arrow &nbsp;
+          %a{:href => ""}
+            %b> Analüüs
+            02/2013
+          %span.arrow &nbsp;
+          %a{:href => ""}
+            %b> Arutelupäev
+            03/2013
+          %span.arrow &nbsp;
+          %a{:href => ""}
+            %b> Seadusemuudatused
+            04/2013
 
 
     %section#outerContainer
-      #container
+      - unless controller.controller_name == 'home'
         = render :partial => "shared/top_banner"
-        = yield
+      #container= yield
 
 

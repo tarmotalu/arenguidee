@@ -65,6 +65,8 @@ class HomeController < ApplicationController
       @activities = Activity.active.top.feed(last).for_all_users.with_20
 
     end
+    @cat = Category.all
+    @bottom_idea = Idea.published.random(1)
   end
 
   def world

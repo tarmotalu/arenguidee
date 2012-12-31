@@ -12,7 +12,7 @@
             = render :partial => "users/pic_48", :locals => {:user => comment.user}
     .col-11
       .col-content
-        = link_to(comment.user.login, comment.user)
+        = link_to(comment.user.real_name, comment.user)
         \- #{time_ago(comment.created_at)}
         - if logged_in? and current_user.id != comment.user_id
           = link_to image_tag("report.png", :align => "right", :border => 0, :class => "comment_report"),                                                              |

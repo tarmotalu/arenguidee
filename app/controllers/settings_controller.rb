@@ -41,7 +41,7 @@ class SettingsController < ApplicationController
       if @user.update_attributes(params[:user])
         ActivityUserPictureNew.create(:user => @user)   
         flash[:notice] = tr("Picture uploaded successfully", "controller/settings")
-        format.html { redirect_to(:action => :picture) }
+        format.html { redirect_to  @user }
       else
         format.html { render :action => "picture" }
       end

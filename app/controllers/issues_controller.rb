@@ -5,6 +5,9 @@ class IssuesController < ApplicationController
   before_filter :check_for_user, :only => [:yours, :yours_finished, :yours_created, :network]
   before_filter :setup_filter_dropdown
 
+   # :show_feed, :activities, :endorsers, :opposers, :opposer_points, :endorser_points, :neutral_points, :everyone_points,
+                                             # :opposed_top_points, :endorsed_top_points, :idea_detail, :top_points, :discussions, :everyone_points ]
+
   def index
     @page_title =  tr("Categories", "controller/issues")
     @categories = Category.all
@@ -36,6 +39,7 @@ class IssuesController < ApplicationController
     @category = Category.find(params[:id])
     @page_title = tr("{tag_name} ideas", "controller/issues", :tag_name => tr(@category.name, "model/category").titleize)
     @ideas = Idea.where(category_id: @category.id).published.top_rank.paginate(:page => params[:page], :per_page => params[:per_page])
+
     get_endorsements
     respond_to do |format|
       format.html { render :action => "list" }
@@ -260,6 +264,8 @@ class IssuesController < ApplicationController
       @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.id},current_user.id])
     end
   end
+
+
   
   def check_for_user
     if params[:user_id]

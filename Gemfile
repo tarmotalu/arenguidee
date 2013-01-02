@@ -35,7 +35,7 @@ gem 'jquery-rjs', github: "bikeexchange/jquery-rjs"
 gem 'kaminari'
 gem 'kgio'
 gem 'oauth'
-gem 'omniauth-idcard', '0.1.0'
+gem "omniauth-idcard", "~> 0.2.0"
 gem 'omniauth-mobileid', '0.1.2'
 gem 'paperclip'
 gem 'pry-rails'

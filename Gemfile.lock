@@ -193,7 +193,7 @@ GEM
     omniauth (1.1.1)
       hashie (~> 1.2)
       rack
-    omniauth-idcard (0.1.0)
+    omniauth-idcard (0.2.0)
       omniauth-oauth (~> 1.0)
     omniauth-mobileid (0.1.2)
       digidoc_client (~> 0.1)
@@ -375,7 +375,7 @@ DEPENDENCIES
   mysql2
   newrelic_rpm
   oauth
-  omniauth-idcard (= 0.1.0)
+  omniauth-idcard (~> 0.2.0)
   omniauth-mobileid (= 0.1.2)
   paperclip
   pry-rails

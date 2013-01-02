@@ -155,8 +155,8 @@ class User < ActiveRecord::Base
     if omniauth['user_info'].present?
       userinfo = omniauth['user_info']
       self.email = userinfo['email'] if email.blank?
-      self.first_name = userinfo['first_name'].try(:humanize) if self.first_name.blank?
-      self.last_name = userinfo['last_name'].try(:humanize) if self.last_name.blank?      
+      self.first_name = userinfo['first_name'] if self.first_name.blank?
+      self.last_name = userinfo['last_name'] if self.last_name.blank?      
       self.login = userinfo['personal_code'] if login.blank?
     end
   end

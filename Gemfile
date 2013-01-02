@@ -46,7 +46,7 @@ gem 'sass'
 gem 'sunlight'
 gem 'sys-filesystem'
 gem 'thinking-sphinx'
-gem 'tr8n', "~> 3.2.1" #github: "hinrik/tr8n", :branch => "social_innovation"
+gem 'tr8n', github: "hinrik/tr8n", :branch => "social_innovation"
 gem 'whenever', :require => false
 gem 'will-paginate-i18n'
 gem 'will_filter', "~> 3.1.2" 

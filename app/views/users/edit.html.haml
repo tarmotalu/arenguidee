@@ -1,9 +1,9 @@
 .col-group
-  .col-1
+  .col-2
     .col-content
       = render :partial => "users/profile_pic"
       = render :partial => "users/profile_nav"
-  .col-11
+  .col-10
     .col-content
       = form_for(@user) do |f|
         = f.error_messages
@@ -12,7 +12,7 @@
           .field_box= f.text_field :first_name, :size => 12
           .field_label= tr("and Last name", "view/users/edit")
           .field_box= f.text_field :last_name, :size => 15
-          .small= tr("(Not displayed on the site)", "view/users/edit")
+          / .small= tr("(Not displayed on the site)", "view/users/edit")
         .field
           .field_label= tr("Email address", "view/users/edit")
           .field_box= f.text_field :email
@@ -34,7 +34,7 @@
             = f.radio_button :report_frequency, 0
             = tr("Never", "view/settings/signups")
         .field
-          .field_label= tr("Zip Code", "view/users/edit")
+          .field_label= tr("Post Code", "view/users/edit")
           .field_box= f.text_field :zip
         .field
           .field_label= tr("Website", "view/users/edit")

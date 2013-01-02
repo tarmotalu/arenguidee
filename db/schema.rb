@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121231111428) do
+ActiveRecord::Schema.define(:version => 20130102152525) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -1312,6 +1312,10 @@ ActiveRecord::Schema.define(:version => 20121231111428) do
     t.boolean  "is_capital_subscribed",                       :default => true
     t.integer  "idea_revisions_count",                        :default => 0
     t.boolean  "is_idea_changes_subscribed",                  :default => false
+    t.string   "organisation"
+    t.string   "title"
+    t.text     "bio"
+    t.string   "social_network_url"
   end
 
   add_index "users", ["facebook_uid"], :name => "index_users_on_facebook_uid"

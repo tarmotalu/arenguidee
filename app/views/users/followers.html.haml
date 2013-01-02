@@ -1,9 +1,9 @@
 .col-group
-  .col-1
+  .col-2
     .col-content
       = render :partial => "users/profile_pic"
       = render :partial => "users/profile_nav"
-  .col-11
+  .col-10
     .col-content
       - @followings.in_groups_of(4) do |row_followings|
         - for following in row_followings

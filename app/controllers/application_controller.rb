@@ -94,7 +94,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html do
         flash[:notice] = 'You must be an admin to do that.'
-        redirect_to forums_path
+        redirect_to '/'
       end
     end
   end
@@ -143,6 +143,10 @@ class ApplicationController < ActionController::Base
   def get_categories
     @categories = Category.all
     session[:locale] = "et"
+    @footer = Page.where(:slug => 'footer')
+    unless @footer.empty?
+      @footer = @footer.first
+    end
   end
   
   def check_for_localhost

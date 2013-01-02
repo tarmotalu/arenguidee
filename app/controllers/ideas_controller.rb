@@ -192,6 +192,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/top
   def top
+    @filter = 'top'
     @position_in_idea_name = true
     @page_title = tr("Top ideas", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
@@ -202,7 +203,7 @@ class IdeasController < ApplicationController
     end
     get_endorsements
     respond_to do |format|
-      format.html { render :action => "list" }
+      format.html { render :template => "/issues/list" }
       format.rss { render :action => "list" }
       format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
       format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
@@ -210,6 +211,26 @@ class IdeasController < ApplicationController
     end
   end
 
+
+  def bottom
+    @filter = 'bottom'
+    @position_in_idea_name = true
+    @page_title = tr("Top ideas", "controller/ideas")
+    @rss_url = top_ideas_url(:format => 'rss')
+    if params[:category_id]
+      @ideas = Idea.by_category(params[:category_id]).published.bottom.paginate :page => params[:page], :per_page => params[:per_page]
+    else
+      @ideas = Idea.published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
+    end
+    get_endorsements
+    respond_to do |format|
+      format.html { render :template => "/issues/list" }
+      format.rss { render :action => "list" }
+      format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
+      format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
+      format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+    end
+  end
   # GET /ideas/top_24hr
   def top_24hr
     @position_in_idea_name = true
@@ -292,13 +313,14 @@ class IdeasController < ApplicationController
   
   # GET /ideas/controversial
   def controversial
+    @filter = 'controversial'
     @position_in_idea_name = true
     @page_title = tr("Most controversial ideas", "controller/ideas")
     @rss_url = controversial_ideas_url(:format => 'rss')
     @ideas = Idea.published.controversial.paginate :page => params[:page], :per_page => params[:per_page]
     get_endorsements
     respond_to do |format|
-      format.html { render :action => "list" }
+      format.html { render :template => "/issues/list"  }
       format.rss { render :action => "list" }
       format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
       format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
@@ -341,6 +363,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/newest
   def newest
+    @filter = 'newest'
     @position_in_idea_name = true
     @page_title = tr("Newest ideas", "controller/ideas")
     @rss_url = newest_ideas_url(:format => 'rss')
@@ -348,7 +371,7 @@ class IdeasController < ApplicationController
     get_endorsements
     respond_to do |format|
       format.html
-      format.rss { render :action => "list" }
+      format.rss { render  :template => "/issues/list"}
       format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
       format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
@@ -412,6 +435,7 @@ class IdeasController < ApplicationController
       if logged_in? # pull all their endorsements on the ideas shown
         @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @relationships.collect {|other_idea, relationship| other_idea.id},current_user.id])
       end
+      @category = @idea.category unless @idea.category.nil?
       respond_to do |format|
         format.html { render :action => "show" }
         format.xml { render :xml => @idea.to_xml(:except => NB_CONFIG['api_exclude_fields']) }

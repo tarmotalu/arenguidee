@@ -1,9 +1,9 @@
 .col-group
-  .col-1
+  .col-2
     .col-content
       = render :partial => "users/profile_pic"
       = render :partial => "users/profile_nav"
-  .col-11
+  .col-10
     .col-content
       = will_paginate(@ideas)
       - if @ideas.any?

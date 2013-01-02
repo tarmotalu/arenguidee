@@ -19,7 +19,8 @@ class Idea < ActiveRecord::Base
   scope :alphabetical, :order => "ideas.name asc"
 
   scope :top_rank, :order => "ideas.score desc, ideas.position asc"
-
+  scope :top, :order => "ideas.score desc, ideas.position asc"
+  scope :bottom, :order => "ideas.score asc, ideas.position desc"
   scope :top_three, :order => "ideas.score desc, ideas.position asc", :limit=>3
 
   scope :top_24hr, :conditions => "ideas.position_endorsed_24hr IS NOT NULL", :order => "ideas.position_endorsed_24hr asc"
@@ -58,7 +59,7 @@ class Idea < ActiveRecord::Base
   scope :by_random, :order => "rand()"
 
   scope :item_limit, lambda{|limit| {:limit=>limit}}  
-  
+
   belongs_to :user
   belongs_to :sub_instance
   belongs_to :category

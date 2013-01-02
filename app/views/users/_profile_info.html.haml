@@ -1,7 +1,7 @@
 .profile_strip
   .profile_name
     - if params[:action] == 'show'
-      %span.profile_name= @user.name
+      %span.profile_name= @user.real_name
       %span.profile_pc= link_to @user.capitals_count.to_s + current_instance.currency_short_name, capital_user_url(@user)
     - else
       %span.profile_name= @page_title
@@ -14,6 +14,13 @@
       - if @user.has_twitter?
         %a{:href => "http://twitter.com/#{@user.twitter_login}"}
           http://twitter.com/#{@user.twitter_login}
+  - unless @user.organisation.blank?
+    .profile_website
+      - unless @user.title.blank?
+        = @user.title + ", "
+      = @user.organisation
+  - unless @user.bio.blank?
+    .profile_biography= @user.bio
   .profile_small
     - if not (logged_in? and current_user == @user)
       .col-group

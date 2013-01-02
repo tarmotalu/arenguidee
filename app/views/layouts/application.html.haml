@@ -31,6 +31,7 @@
     = tr8n_scripts_tag
     = csrf_meta_tag
   %body
+    #fb-root
     - if controller.controller_name == 'home'
       %section#topBar
         .inline
@@ -61,5 +62,6 @@
         .leftSide= raw @footer.body
 
         .rightSide
-          Siia facebok like!
+
+          .fb-like-box{"data-header" => "false", "data-height" => "185", "data-href" => "http://www.facebook.com/Rahvakogu", "data-show-faces" => "true", "data-color-scheme" => "dark",  "data-stream" => "false", "data-width" => "300"}
 

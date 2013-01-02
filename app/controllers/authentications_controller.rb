@@ -54,7 +54,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     return unless Rails.env.development?
     ActiveRecord::IdentityMap.without do
       logger.warn('ssd')
-      authenticate_once('user_info' => {'personal_code' => '38004100067', 'first_name' => 'John William', 'last_name' => 'Fail'})
+      authenticate_once('user_info' => {'personal_code' => '38004100069', 'first_name' => 'John test', 'last_name' => 'Fail'})
     end
   end
 

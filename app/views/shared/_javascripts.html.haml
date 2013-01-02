@@ -11,6 +11,15 @@
   = javascript_include_tag "endless_scrolling_activity_idea_show.js"
 :javascript
   jQuery(document).ready(function() {
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=420406054695129";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
     jQuery("input#idea_name").DefaultValue("#{escape_javascript(current_instance.prompt)}");
     jQuery("input#q_top").DefaultValue("#{tr("Search", "view/shared/_javascripts")}");
   	jQuery("input#user_login_search").DefaultValue("#{tr("Find a member", "view/shared/_javascripts")}");

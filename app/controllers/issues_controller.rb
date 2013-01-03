@@ -60,7 +60,8 @@ class IssuesController < ApplicationController
   alias :top :show
   alias :bottom :show
   alias :newest :show
-
+  alias :random :show
+  
   def yours
 
     @category = Category.find(params[:id])

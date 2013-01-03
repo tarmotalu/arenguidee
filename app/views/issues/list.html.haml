@@ -35,7 +35,7 @@
       %span.filter_divider= " / "
       = link_to 'arutelude', controversial_ideas_path, :class => (@filter == 'controversial' ? :active : false)
       %span.filter_divider= " / "
-      = link_to 'juhuslik', filtered_issue_path(@category, :random), :class => (@filter == 'random' ? :active : false)
+      = link_to 'juhuslik', random_ideas_path, :class => (@filter == 'random' ? :active : false)
     - else
       = link_to 'aja', filtered_issue_path(@category, :newest), :class => (@filter == 'newest' ? :active : false)
       %span.filter_divider= " / "

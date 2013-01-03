@@ -345,6 +345,7 @@ class IdeasController < ApplicationController
   
   # GET /ideas/random
   def random
+    @filter = 'random'
     @page_title = tr("Random ideas", "controller/ideas")
     if User.adapter == 'postgresql'
       @ideas = Idea.published.paginate :order => "RANDOM()", :page => params[:page], :per_page => params[:per_page]

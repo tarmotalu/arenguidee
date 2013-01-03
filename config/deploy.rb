@@ -6,7 +6,7 @@ require "thinking_sphinx/deploy/capistrano"
 require "auto_html/capistrano"
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
-load 'deploy/assets'
+# load 'deploy/assets'
 
 ssh_options[:forward_agent] = true
 set :application, "rahvakogu_staging"

@@ -46,6 +46,7 @@
       = link_to 'arutelude', filtered_issue_path(@category, :controversial), :class => (@filter == 'controversial' ? :active : false)
       %span.filter_divider= " / "
       = link_to 'juhuslik', filtered_issue_path(@category, :random), :class => (@filter == 'random' ? :active : false)
+    %span.filter_divider= "  "      
     põhjal.
 #propositions
   - if @ideas.any?

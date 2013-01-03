@@ -8,8 +8,9 @@
         %br>/
         = @idea.user.last_name
     = @idea.published_at.strftime("%d.%m.%Y")
-    - if (@idea.user == current_user && @idea.is_editable?) || current_user.is_admin?
-      = link_to tr('edit this idea', '/views/ideas'), edit_idea_path(@idea)
+    - if logged_in?
+      - if (@idea.user == current_user && @idea.is_editable?) || current_user.is_admin?
+        = link_to tr('edit this idea', '/views/ideas'), edit_idea_path(@idea)
   .rightSide
     .head
       %h1= @idea.name

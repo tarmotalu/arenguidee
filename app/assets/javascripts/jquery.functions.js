@@ -1,4 +1,18 @@
 $(function(){
+	$("a.form_overlay").click(function() {
+		var orig = $(this).attr('orig_target');
+		$('#login_overlay').fadeIn();
+  	if ($(this).attr('href') == "#") {
+    	$('#after_target').val(orig);
+    	$('#after_target_mob').val(orig);
+
+  	}
+  	else {
+    	$('#after_target').val($(this).attr('href'));
+    	$('#after_target_mob').val($(this).attr('href'));
+  	}
+	});
+
 	$("#topBar").topBar();
 	$("#rotator").rotator();
 	$("#proposal-bottom .cycle").cycle();
@@ -240,3 +254,13 @@ document.createElement('article');
 document.createElement('aside');
 document.createElement('footer');
 document.createElement('figure');
+
+// $("a.form_overlay").overlay({
+//   mask: {
+//   	color: '#ffffff',
+//   	loadSpeed: 200,
+//   overlaypacity: 0.5
+// 	},
+// 	closeOnClick: false  
+// });
+

@@ -5,17 +5,20 @@ module ApplicationHelper
 
   def protected_link_to(*args, &block)
     unless logged_in?
+
       if args.third.nil?
-        args.push({:class => 'form_overlay', :rel => "#login_overlay"})        
+        args.push({:class => 'form_overlay', :rel => "#login_overlay", :orig_target => args[1]})        
       else
-        args.third.merge!({:class => 'form_overlay', :rel => "#login_overlay"}) {|k, o, n| o + " " + n}
+        args.third.merge!({:class => 'form_overlay', :rel => "#login_overlay", :orig_target => args[1]}) {|k, o, n| o.to_s + " " + n.to_s}
+        args.third.merge!({:remote => false })
+        args.third.merge!({:method => false })
       end
+      args[1] = '#'
     end
     link_to *args, &block
   end
 
-    
-  end
+
 
   def current_facebook_user_if_on_facebook
 

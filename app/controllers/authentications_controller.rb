@@ -42,7 +42,15 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     end
 
     respond_to do |format|
-      format.html { redirect_to root_path }
+      format.html {
+        if session[:to_location]
+          tol = session[:to_location]
+          session[:to_location] = nil
+          redirect_to tol
+        else
+         redirect_to root_path 
+        end
+       }
       format.js { render :json => {:redirect => root_path} }
     end
   end
@@ -50,10 +58,8 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
   protected
 
   def development_sign
-    
     return unless Rails.env.development?
     ActiveRecord::IdentityMap.without do
-      logger.warn('ssd')
       authenticate_once('user_info' => {'personal_code' => '38004100067', 'first_name' => 'John', 'last_name' => 'Fail'})
     end
   end
@@ -70,7 +76,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
       
       if @user
         notice = t('devise.sessions.signed_in')
-        redirect = stored_location_for(:user) || root_path
+        redirect = session[:to_location] || root_path
         sign_in(:user, @user)        
       else # Authentication was successful, but user is not registered in the system
         session[:omniauth] = omniauth

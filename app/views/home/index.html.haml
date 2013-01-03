@@ -96,33 +96,14 @@
     Kui sa usud, et avalik arutelu on tähtis poliitika osa, siis tule ja mõtle kaasa!
     %br/
     Koos teeme ettepanekud Riigikogule viie olulise seaduse muutmiseks.
-  .column
-    %h2= link_to 'RAHASTAMINE', issue_path('rahastamine')
-    %p= @cat.select{|x| x.slug == 'rahastamine'}.first.description
-    = link_to pluralize(@cat.select{|x| x.slug == 'rahastamine'}.first.ideas.count, 'ettepanek')
+  - @cat[0..(@cat.count-2)].each do |cat|
+    .column
+      %h2= link_to cat.name, issue_path(cat)
+      %p= cat.description
+      = link_to pluralize(cat.ideas.count, 'ettepanek')
 
-  .column
-    %h2= link_to 'KONKURENTS', issue_path('konkurents')
-    %p= @cat.select{|x| x.slug == 'konkurents'}.first.description
-    = link_to pluralize(@cat.select{|x| x.slug == 'konkurents'}.first.ideas.count, 'ettepanek')
-  / /column
-  .column
-    %h2= link_to 'MINU HÄÄL', issue_path('minu-haal')
-    %p= @cat.select{|x| x.slug == 'minu-haal'}.first.description
-    = link_to pluralize(@cat.select{|x| x.slug == 'minu-haal'}.first.ideas.count, 'ettepanek')
 
-  / /column
-  .column
-    %h2= link_to 'KAASATUS', issue_path('kaasatus')
-    %p= @cat.select{|x| x.slug == 'kaasatus'}.first.description
-    = link_to pluralize(@cat.select{|x| x.slug == 'kaasatus'}.first.ideas.count, 'ettepanek')
-  / /column
-  .column.last-child
-    %h2= link_to ' SUNDPOLITI- SEERIMINE', issue_path('sunpolitseerimine')
-    %p= @cat.select{|x| x.slug == 'sundpolitseerimine'}.first.try(:description)
-    = link_to pluralize(@cat.select{|x| x.slug == 'sundpolitseerimine'}.first.ideas.count, 'ettepanek')
-  / /column
-  = link_to "Tee oma ettepanek", new_idea_path, :class => :button
+  = protected_link_to "Tee oma ettepanek", new_idea_path, :class => :button
 / /proposal
 %section#problems
   %h1 Põhilised probleemid neis viies teemas:

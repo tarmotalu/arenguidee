@@ -354,7 +354,7 @@ class IdeasController < ApplicationController
     end
     get_endorsements
     respond_to do |format|
-      format.html { render :action => "list" }
+      format.html { render  :template => "/issues/list"}
       format.rss { render :action => "list" }
       format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
       format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
@@ -371,8 +371,8 @@ class IdeasController < ApplicationController
     @ideas = Idea.published.newest.paginate :page => params[:page], :per_page => params[:per_page]
     get_endorsements
     respond_to do |format|
-      format.html
-      format.rss { render  :template => "/issues/list"}
+      format.html { render  :template => "/issues/list"}
+      format.rss { render :action => "list" }
       format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
       format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }

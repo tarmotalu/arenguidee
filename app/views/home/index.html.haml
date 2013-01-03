@@ -119,8 +119,8 @@
   / /column
   .column.last-child
     %h2= link_to ' SUNDPOLITI- SEERIMINE', issue_path('sunpolitseerimine')
-    %p= @cat.select{|x| x.slug == 'sunpolitseerimine'}.first.description
-    = link_to pluralize(@cat.select{|x| x.slug == 'sunpolitseerimine'}.first.ideas.count, 'ettepanek')
+    %p= @cat.select{|x| x.slug == 'sundpolitseerimine'}.first.try(:description)
+    = link_to pluralize(@cat.select{|x| x.slug == 'sundpolitseerimine'}.first.ideas.count, 'ettepanek')
   / /column
   = link_to "Tee oma ettepanek", new_idea_path, :class => :button
 / /proposal

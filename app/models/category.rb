@@ -1,7 +1,7 @@
 class Category < ActiveRecord::Base
   has_many :ideas
   has_many :blog_posts
-  has_one :page
+  belongs_to :page
   has_attached_file :icon, :styles => { :icon_32 => "32x32#", :icon_25 => "25x25#", :icon_40  => "40x40#", :icon_50  => "50x50#", :icon_100 => "100x100#" }
 
   validates_attachment_size :icon, :less_than => 5.megabytes
@@ -9,7 +9,7 @@ class Category < ActiveRecord::Base
 
   acts_as_set_sub_instance :table_name=>"categories"
   extend FriendlyId
-  friendly_id :i18n_name, use: :slugged
+  friendly_id :name, use: :slugged
 
   def self.default_or_sub_instance
     if Category.count>0

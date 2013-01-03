@@ -35,6 +35,12 @@ GIT
       sass
       will_filter (>= 3.1.2)
 
+GIT
+  remote: git://github.com/ryanb/nested_form.git
+  revision: f591c0d72d0119c50511c16153b3960fe2da8b71
+  specs:
+    nested_form (0.3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -373,6 +379,7 @@ DEPENDENCIES
   kaminari
   kgio
   mysql2
+  nested_form!
   newrelic_rpm
   oauth
   omniauth-idcard (~> 0.2.0)

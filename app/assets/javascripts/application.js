@@ -37,6 +37,7 @@
 //= require_self
 //= require jquery.cookie
 //= require jquery.functions
+//= require jquery_nested_form
 
 jQuery(function ($) {
   $.fn.extend({

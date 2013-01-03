@@ -24,5 +24,8 @@
     = f.label :sub_tags
     %br/
     = f.text_field :sub_tags
+  %p
+    Category this will be the main info page for (optional) :
+    = f.collection_select :page_id, Page.all, :id, :title, :include_blank => true    
   .actions
     = f.submit

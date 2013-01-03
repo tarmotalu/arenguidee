@@ -9,5 +9,5 @@
         - for following in row_followings
           - if following
             = render :partial => "users/pic_48", :locals => {:user => following.user}
-            = link_to following.user.name, following.user
+            = link_to following.user.real_name, following.user
             .small= time_ago(following.created_at)

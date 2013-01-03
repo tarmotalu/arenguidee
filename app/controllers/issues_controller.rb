@@ -164,6 +164,7 @@ class IssuesController < ApplicationController
 
   # this doesn't work in pgsql :(
   def random
+    @filter = 'random'
     @category = Category.find(params[:id])
     @page_title = tr("Random {tag_name} ideas", "controller/issues", :tag_name => tr(@category.name, "model/category").titleize)
     if User.adapter == 'postgresql'

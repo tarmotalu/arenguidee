@@ -624,7 +624,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    return login
+    return real_name
   end
   
   def real_name

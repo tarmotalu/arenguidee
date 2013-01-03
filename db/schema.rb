@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102152525) do
+ActiveRecord::Schema.define(:version => 20130103030546) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20130102152525) do
     t.text     "description"
     t.string   "sub_tags"
     t.string   "slug"
+    t.integer  "page_id"
   end
 
   add_index "categories", ["slug"], :name => "index_categories_on_slug", :unique => true

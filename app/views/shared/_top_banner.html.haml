@@ -5,6 +5,7 @@
     %nav#mainMenu
       - @categories.each do |category|
         = link_to category.name, issue_path(category), :class => (@category.nil? ? false : (@category == category ? :active : false))
+      #search_box= render :partial => 'shared/search'
     - if logged_in?
       %li.signin
 

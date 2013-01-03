@@ -32,7 +32,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     error = request.env["omniauth.error"]
     error_type = request.env["omniauth.error.type"]
     logger.error error.try(:inspect)
-    
+    redirect = stored_location_for(:user) || root_path
     if error_type.present?
       flash[:alert] = t(error_type, :scope => "mobile_id.fault")
     elsif error.is_a?(Errno::ENETUNREACH)
@@ -42,15 +42,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     end
 
     respond_to do |format|
-      format.html {
-        if session[:to_location]
-          tol = session[:to_location]
-          session[:to_location] = nil
-          redirect_to tol
-        else
-         redirect_to root_path 
-        end
-       }
+      format.html {  redirect_to redirect }
       format.js { render :json => {:redirect => root_path} }
     end
   end
@@ -60,7 +52,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
   def development_sign
     return unless Rails.env.development?
     ActiveRecord::IdentityMap.without do
-      authenticate_once('user_info' => {'personal_code' => '38004100067', 'first_name' => 'John', 'last_name' => 'Fail'})
+      authenticate_once('user_info' => {'personal_code' => '38004100033', 'first_name' => 'Josshn', 'last_name' => 'Fail'})
     end
   end
 
@@ -76,7 +68,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
       
       if @user
         notice = t('devise.sessions.signed_in')
-        redirect = session[:to_location] || root_path
+        redirect = stored_location_for(:user) || root_path
         sign_in(:user, @user)        
       else # Authentication was successful, but user is not registered in the system
         session[:omniauth] = omniauth

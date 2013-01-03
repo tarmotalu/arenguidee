@@ -1,16 +1,6 @@
 $(function(){
 	$("a.form_overlay").click(function() {
-		var orig = $(this).attr('orig_target');
 		$('#login_overlay').fadeIn();
-  	if ($(this).attr('href') == "#") {
-    	$('#after_target').val(orig);
-    	$('#after_target_mob').val(orig);
-
-  	}
-  	else {
-    	$('#after_target').val($(this).attr('href'));
-    	$('#after_target_mob').val($(this).attr('href'));
-  	}
 	});
 
 	$("#topBar").topBar();

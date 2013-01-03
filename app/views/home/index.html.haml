@@ -175,22 +175,21 @@
         %b Isiku nimi
         %br/
         Tegevusala
-      / /desc
-    / /item
-  / /people
-/ /problems
+
 %section#proposal-bottom
-  - if @bottom_idea.empty?
+  - if @bottom_ideas.empty?
     No ideas yet.
   - else
-    %h2
-      = "“#{@bottom_idea.first.name}”"
-    .label
-      %span.left Ettepanek
-      %span.right
-        = @bottom_idea.first.author_sentence
-        = ","
-        %span.gray= l @bottom_idea.first.published_at.to_date, :format => :long
-  / /label
-  %br/
+    .cycle
+      - @bottom_ideas.each do |bi|
+        .item
+          = link_to bi do
+            %h2= "“#{bi.name}”"
+            .label
+              %span.left Ettepanek
+              %span.right
+                = bi.author_sentence
+                = ","
+                %span.gray= l bi.published_at.to_date, :format => :long
+
   = link_to "Näita kõiki " + pluralize(Idea.published.count, "ettepanek"), ideas_path, :class => "showAll"

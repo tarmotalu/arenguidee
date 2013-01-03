@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class AuthenticationsController < Devise::OmniauthCallbacksController
   skip_before_filter :verify_authenticity_token, :only => [:failure]
-  #before_filter :development_sign, :only => [:failure]
+  before_filter :development_sign, :only => [:failure]
   
   def idcard
     authenticate_once(request.env['omniauth.auth'])
@@ -54,7 +54,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     return unless Rails.env.development?
     ActiveRecord::IdentityMap.without do
       logger.warn('ssd')
-      authenticate_once('user_info' => {'personal_code' => '38004100069', 'first_name' => 'John test', 'last_name' => 'Fail'})
+      authenticate_once('user_info' => {'personal_code' => '38004100067', 'first_name' => 'John', 'last_name' => 'Fail'})
     end
   end
 

@@ -87,8 +87,8 @@ jQuery(document).ready(function() {
 	//jQuery("#top_right_column, #toolbar").corners("bottom");
 	
 	jQuery("abbr[class*=timeago]").timeago();	
-	jQuery("#pointContent").NobleCount('#pointContentDown',{ on_negative: 'go_red', on_positive: 'go_green', max_chars: 500 });
-    jQuery("#ideaContent").NobleCount('#ideaContentDown',{ on_negative: 'go_red', on_positive: 'go_green', max_chars: 300 });
+	jQuery("#pointContent").NobleCount('#pointContentDown',{ on_negative: 'go_red', on_positive: 'go_green', max_chars: 1000 });
+    jQuery("#ideaContent").NobleCount('#ideaContentDown',{ on_negative: 'go_red', on_positive: 'go_green', max_chars: 3000 });
 	jQuery("input#user_login_search").autocomplete({ source: "/users.js" });
 	jQuery('#bulletin_content, #blurb_content, #message_content, #document_content, #email_template_content, #page_content').autoResize({extraSpace : 20})
 

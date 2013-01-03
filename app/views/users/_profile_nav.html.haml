@@ -14,7 +14,7 @@
     %li
       = link_to_unless_current tr("Feed", "view/users/_profile_nav"), activities_user_url(@user)
     %li
-      = link_to_unless_current tr("{count} discussions", "view/users/_profile_nav", :count => @user.points_count), discussions_user_url(@user)
+      = link_to_unless_current tr(pluralize(@user.points.count, "discussion"), "view/users/_profile_nav", :count => @user.points_count), discussions_user_url(@user)
     %li
       = link_to_unless_current current_instance.currency_name.titleize, capital_user_url(@user)
 

@@ -1,13 +1,15 @@
 
 #propArticle
   .profile
-    = image_tag @idea.user.buddy_icon(:icon_80)
-    %b
-      = @idea.user.first_name
-      %br>/
-      = @idea.user.last_name
+    = link_to @idea.user do
+      = image_tag @idea.user.buddy_icon(:icon_80)
+      %b
+        = @idea.user.first_name
+        %br>/
+        = @idea.user.last_name
     = @idea.published_at.strftime("%d.%m.%Y")
-
+    - if (@idea.user == current_user && @idea.is_editable?) || current_user.is_admin?
+      = link_to tr('edit this idea', '/views/ideas'), edit_idea_path(@idea)
   .rightSide
     .head
       %h1= @idea.name

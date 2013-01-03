@@ -66,7 +66,7 @@ class HomeController < ApplicationController
 
     end
     @cat = Category.all
-    @bottom_idea = Idea.published.random(1)
+    @bottom_ideas = Idea.published.random(3)
   end
 
   def world

@@ -414,6 +414,10 @@ class Idea < ActiveRecord::Base
     end
   end
 
+  def is_editable?
+    return true if official_status >= 0 && created_at.localtime >= Time.now-3600 
+  end
+
   def deactivate_endorsements
     for e in endorsements.active
       e.finish!

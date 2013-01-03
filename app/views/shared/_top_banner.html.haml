@@ -6,7 +6,9 @@
       - @categories.each do |category|
         = link_to category.name, issue_path(category), :class => (@category.nil? ? false : (@category == category ? :active : false))
     - if logged_in?
-      %li.signin= link_to 'Minu konto', '#', :class => 'logIn profile my_account'
+      %li.signin
+
+        = link_to image_tag(current_user.buddy_icon(:icon_24)) + 'Minu konto', '#', :class => 'logIn profile my_account'
     - else
       %li.signin= link_to 'Sisene', '#', :class => 'logIn signin'
 - if logged_in?

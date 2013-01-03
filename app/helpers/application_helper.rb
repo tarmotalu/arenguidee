@@ -3,7 +3,19 @@
 module ApplicationHelper
   include Tr8n::BaseHelper
 
+  def protected_link_to(*args, &block)
+    unless logged_in?
+      if args.third.nil?
+        args.push({:class => 'form_overlay', :rel => "#login_overlay"})        
+      else
+        args.third.merge!({:class => 'form_overlay', :rel => "#login_overlay"}) {|k, o, n| o + " " + n}
+      end
+    end
+    link_to *args, &block
+  end
 
+    
+  end
 
   def current_facebook_user_if_on_facebook
 

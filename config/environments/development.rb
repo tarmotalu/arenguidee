@@ -37,3 +37,10 @@ SocialInnovation::Application.configure do
   config.cache_store = :dalli_store, '127.0.0.1:11211', { :namespace => "social_innovation_#{Rails.env}_#{Rails.application.config.database_configuration[Rails.env]["git_branch"]}",
                                                           :compress => true, :compress_threshold => 64*1024 }
 end
+ActionController::Base.asset_host = Proc.new { |source| 
+    if source =~ /(png|jpg)$/ && (source.starts_with?('/assets') || source.starts_with?('/system/users'))
+      "https://www.rahvakogu.ee"
+    else
+      "http://localhost:3000"
+    end
+}

@@ -34,27 +34,28 @@
 
   %body
     #fb-root
-    - if controller.controller_name == 'home'
-      %section#topBar
-        .inline
-          %a.active{:href => ""}
-            %b> Ettepanekute kogumine
-            Jaanuar 2013
-          %span.arrow &nbsp;
-          %a{:href => ""}
-            %b> Analüüs
-            Veebruar 2013
-          %span.arrow &nbsp;
-          %a{:href => ""}
-            %b> Arutelupäev
-            Märts 2013
-          %span.arrow &nbsp;
-          %a{:href => ""}
-            %b> Seadusemuudatused
-            Aprill 2013
-          .languages
-            = link_to image_tag('in_russian.png'), page_path('what-is-rahvakogu')
-            = link_to image_tag('in_english.png'), page_path('what-is-rahvakogu')
+
+    %section#topBar
+      .inline
+        %a.active{:href => ""}
+          %b> Ettepanekute kogumine
+          Jaanuar 2013
+        %span.arrow &nbsp;
+        %a{:href => ""}
+          %b> Analüüs
+          Veebruar 2013
+        %span.arrow &nbsp;
+        %a{:href => ""}
+          %b> Arutelupäev
+          Märts 2013
+        %span.arrow &nbsp;
+        %a{:href => ""}
+          %b> Seadusemuudatused
+          Aprill 2013
+        #search_box= render :partial => 'shared/search'            
+        .languages
+          = link_to image_tag('in_russian.png'), page_path('what-is-rahvakogu')
+          = link_to image_tag('in_english.png'), page_path('what-is-rahvakogu')
 
     %section#outerContainer
       - unless controller.controller_name == 'home'

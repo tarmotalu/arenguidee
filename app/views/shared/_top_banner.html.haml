@@ -1,17 +1,18 @@
 %header#header{:class => controller.controller_name != 'home' ? "top-position" : false }
   .inline
     = link_to image_tag('logo.png'), '/', :alt => "Rahvakogu", :class => :logo
-
+ 
     %nav#mainMenu
       - @categories.each do |category|
         = link_to category.name, issue_path(category), :class => (@category.nil? ? false : (@category == category ? :active : false))
-      #search_box= render :partial => 'shared/search'
+      
     - if logged_in?
       %li.signin
 
         = link_to image_tag(current_user.buddy_icon(:icon_24)) + 'Minu konto', '#', :class => 'logIn profile my_account'
     - else
       %li.signin= link_to 'Sisene', '#', :class => 'logIn signin'
+  #search_box= render :partial => 'shared/search'   
 - if logged_in?
   = render :partial => "shared/user_info"
   = render :partial => "shared/notifications"

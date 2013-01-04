@@ -52,7 +52,9 @@
           %a{:href => ""}
             %b> Seadusemuudatused
             04/2013
-
+          .languages
+            = link_to image_tag('in_russian.png'), page_path('what-is-rahvakogu')
+            = link_to image_tag('in_english.png'), page_path('what-is-rahvakogu')
 
     %section#outerContainer
       - unless controller.controller_name == 'home'

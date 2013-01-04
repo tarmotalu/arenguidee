@@ -1,9 +1,8 @@
 
 = form_tag(searches_path, :method => 'get') do
-  .magnifier_wrap
-    %span.magnifier_box
-      - if Rails.env.production? && (!request.subdomains.first || request.subdomains.first == 'www')
-        = hidden_field_tag "global", true
-      = tr("Search:", "shared/search") 
-      = text_field_tag "q", params[:q], :id => "q_top", :value=>"", :class => "search_head"
+  / .magnifier_wrap
+  /   %span.magnifier_box
+  - if Rails.env.production? && (!request.subdomains.first || request.subdomains.first == 'www')
+    = hidden_field_tag "global", true
+  = text_field_tag "q", params[:q], :id => "q_top", :value=>"", :class => "search_head"
 

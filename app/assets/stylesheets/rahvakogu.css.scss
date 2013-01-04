@@ -83,7 +83,11 @@ body.splashScreen{background:#fff;}
 #topBar .inline b{display:block; font-size:14px; font-weight:normal; line-height:120%; color:#cacaca;}
 #topBar .inline a.active{background:#333333;}
 #topBar .inline .arrow{float:left; width:49px; height:49px; background:url(image_path('topBarArrow.png')) no-repeat; overflow:hidden; text-indent:-999px;}
-
+#topBar .languages { float: right; width: 60px; 
+    a {
+        padding: 3px;
+        }
+}
 #outerContainer{background:#fff; float:left; width:100%; min-width:960px;}
 #container{display:block; width:960px; margin:0 auto;}
 
@@ -97,7 +101,7 @@ body.splashScreen{background:#fff;}
 box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);}
 
 #mainMenu{float:left; margin-top:42px;}
-#mainMenu a{float:left; color:#0077bb; font-family:Bebas; text-decoration:none; line-height:18px; padding-bottom:19px; margin-right:23px;}
+#mainMenu a{float:left; color:#0077bb; font-family:Bebas; text-decoration:none; line-height:18px; padding-bottom:11px; margin-right:23px;}
 #mainMenu a:hover, #mainMenu a.active{background:url(image_path('mainMenuUnderline.png')) left bottom repeat-x; color:#ababab;}
 
 #header.top-position{height:59px; background:#dddddd; margin:0 0 47px 0;}
@@ -248,8 +252,7 @@ box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2); cursor:pointer;}
 a.my_account img { margin-top: 3px; margin-right: 3px; float: left;}
 
 #login_overlay { position: absolute; background-color: #ffffff; border: 1px solid black; display: none; padding: 20px; z-index: 20; left: 320px; top: 300px; }
-
-
+#search_box { float: right; margin-bottom: 3px;}
 /* KJ changes */
 
 #mainMenu {

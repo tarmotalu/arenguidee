@@ -6,13 +6,12 @@
     %link{:href => "/static/imgs/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
 
 
-    %title
-      Rahvakogu 
-      = "| " + raw(@page_title)
-
     %link{:href => "/assets/imgs/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
 
-    %title= @page_title || tr(current_instance.name,"Name from database")
+    %title
+      Rahvakogu
+      - unless @page_title.nil?
+        = "| " +  @page_title 
 
 
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/

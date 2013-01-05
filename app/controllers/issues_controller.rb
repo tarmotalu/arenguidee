@@ -10,7 +10,7 @@ class IssuesController < ApplicationController
 
   def index
 
-    @page_title =  trl("Categories", "controller/issues")
+    @page_title =  tr("Categories", "controller/issues")
     @categories = Category.all
     @sub_instance_tags = []
     if current_sub_instance.required_tags
@@ -45,7 +45,7 @@ class IssuesController < ApplicationController
       scpe = :top
     end
     @category = Category.find(params[:id])
-    @page_title = trl("{tag_name} ideas", "controller/issues", :tag_name => tr(@category.name, "model/category").titleize)
+    @page_title = @category.name #tr("{tag_name} ideas", "controller/issues", :tag_name => tr(@category.name, "model/category").titleize)
     @ideas = Idea.where(category_id: @category.id).published.send(scpe).paginate(:page => params[:page], :per_page => params[:per_page])
 
     get_endorsements

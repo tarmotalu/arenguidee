@@ -25,7 +25,7 @@
       %table{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
         %tr
           %td{:valign => "top"}
-            = f.submit tr("New discussion thread", "view/bulletins/_form"), :id => "bulletin-form-submit", :class => "submit_button"
+            = f.submit 'Uus diskussiooni haru', :id => "bulletin-form-submit", :class => "submit_button"
           %td{:valign => "top"}
             #bulletin_error.comment_error
           - if @idea

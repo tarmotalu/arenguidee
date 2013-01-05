@@ -11,14 +11,9 @@
         %li
           = link_to tr("Profile","views/shares/_user_info"), current_user
           |
-          \#{link_to tr("Settings","views/shares/_user_info"), :controller=>"settings"} |
+          \#{link_to tr("Settings","views/shares/_user_info"), edit_user_path(@user)} |
         %li
-          = link_to tr("Groups","views/shares/_user_info"), groups_path
-          |
-          - if current_facebook_user_if_on_facebook and current_user.facebook_uid
-            = fb_logout_link(tr("Logout","view/shared/_user_info"), 'http://'+request.host+"/sessions/destroy")
-          - else
-            = link_to tr("Logout", "view/shared/_user_info"), "/sessions/destroy"
+          = link_to tr("Logout", "view/shared/_user_info"), "/sessions/destroy"
       - if logged_in? && current_user.is_admin?
         #next_steps_box
           %h4= tr("Get started:", "view/shared/_notifications", :instance_name => tr(current_instance.name,"Name from database"))

@@ -7,7 +7,10 @@
     %th
   - @categories.each do |category|
     %tr
-      %td= category.name
+      %td
+        - if category.icon?
+          = image_tag category.icon(:icon_40)
+        = category.name
       %td= link_to 'Show', category
       %td= link_to 'Edit', edit_category_path(category)
 %br/

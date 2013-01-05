@@ -6,13 +6,14 @@
   .col-10
     .col-content
       = form_for(@user) do |f|
-        = f.error_messages
-        .field
-          .field_label= tr("First name", "view/users/edit")
-          .field_box= f.text_field :first_name, :size => 12
-          .field_label= tr("and Last name", "view/users/edit")
-          .field_box= f.text_field :last_name, :size => 15
-          / .small= tr("(Not displayed on the site)", "view/users/edit")
+        = f.error_messages 
+        - @user.is_admin?
+          .field
+            .field_label= tr("First name", "view/users/edit")
+            .field_box= f.text_field :first_name, :size => 12
+            .field_label= tr("and Last name", "view/users/edit")
+            .field_box= f.text_field :last_name, :size => 15
+            / .small= tr("(Not displayed on the site)", "view/users/edit")
         .field
           .field_label= tr("Email address", "view/users/edit")
           .field_box= f.text_field :email
@@ -22,9 +23,9 @@
         /   .field_box= f.text_field :login, :maxlength => 40, :size => 30
         /   .small= tr("(Can be your name, or a pseudonym)", "view/users/edit")
         .field
-          .field_box
-            = f.check_box :is_mergeable
-            = tr("Merge your ideas with others meaning the same thing", "view/users/edit")
+          / .field_box
+          /   = f.check_box :is_mergeable
+          /   = tr("Merge your ideas with others meaning the same thing", "view/users/edit")
           .field_box
             %h4= tr("Periodic updates on your ideas", "view/settings/signups")
             = f.radio_button :report_frequency, 2
@@ -34,12 +35,12 @@
             = f.radio_button :report_frequency, 0
             = tr("Never", "view/settings/signups")
         .field
-          .field_label= tr("Post Code", "view/users/edit")
-          .field_box= f.text_field :zip
+          .field_label= tr("Your city", "view/users/edit")
+          .field_box= f.text_field :city
         .field
           .field_label= tr("Website", "view/users/edit")
           .field_box= f.text_field :website
-        .field
-          .field_label= tr("Birth date", "view/users/edit")
-          .field_box= f.date_select :birth_date, :include_blank => true, :start_year => 1908, :end_year => 1996,  :order => [:month, :day, :year]
+        / .field
+        /   .field_label= tr("Birth date", "view/users/edit")
+        /   .field_box= f.date_select :birth_date, :include_blank => true, :start_year => 1908, :end_year => 1996,  :order => [:month, :day, :year]
         = f.submit tr("Save settings", "view/users/edit"), :class => "yellow_button"

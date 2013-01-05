@@ -63,7 +63,7 @@
                 - if @category.nil?
                   %h3= idea.category.name
                 %span
-                  = idea.author_sentence
+                  = link_to idea.author_sentence, idea.user
                   %span.gray= time_ago_in_words(idea.published_at)
             %p= idea.description
           %td= raw "&nbsp;"

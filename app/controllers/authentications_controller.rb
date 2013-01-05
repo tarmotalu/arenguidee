@@ -52,7 +52,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
   def development_sign
     return unless Rails.env.development?
     ActiveRecord::IdentityMap.without do
-      authenticate_once('user_info' => {'personal_code' => '38004100067', 'first_name' => 'John William', 'last_name' => 'Fail'})
+      authenticate_once('user_info' => {'personal_code' => '38004103067', 'first_name' => 'John William', 'last_name' => 'Fail'})
     end
   end
 

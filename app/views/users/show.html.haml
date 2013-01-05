@@ -15,8 +15,8 @@
           - idea = Idea.unscoped.find(idea_endorsement.idea_id)
           = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
           %div{:id => "idea_detail_#{idea.id}"}
-        %h2= tr("Latest Activity","home")
-        - for activity in @activities
-          = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_nouser"}
-        - if @activities.total_pages > 1
-          = will_paginate(@activities, :params => {:action => "activities"} )
+        / %h2= tr("Latest Activity","home")
+        / - for activity in @activities
+        /   = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_nouser"}
+        / - if @activities.total_pages > 1
+        /   = will_paginate(@activities, :params => {:action => "activities"} )

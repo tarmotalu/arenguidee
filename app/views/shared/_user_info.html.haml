@@ -11,7 +11,7 @@
         %li
           = link_to tr("Profile","views/shares/_user_info"), current_user
           |
-          \#{link_to tr("Settings","views/shares/_user_info"), edit_user_path(@user)} |
+          \#{link_to tr("Settings","views/shares/_user_info"), edit_user_path(current_user)} |
         %li
           = link_to tr("Logout", "view/shared/_user_info"), "/sessions/destroy"
       - if logged_in? && current_user.is_admin?

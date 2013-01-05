@@ -1,7 +1,7 @@
 class SubInstancesController < ApplicationController
 
-  before_filter :login_required
-  before_filter :admin_required, :only => [:destroy]
+  before_filter :admin_required!
+
 
   def index
     @page_title = tr("SubInstance with {instance_name}", "controller/sub_instances", :instance_name => tr(current_instance.name,"Name from database"))

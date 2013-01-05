@@ -1,7 +1,7 @@
 class AdsController < ApplicationController
 
   before_filter :get_idea
-  before_filter :login_required, :only => [:new, :create, :preview, :skip]
+  before_filter :authenticate_user!, :only => [:new, :create, :preview, :skip]
   
   # GET /ideas/1/ads
   def index

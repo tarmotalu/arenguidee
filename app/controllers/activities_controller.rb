@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
   
   before_filter :admin_required, :only => [:edit, :update]
-  before_filter :login_required, :only => [:destroy, :undelete]
+  before_filter :authenticate_user!, :only => [:destroy, :undelete]
   
   def index
     if request.format != 'html'

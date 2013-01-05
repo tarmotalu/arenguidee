@@ -1,6 +1,6 @@
 class NetworkController < ApplicationController
   
-  before_filter :login_required, :only => [:find, :following]
+  before_filter :authenticate_user!, :only => [:find, :following]
   before_filter :admin_required, :only => [:unverified, :deleted, :suspended, :probation, :warnings]
   before_filter :setup, :except => [:sub_instance]
 

@@ -13,7 +13,7 @@
                     %td{:valign => "top", :width => "24"}
                       = render :partial => "users/pic", :locals => {:user => user}
                     %td{:style => "padding-left: 5px;", :valign => "top"}
-                      = link_to user.name, user
+                      = link_to user.real_name, user
                       .small
                         = tr("{count} warnings", "view/network/warnings", :count => user.warnings_count)
                         %br/

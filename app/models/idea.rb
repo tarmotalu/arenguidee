@@ -665,6 +665,7 @@ class Idea < ActiveRecord::Base
     merge_into(p2_id,1)
   end  
   
+
   def show_url
     '/ideas/' + to_param
     # if self.sub_instance_id

@@ -3,11 +3,11 @@
     .col-content
       = render :partial => "users/profile_pic"
       = render :partial => "users/profile_nav"
-  .col-10
-    .col-content
-      = form_for(@user) do |f|
+  = form_for(@user) do |f|
+    .col-5
+      .col-content
         = f.error_messages 
-        - @user.is_admin?
+        - if @user.is_admin?
           .field
             .field_label= tr("First name", "view/users/edit")
             .field_box= f.text_field :first_name, :size => 12
@@ -35,12 +35,26 @@
             = f.radio_button :report_frequency, 0
             = tr("Never", "view/settings/signups")
         .field
+          .field_label= tr("Organisation (optional)", "views/registrations/new")
+          .field_box= f.text_field :organisation
+        .field
+          .field_label= tr("Your title", "views/registraions/new")
+          .field_box= f.text_field :title   
+    .col-5
+      .col-content       
+        .field
+          .field_label= tr("Short biography (max. 500 characters)", "views/registrations/new")
+          .field_box= f.text_area :bio, :rows => 4            
+        .field
           .field_label= tr("Your city", "view/users/edit")
           .field_box= f.text_field :city
         .field
           .field_label= tr("Website", "view/users/edit")
           .field_box= f.text_field :website
+        .field
+          .field_label= tr("Link to your social networking page", "views/registrations/new")
+        = f.text_field :social_network_url
         / .field
         /   .field_label= tr("Birth date", "view/users/edit")
         /   .field_box= f.date_select :birth_date, :include_blank => true, :start_year => 1908, :end_year => 1996,  :order => [:month, :day, :year]
-        = f.submit tr("Save settings", "view/users/edit"), :class => "yellow_button"
+    = f.submit tr("Save settings", "view/users/edit"), :class => "yellow_button"

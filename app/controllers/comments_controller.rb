@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   
-  before_filter :login_required, :only => [:new, :edit, :create, :update, :destroy, :flag]
+  before_filter :authenticate_user!, :only => [:new, :edit, :create, :update, :destroy, :flag]
   before_filter :admin_required, :only => [:abusive, :not_abusive]
   before_filter :get_activity
   

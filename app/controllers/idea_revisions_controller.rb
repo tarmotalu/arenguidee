@@ -1,7 +1,7 @@
 class IdeaRevisionsController < ApplicationController
 
   before_filter :get_idea
-  before_filter :login_required, :except => [:show, :clean]
+  before_filter :authenticate_user!, :except => [:show, :clean]
   before_filter :admin_required, :only => [:destroy, :update, :edit]
 
   def index

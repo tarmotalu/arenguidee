@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :login_required, :only => [:destroy, :request_validate_user_for_country, :validate_user_for_country, :resend_activation, :follow, :unfollow, :endorse, :subscriptions, :disable_facebook, :signups]
+  before_filter :authenticate_user!, :only => [:destroy, :request_validate_user_for_country, :validate_user_for_country, :resend_activation, :follow, :unfollow, :endorse, :subscriptions, :disable_facebook, :signups]
   before_filter :current_user_required, :only => [:resend_activation, :edit, :signups]
   before_filter :admin_required, :only => [:list_suspended, :suspend, :unsuspend, :impersonate, :make_admin, :reset_password]
   

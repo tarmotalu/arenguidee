@@ -1,12 +1,15 @@
 class SettingsController < ApplicationController
   
-  before_filter :login_required
+  before_filter :authenticate_user!
   before_filter :get_user
 
   # GET /settings
   def index
     @sub_instances = SubInstance.find(:all, :conditions => "is_optin = true and status = 'active' and id <> 3")
     @page_title = tr("Your {instance_name} settings", "controller/settings", :instance_name => tr(current_instance.name,"Name from database"))
+    if !current_user.is_admin?
+      redirect_to edit_user_path(current_user)
+    end
   end
 
   # PUT /settings

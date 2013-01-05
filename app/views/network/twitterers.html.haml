@@ -14,7 +14,7 @@
         %td{:style => "padding: 10px 5px 4px 7px;", :valign => "top", :width => "26"}
           = render :partial => "users/pic", :locals => {:user => user}
         %td{:style => "padding: 5px 5px 4px 0px;", :valign => "top"}
-          = link_to user.login, user
+          = link_to user.real_name, user
           %span.pc
             = user.capitals_count
             = current_instance.currency_short_name

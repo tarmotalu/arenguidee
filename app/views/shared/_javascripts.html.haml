@@ -21,7 +21,7 @@
     }(document, 'script', 'facebook-jssdk'));
 
     jQuery("input#idea_name").DefaultValue("#{escape_javascript(current_instance.prompt)}");
-    jQuery("input#q_top").DefaultValue("#{tr("Search", "view/shared/_javascripts")}");
+    jQuery("input#q_top").DefaultValue('Otsi');
   	jQuery("input#user_login_search").DefaultValue("#{tr("Find a member", "view/shared/_javascripts")}");
   	jQuery("input#right_idea_box").DefaultValue("#{tr("Add a idea to your list", "view/shared/_javascripts").html_safe}")
   	jQuery(".comment_content").truncate({max_length: 1000, more: "#{tr("show full comment", "view/shared/_javascripts")}", less: "#{tr("hide full comment", "view/shared/_javascripts")}"});

@@ -226,7 +226,7 @@ class ApplicationController < ActionController::Base
       @current_sub_instance ||= SubInstance.where(:iso_country_id=>@iso_country.id).first
     end
     @current_sub_instance ||= SubInstance.find_by_short_name("united-nations")
-    @current_sub_instance ||= SubInstance.find_by_short_name("default")
+    @current_sub_instance ||= SubInstance.find_by_short_name("www")
     SubInstance.current = @current_sub_instance
   end
   

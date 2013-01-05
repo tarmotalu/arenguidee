@@ -666,11 +666,12 @@ class Idea < ActiveRecord::Base
   end  
   
   def show_url
-    if self.sub_instance_id
-      Instance.current.homepage_url(self.sub_instance) + 'ideas/' + to_param
-    else
-      Instance.current.homepage_url + 'ideas/' + to_param
-    end
+    '/ideas/' + to_param
+    # if self.sub_instance_id
+    #   Instance.current.homepage_url(self.sub_instance) + 'ideas/' + to_param
+    # else
+    #   Instance.current.homepage_url + 'ideas/' + to_param
+    # end
   end
 
   def new_point_url(args = {})

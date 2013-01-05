@@ -6,6 +6,7 @@ class Category < ActiveRecord::Base
 
   validates_attachment_size :icon, :less_than => 5.megabytes
   validates_attachment_content_type :icon, :content_type => ['image/png']
+  attr_accessible :blue_box_text, :name, :description, :page_id
 
   acts_as_set_sub_instance :table_name=>"categories"
   extend FriendlyId

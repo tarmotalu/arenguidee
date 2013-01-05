@@ -2,14 +2,21 @@
 #text-1.cookieText
   %a.closeButton{:href => "#"} &nbsp;
   %p
-    %b Mis on Rahvakogu?
-    Kui sa usud, et avalik arutelu on tähtis poliitika osa, siis tule ja mõtle kaasa!
-    %br/
-    Koos teeme ettepanekud Riigikogule viie olulise seaduse muutmiseks.
-    - if @category.nil? || @category.page.nil?
-      = link_to 'Loe lähemalt', page_path('mis-on-rahvakogu')
+    - if @category.nil? || @category.blue_box_text.blank?
+      %b Mis on Rahvakogu?
+      Kui sa usud, et avalik arutelu on tähtis poliitika osa, siis tule ja mõtle kaasa!
+      %br/
+      Koos teeme ettepanekud Riigikogule viie olulise seaduse muutmiseks.
+      - if @category.nil? || @category.page.nil?
+        = link_to 'Loe lähemalt', page_path('mis-on-rahvakogu')
+      - else
+        = link_to 'Loe lähemalt', @category.page        
     - else
-      = link_to 'Loe lähemalt', @category.page
+      = raw @category.blue_box_text
+      - if @category.page.nil?
+        = link_to 'Loe lähemalt', page_path('mis-on-rahvakogu')
+      - else
+        = link_to 'Loe lähemalt', @category.page
 / /cookieText
 .filterBar
   .leftSide

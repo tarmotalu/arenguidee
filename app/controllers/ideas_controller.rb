@@ -656,7 +656,7 @@ class IdeasController < ApplicationController
       return
     end
   
-    Rails.logger.debug("Point character length: #{params[:idea][:points_attributes]["0"][:content].length} #{params[:idea][:name].length}")
+    # Rails.logger.debug("Point character length: #{params[:idea][:points_attributes]["0"][:content].length} #{params[:idea][:name].length}")
 
     if current_sub_instance and current_sub_instance.required_tags and not params[:idea][:idea_type]
       # default to the first tag
@@ -683,12 +683,14 @@ class IdeasController < ApplicationController
     @saved = @idea.save
     
     if @saved
-      first_point = @idea.points.first
-      first_point.setup_revision
-      first_point.reload
-      @endorsement = @idea.endorse(current_user,request,current_sub_instance,@referral)
-      IdeaRevision.create_from_idea(@idea,request.remote_ip,request.env['HTTP_USER_AGENT'])
-      quality = first_point.point_qualities.find_or_create_by_user_id_and_value(current_user.id, true)
+      unless @idea.points.empty?
+        first_point = @idea.points.first
+        first_point.setup_revision
+        first_point.reload
+        @endorsement = @idea.endorse(current_user,request,current_sub_instance,@referral)  
+        quality = first_point.point_qualities.find_or_create_by_user_id_and_value(current_user.id, true)
+      end
+      IdeaRevision.create_from_idea(@idea,request.remote_ip,request.env['HTTP_USER_AGENT'])      
       if current_user.endorsements_count > 24
         session[:endorsement_page] = (@endorsement.position/25).to_i+1
         session[:endorsement_page] -= 1 if @endorsement.position == (session[:endorsement_page]*25)-25

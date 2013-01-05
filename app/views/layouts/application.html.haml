@@ -44,19 +44,20 @@
         }(document, 'script', 'facebook-jssdk'));
     %section#topBar
       .inline
-        %a.active{:href => ""}
+
+        = link_to page_path('ajakava'), :class => :active do
           %b> Ettepanekute kogumine
           Jaanuar 2013
         %span.arrow &nbsp;
-        %a{:href => ""}
+        = link_to page_path('ajakava') do
           %b> Analüüs
           Veebruar 2013
         %span.arrow &nbsp;
-        %a{:href => ""}
+        = link_to page_path('ajakava') do
           %b> Arutelupäev
           Märts 2013
         %span.arrow &nbsp;
-        %a{:href => ""}
+        = link_to page_path('ajakava') do
           %b> Seadusemuudatused
           Aprill 2013
         #search_box= render :partial => 'shared/search'            
@@ -81,7 +82,9 @@
             %label Telefon
             = text_field_tag :phone, nil, :class => 'textbox', :autocomplete => :off
             = submit_tag 'Sisene', :class => 'btn btn-blue btn-small'        
-      #container= yield
+      #container
+        .flash= flash_div :warning, :notice, :error
+        = yield
 
     %footer#footer
       .inline

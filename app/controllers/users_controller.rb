@@ -539,7 +539,7 @@ class UsersController < ApplicationController
   end
   
   def make_admin
-    redirect_to '/' and return
+    # redirect_to '/' and return
     @user = User.find(params[:id])
     @user.is_admin = true
     @user.save(:validate => false)

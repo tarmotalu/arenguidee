@@ -33,8 +33,8 @@
       - if @user.is_suspended?
         %li
           = link_to tr("Reinstate this member", "view/users/_profile_nav"), unsuspend_user_url(@user), :title => tr("Un suspend this person", "view/users/_profile_nav"), :class => "qtip_left", :confirm => tr("If you reinstate {user_name}, their profile will be restored and they will be able to sign in again. They will NOT receive an email notification of this, so if you want them to know you should contact them directly.", "view/users/_profile_nav", :user_name => @user.name), :method => :put
-      - if @user.is_active? and not @user.is_admin? and @user != current_user
-        %li
-          = link_to tr("Sign in as this member", "view/users/_profile_nav"), impersonate_user_url(@user), :title => tr("Sign in as this member", "view/users/_profile_nav"), :class => "qtip_left", :confirm => tr("Are you sure you want to sign in as {user_name}? Be careful!", "view/users/_profile_nav", :user_name => @user.name), :method => :put
+      / - if @user.is_active? and not @user.is_admin? and @user != current_user
+      /   %li
+      /     = link_to tr("Sign in as this member", "view/users/_profile_nav"), impersonate_user_url(@user), :title => tr("Sign in as this member", "view/users/_profile_nav"), :class => "qtip_left", :confirm => tr("Are you sure you want to sign in as {user_name}? Be careful!", "view/users/_profile_nav", :user_name => @user.name), :method => :put
       %li
         = link_to tr("Make an administrator", "view/users/_profile_nav"), make_admin_user_url(@user), :title => tr("Make this member an administrator", "view/users/_profile_nav"), :class => "qtip_left", :confirm => tr("If you make {user_name} an administrator, they will have the same privileges as you, and you will NOT be able to remove those privileges.", "view/users/_profile_nav", :user_name => @user.name), :method => :put

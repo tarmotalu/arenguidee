@@ -99,6 +99,10 @@
       %h2= link_to cat.name, issue_path(cat)
       %p= cat.description
       = link_to pluralize(cat.ideas.count, 'ettepanek')
+      - unless cat.activities.empty?
+        .latest
+          %b= tr("Latest activity")
+          %p= render :partial => "activities/#{cat.activities.first[:type].downcase}", :locals => {:activity => cat.activities.first}
 
 
   = protected_link_to "Tee oma ettepanek", new_idea_path, :class => :button

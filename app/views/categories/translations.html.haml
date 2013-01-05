@@ -1,4 +1,6 @@
 %h2 Do not rest until all are green-underlined Estonian phrases!
+.field_label= tr("Are you sure you want to sign in as {user_name}? Be careful!", "view/users/_profile_nav", :user_name =>' HENRI')
+.field_label= tr("If you make {user_name} an administrator, they will have the same privileges as you, and you will NOT be able to remove those privileges.", "view/users/_profile_nav", :user_name => "HENRI")
 .field_label= tr("Complete registration", "views/registrations/new")
 .field_label= tr("Your {instance_name} settings", "controller/settings", :instance_name => tr(current_instance.name,"Name from database"))
 .field_label= tr("Submit your idea and point", "view/ideas/_form")

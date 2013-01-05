@@ -139,7 +139,7 @@ class PointsController < ApplicationController
     end
     get_qualities if @points and @points.any?
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { redirect_to @point.idea }
       format.xml { render :xml => @point.to_xml(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @point.to_json(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
     end

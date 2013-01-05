@@ -62,40 +62,40 @@
               = tr("characters left", "view/ideas/_form")
             .field_box
               = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 4, :class=>"col_text_area", :maxLength => 3000
-    .col-6.col-inset
-      .col-content
-        %h1
-          = tr("Why should people support your idea?", "views/ideas/form")
-        .field_label
-          = tr("Add a point in support or against", "views/ideas/form")
-        = f.fields_for(:points) do |point_form|
-          .field
-            .field_box
-              = point_form.text_field :name, :size => 50, :maxlength => 80
-          .field
-            .field_label
-              #point_supports
-                = point_form.radio_button :value, 1, :checked=>(params.has_key?(:support) && params[:support] == "true" ? true : (params.has_key?(:support) && params[:support] == "false") ? false : true)
-                %span.point_supports_label= tr("Yes, this point supports this idea", "views/ideas/form")
-              #point_opposes
-                = point_form.radio_button :value, -1, :checked=>(params.has_key?(:support) && params[:support] == "false" ? true : false)
-                %span.point_opposes_label= tr("No, this point is against this idea", "views/ideas/form")
-          .field
-            %span.characters
-              %span.form_header
-                = tr("Explain your point - ", "view/ideas/_form")
-              %span#pointContentDown
-              = tr("characters left", "view/ideas/_form")
-            .field_box
-              = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"col_text_area", :rows => 5, :maxLength => 1000
-            .field
-              %em
-                %p= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")
-            .field
-              .field_label
-                = tr("Add a link to an external website", "views/ideas/form")
-              .field_box
-                = point_form.text_field :website, :size => 50
+    / .col-6.col-inset
+    /   .col-content
+    /     %h1
+    /       = tr("Why should people support your idea?", "views/ideas/form")
+    /     .field_label
+    /       = tr("Add a point in support or against", "views/ideas/form")
+    /     = f.fields_for(:points) do |point_form|
+    /       .field
+    /         .field_box
+    /           = point_form.text_field :name, :size => 50, :maxlength => 80
+    /       .field
+    /         .field_label
+    /           #point_supports
+    /             = point_form.radio_button :value, 1, :checked=>(params.has_key?(:support) && params[:support] == "true" ? true : (params.has_key?(:support) && params[:support] == "false") ? false : true)
+    /             %span.point_supports_label= tr("Yes, this point supports this idea", "views/ideas/form")
+    /           #point_opposes
+    /             = point_form.radio_button :value, -1, :checked=>(params.has_key?(:support) && params[:support] == "false" ? true : false)
+    /             %span.point_opposes_label= tr("No, this point is against this idea", "views/ideas/form")
+    /       .field
+    /         %span.characters
+    /           %span.form_header
+    /             = tr("Explain your point - ", "view/ideas/_form")
+    /           %span#pointContentDown
+    /           = tr("characters left", "view/ideas/_form")
+    /         .field_box
+    /           = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"col_text_area", :rows => 5, :maxLength => 1000
+    /         .field
+    /           %em
+    /             %p= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")
+    /         .field
+    /           .field_label
+    /             = tr("Add a link to an external website", "views/ideas/form")
+    /           .field_box
+    /             = point_form.text_field :website, :size => 50
   .col-group
     .col-12
       .col-content

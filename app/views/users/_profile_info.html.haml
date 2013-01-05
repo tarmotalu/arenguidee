@@ -3,6 +3,10 @@
     - if params[:action] == 'show'
       %span.profile_name= @user.real_name
       %span.profile_pc= link_to @user.capitals_count.to_s + current_instance.currency_short_name, capital_user_url(@user)
+      - if logged_in?
+        - if current_user.is_admin?
+          - if @user.is_admin?
+            .is_admin admin
     - else
       %span.profile_name= @page_title
   - if @user.has_website? or @user.has_twitter?

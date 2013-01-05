@@ -28,7 +28,7 @@ class Activity < ActiveRecord::Base
     scope :by_tag_name, lambda{|tag_name| {:conditions=>["cached_issue_list=?",tag_name]}}
 
   scope :by_user_id, lambda{|user_id| {:conditions=>["user_id=?",user_id]}}
-
+  scope :by_category, lambda{|cat_id| {:conditions => ["category_id=?", cat_id], :order => "activities.created_at desc" }}
   belongs_to :user
   belongs_to :sub_instance
   
@@ -64,6 +64,13 @@ class Activity < ActiveRecord::Base
   end
 
   before_save :update_changed_at
+  before_save :set_category
+
+  def set_category
+    unless idea.nil?
+      self.category_id = idea.category_id
+    end
+  end
 
   def update_changed_at
     self.changed_at = Time.now unless self.attribute_present?("changed_at")

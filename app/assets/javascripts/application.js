@@ -38,6 +38,7 @@
 //= require jquery.cookie
 //= require jquery.functions
 //= require jquery_nested_form
+//= require jquery.prettyPhoto
 
 jQuery(function ($) {
   $.fn.extend({

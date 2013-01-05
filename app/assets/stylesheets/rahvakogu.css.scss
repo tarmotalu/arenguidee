@@ -291,3 +291,10 @@ input[type="submit"] {
 #header .my_account img {
   display: none;
 }
+
+
+.reg_form {
+    .left { float: left; }
+    .right { float: left; clear: right; margin-left: 80px;} 
+    input[type=submit] { clear: left; margin: 20px; float: left; }
+}

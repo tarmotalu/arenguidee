@@ -2,6 +2,12 @@ class CategoriesController < ApplicationController
   before_filter :admin_required
   # GET /categories
   # GET /categories.xml
+
+  def translations
+
+  end
+
+  
   def index
     if params[:default]
       @categories = Category.unscoped.where("sub_instance_id IS NULL").all

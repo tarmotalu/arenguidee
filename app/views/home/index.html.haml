@@ -1,8 +1,6 @@
 = render :partial => "shared/top_banner"
 %section#rotator
-  .video
-    %iframe{:allowfullscreen => "", :frameborder => "0", :height => "240", :src => "http://www.youtube.com/embed/dwravVF3keM?feature=player_detailpage", :width => "420"}
-  / /video
+  .video= link_to image_tag('ilves_front.png'), 'http://www.youtube.com/watch?v=dwravVF3keM', :rel => :lightbox
   .quote
     = image_tag('quote.png')
     %span
@@ -108,7 +106,7 @@
 %section#problems
   %h1 Põhilised probleemid neis viies teemas:
   .people
-    %a.item{:href => ""}
+    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
       %span.icon
         = image_tag('person-1.png')
         %span.play &nbsp;
@@ -118,7 +116,7 @@
         Tegevusala
       / /desc
     / /item
-    %a.item{:href => ""}
+    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
       %span.icon
         = image_tag('person-2.png')
         %span.play &nbsp;
@@ -128,7 +126,7 @@
         Tegevusala
       / /desc
     / /item
-    %a.item{:href => ""}
+    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
       %span.icon
         = image_tag('person-3.png')
         %span.play &nbsp;
@@ -138,7 +136,7 @@
         Tegevusala
       / /desc
     / /item
-    %a.item{:href => ""}
+    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
       %span.icon
         = image_tag('person-4.png')
         %span.play &nbsp;
@@ -148,7 +146,7 @@
         Tegevusala
       / /desc
     / /item
-    %a.item{:href => ""}
+    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
       %span.icon
         = image_tag('person-5.png')
         %span.play &nbsp;
@@ -174,3 +172,7 @@
                 %span.gray= l bi.published_at.to_date, :format => :long
 
   = link_to "Näita kõiki " + pluralize(Idea.published.count, "ettepanek"), ideas_path, :class => "showAll"
+:javascript
+  $(document).ready(function(){
+    $("a[rel^='lightbox']").prettyPhoto();
+  });

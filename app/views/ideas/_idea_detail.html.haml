@@ -52,7 +52,7 @@
           .field_label= tr("Add a link to an external website", "views/ideas/form")
           .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
         .field
-          .field_box.blue= point_form.submit 
+          .field_box.blue= point_form.submit 'Lisan pooltargumendi'
        
     .point_form.against{:id => "oppose_#{@idea.id.to_s}"}
       = tr("Why should people oppose this idea?", "views/ideas/form")
@@ -74,7 +74,7 @@
           .field_label= tr("Add a link to an external website", "views/ideas/form")
           .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
         .field
-          .field_box= point_form.submit          
+          .field_box= point_form.submit 'Lisan vastuargumendi'          
     .col-left.clearfix
       = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "pro_new", :points => @points_top_up, :numbering=>false}
     .col-right

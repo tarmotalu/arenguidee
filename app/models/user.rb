@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
 
   #validates_presence_of     :login, :message => tr("Please specify a name to be identified as on the site.", "model/user")
   #validates_length_of       :login, :within => 3..60
-  validates :login, :presence => true, :length => { :is => 11 }, :uniqueness => true
+  validates_presence_of  :login
   validates_presence_of     :first_name, :message => tr("Please specify your first name.", "model/user")
   validates_presence_of     :last_name, :message => tr("Please specify your first name.", "model/user")
   

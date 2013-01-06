@@ -1,7 +1,7 @@
 class NetworkController < ApplicationController
   
   before_filter :authenticate_user!, :only => [:find, :following]
-  before_filter :admin_required, :only => [:unverified, :deleted, :suspended, :probation, :warnings]
+  before_filter :admin_required, :only => [:unverified, :deleted, :everyone, :suspended, :probation, :warnings]
   before_filter :setup, :except => [:sub_instance]
 
   caches_action :index, :talkative, :ambassadors, :newest,
@@ -14,6 +14,16 @@ class NetworkController < ApplicationController
   def index
     redirect_to :action=>"influential"
   end
+
+  def everyone
+    @page_title = tr("All users at {sub_instance_name}", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
+    @users = User.active.paginate :page => params[:page], :per_page => params[:per_page]
+    respond_to do |format|
+      format.html 
+      format.xml { render :xml => @users.to_xml(:include => [:top_endorsement, :referral, :sub_instance_referral], :except => NB_CONFIG['api_exclude_fields']) }
+      format.json { render :json => @users.to_json(:include => [:top_endorsement, :referral, :sub_instance_referral], :except => NB_CONFIG['api_exclude_fields']) }
+    end    
+  end     
 
   def influential
     @page_title = tr("Meet the most influential people at {sub_instance_name}", "controller/network", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))

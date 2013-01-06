@@ -83,7 +83,7 @@
             = text_field_tag :phone, nil, :class => 'textbox', :autocomplete => :off
             = submit_tag 'Sisene', :class => 'btn btn-blue btn-small'        
       .flash= flash_div :warning, :notice, :error
-      #container
+      #container.clearfix
         
         = yield
 

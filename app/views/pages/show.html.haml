@@ -1,14 +1,18 @@
 .page 
   .page_title= @page.title
 
-  - if @page.category.nil?
-    .page_body= raw @page.body
-  - else
-    .page_left= raw @page.body
-    .page_sidebar
+  .page_left= raw @page.body
+  .page_sidebar
+    - if @page.category.nil?
+      %b= tr("Latest activity", "pages/show")
+      - acts = Activity.where('user_id is not null').by_recently_created.limit(6)
+      - link = new_idea_path
+    - else
       %b= tr("Latest activity in {category_name}", "pages/show", :category_name => @page.category.name )
-      - @page.category.activities[0..5].each do |activity|
-        .page_activity.clearfix
-          .person= image_tag activity.user.buddy_icon(:icon_40)
-          .activity= render :partial => "activities/#{activity[:type].downcase}", :locals => {:activity => activity}  
-      #proposal-index= link_to "Tee oma ettepanek",  new_category_idea_path(@page.category), :class => :button
+      - acts = @page.category.activities.select{|x| !x.user_id.nil?}[0..5]
+      - link = new_category_idea_path(@page.category)
+    - acts.each do |activity|
+      .page_activity.clearfix
+        .person= image_tag activity.user.buddy_icon(:icon_40)
+        .activity= render :partial => "activities/#{activity[:type].downcase}", :locals => {:activity => activity}  
+    #proposal-index= link_to "Tee oma ettepanek", link , :class => :button

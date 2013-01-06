@@ -17,15 +17,15 @@
       %p= raw @idea.description
       .fb-like{"data-font" => "segoe ui", "data-href" => url_for(:controller => :ideas, :action => :show, :id => @idea.to_param, :only_path => false), "data-layout" => "button_count", "data-send" => "true", "data-show-faces" => "true", "data-width" => "450"}
       %div{style: 'float: right;'}= render :partial=>"ideas/report_content", :locals=>{:idea=>@idea}
-    .votes
-      .left
-        = image_tag image_path('thumb-yes.png')
-        %span.count= @total_up_points + @idea.up_endorsers.count
-        = render :partial => 'shared/rahva_toetan', :locals => {:endorsement => @endorsement, :idea => @idea }
-      .right
-        = image_tag image_path('thumb-no.png')
-        %span.count= @total_down_points + @idea.down_endorsers.count
-        = render :partial => 'shared/rahva_olen_vastu', :locals => {:endorsement => @endorsement, :idea => @idea }
+    .votes= render :partial => 'ideas/debate_buttons', :locals => {:idea => @idea, :region => "idea_detail" }
+    -# .left
+    -#   = image_tag image_path('thumb-yes.png')
+    -#   %span.count= @total_up_points + @idea.up_endorsers.count
+    -#   = render :partial => 'shared/rahva_toetan', :locals => {:endorsement => @endorsement, :idea => @idea }
+    -# .right
+    -#   = image_tag image_path('thumb-no.png')
+    -#   %span.count= @total_down_points + @idea.down_endorsers.count
+    -#   = render :partial => 'shared/rahva_olen_vastu', :locals => {:endorsement => @endorsement, :idea => @idea }
     .col-left
       = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "pro_new", :points => @points_top_up, :numbering=>false}
     .col-right

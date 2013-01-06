@@ -74,11 +74,12 @@
           .field_label= tr("Add a link to an external website", "views/ideas/form")
           .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
         .field
-          .field_box= point_form.submit          
-    .col-left.clearfix
-      = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "pro_new", :points => @points_top_up, :numbering=>false}
-    .col-right
-      = render :partial => "points/short_list", :locals => {:points => @points_top_down, :numbering=>false}
+          .field_box= point_form.submit
+    .idea_wrapper{:style => "clear: both;"}
+      .col-left.clearfix
+        = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "pro_new", :points => @points_top_up, :numbering=>false}
+      .col-right
+        = render :partial => "points/short_list", :locals => {:points => @points_top_down, :numbering=>false}
 
 / .col-group
 /   .col-1

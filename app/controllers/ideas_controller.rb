@@ -517,15 +517,16 @@ class IdeasController < ApplicationController
   end  
   
   def everyone_points
-    @page_title = tr("Best points on {idea_name}", "controller/ideas", :idea_name => @idea.name)
-    @point_value = 0 
-    @points = @idea.points.published.by_helpfulness.paginate :page => params[:page], :per_page => params[:per_page]
-    get_qualities
-    respond_to do |format|
-      format.html { render :action => "points" }
-      format.xml { render :xml => @points.to_xml(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @points.to_json(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
-    end
+    redirect_to(@idea)
+    # @page_title = tr("Best points on {idea_name}", "controller/ideas", :idea_name => @idea.name)
+    # @point_value = 0 
+    # @points = @idea.points.published.by_helpfulness.paginate :page => params[:page], :per_page => params[:per_page]
+    # get_qualities
+    # respond_to do |format|
+    #   format.html { render :action => "points" }
+    #   format.xml { render :xml => @points.to_xml(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
+    #   format.json { render :json => @points.to_json(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
+    # end
   end  
 
   def opposed_top_points

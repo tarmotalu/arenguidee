@@ -52,9 +52,7 @@
             %span#pointContentDown_for
             = tr("characters left", "view/ideas/_form")
           .field_box= point_form.text_area :content, :id => 'pointContent_for', :button => 'submit', :class=>"point_field", :rows => 5, :maxLength => 1000
-        .field
-          %em
-            %p.point_field= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")
+
         .field
           .field_label= tr("Add a link to an external website", "views/ideas/form")
           .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
@@ -76,9 +74,7 @@
             %span#pointContentDown_opp
             = tr("characters left", "view/ideas/_form")
           .field_box= point_form.text_area :content, :id => 'pointContent_opp', :button => 'submit', :class=>"point_field", :rows => 5, :maxLength => 1000
-        .field
-          %em
-            %p.point_field= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")
+
         .field
           .field_label= tr("Add a link to an external website", "views/ideas/form")
           .field_box= point_form.text_field :website, :size => 40, :class => "point_field"

@@ -31,7 +31,7 @@
     = tr8n_scripts_tag
     = csrf_meta_tag
 
-  %body
+  %body{:class => (controller.controller_name == 'home' && controller.action_name == 'index') ? :frontpage : false}
     #fb-root
     - if controller.controller_name == 'ideas' && controller.action_name == 'show'
       :javascript  

@@ -83,7 +83,7 @@
             = link_to tr("Colors", "view/shared/_menu"), color_schemes_url
           %li
             \&middot;
-            = link_to tr("Unverified users", "view/network/_nav"), :controller => "network", :action => "unverified"
+            = link_to tr("All users", "view/network/_nav"), :controller => "network", :action => "everyone"
           %li
             \&middot;
             = link_to tr("Warnings users", "view/network/_nav"), :controller => "network", :action => "warnings"
@@ -103,4 +103,5 @@
           = tr("{count} warnings", "view/layouts/basic", :count => current_user.warnings_count)
         - else
           = tr("{count} warning", "view/layouts/basic", :count => current_user.warnings_count)
-    = render :partial => "shared/language_selection_master"
+    - if current_user.is_admin?
+      = render :partial => "shared/language_selection_master"

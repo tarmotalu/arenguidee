@@ -371,12 +371,13 @@ input[type="submit"], .button {
 	margin: 0 auto;
 	position: relative;
 	.flash_notice {
-		height: 46px;
+		height: 26px;
 		float: left;
 		padding: 10px;
 		text-align: center;
-		background-color: #FAFAFA;
+		background-color: #FFEEA9;
 		color: black;
-		border: 1px solid red;
+		border-radius: 0px !important;
+		-webkit-border-radius: 0px !important;		
 	}
 }

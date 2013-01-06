@@ -71,10 +71,11 @@
       - unless logged_in?
         #login_overlay
           #login-idcard
-            %h3 tr("You must sign in to participate in Rahvakogu", "views/layout/applicaton")
-            = form_tag omniauth_authorize_path(:user, :idcard) do
-              = hidden_field_tag :after_target
-              = submit_tag 'Sisene ID-kaardiga', :class => 'btn btn-blue btn-small'        
+            #header
+              tr("You must sign in to participate in Rahvakogu", "views/layout/applicaton")
+              = form_tag omniauth_authorize_path(:user, :idcard) do
+                = hidden_field_tag :after_target
+                = submit_tag 'Sisene ID-kaardiga', :class => 'btn btn-blue btn-small'        
           #login-mobileid      
             = form_tag omniauth_authorize_path(:user, :mobileid) do
               %label Mobiiltelefoni number

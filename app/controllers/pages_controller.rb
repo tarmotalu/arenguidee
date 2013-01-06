@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :admin_required
+  before_filter :admin_required, :except => [:show]
   # GET /pages
   # GET /pages.xml
   def index

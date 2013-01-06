@@ -1,6 +1,6 @@
 class Idea < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
-
+  self.per_page = 6
   acts_as_set_sub_instance :table_name=>"ideas"
 
   if Instance.current and Instance.current.is_suppress_empty_ideas?
@@ -130,7 +130,7 @@ class Idea < ActiveRecord::Base
   validates_length_of :name, :within => 5..200, :too_long => tr("has a maximum of 200 characters", "model/idea"),
                                                :too_short => tr("please enter more than 5 characters", "model/idea")
 
-  validates_length_of :description, :within => 0..300, :too_long => tr("has a maximum of 300 characters", "model/idea"),
+  validates_length_of :description, :within => 0..3000, :too_long => tr("has a maximum of 3000 characters", "model/idea"),
                                                        :too_short => tr("please enter more than -1 characters", "model/idea")
 
   #validates_uniqueness_of :name, :if => Proc.new { |idea| idea.status == 'published' }

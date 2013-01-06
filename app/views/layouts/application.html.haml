@@ -62,7 +62,7 @@
           Aprill 2013
         #search_box= render :partial => 'shared/search'            
         .languages
-          = link_to image_tag('in_russian.png'), page_path('what-is-rahvakogu')
+          = link_to image_tag('in_russian.png'), page_path(6)
           = link_to image_tag('in_english.png'), page_path('what-is-rahvakogu')
 
     %section#outerContainer
@@ -82,8 +82,9 @@
             %label Telefon
             = text_field_tag :phone, nil, :class => 'textbox', :autocomplete => :off
             = submit_tag 'Sisene', :class => 'btn btn-blue btn-small'        
+      .flash= flash_div :warning, :notice, :error
       #container
-        .flash= flash_div :warning, :notice, :error
+        
         = yield
 
     %footer#footer

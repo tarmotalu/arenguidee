@@ -55,32 +55,12 @@
       = link_to 'juhuslik', filtered_issue_path(@category, :random), :class => (@filter == 'random' ? :active : false)
     %span.filter_divider= "  "      
     põhjal.
-#propositions
-  - if @ideas.any?
-    - @ideas.each do |idea|
-      %table{:cellpadding => "0", :cellspacing => "0"}
-        %tr
-          %td{:width => "636"}
-            .head
-              = image_tag idea.user.buddy_icon(:icon_40)
-              .desc
-                %h2
-                  = link_to idea.name, idea
-                  %span.red= "(#{idea.points.count})"
-                - if @category.nil?
-                  %h3= idea.category.name
-                %span
-                  = link_to idea.author_sentence, idea.user
-                  %span.gray= time_ago_in_words(idea.published_at)
-            %p= idea.description
-          %td= raw "&nbsp;"
-          %td.vote-td
-            .vote
-              .thumb-up= idea.points.published.up_value.count
-              = render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
-          %td.vote-td
-            .vote
-              .thumb-down= idea.points.published.down_value.count
-              = render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+#propositions= render :partial => 'issues/pageless', :locals => {:ideas  => @ideas}
+
+- unless @ideas.blank?
+  = will_paginate @ideas
+  - if @category.nil?
+    = pageless(@ideas.total_pages, "/ideas/#{@filter}")
   - else
-    = tr("No ideas for {tag_name} yet", "view/issues/list", :tag_name => tr(@category.nil? ? @filter : @category.name, "model/category").titleize)   
+    = pageless(@ideas.total_pages, filtered_issue_path(@category, @filter.to_sym))
+#proposal-index= link_to "Tee oma ettepanek", (@category.nil? ? new_idea_path : new_category_idea_path(@category)), :class => :button

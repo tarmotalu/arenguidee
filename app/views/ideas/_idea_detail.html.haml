@@ -15,7 +15,7 @@
     .head
       %h1= @idea.name
       %p= raw @idea.description
-      .fb-like{"data-font" => "segoe ui", "data-href" => "http://icewhistle.com", "data-layout" => "button_count", "data-send" => "true", "data-show-faces" => "true", "data-width" => "450"}
+      .fb-like{"data-font" => "segoe ui", "data-href" => url_for(:controller => :ideas, :action => :show, :id => @idea.to_param, :only_path => false), "data-layout" => "button_count", "data-send" => "true", "data-show-faces" => "true", "data-width" => "450"}
       %div{style: 'float: right;'}= render :partial=>"ideas/report_content", :locals=>{:idea=>@idea}
     .votes
       .left

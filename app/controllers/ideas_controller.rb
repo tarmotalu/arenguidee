@@ -202,12 +202,16 @@ class IdeasController < ApplicationController
       @ideas = Idea.published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
     end
     get_endorsements
-    respond_to do |format|
-      format.html { render :template => "/issues/list" }
-      format.rss { render :action => "list" }
-      format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
-      format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+    if request.xhr?
+        render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+    else
+      respond_to do |format|
+        format.html { render :template => "/issues/list" }
+        format.rss { render :action => "list" }
+        format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
+        format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+      end
     end
   end
 
@@ -223,14 +227,19 @@ class IdeasController < ApplicationController
       @ideas = Idea.published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
     end
     get_endorsements
-    respond_to do |format|
-      format.html { render :template => "/issues/list" }
-      format.rss { render :action => "list" }
-      format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
-      format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+    if request.xhr?
+      render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+    else
+      respond_to do |format|
+        format.html { render :template => "/issues/list" }
+        format.rss { render :action => "list" }
+        format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
+        format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+      end
     end
   end
+
   # GET /ideas/top_24hr
   def top_24hr
     @position_in_idea_name = true
@@ -319,12 +328,16 @@ class IdeasController < ApplicationController
     @rss_url = controversial_ideas_url(:format => 'rss')
     @ideas = Idea.published.controversial.paginate :page => params[:page], :per_page => params[:per_page]
     get_endorsements
-    respond_to do |format|
-      format.html { render :template => "/issues/list"  }
-      format.rss { render :action => "list" }
-      format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
-      format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+    if request.xhr?
+      render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+    else
+      respond_to do |format|
+        format.html { render :template => "/issues/list"  }
+        format.rss { render :action => "list" }
+        format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
+        format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+      end
     end
   end
   
@@ -353,14 +366,19 @@ class IdeasController < ApplicationController
       @ideas = Idea.published.paginate :order => "rand()", :page => params[:page], :per_page => params[:per_page]
     end
     get_endorsements
-    respond_to do |format|
-      format.html { render  :template => "/issues/list"}
-      format.rss { render :action => "list" }
-      format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
-      format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+    if request.xhr?
+     render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+    else
+      respond_to do |format|
+        format.html { render  :template => "/issues/list"}
+        format.rss { render :action => "list" }
+        format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
+        format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+      end
     end
   end
+
 
   # GET /ideas/newest
   def newest
@@ -370,13 +388,17 @@ class IdeasController < ApplicationController
     @rss_url = newest_ideas_url(:format => 'rss')
     @ideas = Idea.published.newest.paginate :page => params[:page], :per_page => params[:per_page]
     get_endorsements
-    respond_to do |format|
-      format.html { render  :template => "/issues/list"}
-      format.rss { render :action => "list" }
-      format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
-      format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
-    end    
+    if request.xhr?
+        render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+    else
+      respond_to do |format|
+        format.html { render  :template => "/issues/list"}
+        format.rss { render :action => "list" }
+        format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
+        format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+      end
+    end
   end
   
   # GET /ideas/untagged
@@ -706,7 +728,7 @@ class IdeasController < ApplicationController
       if @saved
         format.html { 
           flash[:notice] = tr("Thanks for adding {idea_name}", "controller/ideas", :idea_name => @idea.name)
-          redirect_to(@idea)
+          redirect_to(aitah_idea_path(@idea))
         }
         format.js {
           render :update do |page|
@@ -717,6 +739,10 @@ class IdeasController < ApplicationController
         format.html { render :controller => "ideas", :action => "new", :notice=>flash[:notice] }
       end
     end
+  end
+
+  def aitah
+    @idea = Idea.find(params[:id])
   end
 
   # POST /ideas/1/endorse

@@ -386,7 +386,6 @@ input[type="submit"], .button {
   margin-bottom: 5px;
 }
 
-
 .mobileid-code {
   font-size: 35px;
   line-height: 35px;
@@ -399,6 +398,12 @@ input[type="submit"], .button {
 .vote .button {
   text-transform: upper;
 }
+.idea_listing .col-right h2 a,
+.idea_listing .col-right h2 a:link,
+.idea_listing .col-right h2 a:visited {
+  color: #c00;
+}
+
 
 /* Other changes */
 

@@ -17,3 +17,4 @@ if defined?(PhusionPassenger)
     ObjectSpace.each_object(ActionDispatch::Session::DalliStore) { |obj| obj.reset }
   end
 end
+Rails.cache.silence!

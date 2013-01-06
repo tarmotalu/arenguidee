@@ -44,17 +44,22 @@ class IdeasController < ApplicationController
   
   # GET /ideas/yours
   def yours
+    @filter = 'yours'
     @page_title = tr("Your ideas at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
-    @ideas = @user.endorsements.active.by_position.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
+    @ideas = @user.endorsements.active.by_position.map(&:idea).compact.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
     @rss_url = yours_ideas_url(:format => 'rss')
     get_endorsements
-    respond_to do |format|
-      format.html
-      format.rss { render :action => "list" }
-      format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
-      format.xml { render :xml => @ideas.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @ideas.to_json(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-    end    
+    if request.xhr?
+      render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+    else
+      respond_to do |format|
+        format.html { render  :template => "issues/list"}
+        format.rss { render :template => "issues/list" }
+        format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
+        format.xml { render :xml => @ideas.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @ideas.to_json(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
+      end
+    end
   end
   
   # GET /ideas/yours_top
@@ -774,6 +779,7 @@ class IdeasController < ApplicationController
       session[:endorsement_page] -= 1 if @endorsement.position == (session[:endorsement_page]*25)-25
     end
     @idea.reload
+
     respond_to do |format|
       format.js {
         render :update do |page|
@@ -795,7 +801,7 @@ class IdeasController < ApplicationController
             page.replace 'endorser_link', render(:partial => "ideas/endorser_link")
             page.replace 'opposer_link', render(:partial => "ideas/opposer_link")
           elsif params[:region] == 'idea_inline'
-            page<<"$('.idea_#{@idea.id.to_s}_button_small').replaceWith('#{js_help.escape_javascript(render(:partial => "ideas/debate_buttons", :locals => {:force_debate_to_new=>(params[:force_debate_to_new] and params[:force_debate_to_new].to_i==1) ? true : false, :idea => @idea, :endorsement => @endorsement, :region => params[:region]}))}')"
+            page<<"$('#endorsements_#{@idea.id.to_s}').html('#{js_help.escape_javascript(render(:partial => "ideas/debate_buttons", :locals => {:force_debate_to_new=>(params[:force_debate_to_new] and params[:force_debate_to_new].to_i==1) ? true : false, :idea => @idea, :endorsement => @endorsement, :region => params[:region]}))}')"
             # page<<"$('.idea_#{@idea.id.to_s}_endorsement_count').replaceWith('#{js_help.escape_javascript(render(:partial => "ideas/endorsement_count", :locals => {:idea => @idea}))}')"
           elsif params[:region] == 'encouragement_top' and @ad
             page.replace 'encouragements', render(:partial => "ads/pick")
@@ -1096,7 +1102,7 @@ class IdeasController < ApplicationController
     def get_endorsements
       @endorsements = nil
       if logged_in? # pull all their endorsements on the ideas shown
-        @endorsements = current_user.endorsements.active.find(:all, :conditions => ["idea_id in (?)", @ideas.collect {|c| c.id}])
+        @endorsements = current_user.endorsements.active.find(:all, :conditions => ["idea_id in (?)", @ideas.compact.collect {|c| c.id}])
       end
     end
     

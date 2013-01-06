@@ -15,14 +15,10 @@
                 = link_to idea.author_sentence, idea.user
                 %span.gray= time_ago_in_words(idea.published_at)
           %p= idea.description
-        .idea_endorsements
+        .idea_endorsements{:id => "endorsements_#{idea.id}"}= render :partial => 'ideas/debate_buttons', :locals => {:region => "idea_inline", :idea => idea, :endorsements => idea.endorsements}
           
-          .vote
-            .thumb-up= idea.points.published.up_value.count
-            = render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => "idea_inline", :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
 
-          .vote
-            .thumb-down= idea.points.published.down_value.count
-            = render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+
+
 - else
   = tr("No ideas for {tag_name} yet", "view/issues/list", :tag_name => tr(@category.nil? ? @filter : @category.name, "model/category").titleize) 

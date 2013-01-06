@@ -3,7 +3,7 @@
     - # ENDORSED STATE
     -# %span.endorse_button
     -#   .idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
-    = protected_link_to  endorsement_path(endorsement, :region => region, :force_debate_to_new=> true),     |
+    = protected_link_to  endorsement_path(endorsement, :region => region, :force_debate_to_new=> false),     |
       :method => :delete,                                                                |
       :remote=>true,                                                                     |
       'data-disabled-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",                                                         |
@@ -11,11 +11,11 @@
       :class => "idea_add_link button",                                                  |
       :title => tr("Remove from my list of ideas", "view/ideas") do
       = tr("ENDORSED", "view/ideas")  
-    .idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"} X
+    .idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"} 
   - else
     - # OPPOSED STATE
     -# %span.idea_add{:id => "idea_add_endorse_#{idea.id.to_s}"}
-    = protected_link_to endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => 1, :force_debate_to_new=> true), |
+    = protected_link_to endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => 1, :force_debate_to_new=> false), |
       :method => :post,                                                                                                                                        |
       :remote => true,                                                                                                                                         |
       'data-disabled-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",                                                         |
@@ -27,7 +27,7 @@
 - else
   - # NOT VOTED STATE
   -# %span.idea_add{:id => "idea_add_endorse_#{idea.id.to_s}"}
-  = protected_link_to tr("ENDORSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => 1, :force_debate_to_new=> true),  |
+  = protected_link_to tr("ENDORSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => region, :value => 1, :force_debate_to_new=> false),  |
     :method => :post,           |
     :remote => true, |
     'data-disabled-with' => "idea_debate_spinner_endorse_#{idea.id.to_s}",  |

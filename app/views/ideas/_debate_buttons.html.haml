@@ -1,13 +1,18 @@
-- standard_width = 90
-- up_endorser_link = (link_to (idea.up_endorsements_count.to_s).html_safe, idea.show_endorsers_url).html_safe
-- down_endorser_link = (link_to (idea.down_endorsements_count.to_s).html_safe, idea.show_opposers_url).html_safe
-- up_endorser_link = idea.up_endorsements_count.to_s
-- down_endorser_link = idea.down_endorsements_count.to_s
-- points_count = idea.points.where(sub_instance_id: idea.sub_instance_id).count
-- debate_text = @geoblocked ? tr("SHOW DEBATE", "view/ideas") : tr("DEBATE", "view/ideas")
-:javascript
-  alert('here');
-= render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => region, :endorsement => endorsement, :force_debate_to_new => false }
+-# - standard_width = 90
+-# - up_endorser_link = (link_to (idea.up_endorsements_count.to_s).html_safe, idea.show_endorsers_url).html_safe
+-# - down_endorser_link = (link_to (idea.down_endorsements_count.to_s).html_safe, idea.show_opposers_url).html_safe
+-# - up_endorser_link = idea.up_endorsements_count.to_s
+-# - down_endorser_link = idea.down_endorsements_count.to_s
+-# - points_count = idea.points.where(sub_instance_id: idea.sub_instance_id).count
+-# - debate_text = @geoblocked ? tr("SHOW DEBATE", "view/ideas") : tr("DEBATE", "view/ideas")
+.vote
+  .thumb-up= idea.points.published.up_value.count + idea.up_endorsers.count
+  = render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => region, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+
+.vote
+  .thumb-down= idea.points.published.down_value.count + idea.down_endorsers.count
+  = render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :region => region, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+
 -# %span{:class => "idea_#{idea.id.to_s}_button_small", :id => "idea_#{idea.id.to_s}_button_small"}
 -#   - if endorsement and endorsement.status == 'active'
 -#     - if endorsement.is_up?
@@ -115,4 +120,4 @@
 -#             :title =>  tr("I oppose this, and want to add my opposition to my idea list.", "view/ideas") do
 -#             = tr("OPPOSE", "view/ideas")+" (#{idea.down_endorsements_count})"
 -#             .idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
-  = render :partial => "ideas/debate_button_javascript", :locals => { :idea => idea } if not force_debate_to_new
+-# = render :partial => "ideas/debate_button_javascript", :locals => { :idea => idea } if not force_debate_to_new

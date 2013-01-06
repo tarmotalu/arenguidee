@@ -7,11 +7,11 @@
 -# - debate_text = @geoblocked ? tr("SHOW DEBATE", "view/ideas") : tr("DEBATE", "view/ideas")
 .vote
   .thumb-up= idea.points.published.up_value.count + idea.up_endorsers.count
-  = render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => region, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+  %div{:class => region}= render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => region, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
 
 .vote
   .thumb-down= idea.points.published.down_value.count + idea.down_endorsers.count
-  = render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :region => region, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+  %div{:class => region}= render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :region => region, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
 
 -# %span{:class => "idea_#{idea.id.to_s}_button_small", :id => "idea_#{idea.id.to_s}_button_small"}
 -#   - if endorsement and endorsement.status == 'active'

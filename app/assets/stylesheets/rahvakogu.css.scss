@@ -391,7 +391,9 @@ input[type="submit"], .button {
   margin-bottom: 10px;
   padding-bottom: 2px;
 }
-
+#login_overlay label, #login_overlay input {
+  display: block;
+}
 .mobileid-code {
   font-size: 35px;
   line-height: 35px;

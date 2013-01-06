@@ -1,2 +1,10 @@
-%h2= @page.title
-%p= raw @page.body
+.page 
+  .page_title= @page.title
+
+  - unless @page.category.nil?
+    .page_left= raw @page.body
+    .page_sidebar
+      %b= tr("Latest activity in {category_name}", :category_name => @page.category.name )
+      - @page.category.activities[0..5].each do |activity|
+        .page_activity
+          %p= render :partial => "activities/#{activity[:type].downcase}", :locals => {:activity => activity}

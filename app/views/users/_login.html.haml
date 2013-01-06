@@ -1,20 +1,16 @@
 #login
   #sib_login_form
-    %p
       - if @geoblocked
         %a#login_link{:href => "#"}>= raw tr("Sign in", "view/shared/_login")
         \.
-    %p
-      = form_tag omniauth_authorize_path(:user, :idcard), :style => 'display: inline;' do
-        %p
-          = image_submit_tag('idcard.gif', :class => 'id-card-img')
-          
-      = image_tag 'mobileid.gif', :class => 'mobile-id-img'      
-      = form_tag omniauth_authorize_path(:user, :mobileid), :style => 'display: inline;' do
-        %br
-        %label Telefon
-        = text_field_tag :phone, nil, :class => 'textbox', :autocomplete => :off
-        = submit_tag 'Sisene', :class => 'btn btn-blue btn-small'        
+      #login-idcard
+        = form_tag omniauth_authorize_path(:user, :idcard), :style => 'display: inline;' do
+          = submit_tag 'Sisene ID-kaardiga'
+      #login-mobileid    
+        = form_tag omniauth_authorize_path(:user, :mobileid), :style => 'display: inline;' do
+          %label Telefon
+          = text_field_tag :phone, nil, :class => 'textbox', :autocomplete => :off
+          = submit_tag 'Sisene', :class => 'btn btn-blue btn-small'        
           
     - if current_instance.has_facebook_enabled? or current_instance.has_twitter_enabled? or current_instance.google_login_enabled
       %p

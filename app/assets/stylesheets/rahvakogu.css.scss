@@ -128,7 +128,7 @@ box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);}
 #mainMenu a{float:left; color:#0077bb; font-family:Bebas; text-decoration:none; line-height:18px; padding-bottom:11px; margin-right:23px;}
 #mainMenu a:hover, #mainMenu a.active{background:url(image_path('mainMenuUnderline.png')) left bottom repeat-x; color:#ababab;}
 
-#header.top-position{height:59px; background:#dddddd; margin:0 0 47px 0;}
+#header.top-position{height:59px; background:#dddddd; }
 #header.top-position .inline{width:960px; margin:0 auto; position:relative; height:59px;}
 #header.top-position .logo{margin:9px 82px 0 0;} 
 #header.top-position #mainMenu{margin:22px 0 0 0;}
@@ -190,7 +190,14 @@ box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 #footer .rightSide{float:right; margin-top:4px; font-size:12px; color:#fff;}
 
 #propArticle{float:left; width:100%; padding:0 0 50px 0;
-	.point_form { display: none; width: 410px;}
+	.point_form { 
+		.point_field {
+			width: 350px;
+		}
+		float: left;
+		&.against { margin-left: 400px; }
+		display: none;
+		width: 400px;}
 
 }
 #propArticle .profile{float:left; width:80px; font-size:12px; font-family:OpenSansRegular; color:#444444; text-align:right; line-height:16px;}

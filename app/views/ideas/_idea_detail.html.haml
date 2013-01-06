@@ -27,10 +27,10 @@
     -#   %span.count= @total_down_points + @idea.down_endorsers.count
     -#   = render :partial => 'shared/rahva_olen_vastu', :locals => {:endorsement => @endorsement, :idea => @idea }
     .point_form{:id => "support_#{@idea.id.to_s}"}
-      = tr("Why should people support your idea?", "views/ideas/form")
+      = tr("Why should people support this idea?", "views/ideas/form")
       = form_for [@idea, @point = Point.new] do |point_form|
         .field
-          .field_box= point_form.text_field :name, :size => 50, :maxlength => 80
+          .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
           = point_form.hidden_field :value, :value => "1"
         .field
           %span.characters
@@ -38,16 +38,37 @@
               = tr("Explain your point - ", "view/ideas/_form")
             %span#pointContentDown
               = tr("characters left", "view/ideas/_form")
-          .field_box= point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"col_text_area", :rows => 5, :maxLength => 1000
+          .field_box= point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"point_field", :rows => 5, :maxLength => 1000
         .field
           %em
-            %p= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")
+            %p.point_field= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")
         .field
           .field_label= tr("Add a link to an external website", "views/ideas/form")
-          .field_box= point_form.text_field :website, :size => 50
+          .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
         .field
           .field_box= point_form.submit
-    .col-left
+    .point_form.against{:id => "oppose_#{@idea.id.to_s}"}
+      = tr("Why should people oppose this idea?", "views/ideas/form")
+      = form_for [@idea, @point = Point.new] do |point_form|
+        .field
+          .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
+          = point_form.hidden_field :value, :value => "-1"
+        .field
+          %span.characters
+            %span.form_header
+              = tr("Explain your point - ", "view/ideas/_form")
+            %span#pointContentDown
+              = tr("characters left", "view/ideas/_form")
+          .field_box= point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"point_field", :rows => 5, :maxLength => 1000
+        .field
+          %em
+            %p.point_field= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")
+        .field
+          .field_label= tr("Add a link to an external website", "views/ideas/form")
+          .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
+        .field
+          .field_box= point_form.submit          
+    .col-left.clearfix
       = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "pro_new", :points => @points_top_up, :numbering=>false}
     .col-right
       = render :partial => "points/short_list", :locals => {:points => @points_top_down, :numbering=>false}

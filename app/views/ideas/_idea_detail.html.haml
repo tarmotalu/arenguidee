@@ -1,3 +1,13 @@
+- if @point.nil?
+  - against_point = Point.new
+  - for_point = Point.new
+- else
+  - if @point.value == -1
+    - against_point = @point
+    - for_point = Point.new
+  - else
+    - for_point = @point
+    - against_point = Point.new
 
 #propArticle
   .profile
@@ -26,10 +36,11 @@
     -#   = image_tag image_path('thumb-no.png')
     -#   %span.count= @total_down_points + @idea.down_endorsers.count
     -#   = render :partial => 'shared/rahva_olen_vastu', :locals => {:endorsement => @endorsement, :idea => @idea }
-          
-    .point_form{:id => "support_#{@idea.id.to_s}"}
+
+
+    .point_form{:id => "support_#{@idea.id.to_s}", :style => (for_point.value == 1  ? 'display: block;' : false)}
       = tr("Why should people support this idea?", "views/ideas/form")
-      = form_for [@idea, @point = Point.new] do |point_form|
+      = form_for [@idea, for_point] do |point_form|
         .field
           .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
           = point_form.hidden_field :value, :value => "1"
@@ -49,9 +60,10 @@
         .field
           .field_box.blue= point_form.submit 'Lisan pooltargumendi'
        
-    .point_form.against{:id => "oppose_#{@idea.id.to_s}"}
+    .point_form.against{:id => "oppose_#{@idea.id.to_s}", :style => (against_point.value == -1  ? 'display: block;' : false)}
       = tr("Why should people oppose this idea?", "views/ideas/form")
-      = form_for [@idea, @point = Point.new] do |point_form|
+   
+      = form_for [@idea, against_point] do |point_form|
         .field
           .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
           = point_form.hidden_field :value, :value => "-1"

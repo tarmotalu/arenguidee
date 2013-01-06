@@ -1,8 +1,8 @@
 - if ideas.any?
   - ideas.each do |idea|
-    %table{:cellpadding => "0", :cellspacing => "0"}
-      %tr
-        %td{:width => "636"}
+    .idea_list_entry
+      .idea_main_content
+        .idea_left_wrap
           .head
             = image_tag idea.user.buddy_icon(:icon_40)
             .desc
@@ -15,12 +15,12 @@
                 = link_to idea.author_sentence, idea.user
                 %span.gray= time_ago_in_words(idea.published_at)
           %p= idea.description
-        %td= raw "&nbsp;"
-        %td.vote-td
+        .idea_endorsements
+          
           .vote
             .thumb-up= idea.points.published.up_value.count
-            = render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
-        %td.vote-td
+            = render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => "idea_inline", :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+
           .vote
             .thumb-down= idea.points.published.down_value.count
             = render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }

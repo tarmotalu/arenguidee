@@ -2,7 +2,7 @@
   - if endorsement.is_up?
     - # ENDORSED STATE
     /%span.idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
-    = protected_link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => "idea_inline", :value => -1, :force_debate_to_new=>true), |
+    = protected_link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => "idea_inline", :value => -1, :force_debate_to_new=>false), |
       :method => :post,   |
       :remote => true,   |
       'data-disabled-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",   |
@@ -13,7 +13,7 @@
   - else
     - # OPPOSED STATE
     /%span.idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
-    = protected_link_to tr("OPPOSED", "view/ideas"), endorsement_path(endorsement, :region => "idea_inline", :force_debate_to_new=> true),     |
+    = protected_link_to tr("OPPOSED", "view/ideas"), endorsement_path(endorsement, :region => "idea_inline", :force_debate_to_new=> false),     |
       :method => :delete,                                                                |
       :remote=>true,                                                                     |
       'data-disabled-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}",                                                         |
@@ -24,7 +24,7 @@
 - else
   - # NOT VOTED STATE
   /%span.idea_add{:id => "idea_add_oppose_#{idea.id.to_s}"}
-  = protected_link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => "idea_inline", :value => -1, :force_debate_to_new=> true), |
+  = protected_link_to tr("OPPOSE", "view/ideas"), endorse_idea_path(idea, :referral_id => (@user || nil), :region => "idea_inline", :value => -1, :force_debate_to_new=> false), |
     :method => :post,   |
     :remote => true,    |
     'data-disabled-with' => "idea_debate_spinner_oppose_#{idea.id.to_s}", |

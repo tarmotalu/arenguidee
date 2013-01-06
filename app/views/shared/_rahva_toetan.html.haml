@@ -36,3 +36,5 @@
     :title =>  tr("I support this, add it to my idea list", "view/ideas") 
 
   .idea_debate_spinner{:id => "idea_debate_spinner_endorse_#{idea.id.to_s}"}
+- if region == 'idea_detail'
+  = link_to tr("Lisan pooltargumendi", "ideas/idea_detail"), '#'

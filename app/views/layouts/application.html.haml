@@ -69,7 +69,7 @@
       - unless controller.controller_name == 'home'
         = render :partial => "shared/top_banner"
       - unless logged_in?
-        #login_overlay
+        #login-overlay
           #login-idcard
             = tr("You must sign in to participate in Rahvakogu", "views/layout/applicaton")
             = form_tag omniauth_authorize_path(:user, :idcard), :style => 'display: inline;' do

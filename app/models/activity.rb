@@ -31,7 +31,7 @@ class Activity < ActiveRecord::Base
   scope :by_category, lambda{|cat_id| {:conditions => ["category_id=?", cat_id], :order => "activities.created_at desc" }}
   belongs_to :user
   belongs_to :sub_instance
-  
+  belongs_to :category
   belongs_to :other_user, :class_name => "User", :foreign_key => "other_user_id"
   belongs_to :idea
   belongs_to :activity

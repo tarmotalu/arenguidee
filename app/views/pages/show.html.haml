@@ -1,10 +1,14 @@
 .page 
   .page_title= @page.title
 
-  - unless @page.category.nil?
+  - if @page.category.nil?
+    .page_body= raw @page.body
+  - else
     .page_left= raw @page.body
     .page_sidebar
-      %b= tr("Latest activity in {category_name}", :category_name => @page.category.name )
+      %b= tr("Latest activity in {category_name}", "pages/show", :category_name => @page.category.name )
       - @page.category.activities[0..5].each do |activity|
-        .page_activity
-          %p= render :partial => "activities/#{activity[:type].downcase}", :locals => {:activity => activity}
+        .page_activity.clearfix
+          .person= image_tag activity.user.buddy_icon(:icon_40)
+          .activity= render :partial => "activities/#{activity[:type].downcase}", :locals => {:activity => activity}  
+      #proposal-index= link_to "Tee oma ettepanek",  new_category_idea_path(@page.category), :class => :button

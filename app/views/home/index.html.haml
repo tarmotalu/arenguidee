@@ -1,6 +1,6 @@
 = render :partial => "shared/top_banner"
 %section#rotator
-  .video= link_to image_tag('ilves_front.png'), 'http://www.youtube.com/watch?v=dwravVF3keM', :rel => :lightbox
+  .video= link_to image_tag('video.intro.ymarlaud.jpg'), 'http://www.youtube.com/watch?v=dwravVF3keM', :rel => :lightbox
   .quote
     = image_tag('quote.png')
     %span
@@ -93,7 +93,9 @@
       - unless cat.activities.empty?
         .latest
           %b= tr("Latest activity")
-          %p= render :partial => "activities/#{cat.activities.first[:type].downcase}", :locals => {:activity => cat.activities.first}
+          .activity_front
+            .icon= image_tag cat.activities.first.user.buddy_icon(:icon_24) rescue ''
+            .activity= render :partial => "activities/#{cat.activities.first[:type].downcase}", :locals => {:activity => cat.activities.first}
 
 
   = protected_link_to "Tee oma ettepanek", new_idea_path, :class => :button

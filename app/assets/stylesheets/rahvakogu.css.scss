@@ -1,3 +1,27 @@
+* html .clearfix{
+  height: 1%;
+  overflow: visible;
+}
+
+/* float clearing for IE7 */
+*+html .clearfix{
+  min-height: 1%;
+}
+
+/* float clearing for everyone else */
+.clearfix:after{
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+  font-size: 0;
+}
+
+
+a { color: #07B; }
+a:visited { color: #07B; }
+a:hover {color: #08D; }
 a img{border:none;}
 *:focus{outline:0;}
 textarea{resize:none;}
@@ -264,10 +288,32 @@ a.my_account img { margin-top: 3px; margin-right: 3px; float: left;}
   }
 }
 .flash_notice a, .flash_error a { color: red; }
-.page .page_title { font-size: 14px; }
-.page .page_left { float: left; width: 620px; }
-.page .page_sidebar { float: left; width: 300px; margin-left: 20px;}
+.page .page_title { font-size: 18px; font-weight: bold; margin-bottom: 10px;}
+.page .page_left { float: left; width: 720px; }
+.page .page_sidebar { float: left; width: 180px; margin-left: 20px;
+	.page_activity {
+		margin-bottom: 10px;
+		padding: 5px 0 5px 0;
+		border-bottom: #68afed 1px solid;
+		.person { float: left; width: 50px; }
+		.activity { 
+			float: left; 
+			width: 130px;
+			font-size: 12px;
+			line-height: 14px;
+		}
+	}
+}
 
+#proposal .latest { margin-top: 20px; text-decoration: underline; color: #07B; 
+	.activity_front { font-weight: normal; color: black; margin-top: 5px;
+		a { font-weight: normal;}
+		.icon { float: left; width: 30px; }
+		.activity{ float: left; width: 130px; font-size: 12px; line-height: 16px; 
+			a { font-weight: normal;}
+		}
+	}
+}
 
 /* KJ changes */
 

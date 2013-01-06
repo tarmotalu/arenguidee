@@ -18,8 +18,11 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-
-set :output, "/var/www/rahvakogu_#{Rails.env.to_s}/shared/log/cron_log.log"
+if environment == 'staging'
+  set :output, "/var/www/rahvakogu_staging/shared/log/cron_log.log"
+elsif environment == 'production'
+  set :output, "/var/www/rahvakogu_production/shared/log/cron_log.log"
+end
 
 every 5.minutes do
   rake "schedule:fix_top_endorsements"
@@ -32,7 +35,11 @@ end
 every :reboot do
   rake "ts:index"
   rake "ts:start"
-  command "cd /var/www/rahvakogu_#{Rails.env.to_s}/current; RAILS_ENV=production ruby script/delayed_job start"
+  if environment == 'staging'
+    command "cd /var/www/rahvakogu_staging/current; RAILS_ENV=production ruby script/delayed_job start"
+  elsif environment == 'production'
+    command "cd /var/www/rahvakogu_production/current; RAILS_ENV=production ruby script/delayed_job start"
+  end
 end
 
 every 50.minutes do

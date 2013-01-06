@@ -198,6 +198,16 @@ class Idea < ActiveRecord::Base
     idea_revisions.where("idea_revisions.user_id <> ?", user_id).map(&:user)
   end
 
+  def all_for
+    out = up_endorsers + points.published.up_value.map(&:user)
+    return out.uniq
+  end
+
+  def all_against
+    out = down_endorsers + points.published.down_value.map(&:user)
+    return out.uniq
+  end  
+
   def endorse(user,request=nil,sub_instance=nil,referral=nil)
     return false if not user
     sub_instance = nil if sub_instance and sub_instance.id == 1 # don't log sub_instance if it's the default

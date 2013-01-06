@@ -6,11 +6,11 @@
 -# - points_count = idea.points.where(sub_instance_id: idea.sub_instance_id).count
 -# - debate_text = @geoblocked ? tr("SHOW DEBATE", "view/ideas") : tr("DEBATE", "view/ideas")
 .vote
-  .thumb-up= idea.points.published.up_value.count + idea.up_endorsers.count
+  .thumb-up= link_to idea.all_for.count, '#', :onClick => '$("#faces_for_' + @idea.id.to_s + '").slideToggle();'
   %div{:class => region}= render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => region, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
 
 .vote
-  .thumb-down= idea.points.published.down_value.count + idea.down_endorsers.count
+  .thumb-down= link_to idea.all_against.count, '#', :onClick => '$("#faces_against_' + @idea.id.to_s + '").slideToggle();'
   %div{:class => region}= render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :region => region, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
 
 -# %span{:class => "idea_#{idea.id.to_s}_button_small", :id => "idea_#{idea.id.to_s}_button_small"}

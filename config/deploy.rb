@@ -30,7 +30,7 @@ role :db,  domain, :primary => true
 namespace :deploy do
   task :default do
     update
-    assets.precompile
+    # assets.precompile
     restart
     cleanup
     # etc
@@ -61,18 +61,18 @@ after 'deploy:finalize_update' do
   run "ln -nfs #{deploy_to}/#{shared_dir}/system #{current_release}/public/system"
 end
 
-namespace :assets do
-  desc "Precompile assets locally and then rsync to app servers"
-  task :precompile, :only => { :primary => true } do
-    run_locally "mkdir -p public/__assets; mv public/__assets public/assets;"
-    run_locally "bundle exec rake assets:clean_expired; bundle exec rake assets:precompile;"
-    servers = find_servers :roles => [:app], :except => { :no_release => true }
-    servers.each do |server|
-      run_locally "rsync -av ./public/assets/ #{user}@#{server}:#{current_path}/public/assets/;"
-    end
-    run_locally "mv public/assets public/__assets"
-  end
-end
+# namespace :assets do
+#   desc "Precompile assets locally and then rsync to app servers"
+#   task :precompile, :only => { :primary => true } do
+#     run_locally "mkdir -p public/__assets; mv public/__assets public/assets;"
+#     run_locally "bundle exec rake assets:clean_expired; bundle exec rake assets:precompile;"
+#     servers = find_servers :roles => [:app], :except => { :no_release => true }
+#     servers.each do |server|
+#       run_locally "rsync -av ./public/assets/ #{user}@#{server}:#{current_path}/public/assets/;"
+#     end
+#     run_locally "mv public/assets public/__assets"
+#   end
+# end
 
 
 namespace :log do

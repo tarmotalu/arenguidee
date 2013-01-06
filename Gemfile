@@ -80,5 +80,5 @@ group :assets do
   gem 'jquery-ui-rails'
   gem 'execjs'
   gem 'therubyracer', '~> 0.10.2', :platforms => :ruby
-  gem 'turbo-sprockets-rails3'
+  # gem 'turbo-sprockets-rails3'
 end

@@ -70,18 +70,16 @@
         = render :partial => "shared/top_banner"
       - unless logged_in?
         #login_overlay
-          = tr("You must sign in to participate in Rahvakogu", "views/layout/applicaton")
-          = form_tag omniauth_authorize_path(:user, :idcard), :style => 'display: inline;' do
-            = hidden_field_tag :after_target
-            %p
-              = image_submit_tag('idcard.gif', :class => 'id-card-img')
-              
-          = image_tag 'mobileid.gif'      
-          = form_tag omniauth_authorize_path(:user, :mobileid), :style => 'display: inline;' do
-            %br
-            %label Telefon
-            = text_field_tag :phone, nil, :class => 'textbox', :autocomplete => :off
-            = submit_tag 'Sisene', :class => 'btn btn-blue btn-small'        
+          #login-idcard
+            = tr("You must sign in to participate in Rahvakogu", "views/layout/applicaton")
+            = form_tag omniauth_authorize_path(:user, :idcard), :style => 'display: inline;' do
+              = hidden_field_tag :after_target
+              = submit_tag 'Sisene ID-kaardiga', :class => 'btn btn-blue btn-small'        
+          #login-mobileid      
+            = form_tag omniauth_authorize_path(:user, :mobileid), :style => 'display: inline;' do
+              %label Mobiiltelefoni number
+              = text_field_tag :phone, nil, :class => 'textbox', :autocomplete => :off, :size => 15
+              = submit_tag 'Sisene Mobiil-IDga', :class => 'btn btn-blue btn-small'      
       .flash= flash_div :warning, :notice, :error
       #container.clearfix
         

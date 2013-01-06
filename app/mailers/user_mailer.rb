@@ -4,7 +4,7 @@ class UserMailer < ActionMailer::Base
 
   # so DelayedJob will know how to make absolute urls
   def url_options
-    { host: Instance.current.domain_name }.merge(super)
+    { host: "https://www.rahvakogu.ee"}.merge(super)
   end
 
   def welcome(user)
@@ -71,7 +71,7 @@ class UserMailer < ActionMailer::Base
         1 => tr("Monthly", 'email')
     }
     freq = freq_to_word[frequency]
-    subject = tr("{frequency} status report from {instance_name}", 'email', frequency: freq, instance_name: Instance.current.name)
+    subject = tr("{frequency} status report from Rahvakogu", 'email', frequency: freq)
     @instance = Instance.current
     @important = important
     @important_to_followers = important_to_followers

@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-SocialInnovation::Application.load_tasks
+Rahvakogu::Application.load_tasks

@@ -158,6 +158,7 @@ class User < ActiveRecord::Base
       self.first_name = userinfo['first_name'].mb_chars.humanize if self.first_name.blank?
       self.last_name = userinfo['last_name'].mb_chars.humanize if self.last_name.blank?      
       self.login = userinfo['personal_code'] if login.blank?
+      self.status = 'active'
     end
   end
 

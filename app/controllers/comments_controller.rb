@@ -109,7 +109,7 @@ class CommentsController < ApplicationController
       @comment.is_endorser = true if e and e.is_up?
       @comment.is_opposer = true if e and e.is_down?
     end
-
+ 
     if @comment.save
       respond_to do |format|
         format.html { 

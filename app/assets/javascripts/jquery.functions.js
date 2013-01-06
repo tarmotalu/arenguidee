@@ -245,12 +245,4 @@ document.createElement('aside');
 document.createElement('footer');
 document.createElement('figure');
 
-// $("a.form_overlay").overlay({
-//   mask: {
-//   	color: '#ffffff',
-//   	loadSpeed: 200,
-//   overlaypacity: 0.5
-// 	},
-// 	closeOnClick: false  
-// });
 

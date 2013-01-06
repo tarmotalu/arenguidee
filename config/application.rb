@@ -9,7 +9,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module SocialInnovation
+module Rahvakogu
   class Application < Rails::Application
 
     require 'core_extensions'

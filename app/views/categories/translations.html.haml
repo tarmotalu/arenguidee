@@ -1,4 +1,31 @@
 %h2 Do not rest until all are green-underlined Estonian phrases!
+.field_label= tr("No discussions.", "widget")
+.field_label= tr("Follow this discussion", "view/activities/_button")
+.field_label= tr("I want to follow this person's comments and activity", "view/activities/_button")
+.field_label= tr("Delete from this page?","Ajax")
+.field_label= tr("Show", "view/activities/_show")
+.field_label= tr("Editing comment", "controller/comments")
+.field_label= tr("Saved comment", "controller/comments")
+.field_label= tr("That comment was deleted", "controller/comments")
+.field_label= tr("Thanks for flagging comment", "controller/comments")
+.field_label= tr("Send comment", "view/comments/_new_inline")
+.field_label=  tr("Sending","Ajax")
+.field_label= tr("You can also get all your notifications in an {rss_url}", "view/settings/signups", :rss_url => "RSS URL")
+.field_label= tr("Save email settings", "view/settings/signups")
+
+.field_label
+  subject line of email:
+  =tr("Weekly", 'email')
+
+.field_label
+  subject line of email:
+  =tr("Monthly", 'email')
+.field_label=tr("which you support", "email")
+.field_label=tr("which you oppose", "email")
+.field_label=tr('The status of the idea "{idea}" has been changed', "email", :idea => "IDEA NAME HERE")
+.field_label= tr("Post comment", "view/comments/new")
+.field_label= tr('You just gained {points} social point(s) at {instance_name}', "email", points: 9, :instance_name => tr(Instance.current.name,"Name from database"))
+.field_label= tr('You just lost {points} social point(s) at {instance_name}', "email", points: 3, :instance_name => tr(Instance.current.name,"Name from database"))
 .field_label= tr("Are you sure you want to sign in as {user_name}? Be careful!", "view/users/_profile_nav", :user_name =>' HENRI')
 .field_label= tr("If you make {user_name} an administrator, they will have the same privileges as you, and you will NOT be able to remove those privileges.", "view/users/_profile_nav", :user_name => "HENRI")
 .field_label= tr("Complete registration", "views/registrations/new")

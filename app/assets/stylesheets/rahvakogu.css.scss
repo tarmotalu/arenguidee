@@ -350,14 +350,16 @@ input[type="submit"], .button {
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 }
 
-#sib_login_form, #login-overlay {
+#sib_login_form, #login_overlay {
   border: 5px solid #ccc;
   border-radius: 10px;
-  margin-top: 70px !important;
-  margin-left: 870px !important;
   padding: 15px;
   -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);  
+}
+#sib_login_form {
+  margin-top: 70px !important;
+  margin-left: 870px !important;
 }
 #login-mobileid {
  margin-top: 15px;
@@ -380,6 +382,9 @@ input[type="submit"], .button {
 /* TODO: Replace with template change */
 #header .my_account img {
   display: none;
+}
+.vote .button {
+  text-transform: upper;
 }
 
 /* Other changes */

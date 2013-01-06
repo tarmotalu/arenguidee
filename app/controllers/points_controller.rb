@@ -169,6 +169,15 @@ class PointsController < ApplicationController
   def create
     load_endorsement
     @idea = Idea.find(params[:idea_id])
+    @point_value = 0
+    @points_top_up = @idea.points.published.by_helpfulness.up_value.five
+    @points_top_down = @idea.points.published.by_helpfulness.down_value.five
+    @points_new_up = @idea.points.published.by_recently_created.up_value.five.reject {|p| @points_top_up.include?(p)}
+    @points_new_down = @idea.points.published.by_recently_created.down_value.five.reject {|p| @points_top_down.include?(p)}
+    @total_up_points = @idea.points.published.up_value.count
+    @total_down_points = @idea.points.published.down_value.count
+    @total_up_points_new = [0,@total_up_points-@points_top_up.length].max
+    @total_down_points_new = [0,@total_down_points-@points_top_down.length].max
     @point = @idea.points.new(params[:point])
     @point.user = current_user
     @saved = @point.save
@@ -180,7 +189,7 @@ class PointsController < ApplicationController
         @quality = @point.point_qualities.find_or_create_by_user_id_and_value(current_user.id,true)
         format.html { redirect_to(idea_url(@idea)) }
       else
-        format.html { render :action => "new" }
+        format.html { render :template => "/ideas/show" }
       end
     end
   end

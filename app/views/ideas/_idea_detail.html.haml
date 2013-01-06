@@ -41,6 +41,7 @@
     .point_form{:id => "support_#{@idea.id.to_s}", :style => (for_point.value == 1  ? 'display: block;' : false)}
       = tr("Why should people support this idea?", "views/ideas/form")
       = form_for [@idea, for_point] do |point_form|
+        = point_form.error_messages      
         .field
           .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
           = point_form.hidden_field :value, :value => "1"
@@ -64,6 +65,7 @@
       = tr("Why should people oppose this idea?", "views/ideas/form")
    
       = form_for [@idea, against_point] do |point_form|
+        = point_form.error_messages 
         .field
           .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
           = point_form.hidden_field :value, :value => "-1"

@@ -7,9 +7,9 @@ module ApplicationHelper
     unless logged_in?
 
       if args.third.nil?
-        args.push({:class => 'form_overlay', :rel => "nofollow", :onclick => "return false;"})        
+        args.push({:class => 'form_overlay', :rel => "#login_overlay", :onclick => "return false;"})        
       else
-        args.third.merge!({:class => 'form_overlay', :rel => "nofollow", :onclick => "return false;"}) {|k, o, n| o.to_s + " " + n.to_s}
+        args.third.merge!({:class => 'form_overlay', :rel => "#login_overlay", :onclick => "return false;"}) {|k, o, n| o.to_s + " " + n.to_s}
         args.third.merge!({:remote => false })
         args.third.merge!({:method => false })
       end

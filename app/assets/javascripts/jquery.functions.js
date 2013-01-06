@@ -1,7 +1,18 @@
 $(function(){
-	$("a.form_overlay").click(function() {
-		$('#login_overlay').fadeIn();
-	});
+	$('a.form_overlay').click(function() {
+		$('#login_overlay').overlay({load: true, 
+			closeOnClick: true,
+			    mask: {
+		        color: '#ebecff',
+		        loadSpeed: 200,
+		        opacity: 0.9
+      },
+      left: '400px'
+		});
+		$('#login_overlay').overlay().load();
+		});
+	
+
 
 	$("#topBar").topBar();
 	$("#rotator").rotator();

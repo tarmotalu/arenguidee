@@ -81,9 +81,10 @@
 / /rotator
 %section#proposal
   %h1
-    Kui sa usud, et avalik arutelu on tähtis poliitika osa, siis tule ja mõtle kaasa!
+    Kui sa usud, et arutelu on osa lahendusest, siis tule ja mõtle kaasa! 
     %br/
-    Koos teeme ettepanekud Riigikogule viie olulise seaduse muutmiseks.
+    Koos teeme ettepanekud Riigikogule oluliste seaduste muutmiseks.
+
   - @cat[0..(@cat.count-2)].each do |cat|
     .column
       %h2= link_to cat.name, issue_path(cat)

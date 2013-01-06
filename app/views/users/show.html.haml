@@ -11,10 +11,12 @@
           %h2= tr("Top 5 of {idea_count} ideas", "view/users/show", :idea_count => @user.endorsements_count)
         - else
           %h2= tr("Top {count} ideas", "view/users/show", :count => @ideas.length)
-        - @ideas.each do |idea_endorsement|
-          - idea = Idea.unscoped.find(idea_endorsement.idea_id)
-          = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
-          %div{:id => "idea_detail_#{idea.id}"}
+
+        #propositions.users= render :partial => 'issues/pageless', :locals => {:ideas  => @ideas.map(&:idea).compact }
+        -# - @ideas.each do |idea_endorsement|
+        -#   - idea = Idea.unscoped.find(idea_endorsement.idea_id)
+        -#   = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}
+        -#   %div{:id => "idea_detail_#{idea.id}"}
         / %h2= tr("Latest Activity","home")
         / - for activity in @activities
         /   = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_nouser"}

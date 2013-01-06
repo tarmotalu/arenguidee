@@ -11,19 +11,19 @@
     - if @user.followers_count > 0
       %li
         = link_to_unless_current tr("Followers", "view/users/_profile_nav") + " (#{@user.followers_count})", followers_user_url(@user)
-    %li
-      = link_to_unless_current tr("Feed", "view/users/_profile_nav"), activities_user_url(@user)
-    %li
-      = link_to_unless_current tr(pluralize(@user.points.count, "discussion"), "view/users/_profile_nav", :count => @user.points_count), discussions_user_url(@user)
+    -# %li
+    -#   = link_to_unless_current tr("Feed", "view/users/_profile_nav"), activities_user_url(@user)
+    -# %li
+    -#   = link_to_unless_current tr(pluralize(@user.points.count, "discussion"), "view/users/_profile_nav", :count => @user.points_count), discussions_user_url(@user)
     %li
       = link_to_unless_current current_instance.currency_name.titleize, capital_user_url(@user)
 
     - if logged_in? && (current_user.is_admin? || @user == current_user)
       %li
         = link_to_unless_current tr("Account settings", "view/users/_profile_nav"), edit_user_url(@user)
-      - if @user.has_email?
-        %li
-          = link_to_unless_current tr("Email settings", "view/users/_profile_nav"), signups_settings_url
+      -# - if @user.has_email?
+      -#   %li
+      -#     = link_to_unless_current tr("Email settings", "view/users/_profile_nav"), signups_settings_url
       / %li
       /   = link_to_unless_current tr("Reset password", "view/users/_profile_nav"), reset_password_user_url(@user)
     - if logged_in? and current_user.is_admin?

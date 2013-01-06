@@ -21,4 +21,4 @@
 
 
 - else
-  = tr("No ideas for {tag_name} yet", "view/issues/list", :tag_name => tr(@category.nil? ? @filter : @category.name, "model/category").titleize) 
+  = tr("No ideas for {tag_name} yet", "view/issues/list", :tag_name => tr( (@category.nil? ? (@filter.nil? ? controller.controller_name : @filter) : @category.name), "model/category").titleize) 

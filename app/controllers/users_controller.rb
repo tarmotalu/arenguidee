@@ -23,6 +23,8 @@ class UsersController < ApplicationController
     end    
   end
   
+
+
   def request_validate_user_for_country
     unless @iso_country
       flash[:error] = tr("Your country was not detected.", "controller/users", :user_name => @user.name)
@@ -161,6 +163,7 @@ class UsersController < ApplicationController
       @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.idea_id},current_user.id])
     end    
     @activities = @user.activities.active.by_recently_created.paginate :include => :user, :page => params[:page], :per_page => params[:per_page]
+    get_endorsements
     respond_to do |format|
       format.html
       format.xml { render :xml => @user.to_xml(:methods => [:revisions_count], :include => [:top_endorsement, :referral, :sub_instance_referral], :except => NB_CONFIG['api_exclude_fields']) }
@@ -168,6 +171,13 @@ class UsersController < ApplicationController
     end
   end
   
+  def get_endorsements
+    @endorsements = nil
+    if logged_in? # pull all their endorsements on the ideas shown
+      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.id},current_user.id])
+    end
+  end 
+
   def ideas
     @user = User.find(params[:id])    
     redirect_to '/' and return if check_for_suspension

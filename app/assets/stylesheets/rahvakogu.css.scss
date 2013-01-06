@@ -118,7 +118,8 @@ body.splashScreen{background:#fff;}
 #header{float:left; width:100%; height:104px; position:relative;}
 #header .logo{float:left; margin:29px 38px 0 0;}
 #header .logIn{position:absolute; right:0;  height:31px; line-height:31px; padding:0 15px; color:#fff; text-decoration:none; background:#cc0000; font-family:OpenSansRegular; font-size:12px; -webkit-border-radius:99px; border-radius:99px;}
-#container #header .logIn{ top: 35px; }
+#container #header .logIn.signin { top: 35px; }
+
 #header .logIn { top: 14px; }
 #header .my_account{position:absolute; right:0; top:50%; margin-top:-15px; height:31px; line-height:31px; padding:0 15px 0 0; color:#fff; text-decoration:none; background:url(image_path('my_account_arrow.png')) right center no-repeat #444444; font-family:OpenSansRegular; font-size:12px; -webkit-border-radius:99px; border-radius:99px;
 -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
@@ -209,10 +210,13 @@ box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 	}
 }
 .small_button {
-	display:block; clear:both; width:214px; font-size: 20px; background:#cc0000; color:#fff; text-align:center; text-decoration:none; height:49px; line-height:49px; -webkit-border-radius:99px; border-radius:99px; margin:0 auto;
+	display:block;
+	clear:both; width:80px; font-size: 12px; background:#cc0000; color:#fff; text-align:center; 
+	text-decoration:none; height:20px; line-height:20px; -webkit-border-radius:99px; border-radius:99px;
+	 margin:0 auto;
 -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-
+	&.red { background-color: #C00; }
  &.blue { background-color: #07B; }
 }
 #propArticle .profile{float:left; width:80px; font-size:12px; font-family:OpenSansRegular; color:#444444; text-align:right; line-height:16px;}

@@ -1,6 +1,6 @@
 = render :partial => "shared/top_banner"
 %section#rotator
-  .video= link_to image_tag('video.intro.ymarlaud.jpg'), 'http://vimeo.com/56854479', :rel => :lightbox
+  .video= link_to image_tag('video.intro.ymarlaud.jpg', :alt => "Presidendi pöördumine"), 'http://vimeo.com/56854479', :rel => :lightbox, :title => "Presidendi pöördumine"
   .quote
     = image_tag('quote.png')
     %span
@@ -170,5 +170,5 @@
   = link_to "Näita kõiki " + pluralize(Idea.published.count, "ettepanek"), ideas_path, :class => "showAll"
 :javascript
   $(document).ready(function(){
-    $("a[rel^='lightbox']").prettyPhoto();
+    $("a[rel^='lightbox']").prettyPhoto({social_tools: ''});
   });

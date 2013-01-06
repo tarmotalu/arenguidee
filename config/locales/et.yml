@@ -1,4 +1,8 @@
 et:
+  devise:
+    sessions:
+      signed_in: 'Oled sisse loginud'
+      signed_out: 'Oled välja loginud'
   date:
     abbr_day_names:
     - P

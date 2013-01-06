@@ -7,18 +7,26 @@
 -# - debate_text = @geoblocked ? tr("SHOW DEBATE", "view/ideas") : tr("DEBATE", "view/ideas")
 .vote
   - if region != 'idea_inline'
-    .thumb-up= link_to idea.all_for.count, '#', :onClick => '$("#faces_for_' + @idea.id.to_s + '").slideToggle();'
+    .thumb-up= link_to idea.all_for.count, '#', :onClick => '$("#faces_for_' + idea.id.to_s + '").slideToggle();'
   - else
     .thumb-up= idea.all_for.count
   %div{:class => region}= render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => region, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
 
 .vote
   - if region != 'idea_inline'
-    .thumb-down= link_to idea.all_against.count, '#', :onClick => '$("#faces_against_' + @idea.id.to_s + '").slideToggle();'
+    .thumb-down= link_to idea.all_against.count, '#', :onClick => '$("#faces_against_' + idea.id.to_s + '").slideToggle();'
   - else
     .thumb-down= idea.all_against.count
   %div{:class => region}= render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :region => region, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
-
+  
+- if region != 'idea_inline'
+  .faces_wrapper
+    .faces_for{:id => "faces_for_#{idea.id.to_s}"}
+      - @idea.all_for.each do |face|
+        = link_to image_tag(face.buddy_icon(:icon_48)), face
+    .faces_against{:id => "faces_against_#{idea.id.to_s}"}
+      - @idea.all_against.each do |face|
+        = link_to image_tag(face.buddy_icon(:icon_48)), face 
 -# %span{:class => "idea_#{idea.id.to_s}_button_small", :id => "idea_#{idea.id.to_s}_button_small"}
 -#   - if endorsement and endorsement.status == 'active'
 -#     - if endorsement.is_up?

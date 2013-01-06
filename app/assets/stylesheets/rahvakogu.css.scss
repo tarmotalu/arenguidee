@@ -200,10 +200,14 @@ box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 		display: none;
 		width: 400px;
 	}
-	.faces_for, .faces_against { display: none; }
-	.faces_against { margin-left: 400px; }
-
+	.faces_wrapper { clear:both; 
+		padding-top: 20px;
+		margin-bottom: 50px;
+		.faces_for, .faces_against { display: none; width: 400px; }
+		.faces_for { float: left; }
+		.faces_against { margin-left: 410px; }
 	}
+}
 
 
 #propArticle .profile{float:left; width:80px; font-size:12px; font-family:OpenSansRegular; color:#444444; text-align:right; line-height:16px;}

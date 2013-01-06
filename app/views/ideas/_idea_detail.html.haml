@@ -17,7 +17,7 @@
       %p= raw @idea.description
       .fb-like{"data-font" => "segoe ui", "data-href" => url_for(:controller => :ideas, :action => :show, :id => @idea.to_param, :only_path => false), "data-layout" => "button_count", "data-send" => "true", "data-show-faces" => "true", "data-width" => "450"}
       %div{style: 'float: right;'}= render :partial=>"ideas/report_content", :locals=>{:idea=>@idea}
-    .votes= render :partial => 'ideas/debate_buttons', :locals => {:idea => @idea, :region => "idea_detail" }
+    .votes{:id => "endorsements_#{@idea.id.to_s}"}= render :partial => 'ideas/debate_buttons', :locals => {:idea => @idea, :region => "idea_detail" }
     -# .left
     -#   = image_tag image_path('thumb-yes.png')
     -#   %span.count= @total_up_points + @idea.up_endorsers.count
@@ -26,12 +26,7 @@
     -#   = image_tag image_path('thumb-no.png')
     -#   %span.count= @total_down_points + @idea.down_endorsers.count
     -#   = render :partial => 'shared/rahva_olen_vastu', :locals => {:endorsement => @endorsement, :idea => @idea }
-    .faces_for{:id => "faces_for_#{@idea.id.to_s}"}
-      - @idea.all_for.each do |face|
-        = link_to image_tag(face.buddy_icon(:icon_48)), face
-    .faces_against{:id => "faces_against_#{@idea.id.to_s}"}
-      - @idea.all_against.each do |face|
-        = link_to image_tag(face.buddy_icon(:icon_48)), face           
+          
     .point_form{:id => "support_#{@idea.id.to_s}"}
       = tr("Why should people support this idea?", "views/ideas/form")
       = form_for [@idea, @point = Point.new] do |point_form|

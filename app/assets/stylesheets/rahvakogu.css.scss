@@ -191,6 +191,7 @@ box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 
 #propArticle{float:left; width:100%; padding:0 0 50px 0;
 	.point_form { 
+		margin-bottom: 20px;
 		.point_field {
 			width: 350px;
 		}
@@ -353,6 +354,10 @@ input[type="submit"], .button {
   border-radius: 99px;
   -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+
+.field_box.blue input[type="submit"] {
+	background-color: #07B;
 }
 
 #sib_login_form, #login_overlay {

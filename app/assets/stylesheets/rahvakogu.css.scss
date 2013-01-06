@@ -300,11 +300,12 @@ box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2); cursor:pointer;}
 a.my_account img { margin-top: 3px; margin-right: 3px; float: left;}
 
 #login_overlay { position: absolute; background-color: #ffffff; border: 1px solid black; display: none; padding: 20px; z-index: 20; left: 320px; top: 300px; }
-#search_box { float: left; margin: 8px 5px 5px 5px;
+#search_box { float: left; margin: 14px 5px 5px 15px;
   .search_head { width: 125px; }
   input[type=text] {
     height: 18px;
     background-color: #BBB;
+    padding-bottom: 1px;
   }
 }
 .flash_notice a, .flash_error a { color: red; }

@@ -40,7 +40,7 @@
       %span.filter_divider= " / "
       = link_to 'vastuhäälte', bottom_ideas_path, :class => (@filter == 'bottom' ? :active : false)
       %span.filter_divider= " / "
-      = link_to 'minu', your_ideas_path, :class => (@filter == 'yours' ? :active :false)
+      = link_to 'minu', yours_ideas_path, :class => (@filter == 'yours' ? :active :false)
       -# = link_to 'arutelude', controversial_ideas_path, :class => (@filter == 'controversial' ? :active : false)
       %span.filter_divider= " / "
       = link_to 'juhuslik', random_ideas_path, :class => (@filter == 'random' ? :active : false)

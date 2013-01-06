@@ -125,7 +125,7 @@ Rahvakogu::Application.routes.draw do
       get :update_status
   	end
   	collection do
-      get :your
+      get :yours
       get :yours_finished
       get :yours_top
       get :yours_ads

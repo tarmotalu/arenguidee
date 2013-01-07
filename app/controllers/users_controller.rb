@@ -121,7 +121,9 @@ class UsersController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
-    redirect_to '/' and return if check_for_suspension
+    unless current_user == @user || current_user.is_admin? || !check_for_suspension
+      redirect_to '/' and return 
+    end
     @page_title = tr("Changing settings for {user_name}", "controller/users", :user_name => @user.name)
   end
   

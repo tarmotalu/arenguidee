@@ -14,7 +14,7 @@
               %span
                 = link_to idea.author_sentence, idea.user
                 %span.gray= time_ago_in_words(idea.published_at)
-          %p= idea.description
+          %p= simple_format(idea.description)
         .idea_endorsements{:id => "endorsements_#{idea.id}"}= render :partial => 'ideas/debate_buttons', :locals => {:region => "idea_inline", :idea => idea, :endorsements => idea.endorsements}
           
 

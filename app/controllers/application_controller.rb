@@ -165,7 +165,7 @@ class ApplicationController < ActionController::Base
           Rails.logger.info("Resetting session")
           reset_session
           Thread.current[:current_user] = nil
-          flash[:error] = tr("Your session has expired, please login again.","session")
+          flash[:error] = "Sinu sessioon on ekspireerunud. Palun logi uuesti sisse."
           redirect_to '/'
         end
       end

@@ -1,7 +1,7 @@
 set :rvm_ruby_string, 'ruby-1.9.3-p327'
 require "rvm/capistrano"
 require 'bundler/capistrano'
-require 'airbrake/capistrano'
+# require 'airbrake/capistrano'
 require "thinking_sphinx/deploy/capistrano"
 require "auto_html/capistrano"
 set :whenever_command, "bundle exec whenever"

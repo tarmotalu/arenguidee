@@ -89,7 +89,7 @@
     .column
       %h2= link_to cat.name, issue_path(cat)
       %p= cat.description
-      = link_to pluralize(cat.ideas.count, 'ettepanek')
+      = link_to pluralize(cat.ideas.count, 'ettepanek'), issue_path(cat)
       - unless cat.activities.empty?
         .latest
           %h3= tr("Latest activity")

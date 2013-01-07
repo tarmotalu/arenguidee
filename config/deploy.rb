@@ -10,13 +10,13 @@ require "whenever/capistrano"
 
 task :production do
   set :rails_env, "production"
-  set :application, "rahvakogu_production"
+
 end
 task :staging do
   set :rails_env, "staging"
-  set :application, "rahvakogu_staging"
 end
 
+set :application, "rahvakogu"
 ssh_options[:forward_agent] = true
 
 set :domain, "rahvakogu.ee"
@@ -26,7 +26,7 @@ set :repository, "git@217.146.75.17:/var/git/social_innovation.git"
 set :selected_branch, "master"
 set :branch, "#{selected_branch}"
 set :use_sudo, false
-set :deploy_to, "/var/www/#{application}"
+set :deploy_to, "/var/www/#{application}_#{rails_env}"
 set :user, "www-data"
 set :deploy_via, :remote_cache
 

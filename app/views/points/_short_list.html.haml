@@ -9,7 +9,10 @@
       = numbering ? "#{i+1}. " : ""
       = link_to_unless_current tg(h(point.name)), point
     %p= tg(point.content)
-
+    - unless point.website.blank?
+      %p
+        link: 
+        = link_to point.website.gsub(/http[s]?:\/\//i, ''), 'http://' + point.website.gsub(/http[s]?:\/\//i, '')
     %p
       %b= point.author_sentence
       %br/

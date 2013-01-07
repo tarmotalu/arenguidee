@@ -13,7 +13,7 @@ task :staging do
   set :deploy_to, "/var/www/#{application}_staging"
   set :rails_env, "staging"
   after 'deploy:finalize_update' do
-    run "cp {deploy_to}/#{shared_dir}/htaccess #{current_release}/public/.htaccess"
+    run "cp #{deploy_to}/#{shared_dir}/htaccess #{current_release}/public/.htaccess"
   end
 end
 

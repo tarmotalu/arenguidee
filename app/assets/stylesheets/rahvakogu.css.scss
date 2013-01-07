@@ -440,9 +440,6 @@ input[type="submit"], .button {
 .frontpage #container {
 padding-top: 0px;
 }
-
-
-
 /* TODO: Replace with template change */
 #header .my_account img {
   display: none;
@@ -455,7 +452,15 @@ padding-top: 0px;
 .idea_listing .col-right h2 a:visited {
   color: #c00;
 }
-
+.profile_strip {
+  padding: 0;
+  margin: 0 0 20px 0;
+  background: none;
+}
+.profile_strip .profile_name {
+  font-size: 24px;
+  max-width: none;  
+}
 
 /* Other changes */
 

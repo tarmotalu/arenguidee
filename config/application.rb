@@ -34,7 +34,7 @@ module Rahvakogu
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+    config.i18n.default_locale = :et
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -79,8 +79,8 @@ module Rahvakogu
   require 'validates_uri_existence_of'
 
   require 'timeout'
-  require 'authenticated_system'
+  # require 'authenticated_system'
 
-  require 'load_windows_contacts'
-  require 'load_yahoo_contacts'
+  # require 'load_windows_contacts'
+  # require 'load_yahoo_contacts'
 end

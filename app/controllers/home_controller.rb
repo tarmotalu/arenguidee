@@ -49,7 +49,7 @@ class HomeController < ApplicationController
       @page_title = SubInstance.current.name
       @ideas = @new_ideas = Idea.published.newest.limit(3)
       @top_ideas = Idea.published.top_rank.limit(3).reject{|idea| @new_ideas.include?(idea)}
-      @random_ideas = Idea.published.by_random.limit(3).reject{|idea| @new_ideas.include?(idea) or @top_ideas.include?(idea)}
+      @random_ideas = Idea.where("category_id <> 21").published.by_random.limit(3).reject{|idea| @new_ideas.include?(idea) or @top_ideas.include?(idea)}
 
       all_ideas = []
       all_ideas += @new_ideas if @new_ideas

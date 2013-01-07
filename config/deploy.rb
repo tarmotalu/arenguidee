@@ -1,7 +1,7 @@
 set :rvm_ruby_string, 'ruby-1.9.3-p327'
 require "rvm/capistrano"
 require 'bundler/capistrano'
-require 'airbrake/capistrano'
+# require 'airbrake/capistrano'
 require "thinking_sphinx/deploy/capistrano"
 require "auto_html/capistrano"
 set :whenever_command, "bundle exec whenever"
@@ -12,10 +12,9 @@ require "whenever/capistrano"
 task :staging do
   set :deploy_to, "/var/www/#{application}_staging"
   set :rails_env, "staging"
-  
-  # FIXME: this will run _before_ the deploy has occured--
-  # so it just puts robots.txt in the release that we're replacing now!
-  # run "/bin/cp #{shared_path}/robots.txt #{latest_release}/public"
+  after 'deploy:finalize_update' do
+    run "cp #{deploy_to}/#{shared_dir}/htaccess #{current_release}/public/.htaccess"
+  end
 end
 
 

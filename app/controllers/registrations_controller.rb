@@ -1,7 +1,9 @@
+# encoding: UTF-8
 class RegistrationsController < Devise::RegistrationsController
   def create
     super
   end
+
 
   private
 

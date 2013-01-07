@@ -15,4 +15,4 @@
     = tr("by {author_sentence}", "view/points/_short_list", :author_sentence => idea.author_sentence)
     = tr("added {time_ago}", "view/points/_short_list", :time_ago => time_ago(idea.created_at))
 %p
-  = idea.description
+  = simple_format(idea.description)

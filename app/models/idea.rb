@@ -1,6 +1,6 @@
 class Idea < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
-  self.per_page = 6
+  self.per_page = 10
   acts_as_set_sub_instance :table_name=>"ideas"
 
   if Instance.current and Instance.current.is_suppress_empty_ideas?

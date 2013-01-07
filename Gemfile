@@ -7,7 +7,7 @@ gem 'mysql2'
 #gem "twitter-auth", :git => "git://github.com/benders/twitter-auth.git", :branch => "rails_3", :require => "twitter_auth/engine"
 #gem 'facebooker2'
 #gem 'mogli'
-gem 'airbrake'
+# gem 'airbrake'
 gem 'rack-openid'
 gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'ruby-openid'
@@ -21,6 +21,7 @@ gem 'dalli'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'devise', '2.1.2'
+gem 'exceptional'
 gem 'friendly_id', '4.0.9'
 gem 'geoip'
 gem 'googlecharts'
@@ -35,6 +36,7 @@ gem 'jquery-rjs', github: "bikeexchange/jquery-rjs"
 gem 'kaminari'
 gem 'kgio'
 gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
+gem "nokogiri"
 gem 'oauth'
 gem "omniauth-idcard", "~> 0.2.1"
 gem 'omniauth-mobileid', '0.1.2'
@@ -48,6 +50,7 @@ gem 'sunlight'
 gem 'sys-filesystem'
 gem 'thinking-sphinx'
 gem 'tr8n', github: "hinrik/tr8n", :branch => "social_innovation"
+gem 'truncate_html'
 gem 'whenever', :require => false
 gem 'will-paginate-i18n'
 gem 'will_filter', "~> 3.1.2" 

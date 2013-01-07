@@ -16,7 +16,7 @@ $(function(){
 
 	$("#topBar").topBar();
 	$("#rotator").rotator();
-	$("#proposal-bottom .cycle").cycle();
+	$("#proposal-bottom .cycle").cycle({timeout: 10000});
 	$(".cookieText").cookieText();
 	
 	$("#propositions .getMore").getMore();

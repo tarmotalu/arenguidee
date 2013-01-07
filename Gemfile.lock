@@ -307,6 +307,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
+    truncate_html (0.9.1)
     turn (0.9.6)
       ansi
     tzinfo (0.3.35)
@@ -370,6 +371,7 @@ DEPENDENCIES
   mysql2
   nested_form!
   newrelic_rpm
+  nokogiri
   oauth
   omniauth-idcard (~> 0.2.0)
   omniauth-mobileid (= 0.1.2)
@@ -394,6 +396,7 @@ DEPENDENCIES
   thin
   thinking-sphinx
   tr8n!
+  truncate_html
   turn
   uglifier
   watir-webdriver

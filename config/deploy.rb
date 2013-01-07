@@ -8,8 +8,17 @@ set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
 # load 'deploy/assets'
 
+task :production do
+  set :rails_env, "production"
+  set :application, "rahvakogu_production"
+end
+task :staging do
+  set :rails_env, "staging"
+  set :application, "rahvakogu_staging"
+end
+
 ssh_options[:forward_agent] = true
-set :application, "rahvakogu_staging"
+
 set :domain, "rahvakogu.ee"
 set :scm, "git"
 set :repository, "git@217.146.75.17:/var/git/social_innovation.git"
@@ -20,7 +29,7 @@ set :use_sudo, false
 set :deploy_to, "/var/www/#{application}"
 set :user, "www-data"
 set :deploy_via, :remote_cache
-set :rails_env, "staging"
+
 # set :shared_children, shared_children + %w[config db/sphinx assets db/hourly_backup db/daily_backup db/weekly_backup]
 
 role :app, domain
@@ -28,12 +37,15 @@ role :web, domain
 role :db,  domain, :primary => true
 
 namespace :deploy do
-  task :default do
-    update
-    # assets.precompile
-    restart
-    cleanup
-    # etc
+  namespace :assets do
+    task :precompile, :roles => :web, :except => { :no_release => true } do
+      from = source.next_revision(current_revision)
+      if capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
+        run %Q{cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} #{asset_env} assets:precompile}
+      else
+        logger.info "Skipping asset pre-compilation because there were no asset changes"
+      end
+    end
   end
   task :start do
     run "touch #{File.join(current_path,'tmp','restart.txt')}"

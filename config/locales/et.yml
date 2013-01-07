@@ -1,5 +1,8 @@
 et:
   devise:
+    registrations:
+      user:
+        signed_up: 'Tänud registreerimast'
     sessions:
       signed_in: 'Oled sisse loginud'
       signed_out: 'Oled välja loginud'

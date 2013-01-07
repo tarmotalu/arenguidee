@@ -1,6 +1,12 @@
 %h2 Do not rest until all are green-underlined Estonian phrases!
 .field_label= tr("Logged out. Please come again soon.", "controller/sessions")
 .field_label= tr("Save idea", "view/ideas/edit")
+.field_label= tr("All","search")
+.field_label=tr("Everything","search")
+.field_label= tr("No search results","search")
+.field_label=tr("Show","search")
+.field_label= tr("Comment","search")
+.field_label=tr("Followers", "view/users/_profile_nav")
 .field_label
   profile page title
   =tr("{user_name} at {instance_name}", "controller/users", :user_name => 'USERNAME', :instance_name => tr(current_instance.name,"Name from database")) 

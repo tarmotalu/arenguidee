@@ -1,6 +1,6 @@
 class PointsController < ApplicationController
  
-  before_filter :login_required, :only => [:new, :create, :quality, :unquality, :your_ideas, :your_index, :destroy, :update_importance]
+  before_filter :authenticate_user!, :only => [:new, :create, :quality, :unquality, :your_ideas, :your_index, :destroy, :update_importance]
   before_filter :admin_required, :only => [:edit, :update]
 
   before_filter :setup_filter_dropdown

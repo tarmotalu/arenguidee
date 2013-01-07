@@ -14,6 +14,13 @@ class SettingsController < ApplicationController
 
   # PUT /settings
   def update
+    unless current_user.is_admin?
+      params[:user].delete :first_name
+      params[:user].delete :last_name
+      params[:user].delete :is_admin
+      params[:user].delete :login      
+    end
+
     respond_to do |format|
       if @user.update_attributes(params[:user])
         flash[:notice] = tr("Saved your settings", "controller/settings")

@@ -134,7 +134,7 @@ defaults:
     tr8n_helpers:             []                                # if you need to add extra helpers
     admin_layout:             "tr8n_admin"                      # layout to be used for the admin user interface - change it to your layout
     admin_helpers:            []                                # if you need to add extra helpers
-    before_filters:           []                                # filters from application controller
+    before_filters:           ["admin_required"]                                # filters from application controller
     skip_before_filters:      []                                # filters from application controller
     after_filters:            []                                # filters from application controller
     user_info:

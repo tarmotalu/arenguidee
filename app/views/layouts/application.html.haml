@@ -3,10 +3,10 @@
   %head
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %meta{:content => "Wiseman Interactive Oü  www.wiseman.ee", :name => "Author"}/
-    %link{:href => "/static/imgs/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
+    %link{:href => "/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
 
 
-    %link{:href => "/assets/imgs/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
+
 
     %title
       Rahvakogu
@@ -17,8 +17,7 @@
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
     %title
-    - if current_instance.favicon.present?
-      = favicon_link_tag(current_instance.favicon.url(:icon_full))
+
     = render :partial => "shared/description"
     = render :partial => "shared/head"
     = render :partial => "shared/javascripts"

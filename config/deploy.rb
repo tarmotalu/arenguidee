@@ -8,13 +8,17 @@ set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
 # load 'deploy/assets'
 
-task :production do
-  set :rails_env, "production"
 
-end
 task :staging do
+  set :deploy_to, "/var/www/#{application}_staging"
   set :rails_env, "staging"
+  
+  # FIXME: this will run _before_ the deploy has occured--
+  # so it just puts robots.txt in the release that we're replacing now!
+  # run "/bin/cp #{shared_path}/robots.txt #{latest_release}/public"
 end
+
+
 
 set :application, "rahvakogu"
 ssh_options[:forward_agent] = true

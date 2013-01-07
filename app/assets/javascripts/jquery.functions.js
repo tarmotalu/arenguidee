@@ -175,7 +175,7 @@ $.fn.rotator = function(){
 	
 	var status = false;
 	var timeout = '';
-	var delay = 5000;
+	var delay = 10000;
 	
 	function startTimeout(){
 		timeout = setTimeout(function(){

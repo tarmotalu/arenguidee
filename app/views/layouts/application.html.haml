@@ -27,7 +27,9 @@
       = render :partial => "shared/analytics"
     - if controller_name == "ideas" and action_name == "show"
       = render :partial=>"ideas/fb_og_tags"
-    = tr8n_scripts_tag
+    - if logged_in?
+      - if current_user.is_admin?
+        = tr8n_scripts_tag
     = csrf_meta_tag
 
   %body{:class => (controller.controller_name == 'home' && controller.action_name == 'index') ? :frontpage : false}

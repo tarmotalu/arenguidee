@@ -17,19 +17,19 @@
       %b= point.author_sentence
       %br/
       = l point.created_at.to_date, :format => :long_no_year
-    /   %span.point_edit
-    /     - if point.discussions_count > 0
-    /       = link_to tr("{count} discussions", "view/points/_short_list", :count => point.discussions_count), discussions_point_url(point)
-    /     - else
-    /       = link_to tr("Discuss", "view/points/_short_list"), discussions_point_url(point)
-    /     or
-    /     \#{link_to tr("Edit", "view/points/_short_list"), new_point_revision_url(point), :title => tr("Can you make this point more persuasive? Go ahead, change it!", "view/points/_short_list")}
-    /     this point
-    /     - if point.has_website?
-    /   .point_source
-    /     = tr("Source:", "view/points/_show")
-    /     %a{:href => point.website_link}= truncate(point.website_link, :length=>70)
-    /     point
-    / .point_qualities.small_text
-    /   = render :partial => "points/button_small", :locals => {:newest_points=>defined?(newest_points) ? true : false, :point => point, :quality => quality}
-    / %hr
+    -# /   %span.point_edit
+    -# /     - if point.discussions_count > 0
+    -# /       = link_to tr("{count} discussions", "view/points/_short_list", :count => point.discussions_count), discussions_point_url(point)
+    -# /     - else
+    -# /       = link_to tr("Discuss", "view/points/_short_list"), discussions_point_url(point)
+    -# /     or
+    -# /     \#{link_to tr("Edit", "view/points/_short_list"), new_point_revision_url(point), :title => tr("Can you make this point more persuasive? Go ahead, change it!", "view/points/_short_list")}
+    -# /     this point
+    -# /     - if point.has_website?
+    -# /   .point_source
+    -# /     = tr("Source:", "view/points/_show")
+    -# /     %a{:href => point.website_link}= truncate(point.website_link, :length=>70)
+    -# /     point
+    -# / .point_qualities.small_text
+    -# /   = render :partial => "points/button_small", :locals => {:newest_points=>defined?(newest_points) ? true : false, :point => point, :quality => quality}
+    -# / %hr

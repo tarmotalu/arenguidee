@@ -250,7 +250,7 @@ box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);}
 #propArticle .opinion p{margin:0 0 15px 0;}
 #propArticle .opinion:last-child{border:none;}
 #propArticle .opinion b{font-family:OpenSansBold; font-weight:normal;}
-
+#propArticle .col-right .opinion a { color: #C00; }
 .cookieText{float:left; position:relative; width:900px; margin:-17px 0 15px 0; padding:17px 30px; text-align:center; font-family:OpenSansLight; font-size:18px; line-height:26px; color:#fff; background:#0077bb; -webkit-border-radius:5px; border-radius:5px;}
 .cookieText p{margin:0;}
 .cookieText .closeButton{position:absolute; right:8px; top:9px; width:10px; height:9px; background:url(image_path('closeButton.png')) no-repeat; text-decoration:none; overflow:hidden; text-indent:-999px;}

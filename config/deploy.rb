@@ -59,9 +59,9 @@ namespace :deploy do
   end
 end
 
-# before 'deploy:update_code' do
-#   thinking_sphinx.stop
-# end
+before 'deploy:update_code' do
+  thinking_sphinx.stop
+end
 
 after 'deploy:update_code' do
   thinking_sphinx.configure

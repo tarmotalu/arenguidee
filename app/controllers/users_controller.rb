@@ -188,6 +188,8 @@ class UsersController < ApplicationController
     if logged_in? # pull all their endorsements on the ideas shown
       @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.idea_id},current_user.id])
     end    
+    @ideas.compact!
+
     respond_to do |format|
       format.html
       format.xml { render :xml => @ideas.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }

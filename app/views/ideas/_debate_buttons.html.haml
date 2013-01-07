@@ -20,13 +20,14 @@
   %div{:class => region}= render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :region => region, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
   
 - if region != 'idea_inline'
-.faces_wrapper
-  .faces_for{:id => "faces_for_#{idea.id.to_s}"}
-    - @idea.all_for.each do |face|
-      = link_to image_tag(face.buddy_icon(:icon_48)), face
-  .faces_against{:id => "faces_against_#{idea.id.to_s}"}
-    - @idea.all_against.each do |face|
-      = link_to image_tag(face.buddy_icon(:icon_48)), face 
+  .faces_wrapper
+    .faces_for{:id => "faces_for_#{idea.id.to_s}"}
+      - @idea.all_for.each do |face|
+        = link_to image_tag(face.buddy_icon(:icon_48)), face
+    .faces_against{:id => "faces_against_#{idea.id.to_s}"}
+      - @idea.all_against.each do |face|
+        = link_to image_tag(face.buddy_icon(:icon_48)), face 
+      
 -# %span{:class => "idea_#{idea.id.to_s}_button_small", :id => "idea_#{idea.id.to_s}_button_small"}
 -#   - if endorsement and endorsement.status == 'active'
 -#     - if endorsement.is_up?

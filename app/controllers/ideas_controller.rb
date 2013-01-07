@@ -719,7 +719,7 @@ class IdeasController < ApplicationController
         quality = first_point.point_qualities.find_or_create_by_user_id_and_value(current_user.id, true)
       end
       IdeaRevision.create_from_idea(@idea,request.remote_ip,request.env['HTTP_USER_AGENT'])      
-      if current_user.endorsements_count > 24
+      if current_user.endorsements_count > 24 && !@endorsement.nil?
         session[:endorsement_page] = (@endorsement.position/25).to_i+1
         session[:endorsement_page] -= 1 if @endorsement.position == (session[:endorsement_page]*25)-25
       end    

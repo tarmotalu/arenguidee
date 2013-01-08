@@ -23,7 +23,20 @@
 		font-size: 11px;
 	}
 }
+#search_results {
+	.profile_picture96 {
+		float: left;
+		width: 110px;
+	}
+	.profile_strip {
+		float: left;
+		width: 450px;
 
+		.profile_name {
+			font-size:15px;
+		}
+	}
+}
 
 
 .idea_inline a.button { text-transform: uppercase; }

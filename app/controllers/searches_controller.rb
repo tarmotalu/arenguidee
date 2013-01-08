@@ -10,7 +10,7 @@ class SearchesController < ApplicationController
         if params[:global]
           @facets = ThinkingSphinx.facets @query, :all_facets => true, :populate => true, :star => true, :page => params[:page]
         else
-          @facets = ThinkingSphinx.facets @query, :all_facets => true, :populate => true, :with => {:sub_instance_id => SubInstance.current ? SubInstance.current.id : 0}, :star => true, :page => params[:page]
+          @facets = ThinkingSphinx.facets @query, :all_facets => true, :populate => true,  :star => true, :page => params[:page]
         end
       rescue
 
@@ -26,13 +26,14 @@ class SearchesController < ApplicationController
           if params[:global]
             @search_results = ThinkingSphinx.search @query, :order => :updated_at, :populate => true, :sort_mode => :desc, :star => true, :retry_stale => true, :page => params[:page]
           else
-            @search_results = ThinkingSphinx.search @query, :order => :updated_at, :populate => true, :sort_mode => :desc, :with => {:sub_instance_id => SubInstance.current.id }, :star => true, :retry_stale => true, :page => params[:page]
+            @search_results = ThinkingSphinx.search @query, :order => :updated_at, :populate => true, :sort_mode => :desc,  :star => true, :retry_stale => true, :page => params[:page]
           end
         rescue 
           flash[:error] = tr("We're sorry, the search engine is temporary unavailable. Please try again in a few moments", "search")
         end
       end
     end
+    logger.warn(@search_results.inspect)
     respond_to do |format|
       format.html
       format.xml { render :xml => @ideas.to_xml(:except => [:user_agent,:ip_address,:referrer]) }

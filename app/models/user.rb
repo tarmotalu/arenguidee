@@ -150,7 +150,8 @@ class User < ActiveRecord::Base
   attr_accessor :sub_instance_ids, :terms
   
   define_index do
-    indexes real_name
+    indexes "concat(first_name, ' ', last_name)", :as => :real_name
+    has updated_at
     where "users.status = 'active'"    
   end
 

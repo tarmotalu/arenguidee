@@ -168,7 +168,7 @@
                 = ","
                 %span.gray= l bi.published_at.to_date, :format => :long
 
-  = link_to "Näita kõiki " + pluralize(Idea.published.count, "ettepanek"), ideas_path, :class => "showAll"
+  = link_to "Näita kõiki " + pluralize(Idea.published.count, "ettepanek"), newest_ideas_path, :class => "showAll"
 :javascript
   $(document).ready(function(){
     $("a[rel^='lightbox']").prettyPhoto({social_tools: ''});

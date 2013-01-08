@@ -58,6 +58,52 @@
                   #search_results_body
                     = result.excerpts.description.html_safe
                   %br/
+              - if result.class == User
+                .clearfix{:style => "clear: left; margin-bottom: 20px; border-bottom: 1px dotted #07B;"}
+                  %h3.test
+                    = tr("User","search")
+                    \- #{time_ago(result.excerpts.created_at)}
+                    -# \ #{link_to tr("Show","search"), result.show_url}
+                  #search_results_body
+                    .profile_picture96
+                      - if result.has_picture?
+                        %a{:href => picture_settings_url}
+                          = image_tag result.buddy_icon.url(:icon_96), :size => "96x96", :border => 0
+                      - elsif current_facebook_user_if_on_facebook and result.has_facebook?
+                        %a{:href => url_for(result)}
+                          %fb:profile-pic{:border => "0", :linked => "false", :size => "small", :uid => result.facebook_uid, :width => "96px"}/
+                      - elsif logged_in? and result.id == current_user.id
+                        = link_to image_tag("upload_pic.gif", :size => "96x96", :border => 0), picture_settings_url
+                      - else
+                        .image_96
+                          = image_tag current_instance.buddy_icon.url(:icon_96), :size => "96x96", :border => 0, :alt => ""
+                    .profile_strip
+                      .profile_name
+                        %span.profile_name= result.real_name
+                        %span.profile_pc= link_to result.capitals_count.to_s + current_instance.currency_short_name, capital_user_url(result)
+                        - if logged_in?
+                          - if current_user.is_admin?
+                            - if result.is_admin?
+                              .is_admin admin
+
+                      - if result.has_website? or result.has_twitter?
+                        .profile_website
+                          - if result.has_website?
+                            %a{:href => result.website_link}= result.website_link
+                          - if result.has_website? and result.has_twitter?
+                            \&middot;
+                          - if result.has_twitter?
+                            %a{:href => "http://twitter.com/#{result.twitter_login}"}
+                              http://twitter.com/#{result.twitter_login}
+                      - unless result.organisation.blank?
+                        .profile_website
+                          - unless result.title.blank?
+                            = result.title + ", "
+                          = result.organisation
+                      - unless result.social_network_url.blank?
+                        .profile_social= link_to 'Sotsiaalmeedia profiil',  'http://' + result.social_network_url.gsub(/http[s]?:\/\//i, '')
+                      - unless result.bio.blank?
+                        .profile_biography= result.bio
               - elsif result.class == Point
                 %div
                   %h3

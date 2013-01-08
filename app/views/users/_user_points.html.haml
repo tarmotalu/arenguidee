@@ -1,0 +1,26 @@
+- if points.any?
+  - points.each do |point|
+    .idea_list_entry
+      .idea_main_content
+        .idea_left_wrap
+          .head
+            = image_tag point.idea.user.buddy_icon(:icon_40)
+            .desc
+              %h2
+                = link_to point.idea.name, point.idea
+                %span.red= "(#{point.idea.points.count})"
+              - if @category.nil?
+                %h3= point.idea.category.name
+              %span
+                = link_to point.idea.author_sentence, point.idea.user
+                %span.gray= time_ago_in_words(point.idea.published_at)
+          %h3
+            = @user.real_name
+            - if point.value == 1
+              = " kirjutas pooltargumendi:"
+            - elsif point.value == -1
+              = " kirjutas vastuargumendi:"
+          %div{:class => 'user_point_title_' + point.value.to_s }= point.name     
+          %p= simple_format(point.content)
+        .idea_endorsements{:id => "endorsements_#{point.idea.id}"}= render :partial => 'ideas/debate_buttons', :locals => {:region => "idea_inline", :idea => point.idea, :endorsements => point.idea.endorsements}
+          

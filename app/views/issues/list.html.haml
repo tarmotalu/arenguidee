@@ -1,8 +1,10 @@
 
 #text-1.cookieText
   %a.closeButton{:href => "#"} &nbsp;
+  
   %p
     - if @category.nil? || @category.blue_box_text.blank?
+
       %b Mis on Rahvakogu?
       Kui sa usud, et avalik arutelu on tähtis poliitika osa, siis tule ja mõtle kaasa!
       %br/

@@ -8,7 +8,7 @@
     %h2
       = numbering ? "#{i+1}. " : ""
       = link_to_unless_current tg(h(point.name)), point
-    %p= tg(point.content)
+    %p= tg(simple_format(point.content))
     - unless point.website.blank?
       %p
         link: 

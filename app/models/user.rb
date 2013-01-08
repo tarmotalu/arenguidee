@@ -149,6 +149,11 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :sub_instance_ids, :terms
   
+  define_index do
+    indexes real_name
+    where "users.status = 'active'"    
+  end
+
   def apply_omniauth(omniauth)
     return if omniauth.blank?
     

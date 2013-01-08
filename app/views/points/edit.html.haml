@@ -1,36 +1,24 @@
-%h1 Editing point
-= form_for(@point) do |f|
-  = f.error_messages
-  %p
-    = f.label :version_id
-    %br/
-    = f.text_field :version_id
-  %p
-    = f.label :idea_id
-    %br/
-    = f.text_field :idea_id
-  %p
-    = f.label :other_idea_id
-    %br/
-    = f.text_field :other_idea_id
-  %p
-    = f.label :user_id
-    %br/
-    = f.text_field :user_id
-  %p
-    = f.label :value
-    %br/
-    = f.text_field :value
-  %p
-    = f.label :name
-    %br/
-    = f.text_field :name
-  %p
-    = f.label :content
-    %br/
-    = f.text_area :content
-  %p
-    = f.submit "Update"
-= link_to 'Show', @point
-|
-\#{link_to 'Back', points_path}
+- if @point.nil?
+  = tr('Error loading point', "points")
+- else
+  .point_form{:id => "support_#{@idea.id.to_s}", :class => (@point.value == 1  ? false : 'against')}
+    = (@point.value == 1 ? tr("Why should people support this idea?", "views/ideas/form") :  tr("Why should people oppose this idea?", "views/ideas/form"))
+    = form_for [@idea, @point] do |point_form|
+      = point_form.error_messages      
+      .field
+        .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
+        = point_form.hidden_field :value, :value => @point.value
+      .field
+        %span.characters
+          %span.form_header
+            = tr("Explain your point - ", "view/ideas/_form")
+          %span#pointContentDown_for
+          = tr("characters left", "view/ideas/_form")
+        .field_box= point_form.text_area :content, :id => 'pointContent_for', :button => 'submit', :class=>"point_field", :rows => 5, :maxLength => 1000
+
+      .field
+        .field_label= tr("Add a link to an external website", "views/ideas/form")
+        .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
+      .field
+        .field_box{:class =>  (@point.value == 1  ? :blue : false)}= point_form.submit 'Lisan ' + (@point.value == 1  ? 'pooltargumendi' : 'vastuargumendi')
+   

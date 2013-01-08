@@ -273,6 +273,10 @@ class Point < ActiveRecord::Base
     end    
   end
 
+  def is_editable?
+    return true if created_at.localtime >= Time.now-3600 
+  end
+
   def opposers_helpful?
     opposer_score > 0
   end

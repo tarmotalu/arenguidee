@@ -14,9 +14,20 @@
         link: 
         = link_to point.website.gsub(/http[s]?:\/\//i, ''), 'http://' + point.website.gsub(/http[s]?:\/\//i, '')
     %p
-      %b= point.author_sentence
+      %span.name= link_to point.author_sentence, point.user, :target => :_blank
       %br/
       = l point.created_at.to_date, :format => :long_no_year
+    - if logged_in?
+      - if current_user.is_admin? 
+        .edit_point_options
+          %p= link_to tr('Remove this argument', "points"), point, :method => :delete, :confirm => 'Are you sure you want to delete this'
+          %p= link_to tr('Edit this argument. Because you are an admin', "points"), edit_point_path(point)
+      - elsif current_user == point.user
+        - if point.is_editable?
+          .edit_point_options
+            %p= link_to tr('Edit your argument. You have one hour to make changes from creation time.', "points"), edit_point_path(point)
+            %p= link_to tr('Remove your argument', "points"), point, :method => :delete, :confirm => 'Are you sure you want to delete this'
+
     -# /   %span.point_edit
     -# /     - if point.discussions_count > 0
     -# /       = link_to tr("{count} discussions", "view/points/_short_list", :count => point.discussions_count), discussions_point_url(point)

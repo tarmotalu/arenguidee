@@ -439,10 +439,10 @@ class IdeasController < ApplicationController
       @page_title = @idea.name
       @show_only_last_process = false
       @point_value = 0
-      @points_top_up = @idea.points.published.by_helpfulness.up_value.five
-      @points_top_down = @idea.points.published.by_helpfulness.down_value.five
-      @points_new_up = @idea.points.published.by_recently_created.up_value.five.reject {|p| @points_top_up.include?(p)}
-      @points_new_down = @idea.points.published.by_recently_created.down_value.five.reject {|p| @points_top_down.include?(p)}
+      @points_top_up = @idea.points.published.by_helpfulness.up_value
+      @points_top_down = @idea.points.published.by_helpfulness.down_value
+      @points_new_up = @idea.points.published.by_recently_created.up_value.reject {|p| @points_top_up.include?(p)}
+      @points_new_down = @idea.points.published.by_recently_created.down_value.reject {|p| @points_top_down.include?(p)}
       @total_up_points = @idea.points.published.up_value.count
       @total_down_points = @idea.points.published.down_value.count
       @total_up_points_new = [0,@total_up_points-@points_top_up.length].max
@@ -758,7 +758,8 @@ class IdeasController < ApplicationController
     if not logged_in?
       session[:idea_id] = @idea.id
       session[:value] = @value
-      access_denied
+      flash[:error] = tr('You must be logged in to do this.')
+      redirect_to 
       return
     end
     if @value == 1

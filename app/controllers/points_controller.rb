@@ -1,7 +1,7 @@
 class PointsController < ApplicationController
  
-  before_filter :authenticate_user!, :only => [:new, :create, :quality, :unquality, :your_ideas, :your_index, :destroy, :update_importance]
-  before_filter :admin_required, :only => [:edit, :update]
+  before_filter :authenticate_user!, :only => [:new, :edit, :update, :create, :quality, :unquality, :your_ideas, :your_index, :destroy, :update_importance]
+
 
   before_filter :setup_filter_dropdown
 
@@ -163,6 +163,11 @@ class PointsController < ApplicationController
   def edit
     @point = Point.find(params[:id])
     @idea = @point.idea
+    if @point.user_id != current_user.id and not current_user.is_admin?
+      flash[:error] = tr("Access denied", "controller/points")
+      redirect_to(@idea)
+      return
+    end
   end
 
   # POST /ideas/1/points
@@ -198,6 +203,11 @@ class PointsController < ApplicationController
   def update
     @point = Point.find(params[:id])
     @idea = @point.idea
+    if @point.user_id != current_user.id and not current_user.is_admin?
+      flash[:error] = tr("Access denied", "controller/points")
+      redirect_to(@idea)
+      return
+    end
     respond_to do |format|
       if @point.update_attributes(params[:point])
         flash[:notice] = tr("Saved {point_name}", "controller/points", :point_name => @point.name)
@@ -357,10 +367,11 @@ class PointsController < ApplicationController
       redirect_to(@point)
       return
     end
+    i = @point.idea
     @point.remove!
     ActivityPointDeleted.create(:user => current_user, :point => @point)
     respond_to do |format|
-      format.html { redirect_to(points_url) }
+      format.html { redirect_to(idea_path(i)) }
     end
   end
 

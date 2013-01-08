@@ -16,7 +16,7 @@ $(function(){
 
 	$("#topBar").topBar();
 	$("#rotator").rotator();
-	$("#proposal-bottom .cycle").cycle({timeout: 10000});
+	$("#proposal-bottom .cycle").cycle();
 	$(".cookieText").cookieText();
 	
 	$("#propositions .getMore").getMore();
@@ -131,7 +131,7 @@ $.fn.cycle = function(){
 	var state = 0;
 	var total = items.size()-1;
 	var interval = '';
-	var delay = 3000;
+	var delay = 9000;
 	
 	function next(){
 		items.hide();
@@ -175,7 +175,7 @@ $.fn.rotator = function(){
 	
 	var status = false;
 	var timeout = '';
-	var delay = 10000;
+	var delay = 18000;
 	
 	function startTimeout(){
 		timeout = setTimeout(function(){

@@ -1,4 +1,15 @@
 %h2 Do not rest until all are green-underlined Estonian phrases!
+.field_label
+  if you try to edit a point that is not yours (by URL params): 
+  = tr("Access denied", "controller/points")
+.field_label= tr("Saved {point_name}", "controller/points", :point_name => "POINT NAME")
+.field_label= tr('You must be logged in to do this.')
+.field_label= tr('Error loading argument', "points")
+.field_label= tr('Edit this argument. Because you are an admin', "points")
+.field_label=tr('Remove this argument', "points")
+.field_label=tr('Remove your argument', "points")
+.field_label= tr('Edit your argument. You have one hour to make changes from creation time.', "points")
+.field_label=tr("We're sorry, the search engine is temporary unavailable. Please try again in a few moments", "search")
 .field_label= tr("Bottom ideas", "controller/ideas")
 .field_label= tr("Logged out. Please come again soon.", "controller/sessions")
 .field_label= tr("Save idea", "view/ideas/edit")

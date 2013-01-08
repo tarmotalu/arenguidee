@@ -78,6 +78,7 @@ class Endorsement < ActiveRecord::Base
     else
       ActivityOppositionDelete.create(:user => user, :sub_instance => sub_instance, :idea => idea)
     end
+
   end
 
   def on_finished_entry(new_state, event)

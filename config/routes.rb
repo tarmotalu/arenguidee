@@ -115,13 +115,12 @@ Rahvakogu::Application.routes.draw do
       get :neutral_points
       get :everyone_points
       get :top_points
-      get :idea_detail
       get :endorsed_points
       get :opposed_top_points
       get :endorsed_top_points
       get :comments
       get :documents
-      get :idea_detail
+      # get :idea_detail
       get :update_status
   	end
   	collection do

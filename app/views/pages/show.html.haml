@@ -5,7 +5,7 @@
   .page_sidebar
     - if @page.category.nil?
       %b= tr("Latest activity", "pages/show")
-      - acts = Activity.where('user_id is not null').by_recently_created.limit(6)
+      - acts = Activity.includes(:idea).where('activities.user_id is not null AND activities.type  NOT LIKE "%Delete"').where("ideas.status = 'published'").by_recently_created.limit(6)
       - link = new_idea_path
     - else
       %b= tr("Latest activity in {category_name}", "pages/show", :category_name => @page.category.name )

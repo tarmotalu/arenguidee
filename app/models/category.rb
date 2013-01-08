@@ -21,6 +21,9 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def latest_activity
+    activities.joins(:idea).where('activities.user_id is not null AND activities.type NOT LIKE "%Delete"').where("ideas.status = 'published'").first
+  end
 
   def i18n_name
     tr(self.name, "model/category")

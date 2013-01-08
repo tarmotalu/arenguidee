@@ -135,6 +135,8 @@ class Idea < ActiveRecord::Base
 
   #validates_uniqueness_of :name, :if => Proc.new { |idea| idea.status == 'published' }
   validates :category_id, :presence => true
+  validates :name, :uniqueness => {:scope => [:user_id, :category_id], :message => tr('You have already suggested an idea of this name.', "ideas"), :if => Proc.new { |idea| idea.status == 'published' }}
+
 
   after_create :on_published_entry
 
@@ -169,6 +171,7 @@ class Idea < ActiveRecord::Base
       event :remove, transitions_to: :removed
     end
   end
+
 
   def to_param
     "#{id}-#{name.parameterize_full}"

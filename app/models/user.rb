@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
   validates_presence_of     :password_confirmation, :if => [:should_validate_password?]
   validates_length_of       :password, :within => 4..40, :if => [:should_validate_password?]
   validates_confirmation_of :password, :if => [:should_validate_password?]
-
+  validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
   #validates_presence_of     :post_code, :message => tr("Please enter your postcode.", "model/user")
   #validates_presence_of     :age_group, :message => tr("Please select your age group.", "model/user")
   #validates_presence_of     :my_gender, :message => tr("Please select your gender.", "model/user")

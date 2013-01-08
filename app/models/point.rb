@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Point < ActiveRecord::Base
 
   acts_as_set_sub_instance :table_name=>"points"
@@ -87,6 +88,8 @@ class Point < ActiveRecord::Base
   validates_length_of :content, :within => 5..1000, :too_long => tr("has a maximum of 500 characters", "model/point"),
                                                    :too_short => tr("please enter more than 5 characters", "model/point")
 
+  validates :name, :uniqueness => {:scope => [:user_id, :idea_id, :name, :value], :message => tr('You have already made this argument.', "points") }, :if => Proc.new { |point| point.status == 'published' }                                                   
+  validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
   after_create :on_published_entry
 
   include Workflow

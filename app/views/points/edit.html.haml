@@ -1,6 +1,9 @@
+- unless @idea.nil?
+  #propositions= render :partial => 'issues/pageless', :locals => {:ideas => [@idea]}
 - if @point.nil?
   = tr('Error loading point', "points")
 - else
+  %h2= tr('Edit your argument', 'points')
   .point_form{:id => "support_#{@idea.id.to_s}", :class => (@point.value == 1  ? false : 'against')}
     = (@point.value == 1 ? tr("Why should people support this idea?", "views/ideas/form") :  tr("Why should people oppose this idea?", "views/ideas/form"))
     = form_for [@idea, @point] do |point_form|

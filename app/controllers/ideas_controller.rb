@@ -224,12 +224,12 @@ class IdeasController < ApplicationController
   def bottom
     @filter = 'bottom'
     @position_in_idea_name = true
-    @page_title = tr("Top ideas", "controller/ideas")
+    @page_title = tr("Bottom ideas", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     if params[:category_id]
       @ideas = Idea.by_category(params[:category_id]).published.bottom.paginate :page => params[:page], :per_page => params[:per_page]
     else
-      @ideas = Idea.published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
+      @ideas = Idea.published.bottom.paginate :page => params[:page], :per_page => params[:per_page]
     end
     get_endorsements
     if request.xhr?

@@ -1,6 +1,6 @@
 class FacebookController < ApplicationController
 
-  before_filter :login_required
+  before_filter :authenticate_user!
   protect_from_forgery :except => :multiple
 
   def invite

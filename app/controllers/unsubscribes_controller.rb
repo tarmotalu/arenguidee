@@ -1,7 +1,7 @@
 class UnsubscribesController < ApplicationController
   # we should just remove Unsubscribes in its entirety since we now force
   # users to log in and use /settings/signups instead
-  before_filter :login_required, :only => [:new]
+  before_filter :authenticate_user!, :only => [:new]
   
   # GET /unsubscribes/new
   # GET /unsubscribes/new.xml

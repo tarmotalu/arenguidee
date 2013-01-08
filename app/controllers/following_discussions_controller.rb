@@ -1,6 +1,6 @@
 class FollowingDiscussionsController < ApplicationController
 
-  before_filter :login_required
+  before_filter :authenticate_user!
   before_filter :get_activity
 
   # GET /activities/1/followings

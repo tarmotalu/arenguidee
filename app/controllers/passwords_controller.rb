@@ -1,7 +1,7 @@
 class PasswordsController < ApplicationController
 
   before_filter :login_from_cookie
-  before_filter :login_required, :except => [:create, :new]
+  before_filter :authenticate_user!, :except => [:create, :new]
   before_filter :current_user_required, :only => [:edit, :update]
 
   # POST /passwords

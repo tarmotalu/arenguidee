@@ -5,7 +5,16 @@
       = render :partial => "users/profile_nav"
   .col-10
     .col-content
-      #propositions.users= render :partial => 'issues/pageless', :locals => {:ideas  => @ideas.map(&:idea).compact }
+      = render :partial => "users/profile_info"
+      - unless @ideas.empty?
+        %h2= @user.real_name + " tegi  " + (@ideas.count < 2 ? 'järgmise ettepaneku: ' :  'järgmised ettepanekud:') 
+        #propositions.users= render :partial => 'issues/pageless', :locals => {:ideas  => @ideas }
+      - unless @points.empty?
+        %h2= @user.real_name + " avaldas arvamust " + (@points.count < 2 ? 'järgmise ettepaneku kohta: ' :  'järgmiste ettepanekute kohta:') 
+        #user_points.users= render :partial => 'user_points', :locals => {:points  => @points, :user => @user}
+      - unless @supporting.empty?
+        %h2= @user.real_name + " häälitas  " + (@points.count < 2 ? 'järgmise ettepaneku kohta: ' :  'järgmiste ettepanekute kohta:') 
+        #supporting.users= render :partial => 'issues/pageless', :locals => {:ideas => @supporting.map(&:idea) }
       -# = will_paginate(@ideas)
       -# - if @ideas.any?
       -#   - @ideas.each do |idea_endorsement|

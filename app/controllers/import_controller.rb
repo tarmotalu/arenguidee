@@ -5,7 +5,7 @@ require 'uri'
 
 class ImportController < ApplicationController
 
-  before_filter :login_required
+  before_filter :authenticate_user!
   protect_from_forgery :except => :windows
   
   def yahoo

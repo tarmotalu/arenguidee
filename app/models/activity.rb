@@ -678,7 +678,7 @@ class ActivityCapitalPointHelpfulUndeclareds < Activity
       if capital.is_undo?
         tr("{user_name} earned {capital}{currency_short_name} because undeclareds didn't find {point_name} unhelpful anymore", "model/activity", :user_name => user.name, :point_name => point.name, :capital => capital.amount.abs, :currency_short_name => Instance.current.currency_short_name)
       else
-        tr("{user_name} earned {capital}{currency_short_name} because undeclareds found {point_name} helpful", "model/activity", :user_name => user.name, :point_name => point.name, :capital => capital.amount.abs, :currency_short_name => Instance.current.currency_short_name)
+        tr("{user_name} teenis {capital}{currency_short_name} sest tema kommentaar ettepanekule  {point_name}  aitas kellelgi seda toetada", "model/activity", :user_name => user.name, :point_name => point.idea.name, :capital => capital.amount.abs, :currency_short_name => Instance.current.currency_short_name)
       end
     elsif capital.amount < 0
       if capital.is_undo?

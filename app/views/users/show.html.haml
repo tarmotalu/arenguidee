@@ -7,12 +7,9 @@
     .col-content
       = render :partial => "users/profile_info"
       - if @ideas.any?
-        - if @user.endorsements_count > 5
-          %h2= tr("Top 5 of {idea_count} ideas", "view/users/show", :idea_count => @user.endorsements_count)
-        - else
-          %h2= tr("Top {count} ideas", "view/users/show", :count => @ideas.length)
+        %h2= tr("{name} has created {count} ideas", "view/users/show", :name => @user.name, :count => @ideas.length)
 
-        #propositions.users= render :partial => 'issues/pageless', :locals => {:ideas  => @ideas.map(&:idea).compact }
+        #propositions.users= render :partial => 'issues/pageless', :locals => {:ideas  => @ideas.compact }
         -# - @ideas.each do |idea_endorsement|
         -#   - idea = Idea.unscoped.find(idea_endorsement.idea_id)
         -#   = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}

@@ -164,11 +164,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
     @page_title = tr("{user_name} at {instance_name}", "controller/users", :user_name => @user.name, :instance_name => tr(current_instance.name,"Name from database"))
-    @ideas = @user.endorsements.active.by_position.find(:all, :include => :idea, :limit => 5)
+    # @ideas = @user.endorsements.active.by_position.find(:all, :include => :idea, :limit => 5)
+    @ideas = Idea.where(:user_id => @user.id).published.top_rank
     @endorsements = nil
     get_following
     if logged_in? # pull all their endorsements on the ideas shown
-      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.idea_id},current_user.id])
+      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.id},current_user.id])
     end    
     @activities = @user.activities.active.by_recently_created.paginate :include => :user, :page => params[:page], :per_page => params[:per_page]
     get_endorsements

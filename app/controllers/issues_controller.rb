@@ -158,6 +158,7 @@ class IssuesController < ApplicationController
   end  
 
   def controversial
+    @filter = 'controversial'
     @category = Category.find(params[:id])
     @page_title = tr("Controversial {tag_name} ideas", "controller/issues", :tag_name => tr(@category.name, "model/category").titleize)
     @ideas = Idea.where(category_id: @category.id).published.controversial.paginate :page => params[:page], :per_page => params[:per_page]

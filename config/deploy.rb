@@ -14,6 +14,7 @@ task :staging do
   set :rails_env, "staging"
   after 'deploy:finalize_update' do
     run "cp #{deploy_to}/#{shared_dir}/htaccess #{current_release}/public/.htaccess"
+    run "ln -nfs /var/www/rahvakogu_production/system/users/buddy_icons #{current_release}/public/system/users/buddy_icons"
   end
 end
 

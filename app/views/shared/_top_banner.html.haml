@@ -1,6 +1,9 @@
 %header#header{:class => controller.controller_name != 'home' ? "top-position" : false }
   .inline
-    = link_to image_tag('logo.png'), '/', :alt => "Rahvakogu", :class => :logo
+    - if Rails.env.production?
+      = link_to image_tag('logo.png'), '/', :alt => "Rahvakogu", :class => :logo
+    - else
+      = link_to image_tag('staging_logo.png'), '/', :alt => "Rahvakogu staging", :class => :logo
  
     %nav#mainMenu
       - @categories.each do |category|

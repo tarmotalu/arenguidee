@@ -23,6 +23,8 @@
       - unless @user.title.blank?
         = @user.title + ", "
       = @user.organisation
+  - unless @user.social_network_url.blank?
+    .profile_social= link_to 'Sotsiaalmeedia profiil',  'http://' + @user.social_network_url.gsub(/http[s]?:\/\//i, '')
   - unless @user.bio.blank?
     .profile_biography= @user.bio
   .profile_small

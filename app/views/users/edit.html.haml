@@ -7,7 +7,7 @@
     .col-5
       .col-content
         = f.error_messages 
-        - if @user.is_admin?
+        - if current_user.is_admin?
           .field
             .field_label= tr("First name", "view/users/edit")
             .field_box= f.text_field :first_name, :size => 12

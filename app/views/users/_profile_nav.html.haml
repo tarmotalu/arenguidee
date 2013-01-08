@@ -2,9 +2,9 @@
   %ul
     %li.highlight
       = link_to_unless_current tr("Profile", "view/users/_profile_nav"), @user
-    - if @user.endorsements_count > 5
+    - unless @user.ideas.empty?
       %li
-        = link_to_unless_current tr("Ideas", "view/users/_profile_nav") + " (#{@user.endorsements_count})", ideas_user_url(@user)
+        = link_to_unless_current tr("Ideas", "view/users/_profile_nav") + " (#{@user.ideas.count})", ideas_user_url(@user)
     - if @user.followings_count > 0
       %li
         = link_to_unless_current tr("Following", "view/users/_profile_nav") + " (#{@user.followings_count})", following_user_url(@user)

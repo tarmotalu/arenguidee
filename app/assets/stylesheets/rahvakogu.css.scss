@@ -276,7 +276,9 @@ box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);}
 #propositions .idea_main_content .idea_left_wrap .head .desc{float:right; width:580px; color:#444444; font-size:12px; margin-left: 20px;}
 #propositions.users .idea_main_content .idea_left_wrap .head .desc { width: 400px; }
 #propositions .idea_main_content .idea_left_wrap .head .desc h2 {margin:0; font-family:OpenSansSemiBold; font-weight:normal; font-size:18px; line-height:24px; margin-top:-6px; margin-bottom:5px;}
-#propositions .idea_main_content .idea_left_wrap .head .desc h2 .red{color:#cc0000;}
+#propositions .idea_main_content .idea_left_wrap .head .desc h2 .red{ color:#cc0000;
+	 a { color: #c00;}
+}
 #propositions .idea_main_content .idea_left_wrap .head .desc .gray{color:#999999;}
 #propositions p{margin:0 0 0 0; font-size:14px; color:#444444; line-height:20px;}
 #propositions .idea_endorsements { float: left;  width: 300px; }

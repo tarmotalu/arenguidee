@@ -33,4 +33,4 @@
     :title =>  tr("I oppose this, and want to add my opposition to my idea list.", "view/ideas") 
   .idea_debate_spinner{:id => "idea_debate_spinner_oppose_#{idea.id.to_s}"}
 - if region == 'idea_detail'
-  = link_to tr("Lisan vastuargumendi", "ideas/idea_detail"), '#',  :onClick => '$("#oppose_' + @idea.id.to_s + '").slideToggle();return false;' , :class => :red_text
+  = protected_link_to tr("Lisan vastuargumendi", "ideas/idea_detail"), '#',  :onClick => '$("#oppose_' + @idea.id.to_s + '").slideToggle();return false;' , :class => :red_text

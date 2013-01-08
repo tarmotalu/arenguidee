@@ -8,7 +8,7 @@
             .desc
               %h2
                 = link_to idea.name, idea
-                %span.red= "(#{idea.points.count})"
+                %span.red= link_to "(#{idea.points.count})", idea
               - if @category.nil?
                 %h3= idea.category.name
               %span

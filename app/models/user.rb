@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
   has_many :sub_instances, :through => :signups
     
   has_many :endorsements, :dependent => :destroy
-  has_many :ideas, :conditions => "endorsements.status = 'active'", :through => :endorsements
+  has_many :ideas #, :conditions => "endorsements.status = 'active'", :through => :endorsements
   has_many :finished_ideas, :conditions => "endorsements.status = 'finished'", :through => :endorsements, :source => :idea
     
   has_many :created_ideas, :class_name => "Idea"

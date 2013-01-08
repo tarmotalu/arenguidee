@@ -94,7 +94,7 @@
         .latest
           %h3= tr("Latest activity")
           .activity_front
-            .icon= image_tag cat.activities.first.user.buddy_icon(:icon_24) rescue ''
+            -# .icon= image_tag cat.activities.first.user.buddy_icon(:icon_24) rescue ''
             .activity= render :partial => "activities/#{cat.activities.first[:type].downcase}", :locals => {:activity => cat.activities.first}
 
 

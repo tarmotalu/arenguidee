@@ -121,14 +121,22 @@ class UsersController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
-    if current_user != @user || !current_user.is_admin? || check_for_suspension
-      redirect_to '/' and return 
+
+    unless current_user.is_admin?
+      if current_user != @user || check_for_suspension
+        redirect_to '/' and return 
+      end
     end
     @page_title = tr("Changing settings for {user_name}", "controller/users", :user_name => @user.name)
   end
   
   def update
     @user = User.find(params[:id])
+    unless current_user.is_admin?
+      if current_user != @user || check_for_suspension
+        redirect_to '/' and return 
+      end
+    end
     @page_title = tr("Changing settings for {user_name}", "controller/users", :user_name => @user.name)
     unless current_user.is_admin?
       params[:user].delete :first_name
@@ -190,8 +198,9 @@ class UsersController < ApplicationController
   def ideas
     @user = User.find(params[:id])    
     redirect_to '/' and return if check_for_suspension
-    @page_title = tr("{user_name} ideas at {instance_name}", "controller/users", :user_name => @user.name.possessive, :instance_name => tr(current_instance.name,"Name from database"))
+
     @ideas = Idea.where(:user_id => @user.id).published.top_rank
+    @page_title = @user.name
     @points = Point.where(:user_id => @user.id).published
     @supporting = @user.endorsements.active.by_position.delete_if{|x| @ideas.map(&:id).include?(x.idea_id)}
     @endorsements = nil

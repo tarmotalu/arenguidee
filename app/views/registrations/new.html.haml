@@ -1,6 +1,7 @@
 %h2= tr("Complete registration", "views/registrations/new")
 .reg_form
   = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+    = f.error_messages
     .left
       .field_label= tr("Your profile picture","views/registrations/new" )
       .profile_picture48

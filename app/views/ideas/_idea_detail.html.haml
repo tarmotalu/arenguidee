@@ -90,7 +90,7 @@
         .field
           .field_box= point_form.submit 'Lisan vastuargumendi'  
     - unless @points_top_up.nil? || @points_top_down.nil?
-      .idea_wrapper{:style => "clear: both;"}
+      .idea_wrapper
         .col-left.clearfix
           = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "pro_new", :points => @points_top_up, :numbering=>false}
         .col-right

@@ -67,11 +67,7 @@
                   #search_results_body
                     .profile_picture96
                       - if result.has_picture?
-                        %a{:href => picture_settings_url}
-                          = image_tag result.buddy_icon.url(:icon_96), :size => "96x96", :border => 0
-                      - elsif current_facebook_user_if_on_facebook and result.has_facebook?
-                        %a{:href => url_for(result)}
-                          %fb:profile-pic{:border => "0", :linked => "false", :size => "small", :uid => result.facebook_uid, :width => "96px"}/
+                        = link_to image_tag(result.buddy_icon.url(:icon_96), :size => "96x96", :border => 0), result
                       - elsif logged_in? and result.id == current_user.id
                         = link_to image_tag("upload_pic.gif", :size => "96x96", :border => 0), picture_settings_url
                       - else

@@ -673,6 +673,11 @@ class IdeasController < ApplicationController
       format.html # new.html.erb
     end    
   end
+
+  def access_denied
+    flash[:error] = tr('Access denied', 'ideas')
+    redirect_to '/ideas/' and return
+  end
   
   # POST /ideas
   # POST /ideas.xml
@@ -1065,12 +1070,22 @@ class IdeasController < ApplicationController
   
   # DELETE /ideas/1
   def destroy
-    if current_user.is_admin?
-      @idea = Idea.find(params[:id])
-    else
-      @idea = current_user.created_ideas.find(params[:id])
-    end
+    @idea = Idea.find(params[:id])
+
     return unless @idea
+    unless current_user.is_admin?
+      if current_user != @idea.user || check_for_suspension
+        redirect_to '/' and return 
+      end
+      unless @idea.points.published.empty?
+        flash[:error] = tr("You cannot delete an idea once there are arguments for/against it.", "ideas")
+        redirect_to '/' and return
+      end
+      unless @idea.is_editable?
+        flash[:error] = tr('You cannot delete your idea after one hour has passed.', "ideas")
+        redirect_to '/' and return
+      end
+    end
     name = @idea.name
     @idea.remove!
     flash[:notice] = tr("Permanently deleting {idea_name}. This may take a few minutes depending on how many endorsements/oppositions need to be removed.", "controller/ideas", :idea_name => name)

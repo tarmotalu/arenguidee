@@ -1,6 +1,6 @@
 class SubInstancesController < ApplicationController
 
-  before_filter :admin_required!
+  before_filter :admin_required
 
 
   def index

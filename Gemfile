@@ -74,7 +74,15 @@ group :test do
   gem 'ruby-prof'
   gem 'headless'
   gem 'turn', :require => false
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', '4.1.0'
+  gem 'shoulda', '3.3.2'
+  gem 'rspec-rails', '2.12.0'
+  gem 'guard', '1.5.4'
+  gem 'guard-rspec', '2.2.2'
+  gem 'spork', "0.9.2"
+  gem 'guard-spork', '1.3.0'
+  gem 'growl'  
+  gem 'rb-fsevent', '~> 0.9.1'  
 end
 
 group :assets do

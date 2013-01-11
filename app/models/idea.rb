@@ -101,7 +101,7 @@ class Idea < ActiveRecord::Base
   
   before_save :strip_name
 
-
+  validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
   define_index do
     indexes name
     indexes description

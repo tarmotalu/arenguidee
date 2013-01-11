@@ -64,6 +64,9 @@
               = tr("characters left", "view/ideas/_form")
             .field_box
               = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 10, :cols => 120, :class=>"col_text_area", :maxLength => 3000
+        .field
+          = tr("Add a link to an external website", "views/ideas/form")
+          .field_box= f.text_field :website, :size => 40, :class => "point_field"
     -# / .col-6.col-inset
     -# /   .col-content
     -# /     %h1

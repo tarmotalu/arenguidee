@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105193027) do
+ActiveRecord::Schema.define(:version => 20130111124603) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -353,6 +353,7 @@ ActiveRecord::Schema.define(:version => 20130105193027) do
     t.integer  "idea_revision_id"
     t.string   "author_sentence"
     t.integer  "idea_revisions_count",                    :default => 0
+    t.string   "website"
   end
 
   add_index "ideas", ["category_id"], :name => "index_ideas_on_category_id"
@@ -1209,7 +1210,7 @@ ActiveRecord::Schema.define(:version => 20130105193027) do
   add_index "user_rankings", ["version"], :name => "rankings_version_index"
 
   create_table "users", :force => true do |t|
-    t.string   "login",                        :limit => 40
+    t.string   "login",                        :limit => 40,  :default => "",        :null => false
     t.string   "email",                        :limit => 100
     t.string   "crypted_password",             :limit => 40
     t.string   "salt",                         :limit => 40

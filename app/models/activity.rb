@@ -155,8 +155,27 @@ class Activity < ActiveRecord::Base
   def last_comment
     comments.published.last
   end
+
+  def is_interested?(u)
+    out = false
+    if user == u
+      out =  true
+    end
+    unless idea.nil?
+      out = true if  idea.user == u
+      out = true if idea.points.map{|x| x.user_id }.include?(u.id)
+    end
+    unless point.nil?
+      out = true if point.user == u
+      out = true if point.idea.user == u
+      out == true if point.idea.points.map{|x| x.user_id}.include?(u.id)
+    end
+    return out
+  end
 end
 
+  
+  
 class ActivityUserNew < Activity
   def name
     tr("{user_name} joined {instance_name}", "model/activity", :user_name => user.name, :instance_name => Instance.current.name)

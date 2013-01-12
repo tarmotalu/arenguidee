@@ -408,6 +408,15 @@ class User < ActiveRecord::Base
     end
   end  
   
+  def is_interested?(item)
+    if item.class == Idea
+      return true if item.user == self
+    else
+      return item.class.to_s
+    end
+  end
+
+
   def is_subscribed=(value)
     if not value
       self.report_frequency = 0
@@ -539,6 +548,10 @@ class User < ActiveRecord::Base
   
   def follower_user_ids
     @follower_user_ids ||= followers.collect{|f|f.user_id}
+  end
+  
+  def ignoring_user_ids
+    @ignoring_user_ids ||= followings.delete_if{|x| x.value > -1}.collect{|f| f.other_user_id}
   end
   
   def calculate_contacts_count

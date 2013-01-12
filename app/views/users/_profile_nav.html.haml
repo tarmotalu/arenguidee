@@ -10,8 +10,8 @@
     - if @user.followers_count > 0
       %li
         = link_to_unless_current tr("Followers", "view/users/_profile_nav") + " (#{@user.followers_count})", followers_user_url(@user)
-    -# %li
-    -#   = link_to_unless_current tr("Feed", "view/users/_profile_nav"), activities_user_url(@user)
+    %li
+      = link_to_unless_current tr("Feed", "view/users/_profile_nav"), activities_user_url(@user)
     -# %li
     -#   = link_to_unless_current tr(pluralize(@user.points.count, "discussion"), "view/users/_profile_nav", :count => @user.points_count), discussions_user_url(@user)
     %li

@@ -1,6 +1,6 @@
 class FeedController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:index, :top, :top_feed, :discussions, :points, :activities, :capitals, :official, :changes, :changes_voting, :changes_activity, :ads, :videos, :comments, :your_discussions, :your_idea_discussions, :your_network_discussions, :your_ideas_created_discussions]
+  before_filter :authenticate_user!, :except => [ :discussions, :points, :activities, :capitals, :official, :changes, :changes_voting, :changes_activity, :ads, :videos, :comments, :your_discussions, :your_idea_discussions, :your_network_discussions, :your_ideas_created_discussions]
   before_filter :check_for_user, :only => [:your_discussions, :your_idea_discussions, :your_network_discussions, :your_ideas_created_discussions]
 
   caches_action :top, :discussions, :activities, :points,
@@ -8,11 +8,26 @@ class FeedController < ApplicationController
                 :cache_path => proc {|c| c.action_cache_path},
                 :expires_in => 2.minutes
 
-  before_filter :setup_filter_dropdown
+  # before_filter :setup_filter_dropdown
 
   def index
-    redirect_to :action => "activities"
-    return
+    @page_title = tr("Everything happening at {instance_name}", "controller/feed", :instance_name => tr(current_instance.name,"Name from database"))
+#    if @current_instance.users_count > 5000 # only show the last 7 days worth
+#      @activities = Activity.active.for_all_users.last_seven_days.by_recently_created.paginate :page => params[:page]
+#    else
+     @activities = Activity.active.for_all_users.by_recently_created.paginate :page => params[:page]
+#    end
+    @rss_url = url_for(:only_path => false, :format => "rss")
+    if request.xhr?
+      render :partial=>"feed/activity_list", :locals => {:activities => @activities }
+    else
+      respond_to do |format|
+        format.html { render :action => "activity_list" }
+        format.rss { render :template => "rss/activities" }
+        format.xml { render :xml => @activities.to_xml(:include => [:user, :comments], :except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @activities.to_json(:include => [:user, :comments], :except => NB_CONFIG['api_exclude_fields']) }
+      end
+    end
   end
 
   def videos

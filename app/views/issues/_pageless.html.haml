@@ -1,5 +1,8 @@
 - if ideas.any?
   - ideas.each do |idea|
+    - if logged_in? && controller.controller_name != 'users'
+      - if current_user.ignoring_user_ids.include?(idea.user_id)
+        - next
     .idea_list_entry
       .idea_main_content
         .idea_left_wrap

@@ -5,6 +5,7 @@
       = render :partial => "users/profile_nav"
   .col-10
     .col-content
+      = @page_title
       - @followings.in_groups_of(4) do |row_followings|
         - for following in row_followings
           - if following

@@ -6,18 +6,20 @@
 -# - points_count = idea.points.where(sub_instance_id: idea.sub_instance_id).count
 -# - debate_text = @geoblocked ? tr("SHOW DEBATE", "view/ideas") : tr("DEBATE", "view/ideas")
 .vote
-  - if region != 'idea_inline'
+  - if region == 'idea_detail'
     .thumb-up= link_to idea.all_for.count, '#', :onClick => '$("#faces_wrapper_' + idea.id.to_s + '").slideToggle();return false;'
   - else
     .thumb-up= idea.all_for.count
-  %div{:class => region}= render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => region, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+  - if region != 'feed_sidebar'
+    %div{:class => region}= render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => region, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
 
 .vote
-  - if region != 'idea_inline'
+  - if region == 'idea_detail'
     .thumb-down= link_to idea.all_against.count, '#', :onClick => '$("#faces_wrapper_' + idea.id.to_s + '").slideToggle();return false;'
   - else
     .thumb-down= idea.all_against.count
-  %div{:class => region}= render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :region => region, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+  - if region != 'feed_sidebar'
+    %div{:class => region}= render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :region => region, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
   
 
       

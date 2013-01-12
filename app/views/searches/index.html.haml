@@ -75,7 +75,7 @@
                           = image_tag current_instance.buddy_icon.url(:icon_96), :size => "96x96", :border => 0, :alt => ""
                     .profile_strip
                       .profile_name
-                        %span.profile_name= result.real_name
+                        %span.profile_name= link_to result.real_name, result
                         %span.profile_pc= link_to result.capitals_count.to_s + current_instance.currency_short_name, capital_user_url(result)
                         - if logged_in?
                           - if current_user.is_admin?

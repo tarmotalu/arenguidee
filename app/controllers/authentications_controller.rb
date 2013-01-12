@@ -68,7 +68,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
       
       if @user
         notice = t('devise.sessions.signed_in')
-        redirect = stored_location_for(:user) || root_path
+        redirect = stored_location_for(:user) || '/feed'
         sign_in(:user, @user)        
       else # Authentication was successful, but user is not registered in the system
         session[:omniauth] = omniauth

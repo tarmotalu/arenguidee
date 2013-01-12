@@ -1,3 +1,4 @@
+
 - if Instance.current.message_for_news and Instance.current.message_for_news!="" and not params[:controller].include?("portal")
   = render :partial=>"/shared/top_message_box", :locals=> {:message_text => Instance.current.message_for_news.html_safe }
 :javascript
@@ -7,14 +8,55 @@
   });
 / Needs RSS here
 /    .rss_move
-.clear
-/
-  <haml:silent> if not logged_in? </haml:silent><haml:block>
-  <div class="pre_text">
-  <haml:loud> tr(&amp;quot;If you'd like to participate, &amp;lt;a href='{signup_url}'&amp;gt;please sign up&amp;lt;/a&amp;gt;. Membership is free and you can even use your existing Facebook account.&amp;quot;, &amp;quot;view/feed/activity_list&amp;quot;, :signup_url =&amp;gt; new_user_url)</haml:loud>
-  </div>
-  </haml:block>
-%div
+#feed_sidebar
+  - if logged_in?
+    .profile_strip
+      .profile_pic= render :partial => 'users/profile_pic', :locals => {:@user => current_user}
+      .profile_name
+        %span.profile_name= link_to current_user.real_name, current_user
+        %span.profile_pc= link_to current_user.capitals_count.to_s + current_instance.currency_short_name, capital_user_url(current_user)
+        - if logged_in?
+          - if current_user.is_admin?
+            - if current_user.is_admin?
+              .is_admin admin
+     
+      - if current_user.has_website? or current_user.has_twitter?
+        .profile_website
+          - if current_user.has_website?
+            %a{:href => current_user.website_link}= current_user.website_link
+          - if current_user.has_website? and current_user.has_twitter?
+            \&middot;
+          - if current_user.has_twitter?
+            %a{:href => "http://twitter.com/#{current_user.twitter_login}"}
+              http://twitter.com/#{current_user.twitter_login}
+      - unless current_user.organisation.blank?
+        .profile_website
+          - unless current_user.title.blank?
+            = current_user.title + ", "
+          = current_user.organisation
+      - unless current_user.social_network_url.blank?
+        .profile_social= link_to 'Sotsiaalmeedia profiil',  'http://' + current_user.social_network_url.gsub(/http[s]?:\/\//i, '')
+    #ideas
+      - if current_user.ideas.empty?
+        %p
+          = tr('You have not submitted any ideas yet.', 'feed')
+      - else
+        .ideas_feed_title= tr('Your ideas', 'feed')
+        - current_user.ideas.each do |idea|
+          .idea.clearfix
+            .votes
+              .idea_name
+                = link_to idea.name, idea
+                %span.red= link_to "(#{idea.points.count})", idea
+              = render :partial => 'ideas/debate_buttons', :locals => {:region => "feed_sidebar", :idea => idea, :endorsements => idea.endorsements}
+
+  -# <haml:silent> if not logged_in? </haml:silent><haml:block>
+  -# <div class="pre_text">
+  -# <haml:loud> tr(&amp;quot;If you'd like to participate, &amp;lt;a href='{signup_url}'&amp;gt;please sign up&amp;lt;/a&amp;gt;. Membership is free and you can even use your existing Facebook account.&amp;quot;, &amp;quot;view/feed/activity_list&amp;quot;, :signup_url =&amp;gt; new_user_url)</haml:loud>
+  -# </div>
+  -# </haml:block>
+#activity_feed
+  %h2= tr("Latest on Rahvakogu", "feed_list")
   - if logged_in? and (params[:action].include?("activities") or params[:action].include?("discussions"))
     #new_activities
       .col-group
@@ -28,5 +70,6 @@
   - else
     #activities.single
       = render :partial=>"feed/activity_list"
-    %div
-      = will_paginate(@activities) if @activities.respond_to?('total_pages')
+      = pageless_feed @activities.total_pages, '/feed'
+    -# %div
+    -#   = will_paginate(@activities) if @activities.respond_to?('total_pages')

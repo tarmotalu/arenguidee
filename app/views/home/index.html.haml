@@ -99,58 +99,54 @@
 
 
   = protected_link_to "Tee oma ettepanek", new_idea_path, :class => :button
-/ /proposal
--# %section#problems
--#   %h1 Põhilised probleemid neis viies teemas:
--#   .people
--#     = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
--#       %span.icon
--#         = image_tag('person-1.png')
--#         %span.play &nbsp;
--#       %span.desc
--#         %b Isiku nimi
--#         %br/
--#         Tegevusala
--#       / /desc
--#     / /item
--#     = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
--#       %span.icon
--#         = image_tag('person-2.png')
--#         %span.play &nbsp;
--#       %span.desc
--#         %b Isiku nimi
--#         %br/
--#         Tegevusala
--#       / /desc
--#     / /item
--#     = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
--#       %span.icon
--#         = image_tag('person-3.png')
--#         %span.play &nbsp;
--#       %span.desc
--#         %b Isiku nimi
--#         %br/
--#         Tegevusala
--#       / /desc
--#     / /item
--#     = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
--#       %span.icon
--#         = image_tag('person-4.png')
--#         %span.play &nbsp;
--#       %span.desc
--#         %b Isiku nimi
--#         %br/
--#         Tegevusala
--#       / /desc
--#     / /item
--#     = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
--#       %span.icon
--#         = image_tag('person-5.png')
--#         %span.play &nbsp;
--#       %span.desc
--#         %b Isiku nimi
--#         %br/
--#         Tegevusala
+
+%section#problems
+  %h1 Põhilised probleemid neis viies teemas:
+  .people
+    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
+      %span.icon
+        = image_tag('rahastamine.icon.png')
+        %span.play &nbsp;
+      %span.desc
+        %b Isiku nimi
+        %br/
+        Tegevusala
+
+    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
+      %span.icon
+        = image_tag('erakonnad.icon.png')
+        %span.play &nbsp;
+      %span.desc
+        %b Isiku nimi
+        %br/
+        Tegevusala
+
+    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
+      %span.icon
+        = image_tag('valimised.icon.png')
+        %span.play &nbsp;
+      %span.desc
+        %b Isiku nimi
+        %br/
+        Tegevusala
+
+    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
+      %span.icon
+        = image_tag('osalemine.icon.png')
+        %span.play &nbsp;
+      %span.desc
+        %b Isiku nimi
+        %br/
+        Tegevusala
+
+    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
+      %span.icon
+        = image_tag('parteistamine.icon.png')
+        %span.play &nbsp;
+      %span.desc
+        %b Isiku nimi
+        %br/
+        Tegevusala
 
 %section#proposal-bottom
   - if @bottom_ideas.empty?

@@ -26,7 +26,16 @@ module ApplicationHelper
     link_to *args, &block
   end
 
+  def pageless_feed(total_pages, url=nil)
+    opts = {
+      :totalPages => total_pages,
+      :url        => url,
+      :loaderMsg  => 'Laen j&auml;rgmiseid'.mb_chars,
+      :loaderImage => '/assets/load.gif'
+    }
 
+    javascript_tag("$('#activities').pageless(#{opts.to_json});")
+  end  
 
   def current_facebook_user_if_on_facebook
 

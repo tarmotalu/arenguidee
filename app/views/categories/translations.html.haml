@@ -1,4 +1,12 @@
 %h2 Do not rest until all are green-underlined Estonian phrases!
+.field_label= tr("{user_name} is following {count} people", "controller/users", :user_name => "USERSE", :count => 35)      
+.field_label= tr('You have not submitted any ideas yet.', 'feed')
+.field_label= tr('Your ideas', 'feed')
+.field_label=tr("Stop following", "view/users/_button_small")
+.field_label= tr("Following", "view/users/_button_small")
+.field_label= tr("Stop ignoring this person", "view/users/_button_small") 
+.field_label=tr("I want to follow this person's comments and activity", "view/users/_button_small")
+.field_label=tr("I want to ignore this person's comments and activity", "view/users/_button_small")
 .field_label=tr("You must sign in to participate in Rahvakogu", "views/layout/applicaton")
 .field_label=tr('Access denied', 'ideas')
 .field_label=tr("You cannot delete an idea once there are arguments for/against it.", "ideas")
@@ -88,7 +96,9 @@
 .field_label= tr("Your website", "views/registrations/new")
 .field_label= tr("Link to your social networking page", "views/registrations/new")
 .field_label= tr("Your city", "views/registrations/new")
+.field_label= tr("{user_name} is ignoring {count} people", "controller/users", :count = 34, :user_name => "USER_NAME")
 .field_label=tr("Sign up", "views/registrations/new")
+.field_label=tr("Stop ignoring", "view/users/_button_small")
 .field_label
   not yet endorsed (toetan?): 
   =tr("ENDORSE", "view/ideas")

@@ -9,6 +9,11 @@
             .is_admin admin
     - else
       %span.profile_name= @page_title
+  - if not (logged_in? and current_user == @user)
+    .following
+      .col-full
+        .col-content{:id => "user_#{@user.id.to_s}_button"}
+          = render :partial => "users/button_small", :locals => {:user => @user, :following => @following}      
   - if @user.has_website? or @user.has_twitter?
     .profile_website
       - if @user.has_website?
@@ -28,11 +33,7 @@
   - unless @user.bio.blank?
     .profile_biography= @user.bio
   .profile_small
-    -# - if not (logged_in? and current_user == @user)
-    -#   .col-group
-    -#     .col-full
-    -#       .col-content{:id => "user_#{@user.id.to_s}_button"}
-    -#         = render :partial => "users/button_small", :locals => {:user => @user, :following => @following}
+
     - if @user.position > 0
       = tr("{position} most influential", "view/users/_header", :position => @user.position)
   %div.user_joined_visit

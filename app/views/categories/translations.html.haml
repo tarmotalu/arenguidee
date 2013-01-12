@@ -1,4 +1,6 @@
 %h2 Do not rest until all are green-underlined Estonian phrases!
+.field_label=tr("What {user_name} is doing at {instance_name}", "controller/users", :user_name => "USERNAME", :instance_name => tr(current_instance.name,"Name from database"))
+.field_label= tr("{user_name} hasn't earned any {currency_name} yet.", "view/users/activities", :user_name => "USERNAME", :currency_name => tr(current_instance.currency_name.downcase,"Currency name from database"))
 .field_label= tr("{user_name} is following {count} people", "controller/users", :user_name => "USERSE", :count => 35)      
 .field_label= tr('You have not submitted any ideas yet.', 'feed')
 .field_label= tr('Your ideas', 'feed')

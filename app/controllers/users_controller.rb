@@ -223,12 +223,16 @@ class UsersController < ApplicationController
     get_following
     @page_title = tr("What {user_name} is doing at {instance_name}", "controller/users", :user_name => @user.name, :instance_name => tr(current_instance.name,"Name from database"))
     @activities = @user.activities.active.by_recently_created.paginate :page => params[:page], :per_page => params[:per_page]
-    respond_to do |format|
-      format.html # show.html.erb
-      format.rss { render :template => "rss/activities" }
-      format.xml { render :xml => @activities.to_xml(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @activities.to_json(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
-    end    
+    if request.xhr?
+      render :partial => 'feed/activity_list'#, :locals => {:activities => @activities}
+    else
+      respond_to do |format|
+        format.html # show.html.erb
+        format.rss { render :template => "rss/activities" }
+        format.xml { render :xml => @activities.to_xml(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @activities.to_json(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
+      end   
+    end 
   end
   
   def comments

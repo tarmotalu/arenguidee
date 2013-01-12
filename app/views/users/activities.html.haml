@@ -8,12 +8,15 @@
       - if @activities.empty? and params[:action] == 'capital'
         = tr("{user_name} hasn't earned any {currency_name} yet.", "view/users/activities", :user_name => @user.name, :currency_name => tr(current_instance.currency_name.downcase,"Currency name from database"))
       - else
-        - if @activities.total_pages > 1
-          = will_paginate(@activities)
-        - elsif @activities.empty?
+        %h2= @page_title
+        - if @activities.empty?
           = tr("No activity here yet.", "view/users/activities")
-        - for activity in @activities
-          - if params[:action] == 'discussions'
-            = render :partial => "activities/show", :locals => {:activity => activity, :suffix => ""}
-          - else
-            = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_nouser"}
+        - else
+          #activities
+            - for activity in @activities
+              - if params[:action] == 'discussions'
+                = render :partial => "activities/show", :locals => {:activity => activity, :suffix => ""}
+              - else
+                = render :partial => "activities/show", :locals => {:activity => activity, :suffix => "_nouser"}
+          = pageless_feed @activities, activities_user_path(@user)
+

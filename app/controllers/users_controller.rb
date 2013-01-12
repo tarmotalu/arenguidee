@@ -279,13 +279,17 @@ class UsersController < ApplicationController
     get_following
     @page_title = tr("{user_name} {currency_name} at {instance_name}", "controller/users", :user_name => @user.name.possessive, :currency_name => tr(current_instance.currency_name.downcase,"Currency name from database"), :instance_name => tr(current_instance.name,"Name from database"))
     @activities = @user.activities.active.capital.by_recently_created.paginate :page => params[:page], :per_page => params[:per_page]
-    respond_to do |format|
-      format.html {
-        render :template => "users/activities"
-      }
-      format.xml { render :xml => @activities.to_xml(:include => :capital, :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @activities.to_json(:include => :capital, :except => NB_CONFIG['api_exclude_fields']) }
-    end    
+    if request.xhr?
+      render :partial => "feed/activity_list" 
+    else
+      respond_to do |format|
+        format.html {
+          render :template => "users/activities"
+        }
+        format.xml { render :xml => @activities.to_xml(:include => :capital, :except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @activities.to_json(:include => :capital, :except => NB_CONFIG['api_exclude_fields']) }
+      end
+    end  
   end  
   
   def points

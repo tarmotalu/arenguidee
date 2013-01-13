@@ -92,7 +92,7 @@
       = link_to pluralize(cat.ideas.count, 'ettepanek'), issue_path(cat)
       - unless cat.latest_activity.nil?
         .latest
-          %h3= tr("Latest activity")
+          %h3= tr("Viimased sissekanded", "home/index")
           .activity_front
             -# .icon= image_tag cat.activities.first.user.buddy_icon(:icon_24) rescue ''
             .activity= render :partial => "activities/#{cat.latest_activity[:type].downcase}", :locals => {:activity => cat.latest_activity}
@@ -103,50 +103,50 @@
 %section#problems
   %h1 Põhilised probleemid neis viies teemas:
   .people
-    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
+    = link_to '/pages/erakondade-rahastamine-ja-jarelevalve', :class => :item do
       %span.icon
-        = image_tag('rahastamine.icon.png')
+        = image_tag('kaarel-tarand.icon.png')
         %span.play &nbsp;
       %span.desc
-        %b Isiku nimi
+        %b Kaarel Taran
         %br/
-        Tegevusala
+        Rahastamine
 
-    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
+    = link_to '/pages/erakonnasisene-ja-erakondade-vaheline-konkurents', :class => :item do
       %span.icon
-        = image_tag('erakonnad.icon.png')
+        = image_tag('agu.uudelepp.icon.png')
         %span.play &nbsp;
       %span.desc
-        %b Isiku nimi
+        %b Agu Uudelep
         %br/
-        Tegevusala
+        Erakonnad
 
-    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
+    = link_to '/pages/valimissusteem', :class => :item do
       %span.icon
-        = image_tag('valimised.icon.png')
+        = image_tag('ylle.madise.icon.png')
         %span.play &nbsp;
       %span.desc
-        %b Isiku nimi
+        %b Ülle Madise
         %br/
-        Tegevusala
+        Valimissüsteem
 
-    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
+    = link_to '/pages/poliitikate-kujundamises-osalemise-voimalused-valimiste-vahel', :class => :item do
       %span.icon
-        = image_tag('osalemine.icon.png')
+        = image_tag('urmo.kybar.icon.png')
         %span.play &nbsp;
       %span.desc
-        %b Isiku nimi
+        %b Urmo Kübar
         %br/
-        Tegevusala
+        Kaasatus
 
-    = link_to 'http://vimeo.com/44974554', :class => :item, :rel => :lightbox do
+    = link_to '/pages/sundparteistamine-ja-uhiskondliku-ruumi-politiseerimine', :class => :item do
       %span.icon
-        = image_tag('parteistamine.icon.png')
+        = image_tag('mall.hellam.icon.png')
         %span.play &nbsp;
       %span.desc
-        %b Isiku nimi
+        %b Mall Hellam
         %br/
-        Tegevusala
+        Sundpolitiseerimine
 
 %section#proposal-bottom
   - if @bottom_ideas.empty?

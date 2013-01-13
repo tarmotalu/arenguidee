@@ -2,7 +2,7 @@
 %html{:xmlns => "http://www.w3.org/1999/xhtml"}
   %head
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
-    %meta{:content => "Wiseman Interactive Oü  www.wiseman.ee", :name => "Author"}/
+    %meta{:content => "Rahvakogu / Koostöö kogu", :name => "Author"}/
     %link{:href => "/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
 
 
@@ -83,7 +83,6 @@
               = submit_tag 'Sisene Mobiil-IDga', :class => 'btn btn-blue btn-small'      
       .flash= flash_div :warning, :notice, :error
       #container.clearfix
-        
         = yield
 
     %footer#footer

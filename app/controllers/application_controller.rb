@@ -264,39 +264,43 @@ class ApplicationController < ActionController::Base
   end
   
   def current_locale
-
-    if params[:locale]
-      session[:locale] = params[:locale]
-      cookies.permanent[:last_selected_language] = session[:locale]
-      Rails.logger.debug("Set language from params")
-    elsif not session[:locale]
-      if cookies[:last_selected_language]
-        session[:locale] = cookies[:last_selected_language]
-        Rails.logger.debug("Set language from cookie")
-#      elsif Instance.current.layout == "application"
-#        session[:locale] = "en"
-#        Rails.logger.info("Set language for application to English")
-      elsif @iso_country and not @iso_country.languages.empty?
-        session[:locale] =  @iso_country.languages.first.locale
-        Rails.logger.debug("Set language from geoip")
-      elsif SubInstance.current and SubInstance.current.default_locale
-        session[:locale] = SubInstance.current.default_locale
-        Rails.logger.debug("Set language from sub_instance")
-      else
-        session[:locale] = tr8n_user_preffered_locale
-        Rails.logger.debug("Set language from tr8n")
-      end
-    else
-      Rails.logger.debug("Set language from session")
-    end
-    session_locale = session[:locale]
-    if ENABLED_I18_LOCALES.include?(session_locale)
-      I18n.locale = session_locale
-    else
-      session_locale = session_locale.split("-")[0] if session_locale.split("-").length>1
-      I18n.locale = ENABLED_I18_LOCALES.include?(session_locale) ? session_locale : "en"
-    end
-    tr8n_current_locale = session[:locale]
+    I18n.locale = "et"
+    tr8n_current_locale = "et"
+    session[:locale] = "et"
+    tr8n_user_preffered_locale  = "et"
+    return "et"
+#     if params[:locale]
+#       session[:locale] = params[:locale]
+#       cookies.permanent[:last_selected_language] = session[:locale]
+#       Rails.logger.debug("Set language from params")
+#     elsif not session[:locale]
+#       if cookies[:last_selected_language]
+#         session[:locale] = cookies[:last_selected_language]
+#         Rails.logger.debug("Set language from cookie")
+# #      elsif Instance.current.layout == "application"
+# #        session[:locale] = "en"
+# #        Rails.logger.info("Set language for application to English")
+#       elsif @iso_country and not @iso_country.languages.empty?
+#         session[:locale] =  @iso_country.languages.first.locale
+#         Rails.logger.debug("Set language from geoip")
+#       elsif SubInstance.current and SubInstance.current.default_locale
+#         session[:locale] = SubInstance.current.default_locale
+#         Rails.logger.debug("Set language from sub_instance")
+#       else
+#         session[:locale] = tr8n_user_preffered_locale
+#         Rails.logger.debug("Set language from tr8n")
+#       end
+#     else
+#       Rails.logger.debug("Set language from session")
+#     end
+#     session_locale = session[:locale]
+#     if ENABLED_I18_LOCALES.include?(session_locale)
+#       I18n.locale = session_locale
+#     else
+#       session_locale = session_locale.split("-")[0] if session_locale.split("-").length>1
+#       I18n.locale = ENABLED_I18_LOCALES.include?(session_locale) ? session_locale : "en"
+#     end
+#     tr8n_current_locale = session[:locale]
   end
 
   def check_google_translate_setting

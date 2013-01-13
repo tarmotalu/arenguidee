@@ -37,7 +37,7 @@
       - unless current_user.social_network_url.blank?
         .profile_social= link_to 'Sotsiaalmeedia profiil',  'http://' + current_user.social_network_url.gsub(/http[s]?:\/\//i, '')
     #ideas
-      - if current_user.ideas.empty?
+      - if current_user.ideas.published.empty?
         %p
           = tr('You have not submitted any ideas yet.', 'feed')
       - else
@@ -49,7 +49,7 @@
                 = link_to idea.name, idea
                 %span.red= link_to "(#{idea.points.count})", idea
               = render :partial => 'ideas/debate_buttons', :locals => {:region => "feed_sidebar", :idea => idea, :endorsements => idea.endorsements}
-
+    #proposal-index= protected_link_to "Tee oma ettepanek", new_idea_path , :class => :button
   -# <haml:silent> if not logged_in? </haml:silent><haml:block>
   -# <div class="pre_text">
   -# <haml:loud> tr(&amp;quot;If you'd like to participate, &amp;lt;a href='{signup_url}'&amp;gt;please sign up&amp;lt;/a&amp;gt;. Membership is free and you can even use your existing Facebook account.&amp;quot;, &amp;quot;view/feed/activity_list&amp;quot;, :signup_url =&amp;gt; new_user_url)</haml:loud>

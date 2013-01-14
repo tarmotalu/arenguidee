@@ -272,7 +272,7 @@ Rahvakogu::Application.routes.draw do
   match '/' => 'home#index', :as => :root
   match '/activate/:activation_code' => 'users#activate', :as => :activate, :activation_code => nil
   match '/signup' => 'users#new', :as => :signup
-  match '/login' => 'sessions#new', :as => :login
+  # match '/login' => 'sessions#new', :as => :login
   match '/logout' => 'sessions#destroy', :as => :logout
   match '/unsubscribe' => 'unsubscribes#new', :as => :unsubscribe
   match '/yours' => 'ideas#yours'

@@ -33,6 +33,9 @@ class IssuesController < ApplicationController
   end
 
   def show
+    if params[:page] =~ /\D*/
+      params[:page].gsub!(/\D/, '')
+    end
     #if not @tag
     #  flash[:error] = tr("That {tags_name} doesn't exist anymore", "controller/issues", :tags_name => current_instance.tags_name.downcase)
     #  redirect_to "/" and return

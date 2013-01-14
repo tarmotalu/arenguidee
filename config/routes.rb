@@ -29,7 +29,7 @@ Rahvakogu::Application.routes.draw do
   devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations', :omniauth_callbacks => 'authentications'}, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
 
   resources :users do
-  	resource :password
+  	# resource :password
   	resource :profile
   	collection do
   	  get :endorsements
@@ -57,8 +57,8 @@ Rahvakogu::Application.routes.draw do
   	  get :ideas
   	  #get :signups
   	  post :endorse
-  	  get :reset_password
-  	  get :resend_activation
+  	  # get :reset_password
+  	  # get :resend_activation
     end
     resources :messages
     resources :followings do
@@ -254,7 +254,7 @@ Rahvakogu::Application.routes.draw do
 
   #resources :signups
   resources :endorsements
-  resources :passwords
+  # resources :passwords
   resources :unsubscribes
   resources :notifications
   resources :about

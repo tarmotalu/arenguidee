@@ -1215,7 +1215,7 @@ class IdeasController < ApplicationController
       @items[13]=[tr("Falling", "view/ideas"), falling_ideas_url]
       if logged_in?
         @items[14]=[tr("Your network", "view/ideas"), network_ideas_url]
-        @items[15]=[tr("Yours", "view/ideas"), yours_ideas_url]
+        @items[15]=[tr("Minu", "view/ideas"), minu_ideas_url]
       end
       @items
     end

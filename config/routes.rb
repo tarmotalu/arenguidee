@@ -275,7 +275,7 @@ Rahvakogu::Application.routes.draw do
   # match '/login' => 'sessions#new', :as => :login
   match '/logout' => 'sessions#destroy', :as => :logout
   match '/unsubscribe' => 'unsubscribes#new', :as => :unsubscribe
-  match '/yours' => 'ideas#yours'
+  # match '/yours' => 'ideas#yours'
   match '/hot' => 'ideas#hot'
   match '/cold' => 'ideas#cold'
   match '/new' => 'ideas#new'

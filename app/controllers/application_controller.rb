@@ -379,7 +379,7 @@ class ApplicationController < ActionController::Base
       reset_session
       Thread.current[:current_user] = nil
       flash[:notice] = "This account has been suspended."
-      redirect_back_or_default('/')
+      redirect_to('/')
       return  
     end
   end

@@ -4,7 +4,7 @@ class IssuesController < ApplicationController
   #before_filter :set_counts, :except => :index
   before_filter :check_for_user, :only => [:yours, :yours_finished, :yours_created, :network]
   before_filter :setup_filter_dropdown
-
+  before_filter :authenticate_user!, :only =>  [:minu]
    # :show_feed, :activities, :endorsers, :opposers, :opposer_points, :endorser_points, :neutral_points, :everyone_points,
                                              # :opposed_top_points, :endorsed_top_points, :idea_detail, :top_points, :discussions, :everyone_points ]
 
@@ -70,6 +70,27 @@ class IssuesController < ApplicationController
   alias :bottom :show
   alias :newest :show
   alias :random :show
+
+  def minu
+    @filter = 'minu'
+    @position_in_idea_name = true
+    @page_title = tr("My ideas", "contoller/ideas")
+    @rss_url = minu_ideas_url(:format => 'rss')
+    @category = Category.find(params[:id])
+    @ideas = current_user.ideas_and_points_and_endorsements.delete_if{|x| x.category_id != @category.id}.compact.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
+    get_endorsements
+    if request.xhr?
+        render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+    else
+      respond_to do |format|
+        format.html { render :action => "list" }
+        format.rss { render :action => "list" }
+        format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
+        format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+      end
+    end
+  end 
 
   def yours
 

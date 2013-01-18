@@ -1,7 +1,7 @@
 require 'date'
 
 class IdeasController < ApplicationController
-  before_filter :authenticate_user!, :only => [:new, :yours_finished, :yours_ads, :yours_top, :yours_lowest, :consider, :flag_inappropriate, :comment, :edit, :update, 
+  before_filter :authenticate_user!, :only => [:new, :yours_finished, :minu, :yours_ads, :yours_top, :yours_lowest, :consider, :flag_inappropriate, :comment, :edit, :update, 
                                            :tag, :tag_save, :opposed, :endorsed, :destroy, :new]
   before_filter :admin_required, :only => [:bury, :successful, :compromised, :intheworks, :failed]
   before_filter :load_endorsement, :only => [:show, :show_feed, :activities, :endorsers, :opposers, :opposer_points, :endorser_points, :neutral_points, :everyone_points,
@@ -194,6 +194,30 @@ class IdeasController < ApplicationController
       format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
     end
   end
+
+  def minu
+    @filter = 'minu'
+    @position_in_idea_name = true
+    @page_title = tr("My ideas", "contoller/ideas")
+    @rss_url = minu_ideas_url(:format => 'rss')
+    if params[:category_id]
+      @ideas = current_user.ideas_and_points_and_endorsements.compact.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
+    else
+      @ideas = current_user.ideas_and_points_and_endorsements.compact.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
+    end
+    get_endorsements
+    if request.xhr?
+        render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+    else
+      respond_to do |format|
+        format.html { render :template => "/issues/list" }
+        format.rss { render :action => "list" }
+        format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
+        format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
+        format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
+      end
+    end
+  end 
 
   # GET /ideas/top
   def top

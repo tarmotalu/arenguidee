@@ -29,7 +29,7 @@
       Teemas
       = "\"#{@category.name}\""
       on
-      = pluralize(@ideas.total_count, "ettepanek") + "."
+      = pluralize(@ideas.count, "ettepanek") + "."
       = link_to 'Esita ka!', new_category_idea_path(@category)
   / /leftSide
   .rightSide
@@ -42,7 +42,9 @@
       %span.filter_divider= " / "
       = link_to 'vastuhäälte', bottom_ideas_path, :class => (@filter == 'bottom' ? :active : false)
       %span.filter_divider= " / "
-      -# = link_to 'minu', yours_ideas_path, :class => (@filter == 'yours' ? :active :false)
+      - if logged_in?
+        = link_to 'minu', minu_ideas_path, :class => (@filter == 'minu' ? :active :false)
+        %span.filter_divider= " / "
       = link_to 'arutelude', controversial_ideas_path, :class => (@filter == 'controversial' ? :active : false)
       %span.filter_divider= " / "
       = link_to 'juhuslik', random_ideas_path, :class => (@filter == 'random' ? :active : false)
@@ -53,7 +55,9 @@
       %span.filter_divider= " / "
       = link_to 'vastuhäälte', filtered_issue_path(@category, :bottom), :class => (@filter == 'bottom' ? :active : false)
       %span.filter_divider= " / "
-      -# = link_to 'minu', filtered_issue_path(@category, :yours), :class => (@filter == 'yours' ? :active : false)
+      - if logged_in?
+        = link_to 'minu', filtered_issue_path(@category, :minu), :class => (@filter == 'minu' ? :active : false)
+        %span.filter_divider= " / "
       = link_to 'arutelude', filtered_issue_path(@category, :controversial), :class => (@filter == 'controversial' ? :active : false)
       %span.filter_divider= " / "
       = link_to 'juhuslik', filtered_issue_path(@category, :random), :class => (@filter == 'random' ? :active : false)

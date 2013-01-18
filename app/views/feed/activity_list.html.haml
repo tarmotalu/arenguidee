@@ -42,7 +42,7 @@
           = tr('You have not submitted any ideas yet.', 'feed')
       - else
         .ideas_feed_title= tr('Your ideas', 'feed')
-        - current_user.ideas.each do |idea|
+        - current_user.ideas.published.each do |idea|
           .idea.clearfix
             .votes
               .idea_name

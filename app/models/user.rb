@@ -210,6 +210,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def ideas_and_points_and_endorsements
+    (self.ideas.published + self.points.published.map(&:idea) + self.endorsements.active.map(&:idea)).uniq.compact
+  end
+
   def geoblocking_disabled_for?(sub_instance)
     self.geoblocking_open_countries.split.each do |user_country|
       sub_instance.geoblocking_open_countries.split.each do |sub_instance_country|

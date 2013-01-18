@@ -50,6 +50,7 @@ class Idea < ActiveRecord::Base
   scope :item_limit, lambda{|limit| {:limit=>limit}}
   scope :only_ids, :select => "ideas.id"
   
+  scope :minu, :include => [:endorsements, :points]
   scope :alphabetical, :order => "ideas.name asc"
   scope :newest, :order => "ideas.published_at desc, ideas.created_at desc"
   scope :tagged, :conditions => "(ideas.cached_issue_list is not null and ideas.cached_issue_list <> '')"

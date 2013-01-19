@@ -6,7 +6,7 @@ Rahvakogu::Application.routes.draw do
   resources :categories do
     resources :ideas
   end
-
+  resources :export
   match '/groups/suggest_user' => 'groups#suggest_user'
 
   match '/ideas/flag/:id' => 'ideas#flag'

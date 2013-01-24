@@ -144,7 +144,7 @@ class User < ActiveRecord::Base
   after_create :give_user_credit
   after_create :new_user_signedup
   after_create :set_signup_country
-  validates_acceptance_of :eula, :message => "must accept the terms"
+  validates_acceptance_of :eula, :message => tr("Must accept terms", 'users')
   attr_protected :remember_token, :remember_token_expired_at, :activation_code, :salt, :crypted_password, :twitter_token, :twitter_secret
   
   # Virtual attribute for the unencrypted password

@@ -24,6 +24,11 @@
       %p
         .field_label= tr("Your title", "views/registraions/new")
         = f.text_field :title
+
+      = f.check_box :eula
+      .field_label.short 
+        Nõustun minu isikuandmete avalikustamisega käesoleval veebilehel kehtestatud
+        = link_to 'tingimustel', '/pages/isikuandmete-kaitse', :target => "_blank"        
     .right
       %p
         .field_label= tr("Short biography (max. 500 characters)", "views/registrations/new")

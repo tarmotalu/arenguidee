@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
 
   require 'paperclip'
 
-  attr_accessible :buddy_icon
+  attr_accessible :buddy_icon, :eula
+  attr_accessor :eula
 
   devise :omniauthable, :registerable, :omniauth_providers => [:idcard, :mobileid]
   
@@ -143,7 +144,7 @@ class User < ActiveRecord::Base
   after_create :give_user_credit
   after_create :new_user_signedup
   after_create :set_signup_country
-  
+  validates_acceptance_of :eula, :message => "must accept the terms"
   attr_protected :remember_token, :remember_token_expired_at, :activation_code, :salt, :crypted_password, :twitter_token, :twitter_secret
   
   # Virtual attribute for the unencrypted password
@@ -154,6 +155,8 @@ class User < ActiveRecord::Base
     has updated_at
     where "users.status = 'active'"    
   end
+
+
 
   def apply_omniauth(omniauth)
     return if omniauth.blank?

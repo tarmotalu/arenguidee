@@ -9,6 +9,7 @@ class ExportController < ApplicationController
     csv_data = CSV.generate do |csv|
       csv << [
         "id",
+        "Type",
         "Name",
         "Content",
         "Toetan",
@@ -17,6 +18,7 @@ class ExportController < ApplicationController
       @ideas.each do |idea|
         csv << [
           idea.id,
+          idea.category.name,
           idea.name,
           idea.description,
           idea.all_for.count,
@@ -25,6 +27,7 @@ class ExportController < ApplicationController
         idea.points.published.sort{|x, y| y.value <=> x.value}.each do |point|
           csv << [
             idea.id,
+            "Argument",
             point.name,
             point.content,
             point.value == 1 ? point.value : 0,

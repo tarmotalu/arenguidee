@@ -71,4 +71,4 @@
     = pageless(@ideas.total_pages, "/ideas/#{@filter}")
   - else
     = pageless(@ideas.total_pages, filtered_issue_path(@category, @filter.to_sym))
-#proposal-index= link_to "Tee oma ettepanek", (@category.nil? ? new_idea_path : new_category_idea_path(@category)), :class => :button
+-# #proposal-index= link_to "Näita kõiki ettepanekuid", (@category.nil? ? new_idea_path : new_category_idea_path(@category)), :class => :button

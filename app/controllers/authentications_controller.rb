@@ -52,7 +52,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
   def development_sign
     return unless Rails.env.development?
     ActiveRecord::IdentityMap.without do
-      authenticate_once('user_info' => {'personal_code' => '38004150067', 'first_name' => 'John', 'last_name' => 'Fail'})
+      authenticate_once('user_info' => {'personal_code' => '38004100067', 'first_name' => 'John', 'last_name' => 'Fail'})
     end
   end
 
@@ -67,9 +67,14 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
       @user = User.find_by_login(omniauth['user_info']['personal_code'])
       
       if @user
-        notice = t('devise.sessions.signed_in')
-        redirect = stored_location_for(:user) || '/feed'
-        sign_in(:user, @user)        
+        if @user.is_admin?
+          notice = t('devise.sessions.signed_in')
+          redirect = stored_location_for(:user) || '/feed'
+          sign_in(:user, @user)
+        else
+          flash[:error] = "Sisse logida praeguses etapis ei saa."  
+          redirect= root_path
+        end
       else # Authentication was successful, but user is not registered in the system
         session[:omniauth] = omniauth
         alert = t('sessions.new.not_registered', :username => omniauth['user_info']['name'])

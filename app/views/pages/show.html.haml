@@ -15,4 +15,4 @@
       .page_activity.clearfix
         .person= image_tag activity.user.buddy_icon(:icon_40)
         .activity= render :partial => "activities/#{activity[:type].downcase}", :locals => {:activity => activity}  
-    #proposal-index= link_to "Tee oma ettepanek", link , :class => :button
+    #proposal-index= link_to "Näita kõiki ettepanekuid", top_ideas_path , :class => :button

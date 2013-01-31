@@ -1,3 +1,4 @@
+
 $(function(){
 	$('a.form_overlay').click(function() {
 		$('#login_overlay').overlay({load: true, 
@@ -10,7 +11,9 @@ $(function(){
       left: '400px'
 		});
 		$('#login_overlay').overlay().load();
-		});
+
+
+	});
 	
 
 

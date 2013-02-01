@@ -5,6 +5,8 @@ class ExportController < ApplicationController
   def index
     require 'csv'
     @ideas = Idea.published.includes([:points, :endorsements]).order(:id)
+    @ideas.sort!{|x| x.all_for.count }
+    @ideas.reverse!
     @outfile = "ettepanekut_" + Time.now.strftime("%m-%d-%Y") + ".csv"
     csv_data = CSV.generate do |csv|
       csv << [

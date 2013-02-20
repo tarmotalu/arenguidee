@@ -23,13 +23,13 @@ Rahvakogu::Application.routes.draw do
     end
   end
   
-  resources :sub_instances do
-    member do
-      get :email
-      get :picture
-      put :picture_save
-    end
-  end
+  # resources :sub_instances do
+  #   member do
+  #     get :email
+  #     get :picture
+  #     put :picture_save
+  #   end
+  # end
   
   devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations', :omniauth_callbacks => 'authentications'}, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
 
@@ -65,7 +65,7 @@ Rahvakogu::Application.routes.draw do
   	  # get :reset_password
   	  # get :resend_activation
     end
-    resources :messages
+    # resources :messages
     resources :followings do
       collection do
         put :multiple
@@ -87,8 +87,8 @@ Rahvakogu::Application.routes.draw do
       get :signups
       get :picture
       put :picture_save
-      get :legislators
-      post :legislators_save
+      # get :legislators
+      # post :legislators_save
       get :delete
     end
   end
@@ -223,33 +223,33 @@ Rahvakogu::Application.routes.draw do
     end
   end
 
-  resources :color_schemes do
-    collection do
-      put :preview
-    end
-  end
+  # resources :color_schemes do
+  #   collection do
+  #     put :preview
+  #   end
+  # end
 
-  resources :instances do
-    member do
-      get :apis
-    end
-  end
+  # resources :instances do
+  #   member do
+  #     get :apis
+  #   end
+  # end
 
-  resources :widgets do
-    collection do
-      get :ideas
-      get :discussions
-      get :points
-      get :preview_iframe
-      post :preview
-    end
-  end
+  # resources :widgets do
+  #   collection do
+  #     get :ideas
+  #     get :discussions
+  #     get :points
+  #     get :preview_iframe
+  #     post :preview
+  #   end
+  # end
 
-  resources :bulletins do
-    member do
-      post :add_inline
-    end
-  end
+  # resources :bulletins do
+  #   member do
+  #     post :add_inline
+  #   end
+  # end
 
   resources :searches do
     collection do
@@ -260,10 +260,10 @@ Rahvakogu::Application.routes.draw do
   #resources :signups
   resources :endorsements
   # resources :passwords
-  resources :unsubscribes
-  resources :notifications
-  resources :about
-  resources :tags
+  # resources :unsubscribes
+  # resources :notifications
+  # resources :about
+  # resources :tags
   resource :session
   resources :delayed_jobs do
     member do

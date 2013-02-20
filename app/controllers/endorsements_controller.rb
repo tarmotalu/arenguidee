@@ -7,7 +7,7 @@ class EndorsementsController < ApplicationController
   def index
     @endorsements = Endorsement.active_and_inactive.by_recently_created(:include => [:user,:idea]).paginate :page => params[:page], :per_page => params[:per_page]
     respond_to do |format|
-      format.html { redirect_to yours_ideas_url }
+      format.html { redirect_to minu_ideas_url }
       format.xml { render :xml => @endorsements.to_xml(:include => [:user, :idea], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @endorsements.to_json(:include => [:user, :idea], :except => NB_CONFIG['api_exclude_fields']) }
     end

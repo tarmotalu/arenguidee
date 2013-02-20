@@ -1,8 +1,9 @@
 class PointsController < ApplicationController
  
-  before_filter :authenticate_user!, :only => [:new, :edit, :update, :create, :quality, :unquality, :your_ideas, :your_index, :destroy, :update_importance]
+  before_filter :authenticate_user!, :only => [ :quality, :unquality, :your_ideas, :your_index, :update_importance]
 
-
+  before_filter :admin_required, :only => [:new, :edit, :update, :create, :destroy]
+  
   before_filter :setup_filter_dropdown
 
   caches_action :newest, :revised,

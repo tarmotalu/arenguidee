@@ -4,4 +4,5 @@ class Page < ActiveRecord::Base
   friendly_id :title, use: :slugged
   has_one :category
   belongs_to :category
+  has_many :pagecomments
 end

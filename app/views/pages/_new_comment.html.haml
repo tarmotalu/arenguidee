@@ -1,0 +1,12 @@
+= form_for([page, Pagecomment.new], :url => add_comment_page_path(page)) do |f|
+  .new_comment_form
+    .metadata
+      .col-2.activity_icon
+        .col-content
+          = render :partial => "users/pic_48", :locals => {:user => current_user}
+        %strong= current_user.name
+        %p= tr("Add a comment", "pages/show")
+
+      .col-8.right
+        = f.text_area :content
+        = f.submit "Lisa kommentaar"

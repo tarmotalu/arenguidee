@@ -1,7 +1,16 @@
 .page 
   .page_title= @page.title
 
-  .page_left= raw @page.body
+  .page_left
+    = raw @page.body
+    - if @page.is_commentable
+      .page_comments
+        %h2= tr("Comments", "pages/show")
+        - if @page.pagecomments
+          - @page.pagecomments.each do |comment|
+            = render :partial => 'comment', :locals => {:comment => comment}
+        - if logged_in?
+          = render :partial => 'new_comment', :locals => {:page => @page}
   .page_sidebar
     - if @page.category.nil?
       %b= tr("Latest activity", "pages/show")

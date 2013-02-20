@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130220191334) do
+ActiveRecord::Schema.define(:version => 20130220192009) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -485,6 +485,20 @@ ActiveRecord::Schema.define(:version => 20130220191334) do
   add_index "notifications", ["recipient_id"], :name => "index_notifications_on_recipient_id"
   add_index "notifications", ["sender_id"], :name => "index_notifications_on_sender_id"
   add_index "notifications", ["status", "type"], :name => "index_notifications_on_status_and_type"
+
+  create_table "pagecomments", :force => true do |t|
+    t.integer  "page_id"
+    t.integer  "user_id"
+    t.integer  "like_count"
+    t.text     "content"
+    t.integer  "activity_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "pagecomments", ["activity_id"], :name => "index_pagecomments_on_activity_id"
+  add_index "pagecomments", ["page_id"], :name => "index_pagecomments_on_page_id"
+  add_index "pagecomments", ["user_id"], :name => "index_pagecomments_on_user_id"
 
   create_table "pages", :force => true do |t|
     t.string   "slug"

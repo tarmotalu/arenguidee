@@ -17,7 +17,12 @@ Rahvakogu::Application.routes.draw do
   match '/users/list_suspended' => 'users#list_suspended'
   match '/to_translate' => 'categories#translations'
   resources :groups
-  resources :pages
+  resources :pages do
+    member do
+      post :add_comment
+    end
+  end
+  
   resources :sub_instances do
     member do
       get :email

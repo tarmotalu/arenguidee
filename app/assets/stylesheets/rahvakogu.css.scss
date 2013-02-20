@@ -607,3 +607,14 @@ padding-top: 0px;
 .user_follow_button { float: left; margin-right: 15px; margin-bottom: 10px; clear: right; }
 input#user_eula { float: left; margin-right: 10px; }
 .field_label.short { float: left; font-weight: normal; font-size: 9pt; width: 320px;}
+
+textarea#pagecomment_content {
+	width: 400px;
+	height: 150px;
+	margin-bottom: 10px;
+}
+
+.page_comment  {
+	float: none;
+	margin-bottom: 15px;
+}

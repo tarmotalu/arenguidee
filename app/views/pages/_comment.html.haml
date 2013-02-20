@@ -1,0 +1,9 @@
+.page_comment.clearfix
+  .metadata
+    .col-2.activity_icon
+      .col-content
+        = render :partial => "users/pic_48", :locals => {:user => comment.user}
+      %strong= comment.user.name
+
+    .col-8.right.comment_content
+      = simple_format(h comment.content)

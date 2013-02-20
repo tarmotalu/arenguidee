@@ -1,5 +1,23 @@
 class PagesController < ApplicationController
+  before_filter :authenticate_user!, :only => [:add_comment]
   before_filter :admin_required, :except => [:show]
+
+  def add_comment
+    @page = Page.find(params[:id])
+    comment = Pagecomment.new(params[:pagecomment])
+    comment.user_id = current_user.id
+    @page.pagecomments << comment
+
+    if @page.save
+      flash[:notice] = 'Sinu kommentaar on postitatud.'
+    else 
+      flash[:error] = 'Sinu kommentaari postitamisega tekkis probleem. Proovi uuesti lehte laadida.'
+    end
+    respond_to do |format|
+      format.html { redirect_to @page }
+    end
+  end
+
   # GET /pages
   # GET /pages.xml
   def index

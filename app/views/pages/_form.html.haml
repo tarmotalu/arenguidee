@@ -8,7 +8,12 @@
   %p
     Body of page. HTML is OK.
     = f.text_area :body
-
+  %p
+    Publish as belonging to category:
+    = f.collection_select :category_id, Category.all, :id, :name, :include_blank => true
+  %p
+    Allow comments?
+    = f.check_box :is_commentable
   %p
     Published?
     = f.check_box :published

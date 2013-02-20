@@ -3,5 +3,5 @@ class Page < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
   has_one :category
-
+  belongs_to :category
 end

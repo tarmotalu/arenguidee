@@ -12,6 +12,7 @@ tmp/**/*
 tmp/restart.txt
 public/pictures/**/*
 config/*.pem
+config/deploy.rb
 config/contacts.yml
 config/database.yml
 config/facebooker.yml

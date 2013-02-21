@@ -23,13 +23,13 @@ Rahvakogu::Application.routes.draw do
     end
   end
   
-  # resources :sub_instances do
-  #   member do
-  #     get :email
-  #     get :picture
-  #     put :picture_save
-  #   end
-  # end
+  resources :sub_instances do
+    member do
+      get :email
+      get :picture
+      put :picture_save
+    end
+  end
   
   devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations', :omniauth_callbacks => 'authentications'}, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
 

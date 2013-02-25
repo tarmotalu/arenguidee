@@ -9,8 +9,7 @@
     .item
       .wrapper
         .text
-          Suur aitäh kõigile kes osalesid ja pakkusid välja ideid Eesti demokraatia arendamiseks.
-          Veebruari teises pooles hakkame siinsamas avalikustama analüütikute ja ekspertide töö tulemusi.
+          = @blue_box.nil? ? "Suur aitäh kõigile kes osalesid ja pakkusid välja ideid Eesti demokraatia arendamiseks. Veebruari teises pooles hakkame siinsamas avalikustama analüütikute ja ekspertide töö tulemusi." : raw(@blue_box.body)
     -# .item
     -#   .wrapper
     -#     = image_tag('laurisaar.icon.png')
@@ -85,23 +84,25 @@
   / /persons
 / /rotator
 %section#proposal
-  %h1
-    Kui sa usud, et arutelu on osa lahendusest, siis tule ja mõtle kaasa! 
-    %br/
-    Koos teeme ettepanekud Riigikogule oluliste seaduste muutmiseks.
+  - if @grey_box.nil?
+    %h1
+      Kui sa usud, et arutelu on osa lahendusest, siis tule ja mõtle kaasa! 
+      %br/
+      Koos teeme ettepanekud Riigikogule oluliste seaduste muutmiseks.
 
-  - @cat[0..(@cat.count-2)].each do |cat|
-    .column
-      %h2= link_to cat.name, issue_path(cat)
-      %p= cat.description
-      = link_to pluralize(cat.ideas.count, 'ettepanek'), issue_path(cat)
-      - unless cat.latest_activity.nil?
-        .latest
-          %h3= tr("Viimased sissekanded", "home/index")
-          .activity_front
-            -# .icon= image_tag cat.activities.first.user.buddy_icon(:icon_24) rescue ''
-            .activity= render :partial => "activities/#{cat.latest_activity[:type].downcase}", :locals => {:activity => cat.latest_activity}
-
+    - @cat[0..(@cat.count-2)].each do |cat|
+      .column
+        %h2= link_to cat.name, issue_path(cat)
+        %p= cat.description
+        = link_to pluralize(cat.ideas.count, 'ettepanek'), issue_path(cat)
+        - unless cat.latest_activity.nil?
+          .latest
+            %h3= tr("Viimased sissekanded", "home/index")
+            .activity_front
+              -# .icon= image_tag cat.activities.first.user.buddy_icon(:icon_24) rescue ''
+              .activity= render :partial => "activities/#{cat.latest_activity[:type].downcase}", :locals => {:activity => cat.latest_activity}
+  - else
+    = raw @grey_box.body
 
   = link_to "Näita kõiki ettepanekuid", top_ideas_path, :class => :button
 

@@ -66,6 +66,10 @@ class HomeController < ApplicationController
 
     end
     @cat = Category.all
+    @blue_box = Page.where(:slug => 'blue-box')
+    @blue_box = (!@blue_box.nil? ? @blue_box.first : nil)
+    @grey_box = Page.where(:slug => 'grey-box')
+    @grey_box = (!@grey_box.nil? ? @grey_box.first : nil)
     @bottom_ideas = Idea.published.random(3)
   end
 

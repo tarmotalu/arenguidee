@@ -44,8 +44,8 @@ class IssuesController < ApplicationController
       @filter = params[:action].to_s 
       scpe = params[:action].to_sym
     else
-      @filter = 'newest'
-      scpe = :newest
+      @filter = 'top'
+      scpe = :top
     end
     @category = Category.find(params[:id])
     @page_title = @category.name #tr("{tag_name} ideas", "controller/issues", :tag_name => tr(@category.name, "model/category").titleize)

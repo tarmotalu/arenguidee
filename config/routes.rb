@@ -21,8 +21,13 @@ Rahvakogu::Application.routes.draw do
     member do
       post :add_comment
     end
+    resources :pagecomments do
+      member do
+        get :hide_comment
+      end
+    end
   end
-  
+
   resources :sub_instances do
     member do
       get :email

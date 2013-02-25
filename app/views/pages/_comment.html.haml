@@ -3,7 +3,10 @@
     .col-2.activity_icon
       .col-content
         = render :partial => "users/pic_48", :locals => {:user => comment.user}
-      %strong= comment.user.name
+        - if current_user
+          - if current_user.is_admin?
+            = link_to '[peida]', hide_comment_page_pagecomment_path(@page, comment)
+      %strong= link_to comment.user.name, comment.user
 
     .col-8.right.comment_content
       = simple_format(h comment.content)

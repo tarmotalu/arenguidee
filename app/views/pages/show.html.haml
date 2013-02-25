@@ -5,9 +5,10 @@
     = raw @page.body
     - if @page.is_commentable
       .page_comments
-        %h2= tr("Comments", "pages/show")
+        %h2 Kommentaarid
         - if @page.pagecomments
           - @page.pagecomments.each do |comment|
+            - next if comment.hidden == true
             = render :partial => 'comment', :locals => {:comment => comment}
         - if logged_in?
           = render :partial => 'new_comment', :locals => {:page => @page}

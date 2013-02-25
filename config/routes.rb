@@ -223,17 +223,17 @@ Rahvakogu::Application.routes.draw do
     end
   end
 
-  # resources :color_schemes do
-  #   collection do
-  #     put :preview
-  #   end
-  # end
+  resources :color_schemes do
+    collection do
+      put :preview
+    end
+  end
 
-  # resources :instances do
-  #   member do
-  #     get :apis
-  #   end
-  # end
+  resources :instances do
+    member do
+      get :apis
+    end
+  end
 
   # resources :widgets do
   #   collection do
@@ -263,7 +263,7 @@ Rahvakogu::Application.routes.draw do
   # resources :unsubscribes
   # resources :notifications
   # resources :about
-  # resources :tags
+  resources :tags
   resource :session
   resources :delayed_jobs do
     member do

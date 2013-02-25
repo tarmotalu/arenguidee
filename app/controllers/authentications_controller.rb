@@ -69,7 +69,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
       if @user
         # if @user.is_admin?
           notice = t('devise.sessions.signed_in')
-          redirect = stored_location_for(:user) || '/feed'
+          redirect = stored_location_for(:user) || '/'
           sign_in(:user, @user)
       #   else
       #     flash[:error] = "Sisse logida praeguses etapis ei saa."  

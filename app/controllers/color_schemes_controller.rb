@@ -1,4 +1,6 @@
 class ColorSchemesController < ApplicationController
+  before_filter :admin_required
+
   # GET /color_schemes
   # GET /color_schemes.xml
   def index

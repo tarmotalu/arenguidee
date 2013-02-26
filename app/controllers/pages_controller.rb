@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_filter :authenticate_user!, :only => [:add_comment]
-  before_filter :admin_required, :except => [:show]
+  before_filter :admin_required, :except => [:show, :add_comment]
 
   def add_comment
     @page = Page.find(params[:id])

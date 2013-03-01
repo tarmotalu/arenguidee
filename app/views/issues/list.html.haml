@@ -1,20 +1,22 @@
 
 #text-1.cookieText
-  %a.closeButton{:href => "#"} &nbsp;
+  - if @category.nil? || @category.id == 21
+    %a.closeButton{:href => "#"} &nbsp;
   
   %p
-    - if @category.nil? || @category.blue_box_text.blank?
-
-      %b Mis on Rahvakogu?
-      Kui sa usud, et avalik arutelu on tähtis poliitika osa, siis tule ja mõtle kaasa!
-      %br/
+    - if @category.nil? || @category.blue_box_text.blank? || @category.id == 21
       Koos teeme ettepanekud Riigikogule viie olulise seaduse muutmiseks.
       - if @category.nil? || @category.page.nil?
         = link_to 'Loe lähemalt', page_path('mis-on-rahvakogu')
       - else
         = link_to 'Loe lähemalt', @category.page        
     - else
-      = raw @category.blue_box_text
+      %b Oleme jõudnud Rahvakogu ettepanekute analüüsiga niikaugele, et esimesed artiklid teemade kaupa ilmuvad alljärgnevalt siin:
+      %br/
+      %br/
+      %ul
+        - Page.where(:category_id => @category.id, :is_commentable => true).each do |page|
+          %li= link_to page.title, page
       - if @category.page.nil?
         = link_to 'Loe lähemalt', page_path('mis-on-rahvakogu')
       - else

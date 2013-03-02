@@ -20,7 +20,7 @@ $(function(){
 	$("#topBar").topBar();
 	$("#rotator").rotator();
 	$("#proposal-bottom .cycle").cycle();
-	$(".cookieText").cookieText();
+	// $(".cookieText").cookieText();
 	
 	$("#propositions .getMore").getMore();
 	

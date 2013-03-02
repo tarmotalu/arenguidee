@@ -385,8 +385,9 @@ a.my_account img { margin-top: 3px; margin-right: 3px; float: left;}
   }
 }
 .flash_notice a, .flash_error a { color: red; }
-.page .page_title { font-size: 18px; font-weight: bold; margin-bottom: 10px;}
+.page .page_title { font-size: 18px; font-weight: bold; margin-bottom: 5px;}
 .page .page_left { float: left; width: 720px; }
+.page .download_link { margin-bottom: 10px; font-size: 12px;}
 .page .page_sidebar { float: left; width: 180px; margin-left: 20px;
 	.page_activity {
 		margin-bottom: 10px;

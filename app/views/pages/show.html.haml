@@ -1,6 +1,7 @@
 .page 
   .page_title= @page.title
-
+  - if @page.attachment?
+    .download_link= link_to '[lae alla PDF]', @page.attachment.url
   .page_left
     = raw @page.body
     - if @page.is_commentable

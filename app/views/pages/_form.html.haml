@@ -15,6 +15,9 @@
     Allow comments?
     = f.check_box :is_commentable
   %p
+    Optional PDF attachment:
+    = f.file_field :attachment
+  %p
     Published?
     = f.check_box :published
   %p

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130225141509) do
+ActiveRecord::Schema.define(:version => 20130302104558) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -507,10 +507,14 @@ ActiveRecord::Schema.define(:version => 20130225141509) do
     t.text     "body"
     t.boolean  "published"
     t.boolean  "standalone"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
     t.boolean  "is_commentable"
     t.integer  "category_id"
+    t.string   "attachment_file_name"
+    t.integer  "attachment_file_size"
+    t.string   "attachment_content_type"
+    t.datetime "attachment_updated_at"
   end
 
   create_table "pictures", :force => true do |t|

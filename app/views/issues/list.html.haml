@@ -4,7 +4,8 @@
     %a.closeButton{:href => "#"} &nbsp;
   
   %p
-    - if @category.nil? || @category.blue_box_text.blank? || @category.id == 21
+    - pages = Page.where(:category_id => @category.id, :is_commentable => true)
+    - if @category.nil? || @category.blue_box_text.blank? || @category.id == 21 || pages.empty?
       Koos teeme ettepanekud Riigikogule viie olulise seaduse muutmiseks.
       - if @category.nil? || @category.page.nil?
         = link_to 'Loe lähemalt', page_path('mis-on-rahvakogu')
@@ -15,7 +16,7 @@
       %br/
       %br/
       %ul
-        - Page.where(:category_id => @category.id, :is_commentable => true).each do |page|
+        - pages.each do |page|
           %li= link_to page.title, page
     -# - if @category.page.nil?
     -#   = link_to 'Loe lähemalt', page_path('mis-on-rahvakogu')

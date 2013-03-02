@@ -17,10 +17,10 @@
       %ul
         - Page.where(:category_id => @category.id, :is_commentable => true).each do |page|
           %li= link_to page.title, page
-      - if @category.page.nil?
-        = link_to 'Loe lähemalt', page_path('mis-on-rahvakogu')
-      - else
-        = link_to 'Loe lähemalt', @category.page
+    -# - if @category.page.nil?
+    -#   = link_to 'Loe lähemalt', page_path('mis-on-rahvakogu')
+    -# - else
+    -#   = link_to 'Loe lähemalt', @category.page
 / /cookieText
 .filterBar
   .leftSide

@@ -4,7 +4,9 @@
     %a.closeButton{:href => "#"} &nbsp;
   
   %p
-    - pages = Page.where(:category_id => @category.id, :is_commentable => true)
+
+    - unless @category.nil?
+      - pages = Page.where(:category_id => @category.id, :is_commentable => true)
     - if @category.nil? || @category.blue_box_text.blank? || @category.id == 21 || pages.empty?
       Koos teeme ettepanekud Riigikogule viie olulise seaduse muutmiseks.
       - if @category.nil? || @category.page.nil?

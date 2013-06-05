@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.13'
 gem 'rails-i18n'
 gem 'mysql2'
 
@@ -11,7 +11,7 @@ gem 'mysql2'
 gem 'rack-openid'
 gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'ruby-openid'
-gem 'acts_as_list'
+gem 'acts_as_list', '0.1.9'
 gem 'auto_html', '1.5.1'
 gem 'awesome_print'
 gem 'backup', :require => false
@@ -45,10 +45,11 @@ gem 'pry-rails'
 gem 'randumb'
 gem 'rmagick', require: false
 gem 'rvm-capistrano', require: false
+gem 'savon', '1.2.0'
 gem 'sass'
 gem 'sunlight'
 gem 'sys-filesystem'
-gem 'thinking-sphinx'
+gem 'thinking-sphinx', '2.0.13'
 gem 'tr8n', github: "hinrik/tr8n", :branch => "social_innovation"
 gem 'truncate_html'
 gem 'whenever', :require => false

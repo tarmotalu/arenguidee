@@ -33,7 +33,7 @@ class Endorsement < ActiveRecord::Base
   @@max_position = 100
   
   # docs: http://noobonrails.blogspot.com/2007/02/actsaslist-makes-lists-drop-dead-easy.html
-  acts_as_list :scope => 'endorsements.user_id = #{user_id} AND status = \'active\''
+  acts_as_list :scope => proc { ["endorsements.user_id = ? AND status = 'active'", user_id] }
 
   after_create :on_active_entry
 

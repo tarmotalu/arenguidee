@@ -16,7 +16,7 @@
 //= require jquery.ui.slider
 //= require jquery.ui.tabs
 //= require jquery.ui.progressbar
-//= require jquery.effects.all
+
 //= require facebox
 //= require jquery.NobleCount.min
 //= require jquery.timeago

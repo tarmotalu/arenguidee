@@ -16,7 +16,7 @@
 //= require jquery.ui.slider
 //= require jquery.ui.tabs
 //= require jquery.ui.progressbar
-
+//= require endless_scrolling_activity
 //= require facebox
 //= require jquery.NobleCount.min
 //= require jquery.timeago
@@ -67,7 +67,7 @@ jQuery(function ($) {
 
 
 jQuery(document).ready(function() {
-  jQuery('a[data-remote]').live("ajax:beforeSend", function(){
+  jQuery('a[data-remote]').on("ajax:beforeSend", function(){
       var $clicked = $(this);
       if ($clicked.attr("data-disabled-with")) {
           $disable_with = $clicked.attr("data-disabled-with");

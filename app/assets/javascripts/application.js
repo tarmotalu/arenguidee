@@ -1,4 +1,5 @@
 //= require jquery
+//= require jquery.browser
 //= require jquery_ujs
 //= require jquery.ui.core
 //= require jquery.ui.widget

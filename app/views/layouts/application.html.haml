@@ -49,7 +49,7 @@
           %b> Ettepanekute kogumine
           Jaanuar 2013
         %span.arrow &nbsp;
-        = link_to page_path('ajakava') , :class => :active do
+        = link_to page_path('ajakava')  do
           %b> Analüüs
           Veebruar 2013
         %span.arrow &nbsp;
@@ -57,7 +57,7 @@
           %b> Arutelupäev
           Aprill 2013
         %span.arrow &nbsp;
-        = link_to page_path('ajakava') do
+        = link_to page_path('ajakava'), :class => :active do
           %b> Seadusemuudatused
           Aprill 2013
         #search_box= render :partial => 'shared/search'            

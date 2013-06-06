@@ -16,6 +16,7 @@
 //= require jquery.ui.dialog
 //= require jquery.ui.slider
 //= require jquery.ui.tabs
+//= jquery.endless-scroll
 //= require facebox
 //= require jquery.NobleCount.min
 //= require jquery.timeago

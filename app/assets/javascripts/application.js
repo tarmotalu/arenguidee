@@ -25,7 +25,6 @@
 //= require jquery.bgiframe.min
 //= require jquery.corner
 //= require jquery.delayedObserver
-//= require jquery.endless-scroll
 //= require jquery.sticky
 //= require jquery.pop
 //= require jquery.dd

@@ -85,14 +85,4 @@
           -#     = text_field_tag :phone, nil, :class => 'textbox', :autocomplete => :off, :size => 15
           -#    = submit_tag 'Sisene Mobiil-IDga', :class => 'btn btn-blue btn-small'      
       .flash= flash_div :warning, :notice, :error
-      #container.clearfix
-        = yield
-
-    %footer#footer
-      .inline
-        .leftSide= raw @footer.body
-
-        .rightSide
-
-          .fb-like-box{"data-header" => "false", "data-height" => "62", "data-href" => "http://www.facebook.com/Rahvakogu", "data-show-faces" => "false", "data-color-scheme" => "dark",  "data-stream" => "false", "data-width" => "292", "data-border-color" => "#333"}
-
+      #container.clearfix= yield

@@ -38,17 +38,17 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.integer  "category_id"
   end
 
-  add_index "activities", ["activity_id"], :name => "activity_activity_id"
-  add_index "activities", ["ad_id"], :name => "activities_ad_id_index"
+  add_index "activities", ["activity_id"], :name => "index_activities_on_activity_id"
+  add_index "activities", ["ad_id"], :name => "index_activities_on_ad_id"
   add_index "activities", ["changed_at"], :name => "index_activities_on_changed_at"
-  add_index "activities", ["created_at"], :name => "created_at"
-  add_index "activities", ["idea_id"], :name => "activity_idea_id_index"
-  add_index "activities", ["is_user_only"], :name => "activity_is_user_only_index"
-  add_index "activities", ["point_id"], :name => "activity_point_id_index"
+  add_index "activities", ["created_at"], :name => "index_activities_on_created_at"
+  add_index "activities", ["idea_id"], :name => "index_activities_on_idea_id"
+  add_index "activities", ["is_user_only"], :name => "index_activities_on_is_user_only"
+  add_index "activities", ["point_id"], :name => "index_activities_on_point_id"
   add_index "activities", ["revision_id"], :name => "index_activities_on_revision_id"
-  add_index "activities", ["status"], :name => "activity_status_index"
-  add_index "activities", ["type"], :name => "activity_type_index"
-  add_index "activities", ["user_id"], :name => "activity_user_id_index"
+  add_index "activities", ["status"], :name => "index_activities_on_status"
+  add_index "activities", ["type"], :name => "index_activities_on_type"
+  add_index "activities", ["user_id"], :name => "index_activities_on_user_id"
 
   create_table "ads", :force => true do |t|
     t.integer  "idea_id"
@@ -70,8 +70,8 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.integer  "sub_instance_id"
   end
 
-  add_index "ads", ["idea_id"], :name => "ads_idea_id_index"
-  add_index "ads", ["status"], :name => "ads_status_index"
+  add_index "ads", ["idea_id"], :name => "index_ads_on_idea_id"
+  add_index "ads", ["status"], :name => "index_ads_on_status"
 
   create_table "capitals", :force => true do |t|
     t.integer  "sender_id"
@@ -86,9 +86,9 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.boolean  "is_undo",                          :default => false
   end
 
-  add_index "capitals", ["recipient_id"], :name => "capitals_recipient_id_index"
-  add_index "capitals", ["sender_id"], :name => "capitals_sender_id_index"
-  add_index "capitals", ["type"], :name => "capitals_type_index"
+  add_index "capitals", ["recipient_id"], :name => "index_capitals_on_recipient_id"
+  add_index "capitals", ["sender_id"], :name => "index_capitals_on_sender_id"
+  add_index "capitals", ["type"], :name => "index_capitals_on_type"
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.text     "blue_box_text"
   end
 
-  add_index "categories", ["slug"], :name => "index_categories_on_slug", :unique => true
+  add_index "categories", ["slug"], :name => "index_categories_on_slug"
 
   create_table "color_schemes", :force => true do |t|
     t.string   "nav_background",                :limit => 6,  :default => "f0f0f0"
@@ -177,10 +177,10 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.integer  "sub_instance_id"
   end
 
-  add_index "comments", ["activity_id"], :name => "comments_activity_id"
+  add_index "comments", ["activity_id"], :name => "index_comments_on_activity_id"
   add_index "comments", ["status", "activity_id"], :name => "index_comments_on_status_and_activity_id"
-  add_index "comments", ["status"], :name => "comments_status"
-  add_index "comments", ["user_id"], :name => "comments_user_id"
+  add_index "comments", ["status"], :name => "index_comments_on_status"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -196,7 +196,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.string   "queue"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "index_delayed_jobs_on_priority_and_run_at"
 
   create_table "endorsements", :force => true do |t|
     t.string   "status",          :limit => 50
@@ -212,13 +212,13 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.integer  "score",                         :default => 0
   end
 
-  add_index "endorsements", ["idea_id"], :name => "endorsements_idea_id_index"
-  add_index "endorsements", ["position"], :name => "position"
-  add_index "endorsements", ["status", "idea_id", "user_id", "value"], :name => "endorsements_status_pid_uid"
-  add_index "endorsements", ["status"], :name => "endorsements_status_index"
-  add_index "endorsements", ["sub_instance_id"], :name => "endorsements_sub_instance_id_index"
-  add_index "endorsements", ["user_id"], :name => "endorsements_user_id_index"
-  add_index "endorsements", ["value"], :name => "value"
+  add_index "endorsements", ["idea_id"], :name => "index_endorsements_on_idea_id"
+  add_index "endorsements", ["position"], :name => "index_endorsements_on_position"
+  add_index "endorsements", ["status", "idea_id", "user_id", "value"], :name => "index_endorsements_on_status_and_idea_id_and_user_id_and_value"
+  add_index "endorsements", ["status"], :name => "index_endorsements_on_status"
+  add_index "endorsements", ["sub_instance_id"], :name => "index_endorsements_on_sub_instance_id"
+  add_index "endorsements", ["user_id"], :name => "index_endorsements_on_user_id"
+  add_index "endorsements", ["value"], :name => "index_endorsements_on_value"
 
   create_table "feeds", :force => true do |t|
     t.string   "name"
@@ -245,8 +245,8 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "followings", ["other_user_id"], :name => "followings_other_user_id_index"
-  add_index "followings", ["user_id"], :name => "followings_user_id_index"
+  add_index "followings", ["other_user_id"], :name => "index_followings_on_other_user_id"
+  add_index "followings", ["user_id"], :name => "index_followings_on_user_id"
 
   create_table "idea_charts", :force => true do |t|
     t.integer  "idea_id"
@@ -263,8 +263,8 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.integer  "change",         :default => 0
   end
 
-  add_index "idea_charts", ["date_year", "date_month", "date_day"], :name => "idea_chart_date_index"
-  add_index "idea_charts", ["idea_id"], :name => "idea_chart_idea_index"
+  add_index "idea_charts", ["date_year", "date_month", "date_day"], :name => "index_idea_charts_on_date_year_and_date_month_and_date_day"
+  add_index "idea_charts", ["idea_id"], :name => "index_idea_charts_on_idea_id"
 
   create_table "idea_revisions", :force => true do |t|
     t.integer  "idea_id"
@@ -359,10 +359,10 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
   add_index "ideas", ["category_id"], :name => "index_ideas_on_category_id"
   add_index "ideas", ["official_status"], :name => "index_ideas_on_official_status"
   add_index "ideas", ["official_value"], :name => "index_ideas_on_official_value"
-  add_index "ideas", ["position"], :name => "ideas_position_index"
-  add_index "ideas", ["status"], :name => "ideas_status_index"
+  add_index "ideas", ["position"], :name => "index_ideas_on_position"
+  add_index "ideas", ["status"], :name => "index_ideas_on_status"
   add_index "ideas", ["trending_score"], :name => "index_ideas_on_trending_score"
-  add_index "ideas", ["user_id"], :name => "ideas_user_id_index"
+  add_index "ideas", ["user_id"], :name => "index_ideas_on_user_id"
 
   create_table "instances", :force => true do |t|
     t.string   "status",                       :limit => 30
@@ -535,9 +535,9 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "point_qualities", ["point_id"], :name => "point_id"
-  add_index "point_qualities", ["user_id", "point_id"], :name => "user_and_point_id"
-  add_index "point_qualities", ["user_id"], :name => "user_id"
+  add_index "point_qualities", ["point_id"], :name => "index_point_qualities_on_point_id"
+  add_index "point_qualities", ["user_id", "point_id"], :name => "index_point_qualities_on_user_id_and_point_id"
+  add_index "point_qualities", ["user_id"], :name => "index_point_qualities_on_user_id"
 
   create_table "points", :force => true do |t|
     t.integer  "revision_id"
@@ -600,9 +600,9 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.integer  "sub_instance_id"
   end
 
-  add_index "rankings", ["created_at"], :name => "rankings_created_at_index"
-  add_index "rankings", ["idea_id"], :name => "rankings_idea_id"
-  add_index "rankings", ["version"], :name => "rankings_version_index"
+  add_index "rankings", ["created_at"], :name => "index_rankings_on_created_at"
+  add_index "rankings", ["idea_id"], :name => "index_rankings_on_idea_id"
+  add_index "rankings", ["version"], :name => "index_rankings_on_version"
 
   create_table "relationships", :force => true do |t|
     t.integer  "idea_id"
@@ -613,9 +613,9 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "relationships", ["idea_id"], :name => "relationships_idea_index"
-  add_index "relationships", ["other_idea_id"], :name => "relationships_other_idea_index"
-  add_index "relationships", ["type"], :name => "relationships_type_index"
+  add_index "relationships", ["idea_id"], :name => "index_relationships_on_idea_id"
+  add_index "relationships", ["other_idea_id"], :name => "index_relationships_on_other_idea_id"
+  add_index "relationships", ["type"], :name => "index_relationships_on_type"
 
   create_table "revisions", :force => true do |t|
     t.integer  "point_id"
@@ -652,7 +652,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.integer  "seen_count",                :default => 1
   end
 
-  add_index "shown_ads", ["ad_id", "user_id"], :name => "ad_id"
+  add_index "shown_ads", ["ad_id", "user_id"], :name => "index_shown_ads_on_ad_id_and_user_id"
 
   create_table "signups", :force => true do |t|
     t.integer  "sub_instance_id"
@@ -662,8 +662,8 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.string   "ip_address",      :limit => 16
   end
 
-  add_index "signups", ["sub_instance_id"], :name => "signups_sub_instance_id"
-  add_index "signups", ["user_id"], :name => "signups_user_id"
+  add_index "signups", ["sub_instance_id"], :name => "index_signups_on_sub_instance_id"
+  add_index "signups", ["user_id"], :name => "index_signups_on_user_id"
 
   create_table "sub_instances", :force => true do |t|
     t.string   "name",                         :limit => 60
@@ -731,8 +731,8 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.integer  "right_link_width",                            :default => 120
   end
 
-  add_index "sub_instances", ["short_name"], :name => "short_name"
-  add_index "sub_instances", ["status"], :name => "status"
+  add_index "sub_instances", ["short_name"], :name => "index_sub_instances_on_short_name"
+  add_index "sub_instances", ["status"], :name => "index_sub_instances_on_status"
 
   create_table "tag_subscriptions", :id => false, :force => true do |t|
     t.integer "user_id", :null => false
@@ -780,7 +780,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
   end
 
   add_index "tags", ["slug"], :name => "index_tags_on_slug"
-  add_index "tags", ["top_idea_id"], :name => "tag_top_idea_id_index"
+  add_index "tags", ["top_idea_id"], :name => "index_tags_on_top_idea_id"
 
   create_table "tr8n_glossary", :force => true do |t|
     t.string   "keyword"
@@ -830,9 +830,9 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.integer  "position"
   end
 
-  add_index "tr8n_language_case_rules", ["language_case_id"], :name => "tr8n_lcr_case_id"
-  add_index "tr8n_language_case_rules", ["language_id"], :name => "tr8n_lcr_lang_id"
-  add_index "tr8n_language_case_rules", ["translator_id"], :name => "tr8n_lcr_translator_id"
+  add_index "tr8n_language_case_rules", ["language_case_id"], :name => "index_tr8n_language_case_rules_on_language_case_id"
+  add_index "tr8n_language_case_rules", ["language_id"], :name => "index_tr8n_language_case_rules_on_language_id"
+  add_index "tr8n_language_case_rules", ["translator_id"], :name => "index_tr8n_language_case_rules_on_translator_id"
 
   create_table "tr8n_language_case_value_maps", :force => true do |t|
     t.string   "keyword",       :null => false
@@ -844,7 +844,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.boolean  "reported"
   end
 
-  add_index "tr8n_language_case_value_maps", ["keyword", "language_id"], :name => "index_tr8n_language_case_value_maps_on_key_and_language_id"
+  add_index "tr8n_language_case_value_maps", ["keyword", "language_id"], :name => "index_tr8n_language_case_value_maps_on_keyword_and_language_id"
   add_index "tr8n_language_case_value_maps", ["translator_id"], :name => "index_tr8n_language_case_value_maps_on_translator_id"
 
   create_table "tr8n_language_cases", :force => true do |t|
@@ -872,9 +872,9 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_language_forum_abuse_reports", ["language_forum_message_id"], :name => "tr8n_forum_reports_message_id"
-  add_index "tr8n_language_forum_abuse_reports", ["language_id", "translator_id"], :name => "tr8n_forum_reports_lang_id_translator_id"
-  add_index "tr8n_language_forum_abuse_reports", ["language_id"], :name => "tr8n_forum_reports_lang_id"
+  add_index "tr8n_language_forum_abuse_reports", ["language_forum_message_id"], :name => "index_tr8n_language_forum_abuse_reports_on_language_forum_msg_id"
+  add_index "tr8n_language_forum_abuse_reports", ["language_id", "translator_id"], :name => "index_tr8n_language_forum_abuse_reports_on_lang_id_and_trans_id"
+  add_index "tr8n_language_forum_abuse_reports", ["language_id"], :name => "index_tr8n_language_forum_abuse_reports_on_language_id"
 
   create_table "tr8n_language_forum_messages", :force => true do |t|
     t.integer  "language_id",             :null => false
@@ -885,9 +885,9 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_language_forum_messages", ["language_id", "language_forum_topic_id"], :name => "tr8n_forum_msgs_lang_id_topic_id"
-  add_index "tr8n_language_forum_messages", ["language_id"], :name => "tr8n_forum_msgs_lang_id"
-  add_index "tr8n_language_forum_messages", ["translator_id"], :name => "tr8n_forums_msgs_translator_id"
+  add_index "tr8n_language_forum_messages", ["language_id", "language_forum_topic_id"], :name => "index_tr8n_language_forum_messages_on_lang_id_topic_id"
+  add_index "tr8n_language_forum_messages", ["language_id"], :name => "index_tr8n_language_forum_messages_on_language_id"
+  add_index "tr8n_language_forum_messages", ["translator_id"], :name => "index_tr8n_language_forum_messages_on_translator_id"
 
   create_table "tr8n_language_forum_topics", :force => true do |t|
     t.integer  "translator_id", :null => false
@@ -897,8 +897,8 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_language_forum_topics", ["language_id"], :name => "tr8n_forum_topics_lang_id"
-  add_index "tr8n_language_forum_topics", ["translator_id"], :name => "tr8n_forum_topics_translator_id"
+  add_index "tr8n_language_forum_topics", ["language_id"], :name => "index_tr8n_language_forum_topics_on_language_id"
+  add_index "tr8n_language_forum_topics", ["translator_id"], :name => "index_tr8n_language_forum_topics_on_translator_id"
 
   create_table "tr8n_language_metrics", :force => true do |t|
     t.string   "type"
@@ -981,7 +981,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_translation_domains", ["name"], :name => "index_tr8n_translation_domains_on_name", :unique => true
+  add_index "tr8n_translation_domains", ["name"], :name => "index_tr8n_translation_domains_on_name"
 
   create_table "tr8n_translation_key_comments", :force => true do |t|
     t.integer  "language_id",        :null => false
@@ -992,9 +992,9 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_translation_key_comments", ["language_id", "translation_key_id"], :name => "tr8n_tkey_msgs_lang_id_tkey_id"
-  add_index "tr8n_translation_key_comments", ["language_id"], :name => "tr8n_tkey_msgs_lang_id"
-  add_index "tr8n_translation_key_comments", ["translator_id"], :name => "tr8n_tkey_msgs_translator_id"
+  add_index "tr8n_translation_key_comments", ["language_id", "translation_key_id"], :name => "index_tr8n_translation_key_comments_on_lang_id_trans_id"
+  add_index "tr8n_translation_key_comments", ["language_id"], :name => "index_tr8n_translation_key_comments_on_language_id"
+  add_index "tr8n_translation_key_comments", ["translator_id"], :name => "index_tr8n_translation_key_comments_on_translator_id"
 
   create_table "tr8n_translation_key_locks", :force => true do |t|
     t.integer  "translation_key_id",                    :null => false
@@ -1005,7 +1005,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_translation_key_locks", ["translation_key_id", "language_id"], :name => "tr8n_locks_key_id_lang_id"
+  add_index "tr8n_translation_key_locks", ["translation_key_id", "language_id"], :name => "index_tr8n_translation_key_locks_on_trans_key_id_lang_id"
 
   create_table "tr8n_translation_key_sources", :force => true do |t|
     t.integer  "translation_key_id",    :null => false
@@ -1015,8 +1015,8 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_translation_key_sources", ["translation_key_id"], :name => "tr8n_trans_keys_key_id"
-  add_index "tr8n_translation_key_sources", ["translation_source_id"], :name => "tr8n_trans_keys_source_id"
+  add_index "tr8n_translation_key_sources", ["translation_key_id"], :name => "index_tr8n_translation_key_sources_on_translation_key_id"
+  add_index "tr8n_translation_key_sources", ["translation_source_id"], :name => "index_tr8n_translation_key_sources_on_translation_source_id"
 
   create_table "tr8n_translation_keys", :force => true do |t|
     t.string   "key",                              :null => false
@@ -1032,7 +1032,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "synced_at"
   end
 
-  add_index "tr8n_translation_keys", ["key"], :name => "index_tr8n_translation_keys_on_key", :unique => true
+  add_index "tr8n_translation_keys", ["key"], :name => "index_tr8n_translation_keys_on_key"
 
   create_table "tr8n_translation_source_languages", :force => true do |t|
     t.integer  "language_id"
@@ -1041,7 +1041,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_translation_source_languages", ["language_id", "translation_source_id"], :name => "tr8n_tsl_lt"
+  add_index "tr8n_translation_source_languages", ["language_id", "translation_source_id"], :name => "index_tr8n_translation_source_languages_on_lang_id_source_id"
 
   create_table "tr8n_translation_sources", :force => true do |t|
     t.string   "source"
@@ -1050,7 +1050,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.integer  "translation_domain_id"
   end
 
-  add_index "tr8n_translation_sources", ["source"], :name => "tr8n_sources_source"
+  add_index "tr8n_translation_sources", ["source"], :name => "index_tr8n_translation_sources_on_source"
 
   create_table "tr8n_translation_votes", :force => true do |t|
     t.integer  "translation_id", :null => false
@@ -1060,8 +1060,8 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_translation_votes", ["translation_id", "translator_id"], :name => "tr8n_trans_votes_trans_id_translator_id"
-  add_index "tr8n_translation_votes", ["translator_id"], :name => "tr8n_trans_votes_translator_id"
+  add_index "tr8n_translation_votes", ["translation_id", "translator_id"], :name => "index_tr8n_translation_votes_on_translation_id_and_translator_id"
+  add_index "tr8n_translation_votes", ["translator_id"], :name => "index_tr8n_translation_votes_on_translator_id"
 
   create_table "tr8n_translations", :force => true do |t|
     t.integer  "translation_key_id",                             :null => false
@@ -1076,9 +1076,9 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "synced_at"
   end
 
-  add_index "tr8n_translations", ["created_at"], :name => "tr8n_trans_created_at"
-  add_index "tr8n_translations", ["translation_key_id", "translator_id", "language_id"], :name => "tr8n_trans_key_id_translator_id_lang_id"
-  add_index "tr8n_translations", ["translator_id"], :name => "r8n_trans_translator_id"
+  add_index "tr8n_translations", ["created_at"], :name => "index_tr8n_translations_on_created_at"
+  add_index "tr8n_translations", ["translation_key_id", "translator_id", "language_id"], :name => "index_tr8n_translations_on_key_id_translator_id_lang_id"
+  add_index "tr8n_translations", ["translator_id"], :name => "index_tr8n_translations_on_translator_id"
 
   create_table "tr8n_translator_following", :force => true do |t|
     t.integer  "translator_id"
@@ -1192,8 +1192,8 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "user_charts", ["date_year", "date_month", "date_day"], :name => "user_chart_date_index"
-  add_index "user_charts", ["user_id"], :name => "user_chart_user_index"
+  add_index "user_charts", ["date_year", "date_month", "date_day"], :name => "index_user_charts_on_date_year_and_date_month_and_date_day"
+  add_index "user_charts", ["user_id"], :name => "index_user_charts_on_user_id"
 
   create_table "user_contacts", :force => true do |t|
     t.integer  "user_id"
@@ -1215,7 +1215,7 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
   add_index "user_contacts", ["following_id"], :name => "index_user_contacts_on_following_id"
   add_index "user_contacts", ["other_user_id"], :name => "index_user_contacts_on_other_user_id"
   add_index "user_contacts", ["status"], :name => "index_user_contacts_on_status"
-  add_index "user_contacts", ["user_id"], :name => "user_contacts_user_id_index"
+  add_index "user_contacts", ["user_id"], :name => "index_user_contacts_on_user_id"
 
   create_table "user_rankings", :force => true do |t|
     t.integer  "user_id"
@@ -1226,9 +1226,9 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "updated_at"
   end
 
-  add_index "user_rankings", ["created_at"], :name => "rankings_created_at_index"
-  add_index "user_rankings", ["user_id"], :name => "rankings_user_id"
-  add_index "user_rankings", ["version"], :name => "rankings_version_index"
+  add_index "user_rankings", ["created_at"], :name => "index_user_rankings_on_created_at"
+  add_index "user_rankings", ["user_id"], :name => "index_user_rankings_on_user_id"
+  add_index "user_rankings", ["version"], :name => "index_user_rankings_on_version"
 
   create_table "users", :force => true do |t|
     t.string   "login",                        :limit => 40,  :default => "",        :null => false
@@ -1344,10 +1344,10 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
   end
 
   add_index "users", ["facebook_uid"], :name => "index_users_on_facebook_uid"
-  add_index "users", ["identifier_url"], :name => "index_users_on_identifier_url", :unique => true
+  add_index "users", ["identifier_url"], :name => "index_users_on_identifier_url"
   add_index "users", ["rss_code"], :name => "index_users_on_rss_code"
-  add_index "users", ["status"], :name => "status"
-  add_index "users", ["sub_instance_id"], :name => "user_sub_instance_id"
+  add_index "users", ["status"], :name => "index_users_on_status"
+  add_index "users", ["sub_instance_id"], :name => "index_users_on_sub_instance_id"
   add_index "users", ["twitter_id"], :name => "index_users_on_twitter_id"
 
   create_table "wf_filters", :force => true do |t|

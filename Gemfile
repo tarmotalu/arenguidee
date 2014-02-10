@@ -61,7 +61,7 @@ gem 'workflow'
 group :development do
   gem 'thin'
   gem 'rails-dev-boost'
-  gem 'rails_view_annotator', github: "hinrik/rails_view_annotator"
+  gem 'rails_view_annotator', '0.0.7'
   gem 'binding_of_caller'
   gem 'better_errors'
 end

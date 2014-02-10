@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'rails-i18n'
-gem 'mysql2'
+gem 'sqlite3'
 
 #gem "twitter-auth", :git => "git://github.com/benders/twitter-auth.git", :branch => "rails_3", :require => "twitter_auth/engine"
 #gem 'facebooker2'

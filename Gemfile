@@ -60,6 +60,9 @@ group :test do
   gem "minitest"
   gem "minitest-rails"
   gem "minitest-reporters"
+
+  # No need to depend on Guard. Whoever wants it can install it themselves
+  # with their preferred Rails preloader like Spring or Zeus.
 end
 
 group :assets do

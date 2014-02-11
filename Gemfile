@@ -61,10 +61,8 @@ group :production do
 end
 
 group :test do
-  gem 'rspec'
-  gem 'rspec-rails'
-  gem 'guard', '1.5.4'
-  gem 'guard-rspec', '2.2.2'
+  gem 'minitest'
+  gem 'minitest-rails'
   gem 'factory_girl_rails', '4.1.0'
 end
 

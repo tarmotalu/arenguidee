@@ -160,14 +160,18 @@ class User < ActiveRecord::Base
 
   def apply_omniauth(omniauth)
     return if omniauth.blank?
+    return if omniauth['user_info'].blank?
+    info = omniauth['user_info']
 
-    if omniauth['user_info'].present?
-      userinfo = omniauth['user_info']
-      self.email = userinfo['email'] if email.blank?
-      self.first_name = userinfo['first_name'].mb_chars.titlecase if self.first_name.blank?
-      self.last_name = userinfo['last_name'].mb_chars.titlecase if self.last_name.blank?
-      self.login = userinfo['personal_code'] if login.blank?
-      self.status = 'active'
+    self.email = info['email'] if email.blank?
+    self.login = info['personal_code'] if login.blank?
+    self.status = 'active'
+
+    if first_name.blank? && info['first_name']
+      self.first_name = info['first_name'].mb_chars.titlecase
+    end
+    if last_name.blank? && info['last_name']
+      self.last_name = info['last_name'].mb_chars.titlecase
     end
   end
 

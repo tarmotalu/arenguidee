@@ -4,10 +4,6 @@ gem 'rails', '3.2.13'
 gem 'rails-i18n'
 gem 'sqlite3'
 
-#gem "twitter-auth", :git => "git://github.com/benders/twitter-auth.git", :branch => "rails_3", :require => "twitter_auth/engine"
-#gem 'facebooker2'
-#gem 'mogli'
-# gem 'airbrake'
 gem 'rack-openid'
 gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'ruby-openid'
@@ -40,7 +36,6 @@ gem "nokogiri"
 gem 'oauth'
 gem "omniauth-idcard", "~> 0.2.1"
 gem 'paperclip'
-gem 'pry-rails'
 gem 'randumb'
 gem 'rmagick', require: false
 gem 'rvm-capistrano', require: false
@@ -59,9 +54,6 @@ gem 'workflow'
 
 group :development do
   gem 'thin'
-  gem 'rails-dev-boost'
-  gem 'rails_view_annotator', '0.0.7'
-  gem 'binding_of_caller'
   gem 'better_errors'
 end
 
@@ -91,5 +83,4 @@ group :assets do
   gem 'jquery-ui-rails'
   gem 'execjs'
   gem 'therubyracer', '~> 0.10.2', :platforms => :ruby
-  # gem 'turbo-sprockets-rails3'
 end

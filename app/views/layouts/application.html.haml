@@ -39,29 +39,6 @@
           js.src = "//connect.facebook.net/et_EE/all.js#xfbml=1&appId=420406054695129";
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-    %section#topBar
-      .inline
-
-        = link_to page_path('ajakava') do
-          %b> Ettepanekute kogumine
-          Jaanuar 2013
-        %span.arrow &nbsp;
-        = link_to page_path('ajakava')  do
-          %b> Analüüs
-          Veebruar 2013
-        %span.arrow &nbsp;
-        = link_to page_path('ajakava') do
-          %b> Arutelupäev
-          Aprill 2013
-        %span.arrow &nbsp;
-        = link_to page_path('ajakava'), :class => :active do
-          %b> Seadusemuudatused
-          Aprill 2013
-        #search_box= render :partial => 'shared/search'
-        .languages
-          = link_to 'RU', page_path(6)
-          = link_to 'EN', page_path('what-is-rahvakogu')
-
     %section#outerContainer
       - unless controller.controller_name == 'home'
         = render :partial => "shared/top_banner"

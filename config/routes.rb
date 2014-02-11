@@ -1,5 +1,4 @@
 Rahvakogu::Application.routes.draw do
-  mount WillFilter::Engine => "/will_filter"
   mount Tr8n::Engine => "/tr8n"
 
   resources :categories do

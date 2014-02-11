@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130302104558) do
+ActiveRecord::Schema.define(:version => 20140211053831) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -1371,17 +1371,5 @@ ActiveRecord::Schema.define(:version => 20130302104558) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "will_filter_filters", :force => true do |t|
-    t.string   "type"
-    t.string   "name"
-    t.text     "data"
-    t.integer  "user_id"
-    t.string   "model_class_name"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-  end
-
-  add_index "will_filter_filters", ["user_id"], :name => "index_will_filter_filters_on_user_id"
 
 end

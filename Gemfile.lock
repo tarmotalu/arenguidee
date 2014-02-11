@@ -355,6 +355,5 @@ DEPENDENCIES
   uglifier
   whenever
   will-paginate-i18n
-  will_filter (~> 3.1.2)
   will_paginate
   workflow

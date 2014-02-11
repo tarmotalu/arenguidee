@@ -47,7 +47,6 @@ gem "tr8n", github: "hinrik/tr8n", :branch => "social_innovation"
 gem "truncate_html"
 gem "whenever", :require => false
 gem "will-paginate-i18n"
-gem "will_filter", "~> 3.1.2" 
 gem "will_paginate"
 gem "workflow"
 

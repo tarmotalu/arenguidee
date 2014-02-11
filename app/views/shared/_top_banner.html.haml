@@ -11,7 +11,6 @@
 
     - if logged_in?
       %li.signin
-
         = link_to image_tag(current_user.buddy_icon(:icon_24)) + 'Minu konto', '#', :class => 'logIn profile my_account'
     - else
       %li.signin= link_to 'Sisene', '#', :class => 'logIn signin'

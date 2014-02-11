@@ -1,6 +1,3 @@
-# -*- encoding : utf-8 -*-
-require 'spec_helper'
-
 describe User, '#apply_omniauth' do
   before do
     subject { FactoryGirl.build(:user) }

@@ -7,25 +7,6 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     authenticate_once(request.env['omniauth.auth'])
   end
 
-  def mobileid
-    if request.env['omniauth.phase'] == 'authenticated'
-      omniauth = session[:omniauth].try(:dup)
-      authenticate_once(omniauth)
-    else
-      session[:omniauth] = request.env['omniauth.auth'].except('extra') if request.env['omniauth.auth']
-      @session_code = session[:omniauth]['read_pin']['session_code']
-      @challenge_id = session[:omniauth]['read_pin']['challenge_id']
-
-      respond_to do |format|
-        format.html { render 'mobileid_readpin' }
-        format.js do
-          phase = request.env['omniauth.phase']
-          render :json => {:phase => phase, :message => 'Sõnum on saadetud teie telefonile. Palun kontrollige koodi!'} # todo: add tr8n translation here
-        end
-      end
-    end
-  end
-
   def failure
     session[:omniauth] = nil
     session[:selected_tab] = params[:selected_tab] if params[:selected_tab]

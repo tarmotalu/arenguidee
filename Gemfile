@@ -39,7 +39,6 @@ gem 'nested_form', :git => 'git://github.com/ryanb/nested_form.git'
 gem "nokogiri"
 gem 'oauth'
 gem "omniauth-idcard", "~> 0.2.1"
-gem 'omniauth-mobileid', '0.1.2'
 gem 'paperclip'
 gem 'pry-rails'
 gem 'randumb'

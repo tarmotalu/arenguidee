@@ -522,12 +522,7 @@ input[type="submit"], .button {
   margin-top: 70px !important;
   margin-left: 720px !important;
 }
-#login-mobileid {
- margin-top: 15px;
- padding-top: 10px;
- border-top: 1px solid #ccc; 
-}
-#login-mobileid .textbox, #login_overlay .textbox {
+#login_overlay .textbox {
   font-size: 20px;
   font-weight: bold;
   color: #555;
@@ -536,10 +531,6 @@ input[type="submit"], .button {
 }
 #login_overlay label, #login_overlay input {
   display: block;
-}
-.mobileid-code {
-  font-size: 35px;
-  line-height: 35px;
 }
 #topBar .languages {
   font-size: 14px;

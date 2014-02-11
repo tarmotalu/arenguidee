@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   attr_accessible :buddy_icon, :eula
   attr_accessor :eula
 
-  devise :omniauthable, :registerable, :omniauth_providers => [:idcard, :mobileid]
+  devise :omniauthable, :registerable, :omniauth_providers => [:idcard]
 
   scope :active, :conditions => "users.status in ('pending','active')"
   scope :at_least_one_endorsement, :conditions => "users.endorsements_count > 0"

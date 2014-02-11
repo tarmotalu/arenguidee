@@ -6,12 +6,7 @@
     #login-idcard
       = form_tag omniauth_authorize_path(:user, :idcard), :style => 'display: inline;' do
         = submit_tag 'Sisene ID-kaardiga'
-    #login-mobileid    
-      = form_tag omniauth_authorize_path(:user, :mobileid), :style => 'display: inline;' do
-        %label Mobiilitelefoni number:
-        = text_field_tag :phone, nil, :class => 'textbox', :autocomplete => :off, :size => 15
-        = submit_tag 'Sisene Mobiil-IDga', :class => 'btn btn-blue btn-small'        
-          
+
     - if current_instance.has_facebook_enabled? or current_instance.has_twitter_enabled? or current_instance.google_login_enabled
       %p
     / = render :partial => "shared/language_selection_master"

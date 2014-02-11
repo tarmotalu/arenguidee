@@ -4,9 +4,8 @@ development:
   pool: 5
   timeout: 5000
 
-  airbrake_api_key: ""
   secret_token: EAOCgGpr6msOJgeIzF9L6aScXN8KYXL4
-  session_key: Z233WWMecJV7CgDjEkwdONwOC6hglTgF
+
   mobile_id:
     endpoint_url: https://openxades.org:8443/DigiDocService
     authentication:

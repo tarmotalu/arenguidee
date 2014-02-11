@@ -11,8 +11,10 @@ end
 
 module Rahvakogu
   class Application < Rails::Application
-
     require 'core_extensions'
+
+    config.secret_token =
+      config.database_configuration[Rails.env]["secret_token"]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

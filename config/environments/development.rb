@@ -35,13 +35,20 @@ Rahvakogu::Application.configure do
   config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
   # Expands the lines which load the assets
   config.assets.debug = true
-  config.cache_store = :dalli_store, '127.0.0.1:11211', { :namespace => "social_innovation_#{Rails.env}_#{Rails.application.config.database_configuration[Rails.env]["git_branch"]}",
-                                                          :compress => true, :compress_threshold => 64*1024 }
+
+  config.session_store :cookie_store, :key => "session"
+
+  config.cache_store = :dalli_store, '127.0.0.1:11211', {
+    :namespace => "si_3_development_master",
+    :compress => true,
+    :compress_threshold => 64 * 1024
+  }
 end
+
 ActionController::Base.asset_host = Proc.new { |source| 
-    if source.starts_with?('/system/users/buddy_icons') 
-      "http://www.rahvakogu.ee"
-    else
-      "http://localhost:3000"
-    end
+  if source.starts_with?('/system/users/buddy_icons')
+    "http://www.rahvakogu.ee"
+  else
+    "http://localhost:3000"
+  end
 }

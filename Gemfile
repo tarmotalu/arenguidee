@@ -56,15 +56,10 @@ group :development do
   gem "better_errors"
 end
 
-group :production do
-  gem "newrelic_rpm"
-end
-
 group :test do
   gem "minitest"
   gem "minitest-rails"
   gem "minitest-reporters"
-  gem "factory_girl_rails", "4.1.0"
 end
 
 group :assets do
@@ -73,4 +68,8 @@ group :assets do
   gem "jquery-ui-rails"
   gem "execjs"
   gem "therubyracer", "~> 0.10.2", :platforms => :ruby
+end
+
+group :production do
+  gem "newrelic_rpm"
 end

@@ -63,6 +63,7 @@ end
 group :test do
   gem 'minitest'
   gem 'minitest-rails'
+  gem 'minitest-reporters'
   gem 'factory_girl_rails', '4.1.0'
 end
 

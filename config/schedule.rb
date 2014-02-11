@@ -18,9 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-if environment == 'staging'
-  set :output, "/var/www/rahvakogu_staging/shared/log/cron_log.log"
-elsif environment == 'production'
+if environment == 'production'
   set :output, "/var/www/rahvakogu_production/shared/log/cron_log.log"
 end
 
@@ -35,9 +33,7 @@ end
 every :reboot do
   rake "ts:index"
   rake "ts:start"
-  if environment == 'staging'
-    command "cd /var/www/rahvakogu_staging/current; RAILS_ENV=production ruby script/delayed_job start"
-  elsif environment == 'production'
+  if environment == 'production'
     command "cd /var/www/rahvakogu_production/current; RAILS_ENV=production ruby script/delayed_job start"
   end
 end

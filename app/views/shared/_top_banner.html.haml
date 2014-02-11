@@ -4,18 +4,18 @@
       = link_to image_tag('logo.png'), '/', :alt => "Rahvakogu", :class => :logo
     - else
       = link_to image_tag('staging_logo.png'), '/', :alt => "Rahvakogu staging", :class => :logo
- 
+
     %nav#mainMenu
       - @categories.each do |category|
         = link_to category.name, issue_path(category), :class => (@category.nil? ? false : (@category == category ? :active : false))
-      
+
     - if logged_in?
       %li.signin
 
         = link_to image_tag(current_user.buddy_icon(:icon_24)) + 'Minu konto', '#', :class => 'logIn profile my_account'
     - else
       %li.signin= link_to 'Sisene', '#', :class => 'logIn signin'
- 
+
 - if logged_in?
   = render :partial => "shared/user_info"
   = render :partial => "shared/notifications"
@@ -57,38 +57,3 @@
       });
 
   });
-
-
--# / .header
--# /   .header-wrap
--# /     .col-group
--# /       .col-12
--# /         .col-content
--# /           %div
--# /             - unless SubInstance.current.top_banner.to_s.include?("missing.png")
--# /               = image_tag SubInstance.current.top_banner.url(:icon_full), :size => "1024x80", :border => 0
--# /               - if left_url = (SubInstance.current.left_link_url or Instance.current.left_link_url)
--# /                 - left_pos = SubInstance.current.left_link_position or Instance.current.left_link_position
--# /                 - left_width = SubInstance.current.left_link_width or Instance.current.left_link_width
--# /                 %a.header_link{href: left_url, style: "left: #{left_pos}px; width: #{left_width}px;"}
--# /               - if right_url = (SubInstance.current.right_link_url or Instance.current.right_link_url)
--# /                 - right_pos = SubInstance.current.right_link_position or Instance.current.right_link_position
--# /                 - right_width = SubInstance.current.right_link_width or Instance.current.right_link_width
--# /                 %a.header_link{href: right_url, style: "left: #{right_pos}px; width: #{right_width}px;"}
--# /             - else
--# /               = image_tag current_instance.top_banner.url(:icon_full), :size => "1024x80", :border => 0
--# /           %div.header_submenu
--# /             - if SubInstance.current.sub_link_header and SubInstance.current.sub_link_header!=""
--# /               = SubInstance.current.sub_link_header.html_safe
--# /           %p.hide
--# /             %a{:href => "#content"} Skip to content
--# /       .col-group
--# /         .col-3
--# /           .col-content
--# /           &nbsp;
--# /         .col-7
--# /           .col-content
--# /             = render :partial => "shared/top_navigation"
--# /         .col-2
--# /           .col-content
--# /             %a{:id=>"link_to_cf", :href=>"http://citizens.is/", :style=>"position-top:0px;float:right;height:80px;width:100px;"}

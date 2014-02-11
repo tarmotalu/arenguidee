@@ -1,7 +1,6 @@
 /.bundle/
 /config/*.pem
 /config/contacts.yml
-/config/database.yml
 /config/deploy.rb
 /config/development.sphinx.conf
 /config/facebooker.yml

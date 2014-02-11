@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '>= 3.2.16', '< 4'
 gem 'rails-i18n'
 gem 'sqlite3'
 

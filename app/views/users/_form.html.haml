@@ -82,9 +82,6 @@
           (
           %a{:href => current_sub_instance.privacy_url}>= tr("privacy policy", "view/users/_form")
           )
-      :javascript
-        var RecaptchaOptions = { theme : 'clean' };
-      = #recaptcha_tags
       %br/
       = check_box("user", "terms")
       = tr(" I promise to honor the ", "view/users/_form")

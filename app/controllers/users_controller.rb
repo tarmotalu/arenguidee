@@ -333,8 +333,6 @@ class UsersController < ApplicationController
     begin
       if Rails.env.test? && @user.save!
         @valid = true
-#      elsif verify_recaptcha(:model => @user, :message => tr("Please try reCAPTCHA again","users")) and @user.save! #save first
-#        @valid = true
       elsif @user.save! #save first
         @valid = true
       else

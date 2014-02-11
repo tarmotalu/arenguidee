@@ -5,7 +5,6 @@ gem 'rails-i18n'
 gem 'sqlite3'
 
 gem 'rack-openid'
-gem 'recaptcha', :require => 'recaptcha/rails'
 gem 'ruby-openid'
 gem 'acts_as_list', '0.1.9'
 gem 'auto_html', '1.5.1'

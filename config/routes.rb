@@ -1,22 +1,24 @@
 Rahvakogu::Application.routes.draw do
-
   mount WillFilter::Engine => "/will_filter"
   mount Tr8n::Engine => "/tr8n"
 
   resources :categories do
     resources :ideas
   end
-  resources :export
-  match '/groups/suggest_user' => 'groups#suggest_user'
 
-  match '/ideas/flag/:id' => 'ideas#flag'
-  match '/ideas/abusive/:id' => 'ideas#abusive'
-  match '/ideas/not_abusive/:id' => 'ideas#not_abusive'
-  match '/admin/all_flagged' => 'admin#all_flagged'
-  match '/admin/all_deleted' => 'admin#all_deleted'
-  match '/users/list_suspended' => 'users#list_suspended'
-  match '/to_translate' => 'categories#translations'
+  resources :export
+
+  match "/groups/suggest_user" => "groups#suggest_user"
+  match "/ideas/flag/:id" => "ideas#flag"
+  match "/ideas/abusive/:id" => "ideas#abusive"
+  match "/ideas/not_abusive/:id" => "ideas#not_abusive"
+  match "/admin/all_flagged" => "admin#all_flagged"
+  match "/admin/all_deleted" => "admin#all_deleted"
+  match "/users/list_suspended" => "users#list_suspended"
+  match "/to_translate" => "categories#translations"
+
   resources :groups
+
   resources :pages do
     member do
       post :add_comment
@@ -35,16 +37,21 @@ Rahvakogu::Application.routes.draw do
       put :picture_save
     end
   end
-  
-  devise_for :users, :controllers => {:sessions => 'sessions', :registrations => 'registrations', :omniauth_callbacks => 'authentications'}, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
+
+  devise_for :users, :controllers => {
+    :sessions => "sessions",
+    :registrations => "registrations",
+    :omniauth_callbacks => "authentications"
+  }, :path_names => { :sign_in => "login", :sign_out => "logout" }
 
   resources :users do
-  	# resource :password
   	resource :profile
+
   	collection do
   	  get :endorsements
   	  post :order
   	end
+
   	member do
   	  put :suspend
       put :unsuspend
@@ -65,17 +72,15 @@ Rahvakogu::Application.routes.draw do
   	  put :make_admin
   	  get :ads
   	  get :ideas
-  	  #get :signups
   	  post :endorse
-  	  # get :reset_password
-  	  # get :resend_activation
     end
-    # resources :messages
+
     resources :followings do
       collection do
         put :multiple
       end
     end
+
     resources :user_contacts, :as => "contacts" do
       collection do
         put :multiple
@@ -92,8 +97,6 @@ Rahvakogu::Application.routes.draw do
       get :signups
       get :picture
       put :picture_save
-      # get :legislators
-      # post :legislators_save
       get :delete
     end
   end
@@ -130,9 +133,9 @@ Rahvakogu::Application.routes.draw do
       get :endorsed_top_points
       get :comments
       get :documents
-      # get :idea_detail
       get :update_status
   	end
+
   	collection do
       get :minu
       get :yours_finished
@@ -157,6 +160,7 @@ Rahvakogu::Application.routes.draw do
       get :untagged
       get :revised
   	end
+
     resources :changes do
       member do
         put :start
@@ -167,6 +171,7 @@ Rahvakogu::Application.routes.draw do
       end
       resources :votes
     end
+
     resources :idea_revisions do
       member do
         get :clean
@@ -174,7 +179,9 @@ Rahvakogu::Application.routes.draw do
       end
 
     end
+
     resources :points
+
     resources :ads do
       collection do
         post :preview
@@ -190,11 +197,14 @@ Rahvakogu::Application.routes.draw do
       put :undelete
       get :unhide
     end
+
     resources :following_discussions, :as=>"followings"
+
     resources :comments do
       collection do
         get :more
       end
+
       member do
         get :unhide
         get :flag
@@ -215,12 +225,14 @@ Rahvakogu::Application.routes.draw do
       post :unquality
       get :unhide
     end
+
     collection do
       get :newest
       get :revised
       get :your_ideas
       get :your_index
     end
+
     resources :revisions do
       member do
         get :clean
@@ -240,34 +252,13 @@ Rahvakogu::Application.routes.draw do
     end
   end
 
-  # resources :widgets do
-  #   collection do
-  #     get :ideas
-  #     get :discussions
-  #     get :points
-  #     get :preview_iframe
-  #     post :preview
-  #   end
-  # end
-
-  # resources :bulletins do
-  #   member do
-  #     post :add_inline
-  #   end
-  # end
-
   resources :searches do
     collection do
       get :all
     end
   end
 
-  #resources :signups
   resources :endorsements
-  # resources :passwords
-  # resources :unsubscribes
-  # resources :notifications
-  # resources :about
   resources :tags
   resource :session
   resources :delayed_jobs do
@@ -279,86 +270,30 @@ Rahvakogu::Application.routes.draw do
 
   resource :open_id
 
-  match '/' => 'home#index', :as => :root
-  match '/activate/:activation_code' => 'users#activate', :as => :activate, :activation_code => nil
-  match '/signup' => 'users#new', :as => :signup
-  # match '/login' => 'sessions#new', :as => :login
-  match '/logout' => 'sessions#destroy', :as => :logout
-  match '/unsubscribe' => 'unsubscribes#new', :as => :unsubscribe
-  # match '/yours' => 'ideas#yours'
-  match '/hot' => 'ideas#hot'
-  match '/cold' => 'ideas#cold'
-  match '/new' => 'ideas#new'
-  match '/controversial' => 'ideas#controversial'
-  match '/vote/:action/:code' => 'vote#index'
-  match '/welcome' => 'home#index'
-  match '/search' => 'searches#index'
-  match '/splash' => 'splash#index'
-  match '/issues' => 'issues#index'
-  match '/issues.:format' => 'issues#index'
-  match '/issues/:id' => 'issues#show', as: 'issue'
-  match '/issues/:id.:format' => 'issues#show'
-  match '/issues/:id/:action' => 'issues#index', :as => :filtered_issue
-  match '/issues/:id/:action.:format' => 'issues#index'
-  match '/pictures/:short_name/:action/:id' => 'pictures#index'
-  match ':controller' => '#index'
-  match ':controller/:action' => '#index'
-  match ':controller/:action.:format' => '#index'
-  match '/:controller(/:action(/:id))'
+  match "/" => "home#index", :as => :root
+
+  match "/activate/:activation_code" => "users#activate",
+    :as => :activate, :activation_code => nil
+  match "/signup" => "users#new", :as => :signup
+  match "/logout" => "sessions#destroy", :as => :logout
+  match "/unsubscribe" => "unsubscribes#new", :as => :unsubscribe
+  match "/hot" => "ideas#hot"
+  match "/cold" => "ideas#cold"
+  match "/new" => "ideas#new"
+  match "/controversial" => "ideas#controversial"
+  match "/vote/:action/:code" => "vote#index"
+  match "/welcome" => "home#index"
+  match "/search" => "searches#index"
+  match "/splash" => "splash#index"
+  match "/issues" => "issues#index"
+  match "/issues.:format" => "issues#index"
+  match "/issues/:id" => "issues#show", as: "issue"
+  match "/issues/:id.:format" => "issues#show"
+  match "/issues/:id/:action" => "issues#index", :as => :filtered_issue
+  match "/issues/:id/:action.:format" => "issues#index"
+  match "/pictures/:short_name/:action/:id" => "pictures#index"
+  match ":controller" => "#index"
+  match ":controller/:action" => "#index"
+  match ":controller/:action.:format" => "#index"
+  match "/:controller(/:action(/:id))"
 end
-  # The idea is based upon order of creation:
-  # first created -> highest idea.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'

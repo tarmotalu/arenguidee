@@ -1,12 +1,5 @@
-# encoding: UTF-8
 class RegistrationsController < Devise::RegistrationsController
-  def create
-    super
-  end
-
-
   private
-
   def build_resource(*args)
     super
     if session[:omniauth]

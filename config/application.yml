@@ -1,4 +1,5 @@
 development: &development
   secret_token: EAOCgGpr6msOJgeIzF9L6aScXN8KYXL4
+  pepper: EOkR2xVR8MCG8JECDGMfwhJy6rQ5X4W2AuUzkRaZlkMY5xxabRLN8VyTwe12GfGx
 
 test: *development

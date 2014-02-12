@@ -13,7 +13,8 @@
           |
           \#{link_to tr("Settings","views/shares/_user_info"), edit_user_path(current_user)} |
         %li
-          = link_to tr("Logout", "view/shared/_user_info"), "/sessions/destroy"
+          = link_to tr("Logout", "view/shared/_user_info"), destroy_user_session_path
+
       - if logged_in? && current_user.is_admin?
         #next_steps_box
           %h4= tr("Get started:", "view/shared/_notifications", :instance_name => tr(current_instance.name,"Name from database"))

@@ -1,10 +1,13 @@
-# -*- encoding : utf-8 -*-
-class AuthenticationsController < Devise::OmniauthCallbacksController
+class Users::RegistrationsController < Devise::RegistrationsController
   skip_before_filter :verify_authenticity_token, :only => [:failure]
   before_filter :development_id, :only => :failure if Rails.env.development?
-  
+
+  prepend_before_filter :only => [:facebook, :failure] do
+    request.env["devise.skip_timeout"] = true
+  end
+
   def idcard
-    authenticate_once(request.env['omniauth.auth'])
+    omniauthenticate(request.env['omniauth.auth'])
   end
 
   def failure
@@ -28,10 +31,19 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     end
   end
 
-  protected
+  private
+  def build_resource(*args)
+    super
+
+    if session[:omniauth]
+      @user.apply_omniauth(session[:omniauth])
+      @user.valid?
+    end
+  end
+
   def development_id
     ActiveRecord::IdentityMap.without do
-      authenticate_once('user_info' => {
+      omniauthenticate('user_info' => {
         'personal_code' => '38004100067',
         'first_name' => 'John',
         'last_name' => 'Fail'
@@ -39,7 +51,7 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
     end
   end
 
-  def authenticate_once(omniauth = request.env["omniauth.auth"])
+  def omniauthenticate(omniauth)
     logger.info omniauth.inspect
     session[:omniauth] = nil
     notice, alert, redirect = nil, nil, nil
@@ -48,17 +60,14 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
 
     if omniauth
       @user = User.find_by_login(omniauth['user_info']['personal_code'])
-      
+
       if @user
-        # if @user.is_admin?
-          notice = t('devise.sessions.signed_in')
-          redirect = stored_location_for(:user) || '/'
-          sign_in(:user, @user)
-      #   else
-      #     flash[:error] = "Sisse logida praeguses etapis ei saa."  
-      #     redirect= root_path
-      #   end
-      else # Authentication was successful, but user is not registered in the system
+        notice = t('devise.sessions.signed_in')
+        redirect = stored_location_for(:user) || '/'
+        sign_in(:user, @user)
+      else
+        # Authentication was successful, but user is not registered in the
+        # system
         session[:omniauth] = omniauth
         alert = t('sessions.new.not_registered', :username => omniauth['user_info']['name'])
         redirect = new_user_registration_url
@@ -68,15 +77,18 @@ class AuthenticationsController < Devise::OmniauthCallbacksController
       redirect = root_path
     end
 
-  respond_to do |format|
-    format.html do
-      flash[:alert] = alert if alert
-      flash[:notice] = notice if notice
-      redirect_to redirect, :alert => flash[:alert]
-    end
-    format.js do
-      render :json => {:alert => alert, :notice => notice, :redirect => redirect}
-    end
+    respond_to do |format|
+      format.html do
+        flash[:alert] = alert if alert
+        flash[:notice] = notice if notice
+        redirect_to redirect, :alert => flash[:alert]
+      end
+
+      format.js do
+        render :json => {
+          :alert => alert, :notice => notice, :redirect => redirect
+        }
+      end
     end
   end
 end

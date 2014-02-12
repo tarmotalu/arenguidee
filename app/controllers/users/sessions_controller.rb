@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Users::SessionsController < ApplicationController
   skip_before_filter :check_idea
   skip_before_filter :check_referral
   skip_before_filter :check_suspension
@@ -7,9 +7,6 @@ class SessionsController < ApplicationController
 
   def new
     redirect_to '/users/auth/idcard'
-  end
-
-  def create
   end
 
   def destroy

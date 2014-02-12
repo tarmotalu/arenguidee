@@ -48,5 +48,5 @@
           %p Veebruari teises pooles hakkame siinsamas avalikustama analüütikute ja ekspertide töö tulemusi.
           %input{:type => "submit", :id=>"CloseButton", :onclick=>"$('.close').click();return false;", :value => "Sulge", :title => "Sulge"}
 
-      .flash= flash_div :warning, :notice, :error
+      .flash= flash_div :warning, :notice, :alert, :error
       #container.clearfix= yield

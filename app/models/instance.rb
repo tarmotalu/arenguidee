@@ -86,7 +86,7 @@ class Instance < ActiveRecord::Base
   end
   
   def self.current  
-    Thread.current[:instance]
+    Thread.current[:instance] ||= Instance.first
   end  
   
   def self.current=(instance)
@@ -156,7 +156,7 @@ class Instance < ActiveRecord::Base
   end
   
   def has_facebook_enabled?
-    return false 
+    return true
   end
   
   def has_windows_enabled?

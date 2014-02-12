@@ -18,5 +18,10 @@ Devise.setup do |config|
   # If true, extends the user's remember period when remembered via cookie.
   config.extend_remember_period = true
 
-  config.omniauth :idcard, :logger => Logger.new('log/id_card.log')
+  fb_app_id = Rahvakogu.config["facebook_app_id"]
+  fb_app_secret = Rahvakogu.config["facebook_app_secret"]
+  fb_opts = {:scope => "email,user_about_me"}
+  config.omniauth :facebook, fb_app_id, fb_app_secret, fb_opts
+
+  config.omniauth :idcard
 end

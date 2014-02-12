@@ -40,7 +40,7 @@ Rahvakogu::Application.routes.draw do
   devise_for :users,
     :controllers => {
       :registrations => "users/registrations",
-      :omniauth_callbacks => "users/registrations"
+      :omniauth_callbacks => "users/sessions"
     },
     :skip => [:sessions]
 

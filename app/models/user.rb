@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   attr_accessible :buddy_icon, :eula
   attr_accessor :eula
 
-  devise :omniauthable, :registerable, :omniauth_providers => [:idcard]
+  devise :omniauthable, :registerable,
+    :omniauth_providers => [:facebook, :idcard]
 
   scope :active, :conditions => "users.status in ('pending','active')"
   scope :at_least_one_endorsement, :conditions => "users.endorsements_count > 0"
@@ -109,10 +110,8 @@ class User < ActiveRecord::Base
   #validates_presence_of     :login, :message => tr("Please specify a name to be identified as on the site.", "model/user")
   #validates_length_of       :login, :within => 3..60
   validates_presence_of  :login
-  validates_presence_of     :first_name, :message => tr("Please specify your first name.", "model/user")
-  validates_presence_of     :last_name, :message => tr("Please specify your first name.", "model/user")
 
-  validates_presence_of     :email, :unless => [:has_facebook?, :has_twitter?]
+  validates_presence_of     :email
   validates_length_of       :email, :within => 3..100, :allow_nil => true, :allow_blank => true
   validates_uniqueness_of   :email, :case_sensitive => false, :allow_nil => true, :allow_blank => true
   validates_uniqueness_of   :facebook_uid, :allow_nil => true, :allow_blank => true
@@ -231,7 +230,7 @@ class User < ActiveRecord::Base
   end
 
   def new_user_signedup
-    Activity::ActivityUserNew.create(:user => self, :sub_instance => sub_instance)
+    ActivityUserNew.create(:user => self, :sub_instance => sub_instance)
     resend_activation if self.has_email? and self.is_pending? # and not self.identifier_url
   end
 

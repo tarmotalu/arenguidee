@@ -83,8 +83,4 @@ module Rahvakogu
   require 'validates_uri_existence_of'
 
   require 'timeout'
-  # require 'authenticated_system'
-
-  # require 'load_windows_contacts'
-  # require 'load_yahoo_contacts'
 end

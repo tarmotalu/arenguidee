@@ -50,6 +50,9 @@ gem "will-paginate-i18n"
 gem "will_paginate"
 gem "workflow"
 
+# Versions < 1.5.1 are vulnerable.
+gem "omniauth-facebook", ">= 1.5.1"
+
 group :development do
   gem "thin"
   gem "better_errors"

@@ -9,6 +9,4 @@ MiniTest::Reporters.use! MiniTest::Reporters::SpecReporter.new
 Minitest.backtrace_filter.add_filter %r(/zeus-/)
 Minitest.backtrace_filter.add_filter %r(/\.gem/)
 
-class ActiveSupport::TestCase
-  fixtures :all
-end
+require Rails.root.join("db/seeds") if Instance.count == 0

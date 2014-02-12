@@ -10,11 +10,13 @@ if defined?(Bundler)
 end
 
 module Rahvakogu
+  self.singleton_class.send :attr_accessor, :config
+  self.config = YAML.load_file("config/application.yml")[Rails.env]
+
   class Application < Rails::Application
     require 'core_extensions'
 
-    config.secret_token =
-      config.database_configuration[Rails.env]["secret_token"]
+    config.secret_token = Rahvakogu.config["secret_token"]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

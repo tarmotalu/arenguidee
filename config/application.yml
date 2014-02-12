@@ -1,0 +1,4 @@
+development: &development
+  secret_token: EAOCgGpr6msOJgeIzF9L6aScXN8KYXL4
+
+test: *development

@@ -4,7 +4,7 @@ class Activity < ActiveRecord::Base
   
   scope :active, :conditions => "activities.status = 'active'"
   scope :removed, :conditions => "activities.status = 'removed'", :order => "updated_at desc"
-  scope :for_all_users, :conditions => "is_user_only=false"
+  scope :for_all_users, :conditions => "is_user_only = 'f'"
 
   scope :discussions, :conditions => "activities.comments_count > 0"
   scope :points, :conditions => "type like 'ActivityPoint%'", :order => "activities.created_at desc"

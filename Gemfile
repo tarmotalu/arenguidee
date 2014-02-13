@@ -55,6 +55,10 @@ gem "omniauth-facebook", ">= 1.5.1"
 group :development do
   gem "thin"
   gem "better_errors"
+
+  # Dev-Boost reloads files as they're changed and not before a request as
+  # Rails (supposedly) does and thereby speeds up pageloads.
+  gem "rails-dev-boost"
 end
 
 group :test do

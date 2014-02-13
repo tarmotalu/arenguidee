@@ -110,7 +110,6 @@ Rahvakogu::Application.routes.draw do
 
   resources :ideas do
   	member do
-      get :aitah
       get :statistics
       put :flag_inappropriate
       get :flag

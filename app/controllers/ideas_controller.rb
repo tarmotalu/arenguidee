@@ -670,18 +670,17 @@ class IdeasController < ApplicationController
   # GET /ideas/new
   # GET /ideas/new.xml
   def new
-
-    @page_title = tr("New idea at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
-    @idea = Idea.new unless @idea
+    @page_title = "New idea"
+    @idea ||= Idea.new
     @idea.category = Category.find(params[:category_id]) if params[:category_id]
     @idea.points.build
 
     if @ideas
-      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.id},current_user.id])
-    end    
+      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.map(&:id), current_user.id])
+    end
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
     end
   end
 
@@ -700,7 +699,7 @@ class IdeasController < ApplicationController
 
   def access_denied
     flash[:error] = tr('Access denied', 'ideas')
-    redirect_to '/ideas/' and return
+    redirect_to '/ideas/'
   end
   
   # POST /ideas
@@ -763,7 +762,7 @@ class IdeasController < ApplicationController
       if @saved
         format.html { 
           flash[:notice] = tr("Thanks for adding {idea_name}", "controller/ideas", :idea_name => @idea.name)
-          redirect_to(aitah_idea_path(@idea))
+          redirect_to(idea_path(@idea))
         }
         format.js {
           render :update do |page|
@@ -774,10 +773,6 @@ class IdeasController < ApplicationController
         format.html { render :controller => "ideas", :action => "new", :notice=>flash[:notice] }
       end
     end
-  end
-
-  def aitah
-    @idea = Idea.find(params[:id])
   end
 
   # POST /ideas/1/endorse

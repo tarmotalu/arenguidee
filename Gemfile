@@ -12,7 +12,6 @@ gem "awesome_print"
 gem "backup", :require => false
 gem "capistrano", require: false, github: "capistrano/capistrano"
 gem "daemons"
-gem "dalli"
 gem "delayed_job"
 gem "delayed_job_active_record"
 gem "devise", "2.1.2"

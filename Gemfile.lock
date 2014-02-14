@@ -139,6 +139,9 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25.1)
+    mina (0.3.0)
+      open4
+      rake
     mini_portile (0.5.2)
     minitest (4.7.5)
     minitest-rails (0.9.2)
@@ -319,6 +322,7 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   kgio
+  mina
   minitest
   minitest-rails
   minitest-reporters

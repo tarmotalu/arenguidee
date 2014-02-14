@@ -78,3 +78,7 @@ group :assets do
   gem "execjs"
   gem "therubyracer", "~> 0.10.2", :platforms => :ruby
 end
+
+group :deploy do
+  gem "mina"
+end

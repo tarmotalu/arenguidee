@@ -1,0 +1,60 @@
+require "mina/bundler"
+require "mina/rails"
+
+set :domain, "arenguidee"
+set :deploy_to, "/var/www/arenguidee"
+set :branch, "HEAD"
+set :git_cache, "shared/deploy"
+set :bundle_path, ".gem"
+
+set :shared_paths, %w[
+  config/application.yml
+  config/database.yml
+  log
+  tmp
+]
+
+task :setup do
+  queue! %(chmod 770 "#{deploy_to}/shared")
+
+  %w[config deploy log tmp].each do |dir|
+    queue! %(mkdir -p "#{deploy_to}/shared/#{dir}")
+  end
+
+  %w[log tmp].each do |dir|
+    queue! %(chgrp www-data "#{deploy_to}/shared/#{dir}")
+  end
+
+  queue! %(touch "#{deploy_to}/shared/config/database.yml")
+  queue! %(touch "#{deploy_to}/shared/config/application.yml")
+end
+
+namespace :git do
+  task :push do
+    print_status "Pushing changes..."
+    system *%W[git push deploy #{branch}] unless simulate_mode?
+  end
+
+  task :checkout do
+    queue %(echo "-> Checking out repository...")
+    git = %(git --git-dir="#{deploy_to}/#{git_cache}")
+    queue! %(#{git} archive --format=tar "#{branch}" | tar xf -)
+  end
+end
+
+desc "Deploys the current version to the server."
+task :deploy do
+  deploy do
+    invoke "git:push"
+    invoke "git:checkout"
+
+    invoke "deploy:link_shared_paths"
+    invoke "bundle:install"
+    invoke "rails:db_migrate"
+    invoke "rails:assets_precompile"
+
+    to :launch do
+      queue %(touch "#{deploy_to}/#{current_path}/tmp/restart.txt")
+    end
+  end
+end

@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem "rails", ">= 3.2.16", "< 4"
 gem "rails-i18n"
 
+gem "thin"
 gem "rack-openid"
 gem "ruby-openid"
 gem "acts_as_list", "0.1.9"
@@ -53,7 +54,6 @@ group :development, :test do
 end
 
 group :development do
-  gem "thin"
   gem "better_errors"
 
   # Dev-Boost reloads files as they're changed and not before a request as

@@ -872,8 +872,8 @@ ActiveRecord::Schema.define(:version => 20140211053831) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_language_forum_abuse_reports", ["language_forum_message_id"], :name => "index_tr8n_language_forum_abuse_reports_on_language_forum_msg_id"
-  add_index "tr8n_language_forum_abuse_reports", ["language_id", "translator_id"], :name => "index_tr8n_language_forum_abuse_reports_on_lang_id_and_trans_id"
+  add_index "tr8n_language_forum_abuse_reports", ["language_forum_message_id"], :name => "index_tr8n_language_forum_abuse_reports_on_lang_forum_msg_id"
+  add_index "tr8n_language_forum_abuse_reports", ["language_id", "translator_id"], :name => "index_tr8n_language_forum_abuse_reports_on_lang_id_and_trans"
   add_index "tr8n_language_forum_abuse_reports", ["language_id"], :name => "index_tr8n_language_forum_abuse_reports_on_language_id"
 
   create_table "tr8n_language_forum_messages", :force => true do |t|
@@ -1060,7 +1060,7 @@ ActiveRecord::Schema.define(:version => 20140211053831) do
     t.datetime "updated_at"
   end
 
-  add_index "tr8n_translation_votes", ["translation_id", "translator_id"], :name => "index_tr8n_translation_votes_on_translation_id_and_translator_id"
+  add_index "tr8n_translation_votes", ["translation_id", "translator_id"], :name => "index_tr8n_translation_votes_on_trans_id_and_trans_id"
   add_index "tr8n_translation_votes", ["translator_id"], :name => "index_tr8n_translation_votes_on_translator_id"
 
   create_table "tr8n_translations", :force => true do |t|

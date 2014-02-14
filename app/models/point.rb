@@ -81,14 +81,12 @@ class Point < ActiveRecord::Base
 #  after_commit :setup_revision
   before_save :ensure_request_and_user_are_set
   
-  validates_length_of :name, :within => 5..60, :too_long => tr("has a maximum of 60 characters", "model/point"), 
-                                               :too_short => tr("please enter more than 5 characters", "model/point")
+  validates_length_of :name, :within => 5..60, :too_long => "has a maximum of 60 characters", :too_short => "please enter more than 5 characters"
     #validates_uniqueness_of :name
   # this is actually just supposed to be 500, but bumping it to 520 because the javascript counter doesn't include carriage returns in the count, whereas this does.
-  validates_length_of :content, :within => 5..1000, :too_long => tr("has a maximum of 500 characters", "model/point"),
-                                                   :too_short => tr("please enter more than 5 characters", "model/point")
+  validates_length_of :content, :within => 5..1000, :too_long => "has a maximum of 500 characters", :too_short => "please enter more than 5 characters"
 
-  validates :name, :uniqueness => {:scope => [:user_id, :idea_id, :name, :value], :message => tr('You have already made this argument.', "points") }, :if => Proc.new { |point| point.status == 'published' }                                                   
+  validates :name, :uniqueness => {:scope => [:user_id, :idea_id, :name, :value], :message => 'You have already made this argument.' }, :if => Proc.new { |point| point.status == 'published' }                                                   
   validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
   after_create :on_published_entry
 

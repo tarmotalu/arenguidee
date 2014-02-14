@@ -3,11 +3,7 @@ class Idea < ActiveRecord::Base
   self.per_page = 10
   acts_as_set_sub_instance :table_name=>"ideas"
 
-  if Instance.current and Instance.current.is_suppress_empty_ideas?
-    scope :published, :conditions => "ideas.status = 'published' and ideas.position > 0 and endorsements_count > 0"
-  else
-    scope :published, :conditions => "ideas.status = 'published'"
-  end
+  scope :published, :conditions => "ideas.status = 'published'"
 
   scope :published, :conditions => "ideas.status = 'published'"
   scope :unpublished, :conditions => "ideas.status not in ('published','abusive')"
@@ -128,15 +124,13 @@ class Idea < ActiveRecord::Base
 
   end
     
-  validates_length_of :name, :within => 5..200, :too_long => tr("has a maximum of 200 characters", "model/idea"),
-                                               :too_short => tr("please enter more than 5 characters", "model/idea")
+  validates_length_of :name, :within => 5..200, :too_long => "has a maximum of 200 characters", :too_short => "please enter more than 5 characters"
 
-  validates_length_of :description, :within => 0..3000, :too_long => tr("has a maximum of 3000 characters", "model/idea"),
-                                                       :too_short => tr("please enter more than -1 characters", "model/idea")
+  validates_length_of :description, :within => 0..3000, :too_long => "has a maximum of 3000 characters", :too_short => "please enter more than -1 characters"
 
   #validates_uniqueness_of :name, :if => Proc.new { |idea| idea.status == 'published' }
   validates :category_id, :presence => true
-  validates :name, :uniqueness => {:scope => [:user_id, :category_id], :message => tr('You have already suggested an idea of this name.', "ideas"), :if => Proc.new { |idea| idea.status == 'published' }}
+  validates :name, :uniqueness => {:scope => [:user_id, :category_id], :message => 'You have already suggested an idea of this name.', :if => Proc.new { |idea| idea.status == 'published' }}
 
 
   after_create :on_published_entry

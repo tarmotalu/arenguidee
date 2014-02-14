@@ -13,7 +13,7 @@ class Revision < ActiveRecord::Base
   has_many :notifications, :as => :notifiable, :dependent => :destroy
       
   # this is actually just supposed to be 500, but bumping it to 520 because the javascript counter doesn't include carriage returns in the count, whereas this does.
-  validates_length_of :content, :maximum => 520, :allow_blank => true, :allow_nil => true, :too_long => tr("has a maximum of 500 characters", "model/revision")
+  validates_length_of :content, :maximum => 520, :allow_blank => true, :allow_nil => true, :too_long => "has a maximum of 500 characters"
 
   include Workflow
   workflow_column :status

@@ -102,12 +102,12 @@ class SubInstance < ActiveRecord::Base
     errors.on("unsubscribe_url")       
   end
 
-  validates_length_of       :short_name,    :within => 2..50, :message => tr("should be between 2 and 50 characters.","")
+  validates_length_of       :short_name,    :within => 2..50, :message => "should be between 2 and 50 characters."
   # validates_uniqueness_of   :short_name, :case_sensitive => false, :message => tr("is already taken.","")
-  validates_length_of       :name, :within => 2..50, :message => tr("should be within 3 and 50 characters.","")
+  validates_length_of       :name, :within => 2..50, :message => "should be within 3 and 50 characters."
 
   ReservedShortnames = %w[admin blog ftp mail pop pop3 imap smtp stage stats status  localize feedback facebook]
-  validates_exclusion_of :short_name, :in => ReservedShortnames, :message => tr('is already taken',"")
+  validates_exclusion_of :short_name, :in => ReservedShortnames, :message => 'is already taken'
 
   def self.current
     if Thread.current[:sub_instance]

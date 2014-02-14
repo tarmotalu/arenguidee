@@ -152,7 +152,6 @@ GEM
     multi_json (1.8.4)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    newrelic_rpm (3.7.2.192)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     nori (1.1.5)
@@ -323,7 +322,6 @@ DEPENDENCIES
   minitest-rails
   minitest-reporters
   nested_form!
-  newrelic_rpm
   nokogiri
   oauth
   omniauth-facebook (>= 1.5.1)

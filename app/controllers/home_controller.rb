@@ -22,7 +22,6 @@ class HomeController < ApplicationController
 
   def categories
     @categories = Category.all
-    @page_title = SubInstance.current.name
     @endorsements = nil
     @ideas = []
     @ideas << @categories.first.ideas.first if @categories and @categories.first and @categories.first.ideas and @categories.first.ideas.first
@@ -41,7 +40,6 @@ class HomeController < ApplicationController
 
   def index
     @position_in_idea_name = true
-    @page_title = SubInstance.current.name
     @ideas = @new_ideas = Idea.published.newest.limit(3)
     @top_ideas = Idea.published.top_rank.limit(3).reject{|idea| @new_ideas.include?(idea)}
     @random_ideas = Idea.where("category_id <> 21").published.by_random.limit(3).reject{|idea| @new_ideas.include?(idea) or @top_ideas.include?(idea)}

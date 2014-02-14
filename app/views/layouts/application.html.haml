@@ -1,52 +1,26 @@
 !!!
-%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+%html
   %head
-    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
-    %meta{:content => "Rahvakogu / Koostöö kogu", :name => "Author"}/
-    %link{:href => "/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
-
-
-
-
-    %title
-      Rahvakogu
-      - unless @page_title.nil?
-        = "| " +  @page_title
-
-
-    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
-    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    %meta(charset="utf-8")
+    %meta(name="viewport" content="initial-scale=1")
+    %title Arenguidee #{@page_title}
+    = csrf_meta_tag
 
     = render :partial => "shared/description"
     = render :partial => "shared/head"
     = render :partial => "shared/javascripts"
-
     = render :partial => "shared/css"
+
     - if Rails.env.production?
       = render :partial => "shared/analytics"
+
     - if controller_name == "ideas" and action_name == "show"
       = render :partial=>"ideas/fb_og_tags"
-    = csrf_meta_tag
 
-  %body{:class => (controller.controller_name == 'home' && controller.action_name == 'index') ? :frontpage : false}
-    #fb-root
-    - if controller.controller_name == 'ideas' && controller.action_name == 'show'
-      :javascript
-        (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/et_EE/all.js#xfbml=1&appId=420406054695129";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    %section#outerContainer
-      - unless controller.controller_name == 'home'
-        = render :partial => "shared/top_banner"
-      - unless logged_in?
-        #login_overlay
-          %p Suur aitäh kõigile kes osalesid ja pakkusid välja ideid Eesti demokraatia arendamiseks.
-          %p Veebruari teises pooles hakkame siinsamas avalikustama analüütikute ja ekspertide töö tulemusi.
-          %input{:type => "submit", :id=>"CloseButton", :onclick=>"$('.close').click();return false;", :value => "Sulge", :title => "Sulge"}
-
+  %body
+    #main
+      = render :partial => "shared/header"
       .flash= flash_div :warning, :notice, :alert, :error
-      #container.clearfix= yield
+      = yield
+
+    #fb-root

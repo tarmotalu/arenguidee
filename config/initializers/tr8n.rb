@@ -28,7 +28,7 @@ Dir.glob(Rails.root.to_s + '/config/locales/*.{rb,yml}') do |filename|
   if md = filename.match(/([\w\-]+)\.(rb|yml)$/)
     locales << md[1]
   end
-  locales  
+  locales
 end
 
 ENABLED_I18_LOCALES = locales

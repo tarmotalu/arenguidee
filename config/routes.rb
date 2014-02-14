@@ -1,6 +1,4 @@
 Rahvakogu::Application.routes.draw do
-  mount Tr8n::Engine => "/tr8n"
-
   resources :categories do
     resources :ideas
   end

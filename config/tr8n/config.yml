@@ -16,7 +16,7 @@
 #############################################################################
 
 defaults: 
-  enable_tr8n:                true      # enables the engine
+  enable_tr8n:                false      # enables the engine
   enable_key_source_tracking: false     # builds the site map sources - must be enabled for the API
   enable_key_caller_tracking: false     # tracks all calls to labels with their traces - for debugging only
   

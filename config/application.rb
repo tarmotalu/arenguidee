@@ -85,3 +85,10 @@ module Rahvakogu
 
   require 'timeout'
 end
+
+# Tr8n::BaseFilter dies without this constant, even though it itself requires
+# "will_filter". And after all, we're not even using the Tr8n Rails engine!
+module WillFilter
+  class Filter < ActiveRecord::Base
+  end
+end

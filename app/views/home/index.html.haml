@@ -1,158 +1,41 @@
-= render :partial => "shared/top_banner"
 %section#rotator
-  .video= link_to image_tag('presidendi.intro.png', :alt => "Presidendi pöördumine"), 'http://vimeo.com/56854479', :rel => :lightbox, :title => "Presidendi pöördumine"
+  .video
+    = link_to image_tag('presidendi.intro.png',
+      :alt => "Presidendi pöördumine"),
+      'http://vimeo.com/56854479',
+      :rel => :lightbox,
+      :title => "Presidendi pöördumine"
+
   .quote
-    -# = image_tag('quote.png')
     %span
-  / /quote
+
   .persons
     .item
       .wrapper
         .text
-          = @blue_box.nil? ? "Suur aitäh kõigile kes osalesid ja pakkusid välja ideid Eesti demokraatia arendamiseks. Veebruari teises pooles hakkame siinsamas avalikustama analüütikute ja ekspertide töö tulemusi." : raw(@blue_box.body)
-    -# .item
-    -#   .wrapper
-    -#     = image_tag('laurisaar.icon.png')
-    -#     .description
-    -#       %b Riho Laurisaar
-    -#       %br/
-    -#       ajakirjanik
-    -#     / /description
-    -#     .text
-    -#       Muutused, millele mullu sageli viidati, olid rahva kannatuse katkemine riigivalitsemises valitseva ükskõiksuse suhtes. ning see, et rahvas viitsis ja tahtis avalikult ning isegi piisavalt suure seltskonnana oma rahulolematust välja näidata.
-    -#     / /text
-    -#   / /wrapper
-    -# / /item
-    -# .item
-    -#   .wrapper
-    -#     = image_tag('marek.tamm.icon.png')
-    -#     .description
-    -#       %b Marek Tamm
-    -#       %br/
-    -#       ajaloolane
-    -#     / /description
-    -#     .text
-    -#       Lõppev aasta osutas Eesti parteipoliitilise süsteemi tõsistele tüsistustele ja parteide suutmatusele seda süsteemi sisuliselt reformida. Väga loodan, et uuel aastal õnnestub osalusdemokraatia vormis seda olukorda lahendada.
-    -#     / /text
-    -#   / /wrapper
-    -# / /item
-    -# .item
-    -#   .wrapper
-    -#     = image_tag('taagepera.icon.jpg')
-    -#     .description
-    -#       %b Rein Taagepera
-    -#       %br/
-    -#       politoloog
-    -#     .text
-    -#       Kui demokraatia on ainult valimisdemokraatia, kus kord nelja aasta tagant antakse hääl, püsib ta väga hapral pinnal.
+          - if @bluebox
+            != @blue_box.body
+          - else
+            Suur aitäh kõigile kes osalesid ja pakkusid välja ideid Eesti
+            demokraatia arendamiseks. Veebruari teises pooles hakkame siinsamas
+            avalikustama analüütikute ja ekspertide töö tulemusi.
 
-    -# .item
-    -#   .wrapper
-    -#     = image_tag('tarand.icon.jpg')
-    -#     .description
-    -#       %b Kaarel Tarand
-    -#       %br/
-    -#       peatoimetaja
-    -#     / /description
-    -#     .text
-    -#       Põhimõtteliselt ei tohiks olla võimatu pakkuda välja ja üles ehitada selline erakondade ja nende väidetavate maailmavaadete rahastamise süsteem, mis efektiivselt välistaks raha ja mandaatide sirgjoonelise seose.
-    -# .item
-    -#   .wrapper
-    -#     = image_tag('viik.icon.png')
-    -#     .description
-    -#       %b Tõnu Viik
-    -#       %br/
-    -#       filosoof
-    -#     / /description
-    -#     .text
-    -#       Kuidas panna tahtma dialoogi pidada seda, kellele tema edu näib sõltuvat tema monoloogist? Selles ongi meie ühiskondlikku elu puudutava debati põhiküsimus.
-    -#     / /text
-    -#   / /wrapper
-    -# / /item
-    -# .item
-    -#   .wrapper
-    -#     = image_tag('liia.hanni.icon.png')
-    -#     .description
-    -#       %b Liia Hänni
-    -#       %br/
-    -#       avatud valitsemise eestvedaja
-    -#     .text
-    -#       Meil tuleb 20 aastat pärast iseseisvuse taastamist endale tunnistada, et demokraatia alal vajame «järeleaitamistunde», mida keegi teine peale meie enda anda ei saa.
-        / /text
-      / /wrapper
-    / /item
-  / /persons
-/ /rotator
 %section#proposal
-  - if @grey_box.nil?
+  - if @grey_box
+    != @grey_box.body
+  - else
     %h1
-      Kui sa usud, et arutelu on osa lahendusest, siis tule ja mõtle kaasa! 
-      %br/
-      Koos teeme ettepanekud Riigikogule oluliste seaduste muutmiseks.
-
-    - @cat[0..(@cat.count-2)].each do |cat|
+    - @categories.each do |category|
       .column
-        %h2= link_to cat.name, issue_path(cat)
-        %p= cat.description
-        = link_to pluralize(cat.ideas.count, 'ettepanek'), issue_path(cat)
-        - unless cat.latest_activity.nil?
+        - path = issue_path(category)
+        %h2= link_to category.name, path
+        = link_to pluralize(category.ideas.count, 'ettepanek'), path
+
+        - if category.latest_activity
           .latest
             %h3= tr("Viimased sissekanded", "home/index")
             .activity_front
-              -# .icon= image_tag cat.activities.first.user.buddy_icon(:icon_24) rescue ''
-              .activity= render :partial => "activities/#{cat.latest_activity[:type].downcase}", :locals => {:activity => cat.latest_activity}
-  - else
-    = raw @grey_box.body
-
-  = link_to "Näita kõiki ettepanekuid", top_ideas_path, :class => :button
-
-%section#problems
-  %h1 Põhilised probleemid neis viies teemas:
-  .people
-    = link_to '/pages/erakondade-rahastamine-ja-jarelevalve', :class => :item do
-      %span.icon
-        = image_tag('kaarel-tarand.icon.png')
-        %span.play &nbsp;
-      %span.desc
-        %b Kaarel Tarand
-        %br/
-        Rahastamine
-
-    = link_to '/pages/erakonnasisene-ja-erakondade-vaheline-konkurents', :class => :item do
-      %span.icon
-        = image_tag('agu.uudelepp.icon.png')
-        %span.play &nbsp;
-      %span.desc
-        %b Agu Uudelepp
-        %br/
-        Erakonnad
-
-    = link_to '/pages/valimissusteem', :class => :item do
-      %span.icon
-        = image_tag('ylle.madise.icon.png')
-        %span.play &nbsp;
-      %span.desc
-        %b Ülle Madise
-        %br/
-        Valimissüsteem
-
-    = link_to '/pages/poliitikate-kujundamises-osalemise-voimalused-valimiste-vahel', :class => :item do
-      %span.icon
-        = image_tag('urmo.kybar.icon.png')
-        %span.play &nbsp;
-      %span.desc
-        %b Urmo Kübar
-        %br/
-        Kaasatus
-
-    = link_to '/pages/sundparteistamine-ja-uhiskondliku-ruumi-politiseerimine', :class => :item do
-      %span.icon
-        = image_tag('mall.hellam.icon.png')
-        %span.play &nbsp;
-      %span.desc
-        %b Mall Hellam
-        %br/
-        Sundpolitiseerimine
+              .activity= render :partial => "activities/#{category.latest_activity[:type].downcase}", :locals => {:activity => category.latest_activity}
 
 %section#proposal-bottom
   - if @bottom_ideas.empty?

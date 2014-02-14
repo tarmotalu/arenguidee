@@ -22,7 +22,6 @@ class HomeController < ApplicationController
 
   def categories
     @categories = Category.all
-    @page_title = SubInstance.current.name
     @endorsements = nil
     @ideas = []
     @ideas << @categories.first.ideas.first if @categories and @categories.first and @categories.first.ideas and @categories.first.ideas.first
@@ -41,35 +40,30 @@ class HomeController < ApplicationController
 
   def index
     @position_in_idea_name = true
-    if current_instance.domain_name.include?("yrpri") and (not request.subdomains.any? or request.subdomains[0] == 'www' and not params[:sub_instance_short_name])
-      redirect_to :action=>"world"
-    elsif SubInstance.current.use_category_home_page and SubInstance.current.use_category_home_page==true
-      redirect_to :action=>"categories"
-    else
-      @page_title = SubInstance.current.name
-      @ideas = @new_ideas = Idea.published.newest.limit(3)
-      @top_ideas = Idea.published.top_rank.limit(3).reject{|idea| @new_ideas.include?(idea)}
-      @random_ideas = Idea.where("category_id <> 21").published.by_random.limit(3).reject{|idea| @new_ideas.include?(idea) or @top_ideas.include?(idea)}
+    @ideas = @new_ideas = Idea.published.newest.limit(3)
+    @top_ideas = Idea.published.top_rank.limit(3).reject{|idea| @new_ideas.include?(idea)}
+    @random_ideas = Idea.where("category_id <> 21").published.by_random.limit(3).reject{|idea| @new_ideas.include?(idea) or @top_ideas.include?(idea)}
 
-      all_ideas = []
-      all_ideas += @new_ideas if @new_ideas
-      all_ideas += @top_ideas if @top_ideas
-      all_ideas += @random_ideas if @random_ideas
+    all_ideas = []
+    all_ideas += @new_ideas if @new_ideas
+    all_ideas += @top_ideas if @top_ideas
+    all_ideas += @random_ideas if @random_ideas
 
-      @endorsements = nil
-      if logged_in? # pull all their endorsements on the ideas shown
-        @endorsements = current_user.endorsements.active.find(:all, :conditions => ["idea_id in (?)", all_ideas.collect {|c| c.id}])
-      end
-
-      last = params[:last].blank? ? Time.now + 1.second : Time.parse(params[:last])
-      @activities = Activity.active.top.feed(last).for_all_users.with_20
-
+    @endorsements = nil
+    if logged_in? # pull all their endorsements on the ideas shown
+      @endorsements = current_user.endorsements.active.find(:all, :conditions => ["idea_id in (?)", all_ideas.collect {|c| c.id}])
     end
-    @cat = Category.all
+
+    last = params[:last].blank? ? Time.now + 1.second : Time.parse(params[:last])
+
+    @activities = Activity.active.top.feed(last).for_all_users.with_20
+    @categories = Category.all
+
     @blue_box = Page.where(:slug => 'blue-box')
     @blue_box = (!@blue_box.nil? ? @blue_box.first : nil)
     @grey_box = Page.where(:slug => 'grey-box')
     @grey_box = (!@grey_box.nil? ? @grey_box.first : nil)
+
     @bottom_ideas = Idea.published.random(3)
   end
 

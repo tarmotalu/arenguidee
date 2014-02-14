@@ -104,7 +104,7 @@ defaults:
   #
   #############################################################################
   caching:
-    enabled:                  true
+    enabled:                  false
     adapter:                  ActiveSupport::Cache
     store:                    ['dalli_store', '127.0.0.1:11211']
     version:                  1 # you can change the version to invalidate the cache

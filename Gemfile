@@ -12,7 +12,6 @@ gem "awesome_print"
 gem "backup", :require => false
 gem "capistrano", require: false, github: "capistrano/capistrano"
 gem "daemons"
-gem "dalli"
 gem "delayed_job"
 gem "delayed_job_active_record"
 gem "devise", "2.1.2"
@@ -50,9 +49,16 @@ gem "will-paginate-i18n"
 gem "will_paginate"
 gem "workflow"
 
+# Versions < 1.5.1 are vulnerable.
+gem "omniauth-facebook", ">= 1.5.1"
+
 group :development do
   gem "thin"
   gem "better_errors"
+
+  # Dev-Boost reloads files as they're changed and not before a request as
+  # Rails (supposedly) does and thereby speeds up pageloads.
+  gem "rails-dev-boost"
 end
 
 group :test do

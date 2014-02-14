@@ -1,6 +1,3 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 require 'will_paginate/array'
 
 class ApplicationController < ActionController::Base
@@ -19,11 +16,7 @@ class ApplicationController < ActionController::Base
   
   # switch to the right database for this instance
   before_filter :check_for_localhost
-  before_filter :setup_geoblocking
-  before_filter :check_subdomain
-  before_filter :check_geoblocking
 
-  # before_filter :authenticate_user!
   before_filter :session_expiry
   before_filter :update_activity_time
 
@@ -106,7 +99,7 @@ class ApplicationController < ActionController::Base
   end
 
   def action_cache_path
-    params.merge({:geoblocked=>@geoblocked, :host=>request.host, :country_code=>@country_code,
+    params.merge({:host=>request.host, :country_code=>@country_code,
                   :locale=>session[:locale], :google_translate=>session[:enable_google_translate],
                   :have_shown_welcome=>session[:have_shown_welcome], 
                   :last_selected_language=>cookies[:last_selected_language],
@@ -224,39 +217,6 @@ class ApplicationController < ActionController::Base
     @current_sub_instance ||= SubInstance.find_by_short_name("united-nations")
     @current_sub_instance ||= SubInstance.find_by_short_name("www")
     SubInstance.current = @current_sub_instance
-  end
-  
-  def setup_geoblocking
-    if File.exists?(Rails.root.join("lib/geoip/GeoIP.dat"))
-      @country_code = Thread.current[:country_code] = (session[:country_code] ||= GeoIP.new(Rails.root.join("lib/geoip/GeoIP.dat")).country(request.remote_ip)[3]).downcase
-    else
-      Rails.logger.error "No GeoIP.dat file"
-    end
-    @country_code = "ee" if @country_code == nil or @country_code == "--"
-
-    # @iso_country = Tr8n::IsoCountry.find_by_code(@country_code.upcase)
-  end
-
-  def check_geoblocking
-    Rails.logger.info("Geoip country: #{@country_code} - locale #{session[:locale]} - #{current_user ? (current_user.email ? current_user.email : current_user.login) : "Anonymous"}")
-    Rails.logger.info(request.user_agent)
-    if SubInstance.current and SubInstance.current.geoblocking_enabled
-      logged_in_user = current_user
-      unless SubInstance.current.geoblocking_disabled_for?(@country_code)
-        Rails.logger.info("Geoblocking enabled")
-        @geoblocked = true unless Rails.env.development? or (current_user and current_user.is_admin?)
-      end
-      if logged_in_user and logged_in_user.geoblocking_disabled_for?(SubInstance.current)
-        Rails.logger.info("Geoblocking disabled for user #{logged_in_user.login}")
-        @geoblocked = false
-      end
-    end
-    if @geoblocked
-      #unless session["have_shown_geoblock_warning_#{@country_code}"]
-        flash.now[:notice] = tr("This part of the website is only open for viewing in your country.","geoblocking")
-      #  session["have_shown_geoblock_warning_#{@country_code}"] = true
-      #end
-    end
   end
   
   def current_locale
@@ -420,17 +380,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def check_subdomain
-    if not current_instance
-      redirect_to :controller => "install"
-      return
-    end
-    if not current_sub_instance and Rails.env == 'production' and request.subdomains.any? and not ['www','dev'].include?(request.subdomains.first) and current_instance.base_url != request.host
-      redirect_to 'http://' + current_instance.base_url + request.path_info
-      return
-    end    
-  end
-  
   def check_referral
     if not params[:referral_id].blank?
       @referral = User.find(params[:referral_id])

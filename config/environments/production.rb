@@ -83,10 +83,4 @@ Rahvakogu::Application.configure do
   config.assets.precompile += %w( .svg .eot .woff .ttf )
 
   config.session_store :cookie_store, :key => "session", :domain => :all
-
-  config.cache_store = :dalli_store, '127.0.0.1:11211', {
-    :namespace => "si_3_production_master",
-    :compress => true,
-    :compress_threshold => 64 * 1024
-  }
 end

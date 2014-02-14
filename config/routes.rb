@@ -37,11 +37,19 @@ Rahvakogu::Application.routes.draw do
     end
   end
 
-  devise_for :users, :controllers => {
-    :sessions => "sessions",
-    :registrations => "registrations",
-    :omniauth_callbacks => "authentications"
-  }, :path_names => { :sign_in => "login", :sign_out => "logout" }
+  devise_for :users,
+    :controllers => {
+      :registrations => "users/registrations",
+      :omniauth_callbacks => "users/sessions"
+    },
+    :skip => [:sessions]
+
+  devise_scope :user do
+    controller "users/sessions" do
+      get "/signin"  => :new, :as => :new_user_session
+      get "/signout" => :destroy, :as => :destroy_user_session
+    end
+  end
 
   resources :users do
   	resource :profile
@@ -102,7 +110,6 @@ Rahvakogu::Application.routes.draw do
 
   resources :ideas do
   	member do
-      get :aitah
       get :statistics
       put :flag_inappropriate
       get :flag

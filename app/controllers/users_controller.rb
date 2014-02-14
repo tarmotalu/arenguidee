@@ -1,8 +1,29 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!, :only => [
+    :destroy,
+    :disable_facebook,
+    :edit,
+    :endorse,
+    :follow,
+    :request_validate_user_for_country,
+    :resend_activation,
+    :resend_activation,
+    :signups,
+    :signups,
+    :subscriptions,
+    :unfollow,
+    :validate_user_for_country,
+  ]
 
-  before_filter :authenticate_user!, :only => [:destroy, :request_validate_user_for_country, :validate_user_for_country, :resend_activation, :follow, :unfollow, :endorse, :subscriptions, :disable_facebook, :signups, :resend_activation, :edit, :signups]
-  before_filter :admin_required, :only => [:list_suspended, :suspend, :unsuspend, :impersonate, :make_admin, :reset_password]
-  
+  before_filter :admin_required, :only => [
+    :impersonate,
+    :list_suspended,
+    :make_admin,
+    :reset_password,
+    :suspend,
+    :unsuspend,
+  ]
+
   caches_action :show,
                 :if => proc {|c| c.do_action_cache? },
                 :cache_path => proc {|c| c.action_cache_path},

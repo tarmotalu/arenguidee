@@ -27,7 +27,7 @@
                   - Category.default_or_sub_instance.each do |category|
                     %option{:title => category.icon.url(:icon_25,), :value => category.id, :selected=>((@idea.category and @idea.category_id==category.id) or (params[:category_id] and params[:category_id].to_i==category.id)) ? true : false}
                       = tr(category.name,"from_database")
-              - if current_sub_instance.required_tags and current_sub_instance.required_tags != ""
+              -#- if current_sub_instance.required_tags and current_sub_instance.required_tags != ""
                 #idea_tag
                   .field_label
                     = tr("Select tag", "views/ideas/form")

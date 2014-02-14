@@ -1,14 +1,5 @@
 #login
   #sib_login_form
-    - if @geoblocked
-      %a#login_link{:href => "#"}>= raw tr("Sign in", "view/shared/_login")
-      \.
     #login-idcard
-      = form_tag omniauth_authorize_path(:user, :idcard), :style => 'display: inline;' do
-        = submit_tag 'Sisene ID-kaardiga'
-
-    - if current_instance.has_facebook_enabled? or current_instance.has_twitter_enabled? or current_instance.google_login_enabled
-      %p
-    / = render :partial => "shared/language_selection_master"
-    - if @geoblocked
-      = render :partial=>"shared/geoblocking_info"
+      %a{:href => user_omniauth_authorize_path(:idcard)} Sisene ID-kaardiga
+      %a{:href => user_omniauth_authorize_path(:facebook)} Sisene Facebookiga

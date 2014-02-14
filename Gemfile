@@ -10,7 +10,6 @@ gem "acts_as_list", "0.1.9"
 gem "auto_html", "1.5.1"
 gem "awesome_print"
 gem "backup", :require => false
-gem "capistrano", require: false, github: "capistrano/capistrano"
 gem "daemons"
 gem "delayed_job"
 gem "delayed_job_active_record"
@@ -35,7 +34,6 @@ gem "omniauth-idcard", "~> 0.2.1"
 gem "paperclip"
 gem "randumb"
 gem "rmagick", require: false
-gem "rvm-capistrano", require: false
 gem "savon", "1.2.0"
 gem "sass"
 gem "sunlight"

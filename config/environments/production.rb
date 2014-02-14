@@ -83,4 +83,6 @@ Rahvakogu::Application.configure do
   config.assets.precompile += %w( .svg .eot .woff .ttf )
 
   config.session_store :cookie_store, :key => "session", :domain => :all
+
+  config.action_mailer.delivery_method = :test
 end

@@ -12,6 +12,7 @@ end
 module Rahvakogu
   self.singleton_class.send :attr_accessor, :config
   self.config = YAML.load_file("config/application.yml")[Rails.env]
+  self.config.each_key {|key| value = ENV[key.upcase] and config[key] = value }
 
   class Application < Rails::Application
     require 'core_extensions'

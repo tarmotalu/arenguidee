@@ -67,6 +67,10 @@ group :test do
   # with their preferred Rails preloader like Spring or Zeus.
 end
 
+group :production do
+  gem "mysql2"
+end
+
 group :assets do
   gem "sass-rails"
   gem "uglifier"

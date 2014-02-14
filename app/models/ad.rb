@@ -8,8 +8,10 @@ class Ad < ActiveRecord::Base
   scope :most_paid, :order => "ads.per_user_cost desc"
   scope :active_first, :order => "ads.status asc, ads.per_user_cost desc, ads.created_at desc"
   scope :by_recently_created, :order => "ads.created_at desc"
-  scope :by_random, :order=>"rand()"
-  
+
+  adapter = Rails.configuration.database_configuration[Rails.env]["adapter"]
+  scope :by_random, :order => adapter == "mysql2" ? "RAND()" : "RANDOM()"
+
   belongs_to :user
   belongs_to :idea
   

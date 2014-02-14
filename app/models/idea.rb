@@ -53,7 +53,9 @@ class Idea < ActiveRecord::Base
   scope :untagged, :conditions => "(ideas.cached_issue_list is null or ideas.cached_issue_list = '')", :order => "ideas.endorsements_count desc, ideas.created_at desc"
 
   scope :by_most_recent_status_change, :order => "ideas.status_changed_at desc"
-  scope :by_random, :order => "RANDOM()"
+
+  adapter = Rails.configuration.database_configuration[Rails.env]["adapter"]
+  scope :by_random, :order => adapter == "mysql2" ? "RAND()" : "RANDOM()"
 
   scope :item_limit, lambda{|limit| {:limit=>limit}}  
 

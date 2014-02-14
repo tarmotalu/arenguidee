@@ -184,7 +184,6 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
-    pg (0.17.1)
     polyglot (0.3.3)
     powerbar (1.0.11)
       ansi (~> 1.4.0)
@@ -328,7 +327,6 @@ DEPENDENCIES
   omniauth-facebook (>= 1.5.1)
   omniauth-idcard (~> 0.2.1)
   paperclip
-  pg
   rack-openid
   rails (>= 3.2.16, < 4)
   rails-dev-boost

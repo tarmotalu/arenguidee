@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem "rails", ">= 3.2.16", "< 4"
 gem "rails-i18n"
 
+gem "sqlite3"
 gem "thin"
 gem "rack-openid"
 gem "ruby-openid"
@@ -49,10 +50,6 @@ gem "workflow"
 # Versions < 1.5.1 are vulnerable.
 gem "omniauth-facebook", ">= 1.5.1"
 
-group :development, :test do
-  gem "sqlite3"
-end
-
 group :development do
   gem "better_errors"
 
@@ -76,8 +73,4 @@ group :assets do
   gem "jquery-ui-rails"
   gem "execjs"
   gem "therubyracer", "~> 0.10.2", :platforms => :ruby
-end
-
-group :production do
-  gem "pg"
 end

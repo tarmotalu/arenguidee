@@ -7,9 +7,12 @@
     = csrf_meta_tag
 
     = render :partial => "shared/description"
-    = render :partial => "shared/head"
     = render :partial => "shared/javascripts"
     = render :partial => "shared/css"
+
+    - if typekit = Rahvakogu.config["typekit"]
+      %script(src="//use.typekit.com/#{typekit}.js")
+      %script try{Typekit.load();}catch(e){}
 
     - if Rails.env.production?
       = render :partial => "shared/analytics"
@@ -18,9 +21,46 @@
       = render :partial=>"ideas/fb_og_tags"
 
   %body
-    #main
-      = render :partial => "shared/header"
-      .flash= flash_div :warning, :notice, :alert, :error
+    %center
+      %header#header
+        - if current_user
+          = render :partial => "shared/user_info"
+          = render :partial => "shared/notifications"
+          %a.account Konto
+        - else
+          %a.signin(href=new_user_session_path) Logi sisse
+
+        %h1
+          %a(href=root_path) Arenguideede konkurss
+
+      #flash
+        - [:warning, :notice, :alert, :error].each do |type|
+          - if flash[type]
+            %p(class=type)= flash[type]
+
       = yield
 
+    %footer#footer
+      %center
+        %strong Eesti Arengufond
+        %nav
+          %a Info
+          %a Kontakt
+          %a Koostöö kogu
+          %a Tegijad
+
+        %small
+          Roheline aas 5, 10337 Tallinn   
+          Telefon: 693 8330   
+          E-mail: <a href="mailto:eureka@arenguidee.ee">eureka@arenguidee.ee</a>
+
     #fb-root
+    :javascript
+      $("#header a.account").click(function() { $("#sib_profile").toggle() })
+
+      $(document).mouseup(function(ev) {
+        if ($(ev.target).parent("a.account").length) return
+        $("#sib_profile").hide()
+      })
+
+      $("#sib_profile").mouseup(function() { return false })

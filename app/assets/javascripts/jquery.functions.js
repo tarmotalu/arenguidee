@@ -19,7 +19,6 @@ $(function(){
 
 	$("#topBar").topBar();
 	$("#rotator").rotator();
-	$("#proposal-bottom .cycle").cycle();
 	// $(".cookieText").cookieText();
 	
 	$("#propositions .getMore").getMore();
@@ -126,42 +125,31 @@ $.fn.cookieText = function(){
 	});
 };
 
-$.fn.cycle = function(){
-	var main = $(this);
-	if( main.size() == 0 ){ return false; }
-	
-	var items = main.find(".item");
-	var state = 0;
-	var total = items.size()-1;
-	var interval = '';
-	var delay = 9000;
-	
-	function next(){
-		items.hide();
-		items.eq(state).fadeIn(250);
-		state++;
-		if( state > total ){
-			state = 0;
-		};
-	};
-	
-	interval = setInterval(function(){
-		next();
-	}, delay);
-	
-	main.bind("mouseenter", function(){
-		clearInterval(interval);
-	});
-	
-	main.bind("mouseleave", function(){
-		interval = setInterval(function(){
-			next();
-		}, delay);
-	});
-	
-	next();
+$.fn.cycle = function(opts) {
+  this.each(function() {
+    if (!this.children.length) return
 
-};
+    var list = $(this)
+    var els = $(this.children)
+    var index = 0
+    var count = this.children.length
+    var interval = opts && opts.interval || 10000
+
+    var timeout
+    function queue() { timeout = setTimeout(next, interval) }
+
+    list.bind("mouseenter", function() { clearTimeout(timeout) })
+    list.bind("mouseleave", queue)
+
+    function next() {
+      els.hide().eq(index).fadeIn(250)
+      if (++index == count) index = 0
+      queue()
+    }
+
+    next()
+  })
+}
 
 $.fn.rotator = function(){
 	var main = $(this);

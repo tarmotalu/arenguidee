@@ -1,1 +1,4 @@
-= render :partial=>"users/new"
+%section
+  %a{:href => user_omniauth_authorize_path(:idcard)} Sisene ID-kaardiga
+  %br
+  %a{:href => user_omniauth_authorize_path(:facebook)} Sisene Facebookiga

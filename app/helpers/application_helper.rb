@@ -128,12 +128,6 @@ module ApplicationHelper
     end
   end  
   
-  def flash_div *keys
-    f = keys.collect { |key| content_tag(:div, link_to("x","#", :class => "close_notify") + content_tag(:span, flash[key]), :class => "flash_#{key}") if flash[key] }.join
-    keys.collect { |key| flash[key] = nil }
-    return f.html_safe
-  end
-
   def revisions_sentence(user)
     return "" if user.points_count+user.documents_count+user.revisions_count == 0
     r = []

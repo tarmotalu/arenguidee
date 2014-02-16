@@ -3,6 +3,7 @@ development: &development
   pepper: ""
   facebook_app_id: ""
   facebook_app_secret: ""
+  typekit: ""
 
 test: *development
 production: *development

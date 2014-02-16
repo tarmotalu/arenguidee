@@ -1,60 +1,59 @@
-%section#rotator
-  .video
-    = link_to image_tag('presidendi.intro.png',
-      :alt => "Presidendi pöördumine"),
-      'http://vimeo.com/56854479',
-      :rel => :lightbox,
-      :title => "Presidendi pöördumine"
+%section#banner
+  %a(href="http://vimeo.com/56854479" rel="lightbox")
+    = image_tag("presidendi.intro.png")
+  :javascript
+    $("a[rel=lightbox]").prettyPhoto({social_tools: ""})
 
-  .quote
-    %span
+  %p
+    Arengufondi eesmärk on toetada positiivseid muutusi Eesti majanduses
+    investeerimistegevuse, arenguseire- ja kasvuprogrammide kaudu.
 
-  .persons
-    .item
-      .wrapper
-        .text
-          - if @bluebox
-            != @blue_box.body
-          - else
-            Suur aitäh kõigile kes osalesid ja pakkusid välja ideid Eesti
-            demokraatia arendamiseks. Veebruari teises pooles hakkame siinsamas
-            avalikustama analüütikute ja ekspertide töö tulemusi.
 
-%section#proposal
-  - if @grey_box
-    != @grey_box.body
-  - else
-    %h1
-    - @categories.each do |category|
-      .column
-        - path = issue_path(category)
-        %h2= link_to category.name, path
-        = link_to pluralize(category.ideas.count, 'ettepanek'), path
+#home-ideas
+  %section#home-new-idea
+    %a(href=new_idea_path) Esita oma arenguidee
 
-        - if category.latest_activity
-          .latest
-            %h3= tr("Viimased sissekanded", "home/index")
-            .activity_front
-              .activity= render :partial => "activities/#{category.latest_activity[:type].downcase}", :locals => {:activity => category.latest_activity}
+  %section#home-categories
+    %h2 Teemad
+    %ul
+      - @categories.each do |category|
+        %li.category
+          %a{:href => issue_path(category)}
+            = category.name
+            %small= category.ideas.count
 
-%section#proposal-bottom
-  - if @bottom_ideas.empty?
-    Ühtegi ettepanekut ei ole
-  - else
-    .cycle
-      - @bottom_ideas.each do |bi|
-        .item
-          = link_to bi do
-            %h2= "“#{bi.name}”"
-            .label
-              %span.left Ettepanek
-              %span.right
-                = bi.author_sentence
-                = ","
-                %span.gray= l bi.published_at.to_date, :format => :long
+  %section#home-popular-ideas
+    %h2 Populaarsemad ideed
+    %ol
+      - @ideas.each do |idea|
+        %li
+          %a.category{:href => issue_path(idea.category)}= idea.category.name
+          %a.idea{:href => idea_path(idea)}
+            = idea.name
+            %small #{idea.score}
 
-  = link_to "Näita kõiki " + pluralize(Idea.published.count, "ettepanek"), newest_ideas_path, :class => "showAll"
-:javascript
-  $(document).ready(function(){
-    $("a[rel^='lightbox']").prettyPhoto({social_tools: ''});
-  });
+  %section#home-outcome
+    %div
+      %p
+        Enim vastukaja saanud ideed lähevad arutamisele Arenguideede
+        konverentsil 21. aprillil 2014 Linnahallis.
+      %a Loe lähemalt
+
+%section#home-highlights
+  - if !@highlights.empty?
+    %ul
+      - @highlights.each do |idea|
+        %li
+          %blockquote= idea.name
+          %a{:href => idea_path(idea)}
+            %em> Ettepanek
+            %span>
+              = idea.author_sentence + ","
+              %date= l(idea.published_at.to_date, :format => :long)
+
+    :javascript
+      $("#home-highlights ul").cycle({interval: 8000})
+
+  %a.show-all(href=newest_ideas_path)
+    Näita kõiki
+    = pluralize(Idea.published.count, "ettepanek")

@@ -346,12 +346,6 @@ textarea {
 /* =============================================================================
    Links
    ========================================================================== */
-a {
-  color: #00e;
-}
-a:visited {
-  color: #551a8b;
-}
 /*
  * Addresses outline displayed oddly in Chrome
  */
@@ -675,21 +669,8 @@ h4 {
 
 }
 
-p {
-  margin: 0 0 1em 0;
-}
 pre {
   line-height: 1em;
-}
-ul, ol {
-  margin: 0;
-  padding: 0;
-}
-ul {
-  padding: 0;
-}
-ul.inline, ol.inline {
-  padding: 0;
 }
 .inline li {
   display: inline;
@@ -699,22 +680,11 @@ li {
   list-style-type: none;
 }
 
-a, a:visited {
-  text-decoration: none;
-  color: #454bcc;
-}
-a:hover {
-  color: #2a2f9a;
-}
-
 /*
 
 	Layout
 
 */
-body {
-  background: url(/assets/main_navigation/bg.png);
-}
 .main {
   zoom: 1;
   padding-top: 95px;

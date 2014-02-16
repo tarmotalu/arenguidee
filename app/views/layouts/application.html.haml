@@ -33,7 +33,11 @@
         %h1
           %a(href=root_path) Arenguideede konkurss
 
-      .flash= flash_div :warning, :notice, :alert, :error
+      #flash
+        - [:warning, :notice, :alert, :error].each do |type|
+          - if flash[type]
+            %p(class=type)= flash[type]
+
       = yield
 
     #fb-root

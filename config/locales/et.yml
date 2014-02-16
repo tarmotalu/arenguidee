@@ -7,6 +7,10 @@ et:
       signed_in: 'Oled sisse loginud'
       signed_out: 'Oled välja loginud'
 
+    failure:
+      user:
+        unauthenticated: "Palun logi selleks sisse."
+
   users:
     sessions:
       user_denied: "Sisselogimine katkestatud"

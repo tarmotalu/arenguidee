@@ -21,7 +21,7 @@
       = render :partial=>"ideas/fb_og_tags"
 
   %body
-    #main
+    %center
       %header#header
         - if current_user
           = render :partial => "shared/user_info"
@@ -39,6 +39,20 @@
             %p(class=type)= flash[type]
 
       = yield
+
+    %footer#footer
+      %center
+        %strong Eesti Arengufond
+        %nav
+          %a Info
+          %a Kontakt
+          %a Koostöö kogu
+          %a Tegijad
+
+        %small
+          Roheline aas 5, 10337 Tallinn   
+          Telefon: 693 8330   
+          E-mail: <a href="mailto:eureka@arenguidee.ee">eureka@arenguidee.ee</a>
 
     #fb-root
     :javascript

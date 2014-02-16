@@ -1,24 +1,10 @@
-%section#rotator
-  .video
-    = link_to image_tag('presidendi.intro.png',
-      :alt => "Presidendi pöördumine"),
-      'http://vimeo.com/56854479',
-      :rel => :lightbox,
-      :title => "Presidendi pöördumine"
+%section#banner
+  %a(href="http://vimeo.com/56854479" rel="lightbox")
+    = image_tag("presidendi.intro.png")
 
-  .quote
-    %span
-
-  .persons
-    .item
-      .wrapper
-        .text
-          - if @bluebox
-            != @blue_box.body
-          - else
-            Suur aitäh kõigile kes osalesid ja pakkusid välja ideid Eesti
-            demokraatia arendamiseks. Veebruari teises pooles hakkame siinsamas
-            avalikustama analüütikute ja ekspertide töö tulemusi.
+  %p
+    Arengufondi eesmärk on toetada positiivseid muutusi Eesti majanduses
+    investeerimistegevuse, arenguseire- ja kasvuprogrammide kaudu.
 
 %section#proposal
   - if @grey_box
@@ -54,7 +40,6 @@
                 %span.gray= l bi.published_at.to_date, :format => :long
 
   = link_to "Näita kõiki " + pluralize(Idea.published.count, "ettepanek"), newest_ideas_path, :class => "showAll"
+
 :javascript
-  $(document).ready(function(){
-    $("a[rel^='lightbox']").prettyPhoto({social_tools: ''});
-  });
+  $("a[rel=lightbox]").prettyPhoto({social_tools: ""})

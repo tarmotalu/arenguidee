@@ -98,6 +98,25 @@ a:visited { color: $link-color; }
   }
 }
 
+#banner {
+  background: $background-color;
+  padding: 20px;
+  overflow: hidden;
+
+  color: darken(white, 7%);
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.4;
+
+  a {
+    display: block;
+    float: left;
+    margin-right: 20px;
+  }
+
+  img { display: block }
+}
+
 * html .clearfix{
   height: 1%;
   overflow: visible;
@@ -166,17 +185,6 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, nav
 #mainMenu{float:left; margin-top:42px;}
 #mainMenu a{float:left; text-decoration:none; line-height:18px; padding-bottom:11px; margin-right:23px;}
 #mainMenu a:hover, #mainMenu a.active{background:url(image_path('mainMenuUnderline.png')) left bottom repeat-x; color:#ababab;}
-
-#rotator{float:left; position:relative; width:920px; height:238px; background:$background-color; margin:0 0 30px 0; padding:20px; -webkit-border-radius:5px; border-radius:5px;}
-#rotator .video{width:420px; float:left;}
-#rotator .quote{float:right; width:475px; color:#fefefe; font-size:22px; line-height:30px; margin-top:-8px;}
-#rotator .quote img{float:left; margin:8px 18px 0 0;}
-#rotator .persons{position:absolute; right:20px; bottom:20px; width:475px;}
-#rotator .persons .item{float:left; width:40px; height:40px; overflow:hidden; }
-#rotator .persons .item img{float:left; cursor:pointer;}
-#rotator .persons .item .description{float:left; color:#fff; font-size:14px; line-height:18px; padding-left:10px; margin-top:3px;}
-#rotator .persons .item .description b{font-weight:normal;}
-#rotator .persons .item .text{display:none;}
 
 #proposal{
   float:left;

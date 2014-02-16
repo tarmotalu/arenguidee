@@ -59,8 +59,6 @@ class HomeController < ApplicationController
     @activities = Activity.active.top.feed(last).for_all_users.with_20
     @categories = Category.all
 
-    @blue_box = Page.where(:slug => 'blue-box')
-    @blue_box = (!@blue_box.nil? ? @blue_box.first : nil)
     @grey_box = Page.where(:slug => 'grey-box')
     @grey_box = (!@grey_box.nil? ? @grey_box.first : nil)
 

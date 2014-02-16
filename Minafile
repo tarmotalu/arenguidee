@@ -3,7 +3,7 @@ require "mina/rails"
 
 set :domain, "arenguidee"
 set :deploy_to, "/var/www/arenguidee"
-set :branch, "HEAD"
+set :branch, "master"
 set :git_cache, "shared/deploy"
 set :bundle_path, ".gem"
 

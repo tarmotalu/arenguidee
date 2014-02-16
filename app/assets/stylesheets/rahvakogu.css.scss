@@ -72,9 +72,13 @@ a {
 }
 
 body {
-  background: white;
+  background: $background;
   font-family: $open-sans;
   color: black;
+}
+
+main {
+  background: white;
 }
 
 center {

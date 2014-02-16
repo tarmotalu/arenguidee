@@ -21,24 +21,25 @@
       = render :partial=>"ideas/fb_og_tags"
 
   %body
-    %center
-      %header#header
-        - if current_user
-          = render :partial => "shared/user_info"
-          = render :partial => "shared/notifications"
-          %a.account Konto
-        - else
-          %a.signin(href=new_user_session_path) Logi sisse
+    %main
+      %center
+        %header#header
+          - if current_user
+            = render :partial => "shared/user_info"
+            = render :partial => "shared/notifications"
+            %a.account Konto
+          - else
+            %a.signin(href=new_user_session_path) Logi sisse
 
-        %h1
-          %a(href=root_path) Arenguideede konkurss
+          %h1
+            %a(href=root_path) Arenguideede konkurss
 
-      #flash
-        - [:warning, :notice, :alert, :error].each do |type|
-          - if flash[type]
-            %p(class=type)= flash[type]
+        #flash
+          - [:warning, :notice, :alert, :error].each do |type|
+            - if flash[type]
+              %p(class=type)= flash[type]
 
-      = yield
+        = yield
 
     %footer#footer
       %center

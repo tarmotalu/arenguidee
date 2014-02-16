@@ -23,13 +23,12 @@
   %body
     #main
       %header#header
-        - if logged_in?
+        - if current_user
           = render :partial => "shared/user_info"
           = render :partial => "shared/notifications"
           %a.account Konto
         - else
-          = render :partial => "users/login"
-          %a.signin Logi sisse
+          %a.signin(href=new_user_session_path) Logi sisse
 
         %h1
           %a(href=root_path) Arenguideede konkurss
@@ -39,18 +38,11 @@
 
     #fb-root
     :javascript
-      $("#header a.signin").click(function() { $("#sib_login_form").toggle() })
       $("#header a.account").click(function() { $("#sib_profile").toggle() })
-
-      $(document).mouseup(function(ev) {
-        if ($(ev.target).parent("a.signin").length) return
-        $("#sib_login_form").hide()
-      })
 
       $(document).mouseup(function(ev) {
         if ($(ev.target).parent("a.account").length) return
         $("#sib_profile").hide()
       })
 
-      $("#sib_login_form").mouseup(function() { return false })
       $("#sib_profile").mouseup(function() { return false })

@@ -11,6 +11,10 @@
     = render :partial => "shared/javascripts"
     = render :partial => "shared/css"
 
+    - if typekit = Rahvakogu.config["typekit"]
+      %script(src="//use.typekit.com/#{typekit}.js")
+      %script try{Typekit.load();}catch(e){}
+
     - if Rails.env.production?
       = render :partial => "shared/analytics"
 

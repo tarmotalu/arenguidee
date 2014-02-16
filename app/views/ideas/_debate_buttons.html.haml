@@ -11,7 +11,7 @@
   - else
     .thumb-up= idea.all_for.count
   - if region != 'feed_sidebar'
-    -# %div{:class => region}= render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => region, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+    %div{:class => region}= render :partial => 'shared/rahva_toetan', :locals => {:idea => idea, :region => region, :endorsement =>  (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
 
 .vote
   - if region == 'idea_detail'
@@ -19,7 +19,7 @@
   - else
     .thumb-down= idea.all_against.count
   - if region != 'feed_sidebar'
-    -# %div{:class => region}= render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :region => region, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
+    %div{:class => region}= render :partial => 'shared/rahva_olen_vastu', :locals => {:idea => idea, :region => region, :endorsement => (current_user.nil? ? nil : idea.endorsements.active.find_by_user_id(current_user.id)) }
   
 
       

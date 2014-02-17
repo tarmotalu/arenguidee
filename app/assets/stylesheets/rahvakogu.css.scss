@@ -469,9 +469,18 @@ box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);}
 .filterBar .rightSide a.active{text-decoration:none;}
 .filterBar .rightSide span.filter_divider { padding: 0 4px 0 4px; }
 
-#propositions{float:left; width:100%; padding-bottom:50px;}
-#propositions .idea_list_entry {float:left; display: block; width:100%; border:none; padding:35px 0; border-bottom:#d9d9d9 1px solid;}
-#propositions .idea_main_content { float: left; }
+#propositions .idea_list_entry {
+  display: block;
+  width: 100%;
+  border: none;
+  padding: 35px 0;
+  border-bottom: #d9d9d9 1px solid;
+}
+
+#propositions .idea_main_content {
+  overflow: hidden;
+}
+
 #propositions .idea_main_content .idea_left_wrap {  width: 656px; float: left;
 	p { clear: left; }}
 #propositions.users .idea_main_content .idea_left_wrap {  width: 485px; }

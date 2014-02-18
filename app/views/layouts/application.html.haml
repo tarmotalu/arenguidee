@@ -22,8 +22,8 @@
 
   %body
     %main
-      %center
-        %header#header
+      %nav#nav
+        %center
           - if current_user
             = render :partial => "shared/user_info"
             = render :partial => "shared/notifications"
@@ -31,15 +31,16 @@
           - else
             %a.signin(href=new_user_session_path) Logi sisse
 
-          %h1
-            %a(href=root_path) Arenguideede konkurss
+          - unless current_page?(:controller => "home", :action => "index")
+            %h1 <a href="/">Arenguideede konkurss</a>
 
-        #flash
+      #flash
+        %center
           - [:warning, :notice, :alert, :error].each do |type|
             - if flash[type]
               %p(class=type)= flash[type]
 
-        = yield
+      %center= yield
 
     %footer#footer
       %center
@@ -57,7 +58,7 @@
 
     #fb-root
     :javascript
-      $("#header a.account").click(function() { $("#sib_profile").toggle() })
+      $("#nav a.account").click(function() { $("#sib_profile").toggle() })
 
       $(document).mouseup(function(ev) {
         if ($(ev.target).parent("a.account").length) return

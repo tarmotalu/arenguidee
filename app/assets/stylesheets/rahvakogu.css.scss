@@ -97,28 +97,37 @@ a {
 
 a:visited { color: $link; }
 
-#header {
-  padding-top: 10px;
-  margin-bottom: 50px;
-
-  h1 {
-    margin-top: 50px;
-    text-align: center;
-    font-size: 70px;
-    clear: both;
-    font-weight: normal;
-    font-family: $minion-pro;
-    color: $black;
-
-    a { color: inherit }
-  }
+#nav {
+  background: #f0f0f0;
+  height: 40px;
+  line-height: 40px;
 
   a.signin,
   a.account {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 12px;
+    float: left;
+
+    // Turning this into a zero-width button prevents it from pushing
+    // the centered text slightly off the center.
+    margin-right: -100%;
   }
+
+  h1 {
+    font-size: 20px;
+    height: 100%;
+    line-height: inherit;
+  }
+}
+
+h1, h2 {
+  font-weight: normal;
+  font-family: $minion-pro;
+  color: $black;
+  text-align: center;
+
+  a, a:visited { color: inherit }
 }
 
 #flash {
@@ -129,7 +138,18 @@ a:visited { color: $link; }
   }
 }
 
-#banner {
+#home-header {
+  margin-top: 40px;
+  margin-bottom: 50px;
+
+  h1 {
+    margin-top: 50px;
+    font-size: 70px;
+    clear: both;
+  }
+}
+
+#home-banner {
   background: $background;
   padding: 20px;
   overflow: hidden;

@@ -27,7 +27,7 @@
           - if current_user
             = render :partial => "shared/user_info"
             = render :partial => "shared/notifications"
-            %a.account Konto
+            %a.account(href="#") Konto
           - else
             %a.signin(href=new_user_session_path) Logi sisse
 
@@ -58,7 +58,10 @@
 
     #fb-root
     :javascript
-      $("#nav a.account").click(function() { $("#sib_profile").toggle() })
+      $("#nav a.account").click(function(ev) {
+        ev.preventDefault()
+        $("#sib_profile").toggle()
+      })
 
       $(document).mouseup(function(ev) {
         if ($(ev.target).parent("a.account").length) return

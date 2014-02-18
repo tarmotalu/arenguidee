@@ -9,8 +9,6 @@ class NetworkController < ApplicationController
                 :cache_path => proc {|c| c.action_cache_path},
                 :expires_in => 5.minutes
 
-  before_filter :setup_filter_dropdown
-
   def index
     redirect_to :action=>"influential"
   end

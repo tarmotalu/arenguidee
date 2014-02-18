@@ -1,7 +1,9 @@
-# Methods added to this helper will be available to all templates in the application.
-
 module ApplicationHelper
   include Tr8n::BaseHelper
+
+  def url_for_unless_current(opts)
+    url_for(opts) unless current_page?(opts)
+  end
 
   def protected_link_to(*args, &block)
     unless logged_in?

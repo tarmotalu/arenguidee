@@ -1,0 +1,30 @@
+%header#ideas-header
+  %h1= @category.name
+
+  %menu
+    Järjesta
+    %ul
+      - id = {:id => @category}
+      %li
+        - href = url_for_unless_current(id.merge(:action => :show))
+        %a(href=href) aja
+      %li
+        - href = url_for_unless_current(id.merge(:action => :top))
+        %a(href=href) toetuste
+      %li
+        - href = url_for_unless_current(id.merge(:action => :bottom))
+        %a(href=href) vastuhäälte
+      %li
+        - href = url_for_unless_current(id.merge(:action => :controversial))
+        %a(href=href) arutelude
+    põhjal.
+
+#propositions
+  = render :partial => "issues/pageless", :locals => {:ideas  => @ideas}
+
+- unless @ideas.blank?
+  = will_paginate @ideas
+  - if @category.nil?
+    = pageless(@ideas.total_pages, "/ideas/#{@filter}")
+  - else
+    = pageless(@ideas.total_pages, filtered_issue_path(@category, @filter.to_sym))

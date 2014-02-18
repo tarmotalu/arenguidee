@@ -286,15 +286,16 @@ Rahvakogu::Application.routes.draw do
   match "/new" => "ideas#new"
   match "/controversial" => "ideas#controversial"
   match "/vote/:action/:code" => "vote#index"
-  match "/welcome" => "home#index"
   match "/search" => "searches#index"
   match "/splash" => "splash#index"
+
   match "/issues" => "issues#index"
   match "/issues.:format" => "issues#index"
   match "/issues/:id" => "issues#show", as: "issue"
   match "/issues/:id.:format" => "issues#show"
   match "/issues/:id/:action" => "issues#index", :as => :filtered_issue
   match "/issues/:id/:action.:format" => "issues#index"
+
   match "/pictures/:short_name/:action/:id" => "pictures#index"
   match ":controller" => "#index"
   match ":controller/:action" => "#index"

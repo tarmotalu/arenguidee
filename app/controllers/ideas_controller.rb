@@ -8,8 +8,6 @@ class IdeasController < ApplicationController
                                              :opposed_top_points, :endorsed_top_points, :idea_detail, :top_points, :discussions, :everyone_points ]
   before_filter :check_for_user, :only => [:yours, :network, :yours_finished, :yours_created]
 
-  before_filter :setup_filter_dropdown
-
   caches_action :revised, :index, :top, :top_24hr, :top_7days, :top_30days,
                 :ads, :controversial, :rising, :newest, :finished, :show,
                 :top_points, :discussions, :endorsers, :opposers, :activities,

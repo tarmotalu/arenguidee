@@ -90,7 +90,7 @@ center {
   text-align: inherit;
 }
 
-a {
+a:link {
   color: $link;
   cursor: pointer;
 }
@@ -138,14 +138,14 @@ h1, h2 {
   }
 }
 
-#home-header {
+#home-header,
+#ideas-header {
   margin-top: 40px;
   margin-bottom: 50px;
 
   h1 {
     margin-top: 50px;
     font-size: 70px;
-    clear: both;
   }
 }
 
@@ -243,7 +243,7 @@ h1, h2 {
   a.category:after {
     display: inline-block;
     content: "  / ";
-    color: #ccc;
+    color: $gray;
     font-size: 12px;
   }
 
@@ -316,6 +316,27 @@ h1, h2 {
   }
 
   a.show-all { font-size: 12px }
+}
+
+#ideas-header {
+  menu {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  ul, li { display: inline-block }
+
+  ul:before,
+  ul:after { content: " " }
+
+  li + li:before {
+    display: inline-block;
+    content: " / ";
+    color: $gray;
+    font-size: 12px;
+  }
+
+  a:not([href]) { font-weight: bold }
 }
 
 #footer {

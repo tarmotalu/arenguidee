@@ -42,7 +42,7 @@ class IssuesController < ApplicationController
     get_endorsements
 
     if request.xhr?
-      render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+      render :partial => 'issues/ideas', :locals => {:ideas => @ideas }
     else
       respond_to do |format|
         format.html { render :action => "show" }
@@ -67,7 +67,7 @@ class IssuesController < ApplicationController
     @ideas = current_user.ideas_and_points_and_endorsements.delete_if{|x| x.category_id != @category.id}.compact.paginate :include => :idea, :page => params[:page], :per_page => params[:per_page]
     get_endorsements
     if request.xhr?
-        render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+        render :partial => 'issues/ideas', :locals => {:ideas => @ideas }
     else
       respond_to do |format|
         format.html { render :action => "show" }
@@ -196,7 +196,7 @@ class IssuesController < ApplicationController
     end
     get_endorsements
     if request.xhr?
-      render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
+      render :partial => 'issues/ideas', :locals => {:ideas => @ideas }
     else
       respond_to do |format|
         format.html { render :action => "show" }

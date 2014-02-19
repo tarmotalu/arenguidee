@@ -1,5 +1,5 @@
 - unless @idea.nil?
-  #propositions= render :partial => 'issues/pageless', :locals => {:ideas => [@idea]}
+  #propositions= render :partial => 'issues/ideas', :locals => {:ideas => [@idea]}
 - if @point.nil?
   = tr('Error loading point', "points")
 - else

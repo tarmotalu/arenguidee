@@ -9,7 +9,7 @@
       - if @ideas.any?
         %h2= tr("{name} has created {count} ideas", "view/users/show", :name => @user.name, :count => @ideas.length)
 
-        #propositions.users= render :partial => 'issues/pageless', :locals => {:ideas  => @ideas.compact }
+        #propositions.users= render :partial => 'issues/ideas', :locals => {:ideas  => @ideas.compact }
         -# - @ideas.each do |idea_endorsement|
         -#   - idea = Idea.unscoped.find(idea_endorsement.idea_id)
         -#   = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea, :endorsements=>@endorsements}

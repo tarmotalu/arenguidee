@@ -19,8 +19,7 @@
         %a(href=href) arutelude
     põhjal.
 
-#propositions
-  = render :partial => "issues/pageless", :locals => {:ideas  => @ideas}
+#ideas-list= render :partial => "ideas", :locals => {:ideas  => @ideas}
 
 - unless @ideas.blank?
   = will_paginate @ideas

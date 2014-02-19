@@ -291,13 +291,8 @@ center {
       font-style: normal;
     }
 
-    time {
-      color: $dark-gray;
-    }
-
-    span {
-      background: $background;
-    }
+    time { color: $dark-gray }
+    span { background: $background }
   }
 }
 
@@ -327,11 +322,32 @@ center {
   border-top: 2px solid $border;
   border-bottom: 2px solid $border;
 
-  li { padding: 40px 0 }
+  article { padding: 40px 0 30px }
 
-  img {
-    float: left;
-    margin-right: 20px;
+  header {
+    padding-left: 60px;
+
+    img {
+      float: left;
+      margin-left: -60px;
+
+      // Cheat attempt to line up top of the image with the top of the text.
+      // Highly unstable, but worth a go.
+      margin-top: 4px;
+    }
+
+    a { color: inherit }
+    time { color: $gray }
+
+    .author {
+      font-size: 12px;
+      margin-top: 7px;
+    }
+  }
+
+  h2 {
+    font-size: 18px;
+    line-height: 1.3;
   }
 
   h2 small {
@@ -339,10 +355,12 @@ center {
     font-size: inherit;
   }
 
-  h2 a,
-  .author a { color: inherit; }
+  p {
+    margin-top: 15px;
+    line-height: 1.5;
+  }
 
-  li + li { border-top: 2px solid $border; }
+  article + article { border-top: 2px solid $border; }
 }
 
 #footer {
@@ -357,13 +375,12 @@ center {
     margin-right: 15px;
   }
 
-  a { color: white }
-
   nav a {
     display: inline-block;
     padding: 0 10px;
   }
 
+  a { color: white }
   small { font-size: inherit }
 }
 
@@ -409,32 +426,6 @@ center {
 
 
 .idea_inline a.button { text-transform: uppercase; }
-
-a img{border:none;}
-*:focus{outline:0;}
-textarea{resize:none;}
-html{overflow:-moz-scrollbars-vertical;}
-a{-moz-outline-style:none;}
-img { -ms-interpolation-mode: bicubic; }
-.rotated{/* Safari */-webkit-transform: rotate(-90deg);/* Firefox */-moz-transform: rotate(-90deg);/* Internet Explorer */filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);}
-.no_select{-webkit-user-select: none;-khtml-user-select: none;-moz-user-select: none;-o-user-select: none;user-select: none;}
-article, aside, canvas, details, figcaption, figure, footer, header, hgroup, nav, menu, nav, section, summary {display: block; margin:0; padding:0;}
-
-#topBar{display:block; height:49px; background:#000;}
-#topBar .inline{display:block; width:960px; margin:0 auto; height:49px;  visibility:hidden;}
-#topBar .inline a{float:left; color:#8f8f8f; text-decoration:none; font-size:11px; text-align:center; padding:10px 12px 9px 12px; line-height:120%;}
-#topBar .inline b{display:block; font-size:14px; font-weight:normal; line-height:120%; color:#cacaca;}
-#topBar .inline a.active{background:#333333;}
-#topBar .inline .arrow{float:left; width:49px; height:49px; background:url(image_path('topBarArrow.png')) no-repeat; overflow:hidden; text-indent:-999px;}
-#topBar .languages { float: right;
-	a {
-		padding: 3px;
-		}
-}
-
-#mainMenu{float:left; margin-top:42px;}
-#mainMenu a{float:left; text-decoration:none; line-height:18px; padding-bottom:11px; margin-right:23px;}
-#mainMenu a:hover, #mainMenu a.active{background:url(image_path('mainMenuUnderline.png')) left bottom repeat-x; color:#ababab;}
 
 #propArticle {float:left; width:100%; padding:0 0 50px 0;
 	.point_form {
@@ -516,44 +507,6 @@ box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);}
 .filterBar .rightSide a{color:#fff;}
 .filterBar .rightSide a.active{text-decoration:none;}
 .filterBar .rightSide span.filter_divider { padding: 0 4px 0 4px; }
-
-#propositions .idea_list_entry {
-  display: block;
-  width: 100%;
-  border: none;
-  padding: 35px 0;
-  border-bottom: #d9d9d9 1px solid;
-}
-
-#propositions .idea_main_content {
-  overflow: hidden;
-}
-
-#propositions .idea_main_content .idea_left_wrap {  width: 656px; float: left;
-	p { clear: left; }}
-#propositions.users .idea_main_content .idea_left_wrap {  width: 485px; }
-#propositions .idea_main_content .idea_left_wrap .head{float:left;  margin:0 0 13px 0;}
-#propositions .idea_main_content .idea_left_wrap .head img{float:left;}
-#propositions .idea_main_content .idea_left_wrap .head .desc{float:right; width:580px; color:#444444; font-size:12px; margin-left: 20px;}
-#propositions.users .idea_main_content .idea_left_wrap .head .desc { width: 400px; }
-#propositions .idea_main_content .idea_left_wrap .head .desc h2 {margin:0; font-size:18px; line-height:24px; margin-top:-6px; margin-bottom:5px;}
-#propositions .idea_main_content .idea_left_wrap .head .desc h2 .red{ color:#cc0000;
-	 a { color: #c00;}
-}
-#propositions .idea_main_content .idea_left_wrap .head .desc .gray{color:#999999;}
-#propositions p{margin:0 0 0 0; font-size:14px; color:#444444; line-height:20px;}
-#propositions .idea_endorsements { float: left;  width: 300px; }
-#propositions .idea_endorsements .vote {text-align:center; width: 110px;  float: left; padding:0 20px 0 20px;}
-#propositions .idea_endorsements .vote .thumb-up, #propArticle .votes .vote .thumb-up {font-size:30px;  a { color: black; }
-line-height:100%; color:#424242; float:left; padding-left:35px; background:url(image_path('thumb-yes.png')) left center no-repeat;}
-#propositions .idea_endorsements .vote .thumb-down, #propArticle .votes .vote .thumb-down {font-size:30px; a { color: black; }  line-height:100%; color:#424242; float:left; padding-left:35px; background:url(image_path('thumb-no.png')) left center no-repeat;}
-#propositions .idea_endorsements .vote .button{float:left; height:22px; line-height:22px; padding:0 11px; font-size:12px; color:#fff; background:$background; -webkit-border-radius:99px; border-radius:99px; text-decoration:none; margin:10px 0 0 8px;
--webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);}
-#propositions .vote .button.red{background:#cc0000; margin-left:0;}
-#propositions .getMore{float:left; margin-top:30px; width:100px; text-align:center;height:31px; line-height:31px; padding:0 15px 0 15px; color:#fff; text-decoration:none; background:#444444; font-size:12px; -webkit-border-radius:99px; border-radius:99px; margin-left:415px;
--webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);}
 
 #user_points { @extend #propositions; }
 #supporting { @extend #propositions; }

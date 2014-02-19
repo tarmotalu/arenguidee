@@ -64,7 +64,6 @@ jQuery(function ($) {
   });
 });
 
-
 jQuery(document).ready(function() {
   jQuery('a[data-remote]').on("ajax:beforeSend", function(){
       var $clicked = $(this);
@@ -176,3 +175,11 @@ if (typeof Rahvakogu == "undefined" || !Rahvakogu) {
     
     Rahvakogu.MobileIdCheck = MobileIdCheck;
 })(jQuery);
+
+$(document).on("ajax:beforeSend", "form", function(ev) {
+  $(ev.currentTarget).addClass("submitting")
+})
+
+$(document).on("ajax:complete", "form", function(ev) {
+  $(ev.currentTarget).removeClass("submitting")
+})

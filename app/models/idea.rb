@@ -97,7 +97,7 @@ class Idea < ActiveRecord::Base
 
   acts_as_taggable_on :issues
   acts_as_list
-  
+
   before_save :strip_name
 
   validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
@@ -122,18 +122,11 @@ class Idea < ActiveRecord::Base
     end
   end
 
-  def help_with_this
+  validates_length_of :name, :within => 5..256
+  validates_length_of :description, :within => 0..3000
 
-  end
-    
-  validates_length_of :name, :within => 5..200, :too_long => "has a maximum of 200 characters", :too_short => "please enter more than 5 characters"
-
-  validates_length_of :description, :within => 0..3000, :too_long => "has a maximum of 3000 characters", :too_short => "please enter more than -1 characters"
-
-  #validates_uniqueness_of :name, :if => Proc.new { |idea| idea.status == 'published' }
   validates :category_id, :presence => true
   validates :name, :uniqueness => {:scope => [:user_id, :category_id], :message => 'You have already suggested an idea of this name.', :if => Proc.new { |idea| idea.status == 'published' }}
-
 
   after_create :on_published_entry
 
@@ -220,10 +213,12 @@ class Idea < ActiveRecord::Base
       endorsement.flip_up
       endorsement.save
     end
-    if endorsement.is_replaced?
+
+    if endorsement.replaced?
       endorsement.activate!
     end
-    return endorsement
+
+    endorsement
   end
   
   def oppose(user,request=nil,sub_instance=nil,referral=nil)
@@ -238,7 +233,7 @@ class Idea < ActiveRecord::Base
       endorsement.flip_down
       endorsement.save
     end
-    if endorsement.is_replaced?
+    if endorsement.replaced?
       endorsement.activate!
     end
     return endorsement
@@ -774,5 +769,10 @@ class Idea < ActiveRecord::Base
   def on_buried_entry(new_state, event)
     # should probably send an email notification to the person who submitted it
     # but not doing anything for now.
+  end
+
+  def endorsement_by(user)
+    endorsement = endorsements.active.find_by_user_id(user.id)
+    endorsement if endorsement && endorsement.active?
   end
 end

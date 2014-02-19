@@ -1,5 +1,8 @@
 - ideas.each do |idea|
   %article
+    .endorsements{:id => "idea_#{idea.id}_endorsements"}
+      = render "endorsements/buttons", {:idea => idea}
+
     %header
       = image_tag idea.user.buddy_icon(:icon_40)
       %h2
@@ -12,4 +15,5 @@
         - published_at = idea.published_at
         %time{:title => published_at}= time_ago_in_words(published_at)+" tagasi"
 
-    %p= truncate_html(simple_format(idea.description), :length => 350)
+    %section
+      %p= truncate_html(simple_format(idea.description), :length => 350)

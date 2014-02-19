@@ -1,0 +1,9 @@
+document.getElementById("idea_<%= @idea.id %>_endorsements").innerHTML = "<%=
+	# This might be called from controllers other than EndorsementsController, so
+	# use full path for partial.
+	escape_javascript render(
+		:partial => "endorsements/buttons",
+		:formats => :html,
+		:locals => {:idea => @idea}
+	)
+%>"

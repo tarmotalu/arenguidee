@@ -1,12 +1,57 @@
 require 'date'
 
 class IdeasController < ApplicationController
-  before_filter :authenticate_user!, :only => [:new, :yours_finished, :minu, :yours_ads, :yours_top, :yours_lowest, :consider, :flag_inappropriate, :comment, :edit, :update, 
-                                           :tag, :tag_save, :opposed, :endorsed, :destroy, :new]
-  before_filter :admin_required, :only => [:bury, :successful, :compromised, :intheworks, :failed]
-  before_filter :load_endorsement, :only => [:show, :show_feed, :activities, :endorsers, :opposers, :opposer_points, :endorser_points, :neutral_points, :everyone_points,
-                                             :opposed_top_points, :endorsed_top_points, :idea_detail, :top_points, :discussions, :everyone_points ]
-  before_filter :check_for_user, :only => [:yours, :network, :yours_finished, :yours_created]
+  before_filter :authenticate_user!, :only => [
+    :comment,
+    :consider,
+    :destroy,
+    :edit,
+    :endorse,
+    :endorsed,
+    :flag_inappropriate,
+    :minu,
+    :new,
+    :opposed,
+    :tag,
+    :tag_save,
+    :update,
+    :yours_ads,
+    :yours_finished,
+    :yours_lowest,
+    :yours_top,
+  ]
+
+  before_filter :admin_required, :only => [
+    :bury,
+    :compromised,
+    :failed,
+    :intheworks,
+    :successful,
+  ]
+  before_filter :load_endorsement, :only => [
+    :activities,
+    :discussions,
+    :endorsed_top_points,
+    :endorser_points,
+    :endorsers,
+    :everyone_points,
+    :everyone_points,
+    :idea_detail,
+    :neutral_points,
+    :opposed_top_points,
+    :opposer_points,
+    :opposers,
+    :show,
+    :show_feed,
+    :top_points,
+  ]
+
+  before_filter :check_for_user, :only => [
+    :network,
+    :yours,
+    :yours_created,
+    :yours_finished,
+  ]
 
   caches_action :revised, :index, :top, :top_24hr, :top_7days, :top_30days,
                 :ads, :controversial, :rising, :newest, :finished, :show,
@@ -672,6 +717,7 @@ class IdeasController < ApplicationController
     @idea ||= Idea.new
     @idea.category = Category.find(params[:category_id]) if params[:category_id]
     @idea.points.build
+    @categories = Category.all
 
     if @ideas
       @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.map(&:id), current_user.id])
@@ -773,69 +819,21 @@ class IdeasController < ApplicationController
     end
   end
 
-  # POST /ideas/1/endorse
   def endorse
-    @value = (params[:value]||1).to_i
-    @idea = Idea.unscoped.find(params[:id])
-    if not logged_in?
-      session[:idea_id] = @idea.id
-      session[:value] = @value
-      flash[:error] = tr('You must be logged in to do this.')
-      redirect_to 
-      return
-    end
-    if @value == 1
-      @endorsement = @idea.endorse(current_user,request,current_sub_instance,@referral)
-    else
-      @endorsement = @idea.oppose(current_user,request,current_sub_instance,@referral)
-    end
-    if params[:ad_id]    
-      @ad = Ad.unscoped.find(params[:ad_id])
-      @ad.vote(current_user,@value,request) if @ad
-    else
-      @ad = Ad.unscoped.find_by_idea_id_and_status(@idea.id,'active')
-      if @ad and @ad.shown_ads.find_by_user_id(current_user.id)
-        @ad.vote(current_user,@value,request) 
-      end
-    end
-    if current_user.endorsements_count > 24
-      session[:endorsement_page] = (@endorsement.position/25).to_i+1
-      session[:endorsement_page] -= 1 if @endorsement.position == (session[:endorsement_page]*25)-25
-    end
-    @idea.reload
+    @idea = Idea.find(params[:id])
+    @endorsement = @idea.endorse(current_user, request)
 
     respond_to do |format|
-      format.js {
-        render :update do |page|
-          if params[:region] == 'idea_left'
-            page.replace_html 'idea_' + @idea.id.to_s + "_button",render(:partial => "ideas/debate_buttons", :locals => {:force_debate_to_new=>(params[:force_debate_to_new] and params[:force_debate_to_new].to_i==1) ? true : false, :idea => @idea, :endorsement => @endorsement, :region=>"idea_left"})
-            page.replace_html 'idea_' + @idea.id.to_s + "_position",render(:partial => "endorsements/position", :locals => {:endorsement => @endorsement})
-            page.replace 'endorser_link', render(:partial => "ideas/endorser_link")
-            page.replace 'opposer_link', render(:partial => "ideas/opposer_link")
-            if @value == 1          
-              @activity = ActivityEndorsementNew.unscoped.find_by_idea_id_and_user_id(@idea.id,current_user.id, :order => "created_at desc")
-            else
-              @activity = ActivityOppositionNew.unscoped.find_by_idea_id_and_user_id(@idea.id,current_user.id, :order => "created_at desc")
-            end            
-            if @activity and not params[:no_activites]
-              page.insert_html :top, 'activities', render(:partial => "activities/show", :locals => {:activity => @activity, :suffix => "_noself"})
-            end
-          elsif params[:region] == 'idea_subs'
-            page.replace_html 'idea_' + @idea.id.to_s + "_button",render(:partial => "ideas/button_subs", :locals => {:idea => @idea, :endorsement => @endorsement})
-            page.replace 'endorser_link', render(:partial => "ideas/endorser_link")
-            page.replace 'opposer_link', render(:partial => "ideas/opposer_link")
-          elsif params[:region] == 'idea_inline' ||  params[:region] == 'idea_detail'
-            page<<"$('#endorsements_#{@idea.id.to_s}').html('#{js_help.escape_javascript(render(:partial => "ideas/debate_buttons", :locals => {:force_debate_to_new=>(params[:force_debate_to_new] and params[:force_debate_to_new].to_i==1) ? true : false, :idea => @idea, :endorsement => @endorsement, :region => params[:region]}))}')"
-            # page<<"$('.idea_#{@idea.id.to_s}_endorsement_count').replaceWith('#{js_help.escape_javascript(render(:partial => "ideas/endorsement_count", :locals => {:idea => @idea}))}')"
-          elsif params[:region] == 'encouragement_top' and @ad
-            page.replace 'encouragements', render(:partial => "ads/pick")
-            #page << 'if (jQuery("#notification_show").length > 0) { jQuery("#notification_show").corners(); }'
-          else
-            page << "alert('error');"
-          end
-          #page.replace_html 'your_ideas_container', :partial => "ideas/yours"
-        end
-      }
+      format.js { render :partial => "endorsements/buttons" }
+    end
+  end
+
+  def oppose
+    @idea = Idea.find(params[:id])
+    @endorsement = @idea.oppose(current_user, request)
+
+    respond_to do |format|
+      format.js { render :partial => "endorsements/buttons" }
     end
   end
 

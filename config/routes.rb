@@ -116,7 +116,10 @@ Rahvakogu::Application.routes.draw do
       put :successful
       put :failed
       put :intheworks
+
       post :endorse
+      post :oppose
+
       get :endorsed
       get :opposed
       get :activities

@@ -31,9 +31,10 @@ class Endorsement < ActiveRecord::Base
   cattr_reader :per_page, :max_position
   @@per_page = 25
   @@max_position = 100
-  
-  # docs: http://noobonrails.blogspot.com/2007/02/actsaslist-makes-lists-drop-dead-easy.html
-  acts_as_list :scope => proc { ["endorsements.user_id = ? AND status = 'active'", user_id] }
+
+  # Be sure to look into acts_as_list's source code. It wins the worse eval
+  # everything with random strings code of the year award. Every year.
+  acts_as_list :scope => %q(user_id = #{user_id} AND status = 'active')
 
   after_create :on_active_entry
 
@@ -216,25 +217,28 @@ class Endorsement < ActiveRecord::Base
     self.update_attribute(position_column, position)
     self.update_attribute(:score, calculate_score)
   end  
-  
   #
   # / EXTENDED ACTS_AS_LIST
   #
-  
-  def is_up?
-    self.value > 0
-  end
-  
-  def is_down?
-    not self.is_up?
-  end
-  
-  def is_active?
-    status == 'active'
+
+  def up?
+    value > 0
   end
 
-  def is_replaced?
-    status == 'replaced'
+  def down?
+    !is_up?
+  end
+
+  # For backwards compatibility:
+  alias is_up? up?
+  alias is_down? down?
+
+  def active?
+    status == "active"
+  end
+
+  def replaced?
+    status == "replaced"
   end
 
   def value_name

@@ -1,5 +1,5 @@
 %p
-  - if endorsement and endorsement.is_active?
+  - if endorsement and endorsement.active?
     %p
     = tr("Your {position} idea.", "view/endorsements/_position", :position => endorsement.position)
   %span.tag_button

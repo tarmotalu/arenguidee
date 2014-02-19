@@ -1,5 +1,5 @@
 - if endorsements
   - endorsement = endorsements.detect {|e| e.idea_id == idea.id }
 .top_level_idea_listing{:id => "idea_#{idea.id} propositions"}
-  = render :partial => "issues/pageless", :locals => {:ideas => [idea], :endorsement => endorsement, :value => 0}
+  = render :partial => "issues/ideas", :locals => {:ideas => [idea], :endorsement => endorsement, :value => 0}
   %div{:id => "idea_detail_#{idea.id}"}

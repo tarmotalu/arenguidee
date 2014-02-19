@@ -454,44 +454,4 @@ class ApplicationController < ActionController::Base
     include Singleton
     include ActionView::Helpers::JavaScriptHelper
   end
-
-  def setup_filter_dropdown
-    setup_menu_items
-    @sub_menu_items = @items
-    Rails.logger.debug action_name
-
-    if action_name == "index" and @items and not request.xhr? and controller_name != 'issues'
-      Rails.logger.debug "index"
-      selected = nil #DISABLED FEATURE cookies["selected_#{controller_name}_filter_id"].to_i
-      Rails.logger.debug "cookie #{selected}"
-      if selected and @sub_menu_items[selected]
-        Rails.logger.debug "cookie"
-        redirect_to @sub_menu_items[selected][1]
-        return false
-      else
-        Rails.logger.debug "no cookie"
-        redirect_to @sub_menu_items[1][1]
-        return false
-      end
-    end
-
-    selected_sub_menu_item_id, selected_sub_menu_item = find_menu_item_by_url(request.url)
-    if selected_sub_menu_item
-      @selected_sub_nav_name = selected_sub_menu_item[0]
-      Rails.logger.debug "Saved submenu id #{selected_sub_menu_item_id}"
-      @selected_sub_nav_item_id = selected_sub_menu_item_id
-      if controller_name != 'issues'
-        cookies["selected_#{controller_name}_filter_id"] = @selected_sub_nav_item_id
-      end
-    end
-  end
-
-  def find_menu_item_by_url(url)
-    @items.each do |id,item|
-      if url =~ /\A#{item[1]}(\?.*)?\z/
-        return id,item
-        break
-      end
-    end
-  end
 end

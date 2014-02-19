@@ -340,7 +340,6 @@ DEPENDENCIES
   randumb
   rmagick
   ruby-openid
-  sass
   sass-rails
   savon (= 1.2.0)
   sqlite3

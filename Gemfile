@@ -3,10 +3,6 @@ source "https://rubygems.org"
 gem "rails", ">= 3.2.16", "< 4"
 gem "rails-i18n"
 
-gem "sqlite3"
-gem "thin"
-gem "rack-openid"
-gem "ruby-openid"
 gem "acts_as_list", "0.1.9"
 gem "auto_html", "1.5.1"
 gem "awesome_print"
@@ -33,12 +29,15 @@ gem "nokogiri"
 gem "oauth"
 gem "omniauth-idcard", "~> 0.2.1"
 gem "paperclip"
+gem "rack-openid"
 gem "randumb"
 gem "rmagick", require: false
+gem "ruby-openid"
 gem "savon", "1.2.0"
-gem "sass"
+gem "sqlite3"
 gem "sunlight"
 gem "sys-filesystem"
+gem "thin"
 gem "thinking-sphinx", "2.0.13"
 gem "tr8n", github: "hinrik/tr8n", :branch => "social_innovation"
 gem "truncate_html"
@@ -72,11 +71,11 @@ group :production do
 end
 
 group :assets do
-  gem "sass-rails"
-  gem "uglifier"
-  gem "jquery-ui-rails"
   gem "execjs"
+  gem "jquery-ui-rails"
+  gem "sass-rails"
   gem "therubyracer", "~> 0.10.2", :platforms => :ruby
+  gem "uglifier"
 end
 
 group :deploy do

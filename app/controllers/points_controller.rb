@@ -3,8 +3,6 @@ class PointsController < ApplicationController
   before_filter :authenticate_user!, :only => [:new, :edit, :update, :create, :quality, :unquality, :your_ideas, :your_index, :destroy, :update_importance]
 
 
-  before_filter :setup_filter_dropdown
-
   caches_action :newest, :revised,
                 :if => proc {|c| c.do_action_cache?},
                 :cache_path => proc {|c| c.action_cache_path},

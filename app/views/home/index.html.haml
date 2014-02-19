@@ -1,4 +1,7 @@
-%section#banner
+%header#home-header
+  %h1 Arenguideede konkurss
+
+%section#home-banner
   %a(href="http://vimeo.com/56854479" rel="lightbox")
     = image_tag("presidendi.intro.png")
   :javascript
@@ -7,7 +10,6 @@
   %p
     Arengufondi eesmärk on toetada positiivseid muutusi Eesti majanduses
     investeerimistegevuse, arenguseire- ja kasvuprogrammide kaudu.
-
 
 #home-ideas
   %section#home-new-idea
@@ -37,7 +39,7 @@
       %p
         Enim vastukaja saanud ideed lähevad arutamisele Arenguideede
         konverentsil 21. aprillil 2014 Linnahallis.
-      %a Loe lähemalt
+      %a(href="#") Loe lähemalt
 
 %section#home-highlights
   - if !@highlights.empty?
@@ -49,7 +51,7 @@
             %em> Ettepanek
             %span>
               = idea.author_sentence + ","
-              %date= l(idea.published_at.to_date, :format => :long)
+              %time= l(idea.published_at.to_date, :format => :long)
 
     :javascript
       $("#home-highlights ul").cycle({interval: 8000})

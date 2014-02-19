@@ -8,8 +8,6 @@ class FeedController < ApplicationController
                 :cache_path => proc {|c| c.action_cache_path},
                 :expires_in => 2.minutes
 
-  # before_filter :setup_filter_dropdown
-
   def index
     @page_title = tr("Everything happening at {instance_name}", "controller/feed", :instance_name => tr(current_instance.name,"Name from database"))
 #    if @current_instance.users_count > 5000 # only show the last 7 days worth

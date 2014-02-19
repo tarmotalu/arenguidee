@@ -60,6 +60,7 @@ module Rahvakogu
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.assets.paths << Rails.root.join("app/assets/fonts")
 
     config.middleware.use 'Rack::OpenID'
     # config.middleware.use 'FakeUserCertificate' if Rails.env.development?

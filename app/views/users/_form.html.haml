@@ -78,8 +78,7 @@
         )
     %br/
     = check_box("user", "terms")
-    = tr(" I promise to honor the ", "view/users/_form")
-    %a{:href => '/about/rules', :target => '_new'}>= tr(" rules.", "view/users/_form")
+    = tr(" I promise to honor rules", "view/users/_form")
     %br/
     %br/
     - if @idea
@@ -91,5 +90,3 @@
         = submit_tag tr("Signup", "view/users/_form"), :class => "submit_button"
     - else
       = submit_tag tr("Signup", "view/users/_form"), :class => "submit_button"
-
-= render :partial => "users/rules_info"

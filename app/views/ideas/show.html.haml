@@ -1,16 +1,89 @@
-= render :partial => "ideas/header"
-= render :partial => "ideas/idea_detail"
+- if @point.nil?
+  - against_point = Point.new
+  - for_point = Point.new
+- else
+  - if @point.value == -1
+    - against_point = @point
+    - for_point = Point.new
+  - else
+    - for_point = @point
+    - against_point = Point.new
 
-.col-group
-  .col-11.col-offset-1
-    .col-content
-      .fb-comments{"data-href" => url_for(:controller => :ideas, :action => :show, :id => @idea.to_param, :only_path => false), "data-num-posts" => "20", "data-width" => "845"}
+.profile
+  = link_to @idea.user do
+    = image_tag @idea.user.buddy_icon(:icon_80)
+    %b
+      = @idea.user.first_name
+      %br>/
+      = @idea.user.last_name
+  = @idea.published_at.strftime("%d.%m.%Y")
+  - if logged_in?
+    - if (@idea.user == current_user && @idea.is_editable?) || current_user.is_admin?
+      = link_to tr('edit this idea', '/views/ideas'), edit_idea_path(@idea)
+.rightSide
+  .head
+    %h1= @idea.name
+    %p= simple_format(@idea.description)
+    - unless @idea.website.blank?
+      %p
+        link: 
+        = link_to @idea.website.gsub(/http[s]?:\/\//i, ''), 'http://' + @idea.website.gsub(/http[s]?:\/\//i, '')
+    .fb-like{"data-font" => "segoe ui", "data-href" => url_for(:controller => :ideas, :action => :show, :id => @idea.to_param, :only_path => false), "data-layout" => "button_count", "data-send" => "true", "data-show-faces" => "true", "data-width" => "450"}
+    %div{style: 'float: right;'}= render :partial=>"ideas/report_content", :locals=>{:idea=>@idea}
 
-:javascript
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/et_EE/all.js#xfbml=1&appId=420406054695129";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+  .faces_wrapper.clearfix{:id => "faces_wrapper_#{@idea.id.to_s}"}
+    .faces_for{:id => "faces_for_#{@idea.id.to_s}"}
+      - @idea.all_for.each do |face|
+        = link_to image_tag(face.buddy_icon(:icon_48)), face
+    .faces_against{:id => "faces_against_#{@idea.id.to_s}"}
+      - @idea.all_against.each do |face|
+        = link_to image_tag(face.buddy_icon(:icon_48)), face     
+
+  .point_form{:id => "support_#{@idea.id.to_s}", :style => (for_point.value == 1  ? 'display: block;' : false)}
+    = tr("Why should people support this idea?", "views/ideas/form")
+    = form_for [@idea, for_point] do |point_form|
+      = point_form.error_messages      
+      .field
+        .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
+        = point_form.hidden_field :value, :value => "1"
+      .field
+        %span.characters
+          %span.form_header
+            = tr("Explain your point - ", "view/ideas/_form")
+          %span#pointContentDown_for
+          = tr("characters left", "view/ideas/_form")
+        .field_box= point_form.text_area :content, :id => 'pointContent_for', :button => 'submit', :class=>"point_field", :rows => 5, :maxLength => 1000
+
+      .field
+        .field_label= tr("Add a link to an external website", "views/ideas/form")
+        .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
+      .field
+        .field_box.blue= point_form.submit 'Lisan pooltargumendi'
+      
+  .point_form.against{:id => "oppose_#{@idea.id.to_s}", :style => (against_point.value == -1  ? 'display: block;' : false)}
+    = tr("Why should people oppose this idea?", "views/ideas/form")
+  
+    = form_for [@idea, against_point] do |point_form|
+      = point_form.error_messages 
+      .field
+        .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
+        = point_form.hidden_field :value, :value => "-1"
+      .field
+        %span.characters
+          %span.form_header
+            = tr("Explain your point - ", "view/ideas/_form")
+          %span#pointContentDown_opp
+          = tr("characters left", "view/ideas/_form")
+        .field_box= point_form.text_area :content, :id => 'pointContent_opp', :button => 'submit', :class=>"point_field", :rows => 5, :maxLength => 1000
+
+      .field
+        .field_label= tr("Add a link to an external website", "views/ideas/form")
+        .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
+      .field
+        .field_box= point_form.submit 'Lisan vastuargumendi'  
+  - unless @points_top_up.nil? || @points_top_down.nil?
+    .idea_wrapper
+      .col-left.clearfix
+        = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "pro_new", :points => @points_top_up, :numbering=>false}
+      .col-right
+        = render :partial => "points/short_list", :locals => {:points => @points_top_down, :numbering=>false}

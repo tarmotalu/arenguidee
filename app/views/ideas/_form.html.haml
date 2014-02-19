@@ -1,142 +1,33 @@
-- if current_sub_instance and current_sub_instance.message_for_new_idea and current_sub_instance.message_for_new_idea!=""
-  = render :partial=>"/shared/top_message_box", :locals=> {:message_text => current_sub_instance.message_for_new_idea.html_safe}
-- elsif Instance.current.message_for_new_idea and Instance.current.message_for_new_idea!=""
-  = render :partial=>"/shared/top_message_box", :locals=> {:message_text => Instance.current.message_for_new_idea.html_safe}
-- if params[:notice]
-  = params[:notice]
-= form_for @idea do |f|
-  .col-group
-    .col-12
-      .col-content
-        = f.error_messages
-        - if @tag_names
-          = hidden_field_tag :tag_names, @tag_names
-  .col-group
-    .col-6.col-inset
-      .col-content
-        .col-group
-          %h1
-            = tr("Create a new idea", "views/ideas/form")
-          .col-half
-            .col-content
-              #idea_category
-                .field_label
-                  = tr("Select category", "views/ideas/form")
-                %select#category_id{:name => "[idea][category_id]"}
-                  %option{:selected => (@idea.category_id ? false : true)}
-                  - Category.default_or_sub_instance.each do |category|
-                    %option{:title => category.icon.url(:icon_25,), :value => category.id, :selected=>((@idea.category and @idea.category_id==category.id) or (params[:category_id] and params[:category_id].to_i==category.id)) ? true : false}
-                      = tr(category.name,"from_database")
-              -#- if current_sub_instance.required_tags and current_sub_instance.required_tags != ""
-                #idea_tag
-                  .field_label
-                    = tr("Select tag", "views/ideas/form")
-                  - first_tag = true
-                  - current_sub_instance.required_tags.split(',').each do |sub_instance_tag|
-                    = f.radio_button :idea_type, sub_instance_tag, required: false, checked: first_tag
-                    %span.Chapter_name= tr(sub_instance_tag, "views/ideas/form")
-                    - first_tag = false
-          .col-half
-            .col-content
+%header#new-idea-header
+  %h1 Esita oma argenguidee
 
-        #your_idea.field_label
-        %span.characters
-          %span.form_header
-            = tr("What is your idea?", "views/ideas/form")
-          \-
-          %span#ideaNameContentDown
-          = tr("characters left", "view/ideas/_form")
-        %span.idea_name
-          = f.text_area :name, :id => 'ideaNameContent', :button => 'submit', :rows => 2, :class=>"col_text_area", :maxLength => SubInstance.current.idea_name_max_length
-        #idea_suggestions{ style: "display: none;" }
-          = tr("Some ideas already exist with similar names", "view/ideas/_form")
-        - unless SubInstance.current.hide_description
-          .field
-            %em
-              %p
-                = tr("Please describe your idea as neutrally as you can. You have plenty space to convince others here on your right.", "views/ideas/form")
-                = link_to tr("Read closer", "views/ideas/form"), page_path('kuidas-oma-ettepanekuid-esitada')
-            %span.characters
-              %span.form_header
-                = tr("Explain your idea", "view/ideas/_form")
-              \-
-              %span#ideaContentDown
-              = tr("characters left", "view/ideas/_form")
-            .field_box
-              = f.text_area :description, :id => 'ideaContent', :button => 'submit', :rows => 10, :cols => 120, :class=>"col_text_area", :maxLength => 3000
-        .field
-          = tr("Add a link to an external website", "views/ideas/form")
-          .field_box= f.text_field :website, :size => 40, :class => "point_field"
-    -# / .col-6.col-inset
-    -# /   .col-content
-    -# /     %h1
-    -# /       = tr("Why should people support your idea?", "views/ideas/form")
-    -# /     .field_label
-    -# /       = tr("Add a point in support or against", "views/ideas/form")
-    -# /     = f.fields_for(:points) do |point_form|
-    -# /       .field
-    -# /         .field_box
-    -# /           = point_form.text_field :name, :size => 50, :maxlength => 80
-    -# /       .field
-    -# /         .field_label
-    -# /           #point_supports
-    -# /             = point_form.radio_button :value, 1, :checked=>(params.has_key?(:support) && params[:support] == "true" ? true : (params.has_key?(:support) && params[:support] == "false") ? false : true)
-    -# /             %span.point_supports_label= tr("Yes, this point supports this idea", "views/ideas/form")
-    -# /           #point_opposes
-    -# /             = point_form.radio_button :value, -1, :checked=>(params.has_key?(:support) && params[:support] == "false" ? true : false)
-    -# /             %span.point_opposes_label= tr("No, this point is against this idea", "views/ideas/form")
-    -# /       .field
-    -# /         %span.characters
-    -# /           %span.form_header
-    -# /             = tr("Explain your point - ", "view/ideas/_form")
-    -# /           %span#pointContentDown
-    -# /           = tr("characters left", "view/ideas/_form")
-    -# /         .field_box
-    -# /           = point_form.text_area :content, :id => 'pointContent', :button => 'submit', :class=>"col_text_area", :rows => 5, :maxLength => 1000
-    -# /         .field
-    -# /           %em
-    -# /             %p= tr("To convince other people about this idea a strong point is important. Other people will be able to edit your points, similar to Wikipedia.", "views/ideas/form")
-    -# /         .field
-    -# /           .field_label
-    -# /             = tr("Add a link to an external website", "views/ideas/form")
-    -# /           .field_box
-    -# /             = point_form.text_field :website, :size => 50
-  .col-group
-    .col-12
-      .col-content
-        %div
-          = submit_tag tr("Submit your idea and point", "view/ideas/_form"), :class => "submit_button"
+#new-idea-form
+  = form_for @idea do |f|
+    = f.error_messages
+
+    %label Kategooria
+    %select(name="idea[category_id]")
+      - @categories.each do |category|
+        %option{:value => category.id, :selected => @idea.category == category}
+          = category.name
+
+    %label
+      Idee
+      %small <span id="idea-name-countdown"></span> tähte veel ruumi
+    = f.text_area :name, :maxlength => 256
+
+    %label
+      Kirjeldus
+      %small <span id="ideaContentDown"></span> tähte veel ruumi
+    = f.text_area :description, :id => "ideaContent", :maxlength => 3000
+
+    %br
+    = submit_tag "Esita oma arenguidee"
+
 :javascript
-  $(document).ready(function(e) {
-    try {
-      $("#category_id").msDropDown({visibleRows:7});
-      } catch(e) {
-        alert(e.message);
-      }
-  });
-
-  $(document).ready(function(e) {
-    try {
-      $("#group_id").msDropDown({visibleRows:7});
-      } catch(e) {
-        alert(e.message);
-      }
-  });
-
-  jQuery("#ideaNameContent").NobleCount('#ideaNameContentDown',{ on_negative: 'go_red', on_positive: 'go_green', max_chars: #{SubInstance.current.idea_name_max_length} });
-
-  jQuery("input#ideaNameContent").autocomplete({
-          minLength: 10,
-          source: "/ideas.js",
-          search: function(event, ui) {
-              $('#idea_suggestions ul').empty();
-          },
-          open: function(event, ui) { $('#idea_suggestions').show(); },
-          close: function(event, ui) { $('#idea_suggestions').hide(); },
-      }).data('autocomplete')._renderItem = function (ul, item) {
-          return $('<li/>')
-          .data('item.autocomplete', item)
-          .append(item.value)
-          .appendTo($('#idea_suggestions ul'));
-      };
-
+  var e = $("textarea[name='idea[name]']"), el = e[0]
+  e.NobleCount('#idea-name-countdown', {
+    on_negative: "go_red",
+    on_positive: "go_green",
+    max_chars: el.getAttribute("maxlength")
+  })

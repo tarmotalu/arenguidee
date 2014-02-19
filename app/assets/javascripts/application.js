@@ -32,7 +32,6 @@
 //= require jquery.dd
 //= require jquery.autoSuggest
 //= require jquery.tipsy
-//= require msdropdown
 //= require_self
 //= require jquery.cookie
 //= require jquery.functions

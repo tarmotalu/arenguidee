@@ -32,7 +32,7 @@ end
 namespace :git do
   task :push do
     print_status "Pushing changes..."
-    system *%W[git push deploy #{branch}] unless simulate_mode?
+    system *%W[git push deploy #{branch}] or raise unless simulate_mode?
   end
 
   task :checkout do

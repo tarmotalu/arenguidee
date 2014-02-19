@@ -73,7 +73,6 @@ end
 group :assets do
   gem "execjs"
   gem "jquery-ui-rails"
-  gem "sass"
   gem "sass-rails"
   gem "therubyracer", "~> 0.10.2", :platforms => :ruby
   gem "uglifier"

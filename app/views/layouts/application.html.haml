@@ -20,7 +20,7 @@
     - if controller_name == "ideas" and action_name == "show"
       = render :partial=>"ideas/fb_og_tags"
 
-  %body
+  %body{:class => params[:controller]}
     %main
       %nav#nav
         %center
@@ -31,8 +31,7 @@
           - else
             %a.signin(href=new_user_session_path) Logi sisse
 
-          - unless current_page?(:controller => "home", :action => "index")
-            %h1 <a href="/">Arenguideede konkurss</a>
+          %h1 <a href="/">Arenguideede konkurss</a>
 
       #flash
         %center

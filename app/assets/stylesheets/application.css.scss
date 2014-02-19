@@ -101,6 +101,9 @@ center {
     font-size: 20px;
     height: 100%;
   }
+
+  body.home & { background: none }
+  body.home & h1 { display: none }
 }
 
 #flash {

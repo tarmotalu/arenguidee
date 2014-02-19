@@ -7,13 +7,13 @@ Rahvakogu::Application.configure do
   config.assets.compress = true
   config.assets.compile = true
   config.assets.digest = true
+  # Ignores any filename that begins with "_" (e.g. sass partials).
+  # all other css/js/sass/image files are processed
+  config.assets.precompile.push proc {|p| !File.basename(p).starts_with?("_") }
+  config.assets.precompile += %w(.svg .eot .woff .ttf)
 
-  # Specifies the header that your server uses for sending files
-  config.action_dispatch.x_sendfile_header = "X-Sendfile"
-
-  # Specifies the header that your server uses for sending files
-  # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
-  # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for nginx
+  # Let Nginx respond with static files:
+  config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
 
   # config.force_ssl = true
 
@@ -25,11 +25,6 @@ Rahvakogu::Application.configure do
   config.i18n.fallbacks = true
 
   config.active_support.deprecation = :notify
-
-  # Ignores any filename that begins with "_" (e.g. sass partials).
-  # all other css/js/sass/image files are processed
-  config.assets.precompile.push proc {|p| !File.basename(p).starts_with?("_") }
-  config.assets.precompile += %w(.svg .eot .woff .ttf)
 
   config.session_store :cookie_store, :key => "session", :domain => :all
   config.action_mailer.delivery_method = :test

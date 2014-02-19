@@ -275,8 +275,6 @@ Rahvakogu::Application.routes.draw do
     end
   end
 
-  resource :open_id
-
   match "/" => "home#index", :as => :root
 
   match "/activate/:activation_code" => "users#activate",

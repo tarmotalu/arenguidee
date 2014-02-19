@@ -8,9 +8,6 @@
     %div{:style => "margin-bottom: 5px;"}
       = link_to image_tag("twitter_signin.png", :border => 0, :title=>tr("Sign in with Twitter","_login")), :controller => "twitter", :action => "create"
   - if current_instance.google_login_enabled
-    %div{:style => "margin-bottom: 5px;margin-top: 5px;"}
-      = link_to image_tag("logos/Gmail_logo.png", :border => 0, :title=>tr("Sign in with Gmail","_login")), :controller => "open_ids", :action => "new"
-      %br/
   = form_for :user,                                        |
     'data-disable-with' => escape_t(tr("Sending","Ajax")), |
     :url => users_path(:region => "short") do |f|          |

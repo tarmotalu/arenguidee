@@ -11,7 +11,9 @@
   - up = form.merge("action" => endorse_idea_path(idea))
 %form.endorse{up}
   .count= idea.all_for.count
-  %button(type="submit") Toetan
+
+  - if current_user
+    %button(type="submit") Toetan
 
 - if endorsement && endorsement.down?
   - down = form.merge("action" => url_for(endorsement), "method"=>"delete")
@@ -19,4 +21,6 @@
   - down = form.merge("action" => oppose_idea_path(idea))
 %form.oppose{down}
   .count= idea.all_against.count
-  %button(type="submit") Olen vastu
+
+  - if current_user
+    %button(type="submit") Olen vastu

@@ -376,10 +376,6 @@ center {
   max-width: 240px;
   text-align: right;
 
-  // Push the bottom border of the idea farther for a bit of visual balance if
-  // the whole idea is shorter than the endorsement buttons.
-  margin-bottom: 5px;
-
   form {
     text-align: right;
     display: inline-block;
@@ -389,7 +385,6 @@ center {
   .oppose { margin-left: 40px }
 
   .count {
-    margin-bottom: 15px;
     padding-left: 35px;
     background-repeat: no-repeat;
     background-position: 0 center;
@@ -402,12 +397,20 @@ center {
   .endorse .count { background-image: url(image_path("thumb-yes.png")) }
   .oppose .count { background-image: url(image_path("thumb-no.png")) }
 
+  // NOTE: The submit button may be hidden for signed out people, so add
+  // margins to that instead of the count above to not have dangling margins.
   button {
+    // Push the bottom border of the idea farther for a bit of visual balance if
+    // the whole idea is shorter than the endorsement buttons.
+    margin-top: 15px;
+    margin-bottom: 10px;
+
     border: 0;
-    color: white;
     border-radius: 20px;
     display: inline-block;
     padding: 5px 10px;
+
+    color: white;
     font-size: 12px;
 
     cursor: pointer;

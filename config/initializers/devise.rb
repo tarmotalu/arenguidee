@@ -25,3 +25,14 @@ Devise.setup do |config|
 
   config.omniauth :idcard
 end
+
+# Nginx passes $ssl_client_cert with indented lines which breaks
+# OpenSSL::X509::Certificate. Strip them.
+require "omniauth/strategies/idcard"
+
+class OmniAuth::Strategies::Idcard
+  def parse_client_certificate_with_strip_lines(data)
+    parse_client_certificate_without_strip_lines data.lines.map(&:strip).join $/
+  end
+  alias_method_chain :parse_client_certificate, :strip_lines
+end

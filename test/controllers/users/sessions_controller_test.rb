@@ -11,15 +11,13 @@ describe Users::SessionsController do
         :uid => "100000000001337", :info => {:email => "user@example.org"}
       }
 
-      it "must create user with uid when new" do
+      it "must create user with uid" do
         auth :facebook, omniauth_info
         User.count.must_equal 1
-        user = User.first
-        user.login.must_equal "100000000001337"
-        user.facebook_uid.must_equal 100000000001337
+        User.first.facebook_uid.must_equal 100000000001337
       end
 
-      it "must set name and email when new" do
+      it "must set name and email" do
         auth :facebook, {
           :uid => "100000000001337",
 
@@ -36,12 +34,12 @@ describe Users::SessionsController do
         user.last_name.must_equal "Cornwell"
       end
 
-      it "must sign user in when new" do
+      it "must sign user in" do
         auth :facebook, omniauth_info
         assert warden.authenticated?(:user)
       end
 
-      it "must redirect to root when new" do
+      it "must redirect to root" do
         auth :facebook, omniauth_info
         assert_redirected_to root_path
       end
@@ -58,21 +56,21 @@ describe Users::SessionsController do
         :uid => "200000000000069", :info => {:email => "user@example.org"}
       }
 
-      it "must not change existing account if email taken" do
+      it "must not change existing account" do
         User.create!(user_attrs)
         auth :facebook, omniauth_info
         User.count.must_equal 1
         User.first.facebook_uid.must_equal 100000000001337
       end
 
-      it "must redirect to root with with error if email taken" do
+      it "must redirect to signin page with error" do
         User.create!(user_attrs)
         auth :facebook, omniauth_info
-        assert_redirected_to root_path
+        assert_redirected_to new_user_session_path
         request.flash.alert.must_include "Email"
       end
 
-      it "must not sign in if email taken" do
+      it "must not sign in" do
         User.create!(user_attrs)
         auth :facebook, omniauth_info
         assert !warden.authenticated?(:user)
@@ -90,19 +88,19 @@ describe Users::SessionsController do
         :uid => "100000000001337", :info => {:email => "user@example.org"}
       }
 
-      it "must not create new user if one exists with uid" do
+      it "must not create new user" do
         User.create!(user_attrs)
         auth :facebook, omniauth_info
         User.count.must_equal 1
       end
 
-      it "must sign user in when existing" do
+      it "must sign user in" do
         User.create!(user_attrs)
         auth :facebook, omniauth_info
         assert warden.authenticated?(:user)
       end
 
-      it "must redirect to root when existing" do
+      it "must redirect to root" do
         User.create!(user_attrs)
         auth :facebook, omniauth_info
         assert_redirected_to root_path
@@ -110,11 +108,78 @@ describe Users::SessionsController do
     end
   end
 
+  describe "#idcard" do
+    describe "when new" do
+      omniauth_info = {
+        :uid => "38002240211",
+        :user_info => {:personal_code => "38002240211"}
+      }
+
+      it "must create user with uid" do
+        auth :idcard, omniauth_info
+        User.count.must_equal 1
+        user = User.first
+        user.login.must_equal "38002240211"
+      end
+
+      it "must set name" do
+        auth :idcard, {
+          :uid => "38002240211",
+          :user_info => {
+            :personal_code => "38002240211",
+            :first_name => "James III",
+            :last_name => "Cornwell",
+          }
+        }
+
+        user = User.first
+        user.first_name.must_equal "James III"
+        user.last_name.must_equal "Cornwell"
+      end
+
+      it "must sign user in" do
+        auth :idcard, omniauth_info
+        assert warden.authenticated?(:user)
+      end
+
+      it "must redirect to root" do
+        auth :idcard, omniauth_info
+        assert_redirected_to root_path
+      end
+    end
+
+    describe "when uid exists" do
+      user_attrs = {:login => "38002240211"}
+      omniauth_info = {
+        :uid => "38002240211",
+        :user_info => {:personal_code => "38002240211"}
+      }
+
+      it "must not create new user" do
+        User.create!(user_attrs)
+        auth :idcard, omniauth_info
+        User.count.must_equal 1
+      end
+
+      it "must sign user in" do
+        User.create!(user_attrs)
+        auth :idcard, omniauth_info
+        assert warden.authenticated?(:user)
+      end
+
+      it "must redirect to root" do
+        User.create!(user_attrs)
+        auth :idcard, omniauth_info
+        assert_redirected_to root_path
+      end
+    end
+  end
+
   describe "#failure" do
-    it "must redirect to root with error when existing" do
+    it "must redirect to signin page with error" do
       request.env["omniauth.error.type"] = "user_denied"
       get :failure
-      assert_redirected_to root_path
+      assert_redirected_to new_user_session_path
       request.flash.notice.must_equal I18n.t("users.sessions.user_denied")
     end
   end

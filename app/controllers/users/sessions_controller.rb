@@ -20,47 +20,42 @@ class Users::SessionsController < ApplicationController
     redirect_to("/")
   end
 
-  def idcard
-    # Is this ever the case where omniauth.auth is nil, yet this action is
-    # called?
-    if !request.env["omniauth.auth"]
-      redirect_to root_path, :alert => t("sessions.new.invalid_user_info")
-      return
-    end
-
-    info = omniauth["user_info"]
-
-    if user = User.find_by_login(info["personal_code"])
-      flash.notice = t("devise.sessions.signed_in")
-      sign_in_and_redirect user
-    else
-      # Authentication was successful, but user is not registered in the system.
-      session[:omniauth] = request.env["omniauth.auth"]
-      flash.alert = t("sessions.new.not_registered", :username => info["name"])
-      redirect_to new_user_registration_url
-    end
-  end
-
   def facebook
     info = request.env["omniauth.auth"]
     user = User.where(:facebook_uid => info["uid"]).first || User.new
     return sign_in_and_redirect(user) if user.persisted?
 
-    user = User.new
+    # Setting login just for validations for now.
+    user.login = SecureRandom.uuid
     user.facebook_uid = info["uid"]
     user.email = info["info"]["email"]
     user.first_name = info["info"]["first_name"]
     user.last_name = info["info"]["last_name"]
 
-    # Setting login to satisfy validations, but it could clash with the ID card
-    # auth which assumes login is for the personal identity number.
+    if user.save
+      sign_in_and_redirect user
+    else
+      flash.alert = user.errors.full_messages.join("\n")
+      redirect_to new_user_session_path
+    end
+  end
+
+  def idcard
+    info = request.env["omniauth.auth"]
+    user = User.where(:login => info["uid"]).first || User.new
+    return sign_in_and_redirect(user) if user.persisted?
+
+    # NOTE: Omniauth::Idcard returns extra info in the "user_info" property
+    # while the standard seems to be "info".
     user.login = info["uid"]
+    user.first_name = info["user_info"]["first_name"]
+    user.last_name = info["user_info"]["last_name"]
 
     if user.save
       sign_in_and_redirect user
     else
       flash.alert = user.errors.full_messages.join("\n")
-      redirect_to after_sign_in_path_for(:user)
+      redirect_to new_user_session_path
     end
   end
 
@@ -73,6 +68,6 @@ class Users::SessionsController < ApplicationController
       flash.alert = t("users.sessions.invalid_credentials")
     end
 
-    redirect_to after_sign_in_path_for(:user)
+    redirect_to new_user_session_path
   end
 end

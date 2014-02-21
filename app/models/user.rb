@@ -107,15 +107,15 @@ class User < ActiveRecord::Base
   has_many :following_discussions, :dependent => :destroy
   has_many :following_discussion_activities, :through => :following_discussions, :source => :activity
 
-  #validates_presence_of     :login, :message => tr("Please specify a name to be identified as on the site.", "model/user")
-  #validates_length_of       :login, :within => 3..60
-  validates_presence_of  :login
+  validates_presence_of :login
 
-  validates_presence_of     :email
-  validates_length_of       :email, :within => 3..100, :allow_nil => true, :allow_blank => true
-  validates_uniqueness_of   :email, :case_sensitive => false, :allow_nil => true, :allow_blank => true
+  # Require email explicitly elsewhere because signups via ID-card or Mobile-ID
+  # don't have one initially.
+  validates_length_of       :email, :within => 3..128, :allow_blank => true
+  validates_uniqueness_of   :email, :case_sensitive => false, :allow_blank => true
+  validates_format_of       :email, :with => /@/, :allow_blank => true
+
   validates_uniqueness_of   :facebook_uid, :allow_nil => true, :allow_blank => true
-  validates_format_of       :email, :with => /^[-^!$#%&'*+\/=3D?`{|}~.\w]+@[a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])*(\.[a-zA-Z0-9]([-a-zA-Z0-9]*[a-zA-Z0-9])*)+$/x, :allow_nil => true, :allow_blank => true
 
   validates_presence_of     :password, :if => [:should_validate_password?]
   validates_presence_of     :password_confirmation, :if => [:should_validate_password?]
@@ -153,25 +153,6 @@ class User < ActiveRecord::Base
     indexes "concat(first_name, ' ', last_name)", :as => :real_name
     has updated_at
     where "users.status = 'active'"
-  end
-
-
-
-  def apply_omniauth(omniauth)
-    return if omniauth.blank?
-    return if omniauth['user_info'].blank?
-    info = omniauth['user_info']
-
-    self.email = info['email'] if email.blank?
-    self.login = info['personal_code'] if login.blank?
-    self.status = 'active'
-
-    if first_name.blank? && info['first_name']
-      self.first_name = info['first_name'].mb_chars.titlecase
-    end
-    if last_name.blank? && info['last_name']
-      self.last_name = info['last_name'].mb_chars.titlecase
-    end
   end
 
   def validate_age_group

@@ -1,13 +1,4 @@
-= form_for :session, :url => session_path(region: 'inline'), :remote => true do |f|
-  .field
-    .field_label
-      = tr("Email address", "view/sessions/_form")
-    .field_box
-      = text_field_tag :email, "", :size => 30
-  .field
-    .field_label
-      = tr("Password", "view/sessions/_form")
-    .field_box
-      = password_field_tag :password, "", :size => 30
-  = submit_tag tr("Sign in", "view/sessions/_form"), :class => "submit_button"
-.login_message
+%li
+  %a{:href => user_omniauth_authorize_path(:facebook)} Sisene Facebookiga
+%li
+  %a{:href => user_omniauth_authorize_path(:idcard)} Sisene ID-kaardiga

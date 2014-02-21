@@ -182,3 +182,28 @@ $(document).on("ajax:beforeSend", "form", function(ev) {
 $(document).on("ajax:complete", "form", function(ev) {
   $(ev.currentTarget).removeClass("submitting")
 })
+
+$(function() {
+  var menu = document.getElementById("user-menu")
+  var button = document.getElementById("user-menu-button")
+
+  button.addEventListener("click", function(ev) {
+    ev.preventDefault()
+    if (menu.style.display == "") return
+
+    this.className += " open"
+    menu.style.display = ""
+
+    ev.stopPropagation()
+    document.body.addEventListener("click", hide, false)
+  }, false)
+
+  function hide(ev) {
+    var el = ev.target; while (el && el != menu) el = el.parentNode
+    if (el) return
+
+    button.className = button.className.replace(/\s*\bopen\b/, "")
+    menu.style.display = "none"
+    document.body.removeEventListener("click", hide, false)
+  }
+})

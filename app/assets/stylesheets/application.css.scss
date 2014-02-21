@@ -84,25 +84,48 @@ center {
 }
 
 #nav {
-  background: #f0f0f0;
-  height: 40px;
+  $nav-background: #f0f0f0;
+  background: $nav-background;
   line-height: 40px;
 
-  a.signin,
-  a.account {
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 12px;
-    float: left;
-
-    // Turning this into a zero-width button prevents it from pushing
-    // the centered text slightly off the center.
-    margin-right: -100%;
+  center {
+    position: relative;
+    height: 40px;
+    padding-left: 0;
   }
 
   h1 {
     font-size: 20px;
     height: 100%;
+  }
+
+  #user-menu-button {
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    // Turning this into a zero-width button prevents it from pushing
+    // the centered text slightly off the center.
+    margin-right: -100%;
+
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+
+    &.open { background: $nav-background }
+  }
+
+  menu {
+    position: absolute;
+    left: 0;
+    top: 40px;
+    background: $nav-background;
+    min-width: 200px;
+    line-height: 2.4;
+    padding-bottom: 5px;
+
+    & > li { padding: 0 20px; }
+    h2 { margin-top: 20px }
   }
 
   body.home & { background: none }

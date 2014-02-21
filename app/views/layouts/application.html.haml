@@ -24,12 +24,12 @@
     #main
       %nav#nav
         %center
-          - if current_user
-            = render :partial => "shared/user_info"
-            = render :partial => "shared/notifications"
-            %a.account(href="#") Konto
-          - else
-            %a.signin(href=new_user_session_path) Logi sisse
+          - href = current_user ? url_for(current_user) : new_user_session_path
+          - text = current_user ? current_user.real_name : "Logi sisse"
+          %a#user-menu-button.account(href=href)= text
+
+          - menu = current_user ? "users/sessions/menu" : "users/sessions/form"
+          %menu#user-menu(style="display: none")= render :partial => menu
 
           %h1 <a href="/">Arenguideede konkurss</a>
 
@@ -56,15 +56,3 @@
           E-mail: <a href="mailto:eureka@arenguidee.ee">eureka@arenguidee.ee</a>
 
     #fb-root
-    :javascript
-      $("#nav a.account").click(function(ev) {
-        ev.preventDefault()
-        $("#sib_profile").toggle()
-      })
-
-      $(document).mouseup(function(ev) {
-        if ($(ev.target).parent("a.account").length) return
-        $("#sib_profile").hide()
-      })
-
-      $("#sib_profile").mouseup(function() { return false })

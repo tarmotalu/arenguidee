@@ -1,0 +1,13 @@
+%li
+  %a{:href => url_for(current_user)} Profiil
+%li
+  %a{:href => destroy_user_session_path} Logi välja
+
+- if current_user.admin?
+  %li
+    %h2 Administraatorile
+    %ul
+      %li
+        %a{:href => pages_path} Staatilised lehed
+      %li
+        %a{:href => categories_path} Ideede kategooriad

@@ -39,6 +39,10 @@ body {
   font-family: $open-sans;
   color: black;
   font-size: 14px;
+
+  // Without an explicit text-align, Internet Explorer (9 at least) has no
+  // text-align value to inherit from for <center>.
+  text-align: left;
 }
 
 h1, h2 {

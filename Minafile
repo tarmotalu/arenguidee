@@ -12,6 +12,7 @@ set :shared_paths, %w[
   config/database.yml
   log
   tmp
+  public/system
 ]
 
 task :setup do
@@ -21,7 +22,7 @@ task :setup do
     queue! %(mkdir -p "#{deploy_to}/shared/#{dir}")
   end
 
-  %w[log tmp].each do |dir|
+  %w[log tmp system].each do |dir|
     queue! %(chgrp www-data "#{deploy_to}/shared/#{dir}")
   end
 

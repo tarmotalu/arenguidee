@@ -2,7 +2,7 @@
   %h1 Esita oma argenguidee
 
 #new-idea-form
-  = form_for @idea do |f|
+  = form_for @idea, :html => {:multipart => true} do |f|
     = f.error_messages
 
     %label Kategooria
@@ -20,6 +20,10 @@
       Kirjeldus
       %small <span id="ideaContentDown"></span> tähte veel ruumi
     = f.text_area :description, :id => "ideaContent", :maxlength => 3000
+
+    %label
+      Lisa fail
+    = f.file_field :attachment
 
     %br
     = submit_tag "Esita oma arenguidee"

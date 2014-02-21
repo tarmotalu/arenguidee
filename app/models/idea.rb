@@ -1,7 +1,12 @@
 class Idea < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
   self.per_page = 10
-  acts_as_set_sub_instance :table_name=>"ideas"
+  acts_as_set_sub_instance :table_name => "ideas"
+
+  has_attached_file :attachment
+  validates_attachment_size :attachment, {:in => 0..25.megabytes}
+  allowed_types = [/^image\//, /^text\//] + %w[application/pdf]
+  validates_attachment_content_type :attachment, :content_type => allowed_types
 
   scope :published, :conditions => "ideas.status = 'published'"
 

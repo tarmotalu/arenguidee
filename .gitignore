@@ -6,9 +6,10 @@
 /config/facebooker.yml
 /config/newrelic.yml
 /config/s3.yml
-/db/sphinx/
 /db/development.sqlite3
+/db/sphinx/
 /db/test.sqlite3
 /lib/geoip/GeoIP.dat
 /log/
+/public/system/
 /tmp/

@@ -330,13 +330,10 @@ class ApplicationController < ActionController::Base
   
   def check_suspension
     if logged_in? and current_user and current_user.status == 'suspended'
-      self.current_user.forget_me if logged_in?
-      cookies.delete :auth_token
       reset_session
-      Thread.current[:current_user] = nil
       flash[:notice] = "This account has been suspended."
-      redirect_to('/')
-      return  
+      redirect_to root_path
+      nil
     end
   end
   
@@ -433,19 +430,7 @@ class ApplicationController < ActionController::Base
       format.js { redirect_from_facebox(request.referrer||'/') }
     end
   end
-  
-  def fb_session_expired
-    self.current_user.forget_me if logged_in?
-    cookies.delete :auth_token
-    reset_session    
-    Thread.current[:current_user] = nil
-    flash[:error] = tr("Your Facebook session expired.", "controller/application")
-    respond_to do |format|
-      format.html { redirect_to '/portal/' }
-      format.js { redirect_from_facebox(request.referrer||'/') }
-    end    
-  end
-  
+
   def js_help
     JavaScriptHelper.instance
   end

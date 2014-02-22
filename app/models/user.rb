@@ -8,8 +8,7 @@ class User < ActiveRecord::Base
   attr_accessible :buddy_icon, :eula
   attr_accessor :eula
 
-  devise :omniauthable, :registerable,
-    :omniauth_providers => [:facebook, :idcard]
+  devise :omniauthable, :omniauth_providers => [:facebook, :idcard]
 
   scope :active, :conditions => "users.status in ('pending','active')"
   scope :at_least_one_endorsement, :conditions => "users.endorsements_count > 0"
@@ -144,7 +143,7 @@ class User < ActiveRecord::Base
   after_create :new_user_signedup
   after_create :set_signup_country
   validates_acceptance_of :eula, :message => "Must accept terms"
-  attr_protected :remember_token, :remember_token_expired_at, :activation_code, :salt, :crypted_password, :twitter_token, :twitter_secret
+  attr_protected :activation_code, :salt, :crypted_password, :twitter_token, :twitter_secret
 
   # Virtual attribute for the unencrypted password
   attr_accessor :sub_instance_ids, :terms
@@ -603,35 +602,6 @@ class User < ActiveRecord::Base
   # Encrypts the password with the user salt
   def encrypt(password)
     self.class.encrypt(password, salt)
-  end
-
-  def authenticated?(password)
-    crypted_password == encrypt(password)
-  end
-
-  def remember_token?
-    remember_token_expires_at && Time.now.utc < remember_token_expires_at
-  end
-
-  # These create and unset the fields required for remembering users between browser closes
-  def remember_me
-    remember_me_for 4.weeks
-  end
-
-  def remember_me_for(time)
-    remember_me_until time.from_now.utc
-  end
-
-  def remember_me_until(time)
-    self.remember_token_expires_at = time
-    self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
-    save(:validate => false)
-  end
-
-  def forget_me
-    self.remember_token_expires_at = nil
-    self.remember_token            = nil
-    save(:validate => false)
   end
 
   def name

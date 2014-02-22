@@ -1,4 +1,4 @@
-class Users::SessionsController < ApplicationController
+class Users::SessionsController < Devise::SessionsController
   skip_before_filter :check_idea
   skip_before_filter :check_referral
   skip_before_filter :check_suspension
@@ -9,15 +9,6 @@ class Users::SessionsController < ApplicationController
 
   prepend_before_filter :only => [:idcard, :facebook, :failure] do
     request.env["devise.skip_timeout"] = true
-  end
-
-  def destroy
-    self.current_user.forget_me if logged_in?
-    cookies.delete :auth_token
-    reset_session
-    Thread.current[:current_user] = nil
-    flash[:notice] = tr("Logged out. Please come again soon.", "controller/sessions")
-    redirect_to("/")
   end
 
   def facebook

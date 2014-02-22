@@ -1,17 +1,9 @@
 Devise.setup do |config|
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
   config.mailer_sender = "please-change-me@config-initializers-devise.com"
 
-  config.reset_password_within = 6.hours
   config.case_insensitive_keys = [:email]
-  config.authentication_keys = [ :email ]
-
-  # For bcrypt, this is the cost for hashing the password and defaults to 10.
-  # If using other encryptors, it sets how many times you want the password
-  # re-encrypted.
-  config.stretches = 10
-
-  # Setup a pepper to generate the encrypted password.
+  config.authentication_keys = [:email]
   config.pepper = Rahvakogu.config["pepper"]
 
   fb_app_id = Rahvakogu.config["facebook_app_id"]

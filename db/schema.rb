@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140217113443) do
+ActiveRecord::Schema.define(:version => 20140217183412) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -1245,8 +1245,6 @@ ActiveRecord::Schema.define(:version => 20140217113443) do
     t.datetime "updated_at"
     t.datetime "activated_at"
     t.string   "activation_code",              :limit => 60
-    t.string   "remember_token",               :limit => 60
-    t.datetime "remember_token_expires_at"
     t.integer  "picture_id"
     t.string   "status",                       :limit => 30,  :default => "pending"
     t.integer  "sub_instance_id"

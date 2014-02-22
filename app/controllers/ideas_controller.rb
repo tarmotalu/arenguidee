@@ -61,11 +61,7 @@ class IdeasController < ApplicationController
                 :cache_path => proc {|c| c.action_cache_path},
                 :expires_in => 5.minutes
 
-  layout :get_layout
-
-  # GET /ideas
   def index
-
     if params[:term] and request.xhr?
       ideas = Idea.published.find(:all, :select => "ideas.name", :conditions => ["name LIKE ?", "%#{params[:term]}%"], :order => "endorsements_count desc")
       idea_links = []

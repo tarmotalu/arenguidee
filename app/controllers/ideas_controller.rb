@@ -1,5 +1,3 @@
-require 'date'
-
 class IdeasController < ApplicationController
   ALLOWED_PARAMS = [:name, :category_id, :name, :description, :attachment]
 

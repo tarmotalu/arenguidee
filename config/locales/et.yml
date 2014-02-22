@@ -2,10 +2,10 @@ et:
   devise:
     registrations:
       user:
-        signed_up: 'Tänud registreerimast'
+        signed_up: "Tänud registreerimast"
     sessions:
-      signed_in: 'Oled sisse loginud'
-      signed_out: 'Oled välja loginud'
+      signed_in: "Oled sisse loginud"
+      signed_out: "Oled välja loginud"
 
     failure:
       user:
@@ -15,51 +15,56 @@ et:
     sessions:
       user_denied: "Sisselogimine katkestatud"
 
-  errors: &errors
-    format: ! '%{attribute} %{message}'
-    messages:
-      accepted: peab olema heaks kiidetud
-      blank: on täitmata
-      confirmation: ei vasta kinnitusele
-      empty: on tühi
-      equal_to: peab võrdne arvuga %{count}
-      even: peab olema paarisarv
-      exclusion: on reserveeritud
-      greater_than: ei tohi olla suurem kui %{count}
-      greater_than_or_equal_to: peab olema suurem või võrdne arvuga %{count}
-      inclusion: ei leidu nimekirjas
-      invalid: ei ole korrektne
-      less_than: peab olema vähem kui %{count}
-      less_than_or_equal_to: peab olema vähem või võrdne arvuga %{count}
-      not_a_number: ei ole number
-      not_an_integer: peab olema täisarv
-      odd: peab olema paaritu arv
-      record_invalid: ! 'Valideerimine ebaõnnestus: %{errors}'
-      taken: on juba kasutusel
-      too_long: on liiga pikk (maksimum on %{count} tähemärki)
-      too_short: on liiga lühike (miinimum on %{count} tähemärki)
-      wrong_length: on vale pikkusega (peab olema %{count} tähemärki)
-    template:
-      body: ! 'Probleeme ilmnes järgmiste väljadega:'
-      header:
-        one: Üks viga takistas objekti %{model} salvestamist
-        other: ! '%{count} viga takistasid objekti %{model} salvestamist'
-
   helpers:
     select:
-      prompt: Palun vali
+      prompt: "Palun vali"
     submit:
-      create: Loo uus %{model}
-      submit: Salvesta %{model}
-      update: Uuenda objekti %{model}
+      create: "Loo uus %{model}"
+      submit: "Salvesta %{model}"
+      update: "Uuenda %{model}"
     array:
-      last_word_connector: ! ' ja '
-      two_words_connector: ! ' ja '
-      words_connector: ! ', '
+      last_word_connector: " ja "
+      two_words_connector: " ja "
+      words_connector: ", "
 
-  activemodel:
-    errors:
-      <<: *errors
+  errors:
+    template:
+      body: "Probleeme ilmnes järgmiste väljadega:"
+      header:
+        one: "Esines üks viga %{model} juures"
+        other: "Esines %{count} viga %{model} juures"
+
   activerecord:
+    attributes:
+      idea:
+        name: "Pealkiri"
+        attachment: "Manus"
+        attachment_content_type: "Manuse tüüp"
+        attachment_file_size: "Manuse suurus"
+    models:
+      idea: "Idee"
+
     errors:
-      <<: *errors
+      format: "%{attribute} %{message}"
+      messages:
+        accepted: peab olema heaks kiidetud
+        blank: on täitmata
+        confirmation: ei vasta kinnitusele
+        empty: on tühi
+        equal_to: peab võrdne arvuga %{count}
+        even: peab olema paarisarv
+        exclusion: on reserveeritud
+        greater_than: ei tohi olla suurem kui %{count}
+        greater_than_or_equal_to: peab olema suurem või võrdne arvuga %{count}
+        inclusion: ei leidu nimekirjas
+        invalid: ei ole korrektne
+        less_than: peab olema vähem kui %{count}
+        less_than_or_equal_to: peab olema vähem või võrdne arvuga %{count}
+        not_a_number: ei ole number
+        not_an_integer: peab olema täisarv
+        odd: peab olema paaritu arv
+        record_invalid: "Valideerimine ebaõnnestus: %{errors}"
+        taken: on juba kasutusel
+        too_long: on liiga pikk (maksimum on %{count} tähemärki)
+        too_short: on liiga lühike (miinimum on %{count} tähemärki)
+        wrong_length: on vale pikkusega (peab olema %{count} tähemärki)

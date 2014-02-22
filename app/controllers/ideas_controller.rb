@@ -1,9 +1,10 @@
-require 'date'
-
 class IdeasController < ApplicationController
+  ALLOWED_PARAMS = [:name, :category_id, :name, :description, :attachment]
+
   before_filter :authenticate_user!, :only => [
     :comment,
     :consider,
+    :create,
     :destroy,
     :edit,
     :endorse,
@@ -742,77 +743,24 @@ class IdeasController < ApplicationController
     redirect_to '/ideas/'
   end
   
-  # POST /ideas
-  # POST /ideas.xml
   def create
-    if not logged_in?
-      flash[:notice] = tr("First you need to fill out this quick form and agree to the rules, then you can start adding your ideas.", "controller/ideas")
-      session[:query] = params[:idea][:name] if params[:idea]
-      access_denied
-      return
-    end
-  
-    # Rails.logger.debug("Point character length: #{params[:idea][:points_attributes]["0"][:content].length} #{params[:idea][:name].length}")
-
-    if current_sub_instance and current_sub_instance.required_tags and not params[:idea][:idea_type]
-      # default to the first tag
-      params[:idea][:idea_type] = current_sub_instance.required_tags.split(',')[0]
-    end
-
-    @idea = Idea.new(params[:idea])
-    tags = []
-    tags << @idea.category.name if @idea.category
-    params.each do |p,v|
-      tags << v if p.include?("special_checkbox_tag_")
-    end
-    params.each do |a,b|
-      tags << b if a.include?("sub_tag_")
-    end
-    tags += params[:custom_tags].split(",").collect {|t| t.strip} if params[:custom_tags] and params[:custom_tags]!=""
-
-    unless tags.empty?
-      @idea.issue_list = tags.join(",")
-    end
+    @idea = Idea.new(idea_params)
     @idea.user = current_user
     @idea.ip_address = request.remote_ip
-    @idea.request = request
-    @saved = @idea.save
-    
-    if @saved
-      unless @idea.points.empty?
-        first_point = @idea.points.first
-        first_point.setup_revision
-        first_point.reload
-        @endorsement = @idea.endorse(current_user,request,current_sub_instance,@referral)  
-        quality = first_point.point_qualities.find_or_create_by_user_id_and_value(current_user.id, true)
-      end
-      IdeaRevision.create_from_idea(@idea,request.remote_ip,request.env['HTTP_USER_AGENT'])      
-      if current_user.endorsements_count > 24 && !@endorsement.nil?
-        session[:endorsement_page] = (@endorsement.position/25).to_i+1
-        session[:endorsement_page] -= 1 if @endorsement.position == (session[:endorsement_page]*25)-25
-      end    
-    else
-      # see if it already exists
-      query = params[:idea][:name].strip
-      same_name_idea = Idea.find(:first, :conditions => ["name = ? and status = 'published'", query], :order => "endorsements_count desc")
-      flash[:current_same_name_idea_id] = same_name_idea.id if same_name_idea
+
+    return render "new" if !@idea.save
+
+    unless @idea.points.empty?
+      first_point = @idea.points.first
+      first_point.setup_revision
+      first_point.reload
+      @endorsement = @idea.endorse(current_user,request,current_sub_instance,@referral)
+      quality = first_point.point_qualities.find_or_create_by_user_id_and_value(current_user.id, true)
     end
-    
-    respond_to do |format|
-      if @saved
-        format.html { 
-          flash[:notice] = tr("Thanks for adding {idea_name}", "controller/ideas", :idea_name => @idea.name)
-          redirect_to(idea_path(@idea))
-        }
-        format.js {
-          render :update do |page|
-            page.redirect_to @idea
-          end
-        }        
-      else
-        format.html { render :controller => "ideas", :action => "new", :notice=>flash[:notice] }
-      end
-    end
+
+    IdeaRevision.create_from_idea(@idea,request.remote_ip,request.env["HTTP_USER_AGENT"])
+
+    redirect_to @idea
   end
 
   def endorse
@@ -1206,4 +1154,9 @@ class IdeasController < ApplicationController
       end
       @items
     end
+
+  private
+  def idea_params
+    params[:idea].slice(*ALLOWED_PARAMS)
+  end
 end

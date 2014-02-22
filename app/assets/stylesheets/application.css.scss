@@ -19,7 +19,8 @@
 //= require_self
 
 $black: #454545;
-$link: #cb481e;
+$red: #cb481e;
+$link: $red;
 $gray: #ccc;
 $dark-gray: #8b8b8b;
 $background: #444444;
@@ -59,6 +60,11 @@ h1 {
 h2 {
   color: $black;
   font-weight: 500;
+  font-size: 16px;
+}
+
+label h2 {
+  text-transform: uppercase;
 }
 
 a { text-decoration: inherit }
@@ -69,6 +75,18 @@ a:link {
 }
 
 a:visited { color: $link }
+
+// Be explicit to not color type=files.
+input[type=text].error,
+input[type=email].error,
+textarea.error {
+  border: 1px solid $red;
+}
+
+p.error {
+  font-size: 12px;
+  color: $red;
+}
 
 #main {
   background: white;
@@ -186,7 +204,6 @@ center {
 
   h2 {
     text-transform: uppercase;
-    font-size: 18px;
     margin-bottom: 15px;
   }
 }
@@ -381,7 +398,6 @@ center {
   }
 
   h2 {
-    font-size: 18px;
     line-height: 1.3;
   }
 
@@ -454,7 +470,68 @@ center {
 }
 
 #new-idea-form {
-  label { display: block }
+  margin: 0 auto;
+  max-width: 620px;
+
+  p.errors {
+    color: $red;
+    margin-bottom: 30px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+
+    & ~ label { margin-top: 25px }
+  }
+
+  h2 { margin-bottom: 5px }
+
+  p + p {
+    margin-top: 5px;
+  }
+
+  input[type=text], textarea {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  input[type=text] {
+    height: 35px;
+    padding: 0 5px;
+  }
+
+  textarea {
+    height: 200px;
+    padding: 5px;
+    resize: vertical;
+  }
+
+  input[name="idea[name]"] {
+    font-size: 17px;
+  }
+
+  small {
+    font-size: 12px;
+    color: $dark-gray;
+  }
+
+  .countdown { float: right }
+  strong { font-weight: bold }
+
+  input[type=submit] {
+    display: block;
+    width: 100%;
+    margin-top: 35px;
+    padding: 10px 30px;
+    border: 0;
+
+    background: $link;
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+  }
 }
 
 #footer {
@@ -497,23 +574,6 @@ center {
   visibility: hidden;
   font-size: 0;
 }
-#search_results {
-	.profile_picture96 {
-		float: left;
-		width: 110px;
-	}
-	.profile_strip {
-		float: left;
-		width: 450px;
-
-		.profile_name {
-			font-size:15px;
-		}
-	}
-}
-
-
-.idea_inline a.button { text-transform: uppercase; }
 
 .small_button {
 	a:hover {
@@ -528,22 +588,7 @@ box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 	&.red { background: #C00; }
  &.blue { background: $background; }
 }
-.cookieText{float:left; position:relative; width:900px; margin:-17px 0 15px 0; padding:17px 30px; text-align:center; font-size:18px; line-height:26px; color:#fff; background:$background; -webkit-border-radius:5px; border-radius:5px;}
-.cookieText p{margin:0;}
-.cookieText .closeButton{position:absolute; right:8px; top:9px; width:10px; height:9px; background:url(image_path('closeButton.png')) no-repeat; text-decoration:none; overflow:hidden; text-indent:-999px;}
-.cookieText b{font-weight:normal;}
-.cookieText a{color:#fff; text-decoration: underline; }
 
-.filterBar{position:relative; width:936px;  padding:0 10px 0 14px; font-size:18px; line-height:37px; height:37px; color:#fff; background:$background; -webkit-border-radius:5px; border-radius:5px; background:#444444; font-size:14px;}
-.filterBar .leftSide{float:left;}
-.filterBar .leftSide a{color:#fff;}
-.filterBar .rightSide{float:right; color:#bcbcbc;}
-.filterBar .rightSide a{color:#fff;}
-.filterBar .rightSide a.active{text-decoration:none;}
-.filterBar .rightSide span.filter_divider { padding: 0 4px 0 4px; }
-
-#user_points { @extend #propositions; }
-#supporting { @extend #propositions; }
 .blueBar{float:left; position:relative; width:936px;  padding:0 10px 0 14px; font-size:18px; line-height:51px; height:51px; color:#fff; background:$background; -webkit-border-radius:5px; border-radius:5px; background:$background; font-size:14px; font-size:18px; margin:0 0 34px 0;}
 .blueBar span{float:left; margin-right:9px;}
 .blueBar #dropdown{float:left; position:relative; margin-right:9px;}
@@ -552,21 +597,6 @@ box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 .blueBar #dropdown .more{position:absolute; top:41px; left:0; background:$background; -webkit-border-radius:5px; border-radius:5px; display:none;}
 .blueBar #dropdown .more .item{display:block; line-height:31px; font-size:15px; padding:0 10px; white-space:nowrap; cursor:pointer; text-decoration:none; color:#DDDDDD;}
 .blueBar #dropdown .more .item.selected, .blueBar #dropdown .more .item:hover{color:#fff;}
-
-#addProposition{float:left; width:100%; padding:0 0 50px 0;}
-#addProposition .profile{float:left; width:80px; font-size:12px; color:#444444; text-align:right; line-height:16px;}
-#addProposition .profile img{margin-bottom:7px; display:block;}
-#addProposition .profile b{margin-bottom:4px; display:block;}
-#addProposition .rightSide{float:right; width:845px; }
-#addProposition .form-item{float:left; width:100%; margin:0 0 15px 0;}
-#addProposition .form-item input{float:left; width:100%; padding:0; height:35px; line-height:35px; border:none; border-bottom:#d9d9d9 1px solid; font-size:30px; color:#000;}
-#addProposition .form-item textarea{float:left; width:100%; padding:0; border:none;  padding:2px 0; border-bottom:#d9d9d9 1px solid; font-size:14px; line-height:20px; height:150px; color:#aeaeae;}
-#addProposition .spacer{float:left; width:100%; height:10px;}
-#addProposition .submit{float:left; border:none; height:37px; line-height:37px; font-size:18px; padding:0 24px 3px 24px; color:#fff; background:#cc0000; -webkit-border-radius:99px; border-radius:99px; text-decoration:none;
--webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2); cursor:pointer;}
-#addProposition .notice{float:left; line-height:37px; margin-left:15px; font-size:14px;  color:#444444;}
-
 
 /* JWF stuff */
 .profile_pic_96 { width: 96px; margin-bottom: 8px; text-align: right; }
@@ -590,14 +620,6 @@ box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2); cursor:pointer;}
 
 }
 
-#search_box { float: left; margin: 14px 5px 5px 15px;
-  .search_head { width: 125px; }
-  input[type=text] {
-    height: 18px;
-    background: #BBB;
-    padding-bottom: 1px;
-  }
-}
 .page .page_title { font-size: 18px; font-weight: bold; margin-bottom: 5px;}
 .page .page_left { float: left; width: 720px; }
 .page .download_link { margin-bottom: 10px; font-size: 12px;}
@@ -614,16 +636,6 @@ box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2); cursor:pointer;}
 			line-height: 14px;
 		}
 	}
-}
-
-.user_point_title_1 {
-	margin-top: 10px;
-	color: $link;
-}
-
-.user_point_title_-1 {
-	margin-top: 10px;
-	color: #C00;
 }
 
 #feed_sidebar {
@@ -690,29 +702,6 @@ box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2); cursor:pointer;}
 	float: left;
 }
 /* KJ changes */
-
-#mainMenu {
-  font-size: 19px;
-}
-input[type="submit"], .button {
-  height: 31px;
-  line-height: 31px;
-  padding: 0 15px;
-  color: white;
-  text-decoration: none;
-  background: #C00;
-  font-size: 12px;
-  border: none;
-  -webkit-border-radius: 99px;
-  border-radius: 99px;
-  -webkit-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-}
-
-.field_box.blue input[type="submit"] {
-	background: $background;
-}
-
 #login_overlay, #sib_profile {
   border: 5px solid #ccc;
   border-radius: 10px;
@@ -741,14 +730,6 @@ input[type="submit"], .button {
 #container {
   padding-top: 25px;
 }
-.vote .button {
-  text-transform: upper;
-}
-.idea_listing .col-right h2 a,
-.idea_listing .col-right h2 a:link,
-.idea_listing .col-right h2 a:visited {
-  color: #c00;
-}
 .profile_strip {
   padding: 0;
   margin: 0 0 20px 0;
@@ -760,31 +741,4 @@ input[type="submit"], .button {
 }
 .profile_menu li {
   border-bottom: 1px solid #eee;
-}
-
-
-/* Other changes */
-
-.reg_form {
-	.left { float: left; }
-	.right { float: left; clear: right; margin-left: 80px;}
-	input[type=submit] { clear: left; margin: 20px; float: left; }
-}
-
-.following {
-	margin-top: 10px;
-}
-.user_follow_button { float: left; margin-right: 15px; margin-bottom: 10px; clear: right; }
-input#user_eula { float: left; margin-right: 10px; }
-.field_label.short { float: left; font-weight: normal; font-size: 9pt; width: 320px;}
-
-textarea#pagecomment_content {
-	width: 400px;
-	height: 150px;
-	margin-bottom: 10px;
-}
-
-.page_comment  {
-	float: none;
-	margin-bottom: 15px;
 }

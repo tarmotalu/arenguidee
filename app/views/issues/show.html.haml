@@ -22,8 +22,10 @@
 #ideas-list= render :partial => "ideas", :locals => {:ideas  => @ideas}
 
 - unless @ideas.blank?
-  = will_paginate @ideas
-  - if @category.nil?
-    = pageless(@ideas.total_pages, "/ideas/#{@filter}")
+  - if @category
+    - path = filtered_issue_path(@category, @filter.to_sym)
   - else
-    = pageless(@ideas.total_pages, filtered_issue_path(@category, @filter.to_sym))
+    - path = "/ideas/#{@filter}"
+
+  = will_paginate @ideas
+  = pageless(@ideas.total_pages, path)

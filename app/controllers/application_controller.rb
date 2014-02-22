@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
   # Make these methods visible to views as well
   helper_method :current_facebook_user, :instance_cache, :current_sub_instance, :current_user_endorsements, :current_idea_ids, :current_following_ids, :current_ignoring_ids, :current_following_facebook_uids, :current_instance, :current_tags, :facebook_session, :is_robot?, :js_help, :logged_in?
 
-  before_filter :session_expiry
   before_filter :update_activity_time
 
   before_filter :load_actions_to_publish, :unless => [:is_robot?]
@@ -76,23 +75,6 @@ class ApplicationController < ActionController::Base
     session[:locale] = "et"
   end
 
-  def session_expiry
-    return if controller_name == "sessions"
-    Rails.logger.info("Session expires at #{session[:expires_at]}")
-    if session[:expires_at]
-      @time_left = (session[:expires_at] - Time.now).to_i
-      if current_user and not current_facebook_user_if_on_facebook
-        unless @time_left > 0
-          Rails.logger.info("Resetting session")
-          reset_session
-          Thread.current[:current_user] = nil
-          flash[:error] = "Sinu sessioon on aegunud. Palun logi uuesti sisse!"
-          redirect_to '/'
-        end
-      end
-    end
-  end
-  
   def update_activity_time
     if current_user and current_user.is_admin?
       session[:expires_at] = 6.hours.from_now

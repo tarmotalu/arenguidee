@@ -15,7 +15,7 @@ Rahvakogu::Application.configure do
   # Let Nginx respond with static files:
   config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
 
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

@@ -1,17 +1,13 @@
-%h1 Listing categories
-%table
-  %tr
-    %th Name
-    %th
-    %th
-    %th
+%header
+  %h1 Kategooriad
+
+%ul#categories-list
   - @categories.each do |category|
-    %tr
-      %td
-        - if category.icon?
-          = image_tag category.icon(:icon_40)
-        = category.name
-      %td= link_to 'Show', category
-      %td= link_to 'Edit', edit_category_path(category)
-%br/
-= link_to 'New Category', new_category_path
+    %li
+      %h2
+        %a{:href => issue_path(category)}= category.name
+      %menu
+        %a{:href => edit_category_path(category)} Muuda
+
+%menu#categories-menu
+  %a.button.primary(href=new_category_path) Uus kategooria

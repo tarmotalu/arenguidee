@@ -12,7 +12,6 @@ Rahvakogu::Application.routes.draw do
   match "/admin/all_flagged" => "admin#all_flagged"
   match "/admin/all_deleted" => "admin#all_deleted"
   match "/users/list_suspended" => "users#list_suspended"
-  match "/to_translate" => "categories#translations"
 
   resources :groups
 

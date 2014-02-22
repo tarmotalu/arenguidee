@@ -34,8 +34,8 @@ class ApplicationController < ActionController::Base
     current_user && current_user.is_admin?
   end
 
-  def admin_required
-    return if is_admin?
+  def authenticate_admin!
+    return if current_user && current_user.admin?
 
     respond_to do |format|
       format.html do
@@ -44,6 +44,7 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+  alias admin_required authenticate_admin!
 
   protected
   def logged_in?

@@ -1,0 +1,8 @@
+%header
+  %h1 Kasutajad
+
+%ul#users-list
+  - @users.each do |user|
+    %li
+      %h2
+        %a{:href => url_for(user)}= user.name

@@ -1,25 +1,18 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!, :only => [
-    :destroy,
-    :disable_facebook,
     :edit,
     :endorse,
     :follow,
-    :request_validate_user_for_country,
     :resend_activation,
     :resend_activation,
     :signups,
-    :signups,
-    :subscriptions,
     :unfollow,
-    :validate_user_for_country,
   ]
 
-  before_filter :admin_required, :only => [
+  before_filter :authenticate_admin!, :only => [
     :impersonate,
-    :list_suspended,
+    :index,
     :make_admin,
-    :reset_password,
     :suspend,
     :unsuspend,
   ]
@@ -30,132 +23,25 @@ class UsersController < ApplicationController
                 :expires_in => 5.minutes
 
   def index
-    if params[:term]
-      @users = User.active.find(:all, :conditions => ["login LIKE ?", "#{h(params[:term])}%"], :order => "users.login asc")
-    else
-      @users = User.active.by_ranking.paginate :page => params[:page], :per_page => params[:per_page]  
-    end
-    respond_to do |format|
-      format.html { redirect_to :controller => "network" }
-      format.js { render :text => @users.collect{|p|p.login}.join("\n") }
-      format.xml { render :xml => @users.to_xml(:include => [:top_endorsement, :referral, :sub_instance_referral], :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @users.to_json(:include => [:top_endorsement, :referral, :sub_instance_referral], :except => NB_CONFIG['api_exclude_fields']) }
-    end    
-  end
-  
-
-
-  def request_validate_user_for_country
-    unless @iso_country
-      flash[:error] = tr("Your country was not detected.", "controller/users", :user_name => @user.name)
-      redirect_to '/'
-    end
+    @users = User.all
   end
 
-  def validate_user_for_country
-    email = params[:user][:email]
-    user = User.find_by_email(email)
-    if user and @iso_country
-      user.add_iso_country_access!(@iso_country.code)
-      flash[:error] = tr("{email} has allowed access to #{@iso_country.country_english_name}.", "controller/users", :user_name => @user.name)
-      redirect_to '/'
-    else
-      flash[:error] = tr("{email} is not found.", "controller/users", :user_name => @user.name)
-      redirect_to '/'
-    end
-  end
-  
-  def suspended
-  end
-
-  def list_suspended
-    @users = User.suspended.paginate :page => params[:page], :per_page => params[:per_page] 
-  end
-
-  def disable_facebook
-   #TODO: THis needs to be implemented
-#    @user = current_user
-#    @user.facebook_uid=nil
-#    @user.save(:validate => false)
-#    fb_cookie_destroy
-    redirect_to '/'
-  end
-  
-  def set_email
-    @user = current_user
-    flash[:notice]=nil
-    if request.put?
-      @user.email = params[:user][:email]
-      @user.have_sent_welcome = true
-      if @user.save
-        @user.send_welcome
-        redirect_back_or_default('/')
-      else
-        flash[:notice]=tr("Email not accepted", "controller/users")
-        redirect_to "/set_email"
-      end
-    end
-  end
-  
-  def subscriptions
-    @subscription_user = current_user
-    if request.put?
-      TagSubscription.delete_all(["user_id = ?",current_user.id])
-      Tag.all.each do |tag|
-        tag_checkbox_id = "subscribe_to_tag_id_#{tag.id}"
-        if params[:user][tag_checkbox_id]
-          subscription = TagSubscription.new
-          subscription.user_id = current_user.id
-          subscription.tag_id = tag.id
-          subscription.save
-        end
-      end
-      Rails.logger.info("Starting HASH #{params[:user].inspect}")
-      params[:user].each do |hash_value,x|
-        Rails.logger.info(hash_value)
-        if hash_value.include?("to_tag_id")
-          Rails.logger.info("DELETING: #{hash_value}")
-          params[:user].delete(hash_value)
-        end
-      end
-      Rails.logger.info("After HASH #{params[:user].inspect}")
-      if not current_user.reports_enabled and params[:user][:reports_enabled].to_i==1
-        params[:user][:last_sent_report]=Time.now
-      end
-      current_user.update_attributes(params[:user])
-      current_user.save(:validate => false)
-      redirect_to "/"
-    end
-  end
-  
-  # render new.rhtml
-  def new
-    if logged_in?
-      redirect_to "/"
-      return
-    end
-    store_previous_location
-    respond_to do |format|
-      format.html
-    end
-  end
-  
   def edit
     @user = User.find(params[:id])
 
     unless current_user.is_admin?
       if current_user != @user || check_for_suspension
-        redirect_to '/' and return 
+        redirect_to '/' and return
       end
     end
     @page_title = tr("Changing settings for {user_name}", "controller/users", :user_name => @user.name)
   end
-  
+
   def update
     @user = User.find(params[:id])
     unless current_user.is_admin?
       if current_user != @user || check_for_suspension
-        redirect_to '/' and return 
+        redirect_to '/' and return
       end
     end
     @page_title = tr("Changing settings for {user_name}", "controller/users", :user_name => @user.name)
@@ -177,47 +63,34 @@ class UsersController < ApplicationController
         format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
       end
     end
-  end  
-  
-  def signups
-    @user = User.find(params[:id])
-    redirect_to '/' and return if check_for_suspension
-    @page_title = tr("Email notifications for {user_name}", "controller/users", :user_name => @user.name)
-    @rss_url = url_for(:only_path => false, :controller => "rss", :action => "your_notifications", :format => "rss", :c => @user.rss_code)
-    @sub_instances = SubInstance.find(:all, :conditions => "is_optin = true and status = 'active' and id <> 3")
   end
-    
-  # GET /users/1
-  # GET /users/1.xml
+
   def show
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
     @page_title = tr("{user_name} at {instance_name}", "controller/users", :user_name => @user.name, :instance_name => tr(current_instance.name,"Name from database"))
-    # @ideas = @user.endorsements.active.by_position.find(:all, :include => :idea, :limit => 5)
     @ideas = Idea.where(:user_id => @user.id).published.top_rank
     @endorsements = nil
     get_following
     if logged_in? # pull all their endorsements on the ideas shown
       @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.id},current_user.id])
-    end    
+    end
     @activities = @user.activities.active.by_recently_created.paginate :include => :user, :page => params[:page], :per_page => params[:per_page]
-    get_endorsements
+
+    @endorsements = nil
+    if logged_in? # pull all their endorsements on the ideas shown
+      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.id},current_user.id])
+    end
+
     respond_to do |format|
       format.html
       format.xml { render :xml => @user.to_xml(:methods => [:revisions_count], :include => [:top_endorsement, :referral, :sub_instance_referral], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @user.to_json(:methods => [:revisions_count], :include => [:top_endorsement, :referral, :sub_instance_referral], :except => NB_CONFIG['api_exclude_fields']) }
     end
   end
-  
-  def get_endorsements
-    @endorsements = nil
-    if logged_in? # pull all their endorsements on the ideas shown
-      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.id},current_user.id])
-    end
-  end 
 
   def ideas
-    @user = User.find(params[:id])    
+    @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
 
     @ideas = Idea.where(:user_id => @user.id).published.top_rank
@@ -228,16 +101,16 @@ class UsersController < ApplicationController
     get_following
     if logged_in? # pull all their endorsements on the ideas shown
       @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @supporting.collect {|c| c.idea_id},current_user.id])
-    end    
+    end
     @ideas.compact!
 
     respond_to do |format|
       format.html
       format.xml { render :xml => @ideas.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @ideas.to_json(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-    end    
+    end
   end
-  
+
   def activities
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
@@ -252,10 +125,10 @@ class UsersController < ApplicationController
         format.rss { render :template => "rss/activities" }
         format.xml { render :xml => @activities.to_xml(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
         format.json { render :json => @activities.to_json(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
-      end   
-    end 
+      end
+    end
   end
-  
+
   def comments
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
@@ -266,8 +139,8 @@ class UsersController < ApplicationController
       format.xml { render :xml => @comments.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @comments.to_json(:except => NB_CONFIG['api_exclude_fields']) }
     end
-  end  
-  
+  end
+
   def discussions
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
@@ -278,22 +151,9 @@ class UsersController < ApplicationController
       format.html { render :template => "users/activities" }
       format.xml { render :xml => @activities.to_xml(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @activities.to_json(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
-    end    
-  end 
-  
-  def ads
-    @user = User.find(params[:id])
-    redirect_to '/' and return if check_for_suspension
-    get_following
-    @page_title = tr("{user_name} ads at {instance_name}", "controller/users", :user_name => @user.name.possessive, :instance_name => tr(current_instance.name,"Name from database"))
-    @ads = @user.ads.active_first.paginate :page => params[:page], :per_page => params[:per_page]
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml { render :xml => @ads.to_xml(:include => :idea, :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @ads.to_json(:include => :idea, :except => NB_CONFIG['api_exclude_fields']) }
-    end    
+    end
   end
-  
+
   def capital
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
@@ -301,7 +161,7 @@ class UsersController < ApplicationController
     @page_title = tr("{user_name} {currency_name} at {instance_name}", "controller/users", :user_name => @user.name.possessive, :currency_name => tr(current_instance.currency_name.downcase,"Currency name from database"), :instance_name => tr(current_instance.name,"Name from database"))
     @activities = @user.activities.active.capital.by_recently_created.paginate :page => params[:page], :per_page => params[:per_page]
     if request.xhr?
-      render :partial => "feed/activity_list" 
+      render :partial => "feed/activity_list"
     else
       respond_to do |format|
         format.html {
@@ -310,9 +170,9 @@ class UsersController < ApplicationController
         format.xml { render :xml => @activities.to_xml(:include => :capital, :except => NB_CONFIG['api_exclude_fields']) }
         format.json { render :json => @activities.to_json(:include => :capital, :except => NB_CONFIG['api_exclude_fields']) }
       end
-    end  
-  end  
-  
+    end
+  end
+
   def points
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
@@ -321,74 +181,13 @@ class UsersController < ApplicationController
     @points = @user.points.published.by_recently_created.paginate :page => params[:page], :per_page => params[:per_page]
     if logged_in? and @points.any? # pull all their qualities on the points shown
       @qualities = PointQuality.find(:all, :conditions => ["point_id in (?) and user_id = ? ", @points.collect {|c| c.id},current_user.id])
-    end    
+    end
     respond_to do |format|
       format.html
       format.xml { render :xml => @points.to_xml(:include => [:idea,:other_idea], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @points.to_json(:include => [:idea,:other_idea], :except => NB_CONFIG['api_exclude_fields']) }
-    end    
+    end
   end
-  
-  def stratml
-    @user = User.find(params[:id])
-    @page_title = tr("{user_name} ideas at {instance_name}", "controller/users", :user_name => @user.name.possessive, :instance_name => tr(current_instance.name,"Name from database"))
-    @tags = @user.issues(500)
-    respond_to do |format|
-      format.xml # show.html.erb
-    end    
-  end
-
-  def create
-    # cookies.delete :auth_token
-    # protects against session fixation attacks, wreaks havoc with
-    # request forgery protection.
-    # uncomment at your own risk
-    # reset_session
-    @valid = true
-
-    @user = User.new(params[:user]) 
-    @user.request = request
-    @user.referral = @referral
-    @user.sub_instance_referral = current_sub_instance
-
-    begin
-      if Rails.env.test? && @user.save!
-        @valid = true
-      elsif @user.save! #save first
-        @valid = true
-      else
-        @valid = false
-      end
-      rescue ActiveRecord::RecordInvalid
-        @valid = false
-    end   
-
-    if not @valid
-      respond_to do |format|
-        format.js
-        format.html { render :action => "new" }
-      end
-      return
-    end
-    self.current_user = @user # automatically log them in
-    
-    if current_sub_instance and params[:signup]
-      @user.signups << Signup.create(:sub_instance => current_sub_instance, :is_optin => params[:signup][:is_optin], :ip_address => request.remote_ip)
-    end
-      
-    flash[:notice] = tr("Welcome to {instance_name}", "controller/users", :instance_name => tr(current_instance.name,"Name from database"))
-    if session[:query] 
-      @send_to_url = "/?q=" + session[:query]
-      session[:query] = nil
-    else
-      @send_to_url = session[:return_to] || get_previous_location
-    end
-    session[:goal] = 'signup'
-    respond_to do |format|
-      format.js
-      format.html { redirect_to @send_to_url }
-    end      
-  end  
 
   def activate
     self.current_user = params[:activation_code].blank? ? false : User.find_by_activation_code(params[:activation_code])
@@ -398,68 +197,58 @@ class UsersController < ApplicationController
     flash[:notice] = tr("Thanks for verifying your email address", "controller/users")
     redirect_back_or_default('/')
   end
-  
+
   def resend_activation
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
     @user.resend_activation
     flash[:notice] = tr("Resent verification email to {email}", "controller/users", :email => @user.email)
     redirect_back_or_default(url_for(@user))
-  end  
-
-  def reset_password
-    @user = User.find(params[:id])
-    @user.reset_password
-    flash[:notice] = tr("Sent a new temporary password to {email}", "controller/users", :email => @user.email)
-    redirect_to @user
   end
-  
-  # POST /users/1/follow
+
   def follow
     @value = params[:value].to_i
     @user = User.find(params[:id])
     if @value == 1
       @following = current_user.follow(@user)
     else
-      @following = current_user.ignore(@user)    
+      @following = current_user.ignore(@user)
     end
     respond_to do |format|
       format.js {
         render :update do |page|
           if params[:region] == 'user_left'
             page.replace_html 'user_' + @user.id.to_s + "_button",render(:partial => "users/button_small", :locals => {:user => @user, :following => @following})
-          end          
+          end
         end
-      }    
-    end  
+      }
+    end
   end
 
-  # POST /users/1/unfollow
   def unfollow
     @value = params[:value].to_i
     @user = User.find(params[:id])
     if @value == 1
       current_user.unfollow(@user)
     else
-      current_user.unignore(@user)    
+      current_user.unignore(@user)
     end
     respond_to do |format|
       format.js {
         render :update do |page|
           if params[:region] == 'user_left'
             page.replace_html 'user_' + @user.id.to_s + "_button",render(:partial => "users/button_small", :locals => {:user => @user, :following => nil})
-          end          
+          end
         end
-      }    
-    end  
+      }
+    end
   end
-  
-  # GET /users/1/followers
+
   def followers
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
     get_following
-    @page_title = tr("{count} people are following {user_name}", "controller/users", :user_name => @user.name, :count => @user.followers_count)      
+    @page_title = tr("{count} people are following {user_name}", "controller/users", :user_name => @user.name, :count => @user.followers_count)
     @followings = @user.followers.up.paginate :page => @page, :per_page => 50
     respond_to do |format|
       format.html
@@ -468,26 +257,24 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1/ignorers
   def ignorers
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
-    get_following    
-    @page_title = tr("{count} people are ignoring {user_name}", "controller/users", :user_name => @user.name, :count => @user.ignorers_count)      
+    get_following
+    @page_title = tr("{count} people are ignoring {user_name}", "controller/users", :user_name => @user.name, :count => @user.ignorers_count)
     @followings = @user.followers.down.paginate :page => @page, :per_page => 50
     respond_to do |format|
       format.html { render :action => "followers" }
       format.xml { render :xml => @followings.to_xml(:include => [:user], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @followings.to_json(:include => [:user], :except => NB_CONFIG['api_exclude_fields']) }
     end
-  end  
-  
-  # GET /users/1/following
+  end
+
   def following
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
     get_following
-    @page_title = tr("{user_name} is following {count} people", "controller/users", :user_name => @user.name, :count => @user.followings_count)      
+    @page_title = tr("{user_name} is following {count} people", "controller/users", :user_name => @user.name, :count => @user.followings_count)
     @followings = @user.followings.up.paginate :page => @page, :per_page => 50
     respond_to do |format|
       format.html
@@ -496,19 +283,18 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1/ignoring
   def ignoring
     @user = User.find(params[:id])
     redirect_to '/' and return if check_for_suspension
-    get_following    
-    @page_title = tr("{user_name} is ignoring {count} people", "controller/users", :user_name => @user.name, :count => @user.ignorings_count)      
+    get_following
+    @page_title = tr("{user_name} is ignoring {count} people", "controller/users", :user_name => @user.name, :count => @user.ignorings_count)
     @followings = @user.followings.down.paginate :page => @page, :per_page => 50
     respond_to do |format|
       format.html { render :action => "following" }
       format.xml { render :xml => @followings.to_xml(:include => [:other_user], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @followings.to_json(:include => [:other_user], :except => NB_CONFIG['api_exclude_fields']) }
     end
-  end  
+  end
 
   # this is for loading up more endorsements in the left column
   def endorsements
@@ -545,26 +331,12 @@ class UsersController < ApplicationController
     end
   end
 
-   # DELETE /user
-  def destroy
-    @user = User.find(current_user.id)
-    @user.remove!
-    self.current_user.forget_me
-    cookies.delete :auth_token
-    reset_session
-    Thread.current[:current_user] = nil
-    flash[:notice] = tr("Your account was deleted. Good bye!", "controller/settings")
-    redirect_to "/" and return
-  end
-
-  # PUT /users/1/suspend
   def suspend
     @user = User.find(params[:id])
-    @user.suspend! 
+    @user.suspend!
     redirect_to(@user)
   end
 
-  # PUT /users/1/unsuspend
   def unsuspend
     @user = User.find(params[:id])
     @user.unsuspend!
@@ -585,10 +357,10 @@ class UsersController < ApplicationController
       e.idea.oppose(current_user,request,current_sub_instance,@referral) if e.is_down?
     end
     respond_to do |format|
-      format.js { redirect_from_facebox(user_path(@user)) }        
-    end    
+      format.js { redirect_from_facebox(user_path(@user)) }
+    end
   end
-  
+
   def impersonate
     @user = User.find(params[:id])
     self.current_user = @user
@@ -596,7 +368,7 @@ class UsersController < ApplicationController
     redirect_to @user
     return
   end
-  
+
   def make_admin
     # redirect_to '/' and return
     @user = User.find(params[:id])
@@ -605,29 +377,27 @@ class UsersController < ApplicationController
     flash[:notice] = tr("{user_name} is now an Administrator", "controller/users", :user_name => @user.name)
     redirect_to @user
   end
-  
+
   private
-  
-    def get_following
-      if logged_in?
-        @following = @user.followers.find_by_user_id(current_user.id)      
-      else
-        @following = nil
-      end
+  def get_following
+    if logged_in?
+      @following = @user.followers.find_by_user_id(current_user.id)
+    else
+      @following = nil
     end
-    
-    def check_for_suspension
-      if @user.status == 'suspended'
-        flash[:error] = tr("{user_name} is suspended", "controller/users", :user_name => @user.name)
-        if logged_in? and current_user.is_admin?
-        else
-          return true
-        end
-      end
-      if @user.status == 'removed'
-        flash[:error] = tr("That user deleted their account", "controller/users")
+  end
+
+  def check_for_suspension
+    if @user.status == 'suspended'
+      flash[:error] = tr("{user_name} is suspended", "controller/users", :user_name => @user.name)
+      if logged_in? and current_user.is_admin?
+      else
         return true
       end
     end
-  
+    if @user.status == 'removed'
+      flash[:error] = tr("That user deleted their account", "controller/users")
+      return true
+    end
+  end
 end

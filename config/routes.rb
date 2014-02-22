@@ -11,7 +11,6 @@ Rahvakogu::Application.routes.draw do
   match "/ideas/not_abusive/:id" => "ideas#not_abusive"
   match "/admin/all_flagged" => "admin#all_flagged"
   match "/admin/all_deleted" => "admin#all_deleted"
-  match "/users/list_suspended" => "users#list_suspended"
 
   resources :groups
 
@@ -48,7 +47,7 @@ Rahvakogu::Application.routes.draw do
     end
   end
 
-  resources :users do
+  resources :users, :except => [:new, :create, :destroy] do
   	resource :profile
 
   	collection do
@@ -67,14 +66,12 @@ Rahvakogu::Application.routes.draw do
   	  put :impersonate
   	  get :followers
   	  get :documents
-  	  get :stratml
   	  get :ignorers
   	  get :following
   	  get :ignoring
   	  post :follow
   	  post :unfollow
   	  put :make_admin
-  	  get :ads
   	  get :ideas
   	  post :endorse
     end

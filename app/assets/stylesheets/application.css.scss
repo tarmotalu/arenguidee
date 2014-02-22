@@ -477,10 +477,7 @@ center > header {
   }
 }
 
-#idea-form {
-  margin: 0 auto;
-  max-width: 620px;
-
+center > form {
   p.errors {
     color: $red;
     margin-bottom: 30px;
@@ -510,13 +507,8 @@ center > header {
   }
 
   textarea {
-    height: 200px;
     padding: 5px;
     resize: vertical;
-  }
-
-  input[name="idea[name]"] {
-    font-size: 17px;
   }
 
   small {
@@ -524,7 +516,6 @@ center > header {
     color: $dark-gray;
   }
 
-  .countdown { float: right }
   strong { font-weight: bold }
 
   input[type=submit] {
@@ -533,10 +524,23 @@ center > header {
   }
 }
 
-#categories-list,
-#categories-menu {
-  max-width: 620px;
+#idea-form {
   margin: 0 auto;
+  max-width: 620px;
+
+  input[name="idea[name]"] {
+    font-size: 17px;
+  }
+
+  textarea {
+    height: 200px;
+  }
+
+  .countdown { float: right }
+}
+
+body.categories #main > center {
+  max-width: 620px;
 }
 
 #categories-list {

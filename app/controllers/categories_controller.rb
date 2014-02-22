@@ -5,10 +5,6 @@ class CategoriesController < ApplicationController
     @categories = Category.all.sort_by(&:name)
   end
 
-  def show
-    @category = Category.find(params[:id])
-  end
-
   def new
     @category = Category.new
   end
@@ -21,9 +17,9 @@ class CategoriesController < ApplicationController
     @category = Category.new(params[:category])
 
     if @category.save
-      redirect_to @category, :notice => "Category was successfully created."
+      redirect_to :action => :index
     else
-      render :action => "new"
+      render :action => :new
     end
   end
 
@@ -31,15 +27,15 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
 
     if @category.update_attributes(params[:category])
-      redirect_to @category, :notice => "Category was successfully updated."
+      redirect_to :action => :index
     else
-      render :action => "edit"
+      render :action => :edit
     end
   end
 
   def destroy
     @category = Category.find(params[:id])
     @category.destroy
-    redirect_to categories_url
+    redirect_to :action => :index
   end
 end

@@ -1,35 +1,10 @@
-= form_for @category, :html => {:multipart => true} do |f|
-  - if @category.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@category.errors.count, "error")
-        prohibited this category from being saved:
-      %ul
-        - @category.errors.full_messages.each do |msg|
-          %li= msg
-  %p
-    %label{:for => "picture"}= tr("Upload your picture", "view/settings/picture")
-  %p
-    = f.file_field :icon
-    %br/
-  .field
-    = f.label :name
-    %br/
-    = f.text_field :name
-  .field
-    = f.label :description
-    %br/
-    = f.text_area :description, :rows => 5
-  .field
-    = f.label :blue_box_text
-    %br/
-    = f.text_area :blue_box_text, :rows => 5
-  -#.field
-    = f.label :sub_tags
-    %br/
-    = f.text_field :sub_tags
-  %p
-    Category this will be the main info page for (optional) :
-    = f.collection_select :page_id, Page.all, :id, :title, :include_blank => true    
-  .actions
-    = f.submit
+- html = {:multipart => true, :id => "category-form"}
+= form_for @category, :html => html do |f|
+  = error_summary @category
+
+  %label
+    %h2= t("activerecord.attributes.category.name")
+    = errors_for @category, :name
+  = f.text_field :name
+
+  = f.submit

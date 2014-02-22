@@ -1,45 +1,41 @@
-%header#new-idea-header
-  %h1 Uus arenguidee
+= form_for @idea, :html => {:multipart => true, :id => "idea-form"} do |f|
+  = error_summary @idea
 
-#new-idea-form
-  = form_for @idea, :html => {:multipart => true} do |f|
-    = error_summary @idea
+  %label
+    %small.countdown
+      <strong id="idea-name-countdown"></strong> tähemärki veel järel.
+    %h2 Idee
+    = errors_for @idea, :name
+  = f.text_field :name, :maxlength => 256, :size => nil
 
-    %label
-      %small.countdown
-        <strong id="idea-name-countdown"></strong> tähemärki veel järel.
-      %h2 Idee
-      = errors_for @idea, :name
-    = f.text_field :name, :maxlength => 256, :size => nil
+  %label
+    %small.countdown
+      <strong id="idea-description-countdown"></strong> tähemärki veel järel.
+    %h2 Kirjeldus
+    = errors_for @idea, :description
+  = f.text_area :description, :maxlength => 3000
 
-    %label
-      %small.countdown
-        <strong id="idea-description-countdown"></strong> tähemärki veel järel.
-      %h2 Kirjeldus
-      = errors_for @idea, :description
-    = f.text_area :description, :maxlength => 3000
+  %label
+    %h2 Kategooria
+  %select(name="idea[category_id]")
+    - @categories.each do |category|
+      %option{:value => category.id, :selected => @idea.category == category}
+        = category.name
 
-    %label
-      %h2 Kategooria
-    %select(name="idea[category_id]")
-      - @categories.each do |category|
-        %option{:value => category.id, :selected => @idea.category == category}
-          = category.name
+  %label
+    %h2 Manus
+    %p
+      %small Lisa soovi korral ideed kirjeldav pilt või muu tekstidokument.
+    = errors_for @idea, :attachment_content_type
+    = errors_for @idea, :attachment_file_size
+  = f.file_field :attachment
 
-    %label
-      %h2 Manus
-      %p
-        %small Lisa soovi korral ideed kirjeldav pilt või muu tekstidokument.
-      = errors_for @idea, :attachment_content_type
-      = errors_for @idea, :attachment_file_size
-    = f.file_field :attachment
-
-    %br
-    = submit_tag "Esita oma arenguidee"
+  %br
+  = submit_tag "Esita oma arenguidee"
 
 :javascript
   ;(function() {
-    var form = $("#new-idea-form form")[0]
+    var form = document.getElementById("idea-form")
 
     var name = form.elements["idea[name]"]
     $(name).NobleCount("#idea-name-countdown", {

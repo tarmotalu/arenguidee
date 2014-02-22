@@ -19,10 +19,12 @@ et:
   helpers:
     select:
       prompt: "Palun vali"
+
     submit:
       create: "Loo uus %{model}"
       submit: "Salvesta %{model}"
       update: "Uuenda %{model}"
+
     array:
       last_word_connector: " ja "
       two_words_connector: " ja "
@@ -36,14 +38,19 @@ et:
         other: "Esines %{count} viga %{model} juures"
 
   activerecord:
+    models:
+      idea: "Idee"
+      category: "Kategooria"
     attributes:
       idea:
         name: "Pealkiri"
+        description: "Kirjeldus"
+        category: "Kategooria"
         attachment: "Manus"
         attachment_content_type: "Manuse tüüp"
         attachment_file_size: "Manuse suurus"
-    models:
-      idea: "Idee"
+      category:
+        name: "Nimi"
 
     errors:
       format: "%{attribute} %{message}"

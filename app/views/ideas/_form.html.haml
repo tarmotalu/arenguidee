@@ -4,26 +4,26 @@
   %label
     %small.countdown
       <strong id="idea-name-countdown"></strong> tähemärki veel järel.
-    %h2 Idee
+    %h2= t("activerecord.attributes.idea.name")
     = errors_for @idea, :name
   = f.text_field :name, :maxlength => 256, :size => nil
 
   %label
     %small.countdown
       <strong id="idea-description-countdown"></strong> tähemärki veel järel.
-    %h2 Kirjeldus
+    %h2= t("activerecord.attributes.idea.description")
     = errors_for @idea, :description
   = f.text_area :description, :maxlength => 3000
 
   %label
-    %h2 Kategooria
+    %h2= t("activerecord.attributes.idea.category")
   %select(name="idea[category_id]")
     - @categories.each do |category|
       %option{:value => category.id, :selected => @idea.category == category}
         = category.name
 
   %label
-    %h2 Manus
+    %h2= t("activerecord.attributes.idea.attachment")
     %p
       %small Lisa soovi korral ideed kirjeldav pilt või muu tekstidokument.
     = errors_for @idea, :attachment_content_type

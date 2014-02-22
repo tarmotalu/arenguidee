@@ -77,6 +77,19 @@ a:link {
 
 a:visited { color: $link }
 
+.button.primary,
+input[type=submit] {
+  border: 0;
+  padding: 10px 30px;
+  display: block;
+
+  background: $link;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+}
+
 // Be explicit to not color type=files.
 input[type=text].error,
 input[type=email].error,
@@ -159,9 +172,7 @@ center {
   }
 }
 
-#home-header,
-#ideas-header,
-#new-idea-header {
+center > header {
   margin-top: 40px;
   margin-bottom: 50px;
 
@@ -213,12 +224,9 @@ center {
   float: left;
 
   a {
-    display: block;
-    background: $link;
-    color: white;
     font-size: 24px;
-    padding: 24px;
-    text-align: center;
+    padding-top: 24px;
+    padding-bottom: 24px;
   }
 }
 
@@ -425,7 +433,6 @@ center {
     display: inline-block;
   }
 
-
   .oppose { margin-left: 40px }
 
   .count {
@@ -521,18 +528,33 @@ center {
   strong { font-weight: bold }
 
   input[type=submit] {
-    display: block;
     width: 100%;
     margin-top: 35px;
-    padding: 10px 30px;
-    border: 0;
-
-    background: $link;
-    color: white;
-    font-size: 18px;
-    text-align: center;
-    cursor: pointer;
   }
+}
+
+#categories-list,
+#categories-menu {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+#categories-list {
+  li + li { margin-top: 15px; }
+
+  h2 {
+    text-transform: uppercase;
+    //font-size: 12px;
+    a { color: $black }
+  }
+
+  menu {
+    margin-top: 5px;
+  }
+}
+
+#categories-menu {
+  margin-top: 40px;
 }
 
 #footer {

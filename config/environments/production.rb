@@ -26,6 +26,5 @@ Rahvakogu::Application.configure do
 
   config.active_support.deprecation = :notify
 
-  config.session_store :cookie_store, :key => "session", :domain => :all
   config.action_mailer.delivery_method = :test
 end

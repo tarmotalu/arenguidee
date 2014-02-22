@@ -14,10 +14,6 @@ Devise.setup do |config|
   # Setup a pepper to generate the encrypted password.
   config.pepper = Rahvakogu.config["pepper"]
 
-  config.remember_for = 1.day
-  # If true, extends the user's remember period when remembered via cookie.
-  config.extend_remember_period = true
-
   fb_app_id = Rahvakogu.config["facebook_app_id"]
   fb_app_secret = Rahvakogu.config["facebook_app_secret"]
   fb_opts = {:scope => "email,user_about_me"}

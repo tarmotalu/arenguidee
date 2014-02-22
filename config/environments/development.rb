@@ -32,8 +32,6 @@ Rahvakogu::Application.configure do
 
   config.assets.compress = false
   config.assets.debug = true
-
-  config.session_store :cookie_store, :key => "session"
 end
 
 ActionController::Base.asset_host = Proc.new { |source| 

@@ -297,4 +297,25 @@ module ApplicationHelper
   def sub_instance_link(short_name)
     SubInstance.find_by_short_name(short_name).show_url
   end
+
+  def errorify_tag(html)
+    html.
+      sub(/\A(<[^>]+ \bclass=['"])/x, '\1error ').
+      sub(/\A(<\w+\b) (?![^>]*\bclass=)/x, '\1 class="error"\2').
+      html_safe
+  end
+
+  def errors_for(model, attr)
+    return if !model.errors[attr].present?
+    msgs = model.errors[attr].map {|msg| model.errors.full_message(attr, msg) }
+    "<p class=error>#{msgs.to_sentence}</p>".html_safe
+  end
+
+  def error_summary(model)
+    return if model.errors.empty?
+    count = model.errors.count
+    name = model.class.model_name.human.downcase
+    msg = I18n.t("errors.template.header", :count => count, :model => name)
+    "<p class=errors>#{msg}</p>".html_safe
+  end
 end

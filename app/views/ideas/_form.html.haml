@@ -1,37 +1,53 @@
 %header#new-idea-header
-  %h1 Esita oma argenguidee
+  %h1 Uus arenguidee
 
 #new-idea-form
   = form_for @idea, :html => {:multipart => true} do |f|
-    = f.error_messages
+    = error_summary @idea
 
-    %label Kategooria
+    %label
+      %h2 Kategooria
     %select(name="idea[category_id]")
       - @categories.each do |category|
         %option{:value => category.id, :selected => @idea.category == category}
           = category.name
 
     %label
-      Idee
-      %small <span id="idea-name-countdown"></span> tähte veel ruumi
-    = f.text_area :name, :maxlength => 256
+      %small.countdown
+        <strong id="idea-name-countdown"></strong> tähemärki veel järel.
+      %h2 Idee
+      = errors_for @idea, :name
+    = f.text_field :name, :maxlength => 256, :size => nil
 
     %label
-      Kirjeldus
-      %small <span id="ideaContentDown"></span> tähte veel ruumi
-    = f.text_area :description, :id => "ideaContent", :maxlength => 3000
+      %small.countdown
+        <strong id="idea-description-countdown"></strong> tähemärki veel järel.
+      %h2 Kirjeldus
+      = errors_for @idea, :description
+    = f.text_area :description, :maxlength => 3000
 
     %label
-      Lisa fail
+      %h2 Manus
+      %p
+        %small Lisa soovi korral ideed kirjeldav pilt või muu tekstidokument.
+      = errors_for @idea, :attachment_content_type
+      = errors_for @idea, :attachment_file_size
     = f.file_field :attachment
 
     %br
     = submit_tag "Esita oma arenguidee"
 
 :javascript
-  var e = $("textarea[name='idea[name]']"), el = e[0]
-  e.NobleCount('#idea-name-countdown', {
-    on_negative: "go_red",
-    on_positive: "go_green",
-    max_chars: el.getAttribute("maxlength")
-  })
+  ;(function() {
+    var form = $("#new-idea-form form")[0]
+
+    var name = form.elements["idea[name]"]
+    $(name).NobleCount("#idea-name-countdown", {
+      max_chars: name.getAttribute("maxlength")
+    })
+
+    var desc = form.elements["idea[description]"]
+    $(desc).NobleCount("#idea-description-countdown", {
+      max_chars: desc.getAttribute("maxlength")
+    })
+  })()

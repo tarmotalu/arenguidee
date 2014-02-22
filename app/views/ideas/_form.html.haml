@@ -6,13 +6,6 @@
     = error_summary @idea
 
     %label
-      %h2 Kategooria
-    %select(name="idea[category_id]")
-      - @categories.each do |category|
-        %option{:value => category.id, :selected => @idea.category == category}
-          = category.name
-
-    %label
       %small.countdown
         <strong id="idea-name-countdown"></strong> tähemärki veel järel.
       %h2 Idee
@@ -25,6 +18,13 @@
       %h2 Kirjeldus
       = errors_for @idea, :description
     = f.text_area :description, :maxlength => 3000
+
+    %label
+      %h2 Kategooria
+    %select(name="idea[category_id]")
+      - @categories.each do |category|
+        %option{:value => category.id, :selected => @idea.category == category}
+          = category.name
 
     %label
       %h2 Manus

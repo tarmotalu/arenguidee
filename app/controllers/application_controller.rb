@@ -4,24 +4,18 @@ class ApplicationController < ActionController::Base
   include FaceboxRender
 
   require_dependency "activity.rb"
-  require_dependency "relationship.rb"   
+  require_dependency "relationship.rb"
   require_dependency "capital.rb"
-
-#  rescue_from ActionController::InvalidAuthenticityToken, :with => :bad_token
 
   helper :all # include all helpers, all the time
   
   # Make these methods visible to views as well
   helper_method :current_facebook_user, :instance_cache, :current_sub_instance, :current_user_endorsements, :current_idea_ids, :current_following_ids, :current_ignoring_ids, :current_following_facebook_uids, :current_instance, :current_tags, :facebook_session, :is_robot?, :js_help, :logged_in?
-  
-  # switch to the right database for this instance
-  before_filter :check_for_localhost
 
   before_filter :session_expiry
   before_filter :update_activity_time
 
   before_filter :load_actions_to_publish, :unless => [:is_robot?]
-#  before_filter :check_facebook, :unless => [:is_robot?]
     
   before_filter :check_blast_click, :unless => [:is_robot?]
   before_filter :check_idea, :unless => [:is_robot?]
@@ -30,7 +24,6 @@ class ApplicationController < ActionController::Base
   before_filter :update_loggedin_at, :unless => [:is_robot?]
   before_filter :init_tr8n
   before_filter :check_google_translate_setting
-  before_filter :check_missing_user_parameters, :except=>[:destroy]
 
   before_filter :setup_inline_translation_parameters
   before_filter :get_categories
@@ -40,60 +33,22 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :is_admin?
 
-  def is_admin? 
-    if logged_in? && current_user.is_admin?
-      true
-    else
-      false
-    end
+  def is_admin?
+    current_user && current_user.is_admin?
   end
-  
+
   def admin_required
-    logger.warn('cufksd' + current_user.inspect)
-    is_admin? || admin_denied
-  end
-  
-  def admin_denied
+    return if is_admin?
+
     respond_to do |format|
       format.html do
-
-        flash[:notice] = 'You must be an admin to do that.'
-        redirect_to '/'
-      end
-    end
-  end
-
-  def is_admin? 
-      if logged_in? && current_user.is_admin?
-        true
-      else
-        false
-      end
-  end
-  
-  def admin_required
-    is_admin? || admin_denied
-  end
-  
-  def login_required
-    logged_in?
-  end
-  
-  def current_user_required
-    return logged_in?
-  end
-
-  def admin_denied
-    respond_to do |format|
-      format.html do
-        flash[:notice] = 'You must be an admin to do that.'
-        redirect_to '/'
+        flash[:notice] = "You must be an admin to do that."
+        redirect_to root_path
       end
     end
   end
 
   protected
-  
   def logged_in?
     current_user.present?
   end
@@ -115,33 +70,10 @@ class ApplicationController < ActionController::Base
       false
     end
   end
-  
-  def check_missing_user_parameters
-    #if logged_in? and Instance.current and controller_name!="settings"
-    #  unless current_user.email and current_user.my_gender and current_user.post_code and current_user.age_group
-    #    flash[:notice] = "Please make sure you have registered all relevant information about you for this website."
-    #    if request.format.js?
-    #      render :update do |page|
-    #        page.redirect_to :controller => "settings"
-    #      end
-    #      return false
-    #    else
-    #      redirect_to :controller=>"settings"
-    #    end
-    #  end
-    #end
-  end
-
 
   def get_categories
     @categories = Category.all
     session[:locale] = "et"
-  end
-
-  def check_for_localhost
-    if Rails.env.development?
-      Thread.current[:localhost_override] = "#{request.host}:#{request.port}"
-    end
   end
 
   def session_expiry

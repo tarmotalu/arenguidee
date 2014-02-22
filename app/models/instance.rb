@@ -107,14 +107,10 @@ class Instance < ActiveRecord::Base
   end
   
   def homepage_url(sub_instance=nil)
-    if Thread.current[:localhost_override]
-      'http://' + Thread.current[:localhost_override] + '/'
+    if p = sub_instance or (p = SubInstance.current)
+      'http://' + p.short_name + '.' + base_url + '/'
     else
-      if p = sub_instance or (p = SubInstance.current)
-        'http://' + p.short_name + '.' + base_url + '/'
-      else
-        'http://' + base_url + '/'
-      end
+      'http://' + base_url + '/'
     end
   end
 

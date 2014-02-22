@@ -46,7 +46,7 @@ body {
   text-align: left;
 }
 
-h1, h2 {
+h1, h2, h3 {
   color: $black;
   a, a:visited { color: inherit }
 }
@@ -57,11 +57,12 @@ h1 {
   text-align: center;
 }
 
-h2 {
+h2, h3 {
   color: $black;
   font-weight: 500;
-  font-size: 16px;
 }
+
+h2 { font-size: 16px }
 
 label h2 {
   text-transform: uppercase;
@@ -143,7 +144,7 @@ center {
     padding-bottom: 5px;
 
     & > li { padding: 0 20px; }
-    h2 { margin-top: 20px }
+    h3 { margin-top: 20px }
   }
 
   body.home & { background: none }

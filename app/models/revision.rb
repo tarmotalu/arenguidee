@@ -5,10 +5,10 @@ class Revision < ActiveRecord::Base
   scope :published, :conditions => "revisions.status = 'published'"
   scope :by_recently_created, :order => "revisions.created_at desc"  
 
-  belongs_to :point  
+  belongs_to :point
   belongs_to :user
   belongs_to :other_idea, :class_name => "Idea"
-    
+
   has_many :activities
   has_many :notifications, :as => :notifiable, :dependent => :destroy
       
@@ -18,9 +18,6 @@ class Revision < ActiveRecord::Base
   include Workflow
   workflow_column :status
   workflow do
-    state :draft do
-      event :publish, transitions_to: :published
-    end
     state :archived do
       event :publish, transitions_to: :published
       event :remove, transitions_to: :removed

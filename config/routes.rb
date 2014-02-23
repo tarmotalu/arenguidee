@@ -136,10 +136,11 @@ Rahvakogu::Application.routes.draw do
       get :endorsed_top_points
       get :comments
       get :documents
-      get :update_status
   	end
 
   	collection do
+      get :pending
+
       get :minu
       get :yours_finished
       get :yours_top

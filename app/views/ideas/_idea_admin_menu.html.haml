@@ -1,0 +1,12 @@
+%menu.admin{:id => "idea-#{idea.id}-admin-menu"}
+  - if !idea.published?
+    = form_for idea, :remote => true, :html => {:id => nil} do |f|
+      = hidden_field_tag :partial, "idea_admin_menu"
+      = f.hidden_field :status, :value => "published"
+      %button.primary Avalda
+  - else
+    %strong= t("activerecord.attributes.idea.status_published")
+    = form_for idea, :remote => true, :html => {:id => nil} do |f|
+      = hidden_field_tag :partial, "idea_admin_menu"
+      = f.hidden_field :status, :value => "pending"
+      %button.link Saada tagasi ootele

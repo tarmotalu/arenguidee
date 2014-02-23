@@ -39,5 +39,114 @@ describe IdeasController do
       assert_template "new"
       assert_response :unprocessable_entity
     end
+
+    it "must set idea pending" do
+      post :create, :idea => {:name => "Love all", :category_id => @category.id}
+      Idea.first.status.must_equal "pending"
+    end
+
+    it "must not allow setting idea published" do
+      post :create, :idea => {
+        :name => "Love all", :category_id => @category.id,
+        :status => "published"
+      }
+      Idea.first.status.must_equal "pending"
+    end
+
+    it "must allow setting idea published if admin" do
+      @user.update_attributes(:is_admin => true)
+      post :create, :idea => {
+        :name => "Love all", :category_id => @category.id,
+        :status => "published"
+      }
+      Idea.first.status.must_equal "published"
+    end
+
+    it "must allow leaving idea pending if admin" do
+      @user.update_attributes(:is_admin => true)
+      post :create, :idea => {
+        :name => "Love all", :category_id => @category.id,
+        :status => "pending"
+      }
+      Idea.first.status.must_equal "pending"
+    end
+  end
+
+  describe "#edit" do
+    before do
+      @user = User.create!
+      sign_in @user
+    end
+
+    it "must redirect to root page if not admin" do
+      put :edit, :id => 1
+      assert_redirected_to root_path
+    end
+
+    it "must render edit form if admin" do
+      category = Category.create(:name => "World Peace")
+      idea = Idea.create!(:user => @user, :category => category, :name => "X!")
+      @user.update_attributes(:is_admin => true)
+      put :edit, :id => idea.id
+      assert_template "edit"
+    end
+  end
+
+  describe "#update" do
+    before do
+      @category = Category.create!(:name => "World Peace")
+      @user = User.create!
+      sign_in @user
+    end
+
+    it "must update if admin" do
+      idea = Idea.create!(
+        :user => @user, :category => @category, :name => "Peace!"
+      )
+      @user.update_attributes(:is_admin => true)
+      put :update, :id => idea.id, :idea => {:name => "War!"}
+
+      assert_redirected_to Idea.first
+      Idea.first.name.must_equal "War!"
+    end
+
+    it "must redirect to root page if not admin" do
+      idea = Idea.create!(
+        :user => @user, :category => @category, :name => "Peace!"
+      )
+      put :update, :id => idea.id, :idea => {:name => "War!"}
+
+      assert_redirected_to root_path
+      Idea.first.name.must_equal "Peace!"
+    end
+
+    it "must render edit page when validation failed" do
+      idea = Idea.create!(
+        :user => @user, :category => @category, :name => "Peace!"
+      )
+      @user.update_attributes(:is_admin => true)
+      put :update, :id => idea.id, :idea => {:name => ""}
+      assert_template "edit"
+      assert_response :unprocessable_entity
+    end
+
+    it "must update status if admin" do
+      idea = Idea.create!(
+        :user => @user, :category => @category,
+        :name => "I", :status => "pending"
+      )
+      @user.update_attributes(:is_admin => true)
+      put :update, :id => idea.id, :idea => {:status => "published"}
+      Idea.first.status.must_equal "published"
+    end
+
+    it "must not update status if not admin" do
+      idea = Idea.create!(
+        :user => @user, :category => @category,
+        :name => "I", :status => "pending"
+      )
+      put :update, :id => idea.id, :idea => {:status => "published"}
+      Idea.first.status.must_equal "pending"
+    end
   end
 end

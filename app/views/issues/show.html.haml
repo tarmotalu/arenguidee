@@ -19,7 +19,7 @@
         %a(href=href) arutelude
     põhjal.
 
-#ideas-list= render :partial => "ideas", :locals => {:ideas  => @ideas}
+#ideas-list= render :partial => "ideas/idea", :collection => @ideas
 
 - unless @ideas.blank?
   - if @category

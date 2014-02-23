@@ -1,12 +1,11 @@
 class IdeasController < ApplicationController
-  ALLOWED_PARAMS = %w[name name description text category_id attachment]
+  XHR_PARTIALS = %w[idea_admin_menu]
 
   before_filter :authenticate_user!, :only => [
     :comment,
     :consider,
     :create,
     :destroy,
-    :edit,
     :endorse,
     :endorsed,
     :flag_inappropriate,
@@ -15,18 +14,20 @@ class IdeasController < ApplicationController
     :opposed,
     :tag,
     :tag_save,
-    :update,
     :yours_finished,
     :yours_lowest,
     :yours_top,
   ]
 
-  before_filter :admin_required, :only => [
+  before_filter :authenticate_admin!, :only => [
     :bury,
     :compromised,
+    :edit,
     :failed,
     :intheworks,
+    :pending,
     :successful,
+    :update,
   ]
   before_filter :load_endorsement, :only => [
     :activities,
@@ -61,26 +62,15 @@ class IdeasController < ApplicationController
                 :expires_in => 5.minutes
 
   def index
-    if params[:term] and request.xhr?
-      ideas = Idea.published.find(:all, :select => "ideas.name", :conditions => ["name LIKE ?", "%#{params[:term]}%"], :order => "endorsements_count desc")
-      idea_links = []
-      ideas.each do |idea|
-        idea_links << view_context.link_to(idea.name, idea_path(idea))
-      end
-    end
-
-    respond_to do |format|
-      format.html
-      format.js { 
-        if not idea_links
-          render :nothing => true
-        else
-          render :json => idea_links
-        end
-      }
-    end
+    @ideas = Idea.published.all
   end
-  
+
+  def pending
+    @page_title = "Ootel ideed"
+    @ideas = Idea.pending.all
+    render "admin"
+  end
+
   # GET /ideas/yours
   def yours
     @filter = 'yours'
@@ -100,7 +90,7 @@ class IdeasController < ApplicationController
       end
     end
   end
-  
+
   # GET /ideas/yours_top
   def yours_top
     @page_title = tr("Your ideas ranked highest by {sub_instance_name} members", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
@@ -110,9 +100,9 @@ class IdeasController < ApplicationController
       format.html { render :action => "yours" }
       format.xml { render :xml => @endorsements.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @endorsements.to_json(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-    end    
-  end  
-  
+    end
+  end
+
   # GET /ideas/yours_lowest
   def yours_lowest
     @page_title = tr("Your ideas ranked lowest by {sub_instance_name} members", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
@@ -122,9 +112,9 @@ class IdeasController < ApplicationController
       format.html { render :action => "yours" }
       format.xml { render :xml => @endorsements.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @endorsements.to_json(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-    end    
-  end  
-  
+    end
+  end
+
   # GET /ideas/yours_created
   def yours_created
     @page_title = tr("Ideas you created at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
@@ -137,7 +127,7 @@ class IdeasController < ApplicationController
       format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
     end
-  end  
+  end
 
   # GET /ideas/network
   def network
@@ -147,7 +137,7 @@ class IdeasController < ApplicationController
       @ideas = Endorsement.active.find(:all,
         :select => "endorsements.idea_id, sum((#{Endorsement.max_position+1}-endorsements.position)*endorsements.value) as score, count(*) as endorsements_number, ideas.*",
         :joins => "endorsements INNER JOIN ideas ON ideas.id = endorsements.idea_id",
-        :conditions => ["endorsements.user_id in (?) and endorsements.position <= #{Endorsement.max_position}",@user.followings.up.collect{|f|f.other_user_id}], 
+        :conditions => ["endorsements.user_id in (?) and endorsements.position <= #{Endorsement.max_position}",@user.followings.up.collect{|f|f.other_user_id}],
         :group => "endorsements.idea_id",
         :order => "score desc").paginate :page => params[:page], :per_page => params[:per_page]
         @endorsements = @user.endorsements.active.find(:all, :conditions => ["idea_id in (?)", @ideas.collect {|c| c.idea_id}])
@@ -158,9 +148,9 @@ class IdeasController < ApplicationController
       format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
       format.xml { render :xml => @ideas.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @ideas.to_json(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-    end    
+    end
   end
-  
+
   # GET /ideas/yours_finished
   def yours_finished
     @page_title = tr("Your ideas in progress at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
@@ -175,9 +165,9 @@ class IdeasController < ApplicationController
     if logged_in? and request.format == 'html' and current_user.unread_notifications_count > 0
       for n in current_user.received_notifications.all
         n.read! if n.class == NotificationIdeaFinished and n.unread?
-      end    
+      end
     end
-  end  
+  end
 
   # GET /ideas/consider
   def consider
@@ -194,7 +184,7 @@ class IdeasController < ApplicationController
       format.rss { render :action => "list" }
       format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
-    end    
+    end
   end
 
   # GET /ideas/official
@@ -234,7 +224,7 @@ class IdeasController < ApplicationController
         format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
       end
     end
-  end 
+  end
 
   # GET /ideas/top
   def top
@@ -349,7 +339,7 @@ class IdeasController < ApplicationController
       format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
     end
   end
-  
+
   # GET /ideas/falling
   def falling
     @position_in_idea_name = true
@@ -364,8 +354,8 @@ class IdeasController < ApplicationController
       format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
     end
-  end  
-  
+  end
+
   # GET /ideas/controversial
   def controversial
     @filter = 'controversial'
@@ -386,7 +376,7 @@ class IdeasController < ApplicationController
       end
     end
   end
-  
+
   # GET /ideas/finished
   def finished
     @position_in_idea_name = true
@@ -399,9 +389,9 @@ class IdeasController < ApplicationController
       format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
       format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
-    end    
-  end  
-  
+    end
+  end
+
   # GET /ideas/random
   def random
     @filter = 'random'
@@ -446,7 +436,7 @@ class IdeasController < ApplicationController
       end
     end
   end
-  
+
   # GET /ideas/untagged
   def untagged
     @page_title = tr("Untagged (or uncategorized) ideas", "controller/ideas")
@@ -458,9 +448,9 @@ class IdeasController < ApplicationController
       format.rss { render :action => "list" }
       format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @ideas.to_json(:except => NB_CONFIG['api_exclude_fields']) }
-    end  
-  end  
-  
+    end
+  end
+
   def revised
     @page_title = tr("Recently revised ideas", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
     @ideas = Idea.published.revised.by_recently_revised.uniq.paginate :page => params[:page], :per_page => params[:per_page]
@@ -469,8 +459,8 @@ class IdeasController < ApplicationController
       format.html
       format.xml { render :xml => @revisions.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @revisions.to_json(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-    end    
-  end 
+    end
+  end
 
   def show
     @page_title = @idea.name
@@ -519,7 +509,7 @@ class IdeasController < ApplicationController
 
   def opposer_points
     @page_title = tr("Points opposing {idea_name}", "controller/ideas", :idea_name => @idea.name)
-    @point_value = -1  
+    @point_value = -1
     @points = @idea.points.published.by_opposer_helpfulness.paginate :page => params[:page], :per_page => params[:per_page]
     get_qualities
     respond_to do |format|
@@ -528,7 +518,7 @@ class IdeasController < ApplicationController
       format.json { render :json => @points.to_json(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
     end
   end
-  
+
   def endorser_points
     @page_title = tr("Points supporting {idea_name}", "controller/ideas", :idea_name => @idea.name)
     @point_value = 1
@@ -540,10 +530,10 @@ class IdeasController < ApplicationController
       format.json { render :json => @points.to_json(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
     end
   end
-  
+
   def neutral_points
     @page_title = tr("Points about {idea_name}", "controller/ideas", :idea_name => @idea.name)
-    @point_value = 2 
+    @point_value = 2
     @points = @idea.points.published.by_neutral_helpfulness.paginate :page => params[:page], :per_page => params[:per_page]
     get_qualities
     respond_to do |format|
@@ -551,12 +541,12 @@ class IdeasController < ApplicationController
       format.xml { render :xml => @points.to_xml(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @points.to_json(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
     end
-  end  
-  
+  end
+
   def everyone_points
     redirect_to(@idea)
     # @page_title = tr("Best points on {idea_name}", "controller/ideas", :idea_name => @idea.name)
-    # @point_value = 0 
+    # @point_value = 0
     # @points = @idea.points.published.by_helpfulness.paginate :page => params[:page], :per_page => params[:per_page]
     # get_qualities
     # respond_to do |format|
@@ -564,7 +554,7 @@ class IdeasController < ApplicationController
     #   format.xml { render :xml => @points.to_xml(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
     #   format.json { render :json => @points.to_json(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
     # end
-  end  
+  end
 
   def opposed_top_points
     @page_title = tr("Points opposing {idea_name}", "controller/ideas", :idea_name => @idea.name)
@@ -581,7 +571,7 @@ class IdeasController < ApplicationController
       format.json { render :json => @points.to_json(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
     end
   end
-  
+
   def endorsed_top_points
     @page_title = tr("Points supporting {idea_name}", "controller/ideas", :idea_name => @idea.name)
     @point_value = 1
@@ -611,12 +601,12 @@ class IdeasController < ApplicationController
       format.xml { render :xml => @points.to_xml(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @points.to_json(:include => [:idea, :other_idea], :except => NB_CONFIG['api_exclude_fields']) }
     end
-  end  
-  
+  end
+
   def points
     redirect_to :action => "everyone_points"
   end
-  
+
   def discussions
     @page_title = tr("Discussions on {idea_name}", "controller/ideas", :idea_name => @idea.name)
     @activities = @idea.activities.active.discussions.by_recently_updated.for_all_users.paginate :page => params[:page], :per_page => 10
@@ -628,8 +618,8 @@ class IdeasController < ApplicationController
       format.xml { render :xml => @activities.to_xml(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @activities.to_json(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
     end
-  end  
-  
+  end
+
   def comments
     @idea = Idea.find(params[:id])
     @page_title = tr("Latest comments on {idea_name}", "controller/ideas", :idea_name => @idea.name)
@@ -639,9 +629,9 @@ class IdeasController < ApplicationController
       format.rss { render :template => "rss/comments" }
       format.xml { render :xml => @comments.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @comments.to_json(:except => NB_CONFIG['api_exclude_fields']) }
-    end    
+    end
   end
-  
+
   # GET /ideas/1/activities
   def activities
     @page_title = tr("Activity on {idea_name}", "controller/ideas", :idea_name => @idea.name)
@@ -652,8 +642,8 @@ class IdeasController < ApplicationController
       format.xml { render :xml => @activities.to_xml(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
       format.json { render :json => @activities.to_json(:include => :comments, :except => NB_CONFIG['api_exclude_fields']) }
     end
-  end 
-  
+  end
+
   # GET /ideas/1/endorsers
   def endorsers
     @page_title = tr("{number} people endorse {idea_name}", "controller/ideas", :idea_name => @idea.name, :number => @idea.up_endorsements_count)
@@ -663,7 +653,7 @@ class IdeasController < ApplicationController
     respond_to do |format|
       format.html
       format.xml { render :xml => @endorsements.to_xml(:include => :user, :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @endorsements.to_json(:include => :user, :except => NB_CONFIG['api_exclude_fields']) }      
+      format.json { render :json => @endorsements.to_json(:include => :user, :except => NB_CONFIG['api_exclude_fields']) }
     end
   end
 
@@ -676,7 +666,7 @@ class IdeasController < ApplicationController
     respond_to do |format|
       format.html
       format.xml { render :xml => @endorsements.to_xml(:include => :user, :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @endorsements.to_json(:include => :user, :except => NB_CONFIG['api_exclude_fields']) }      
+      format.json { render :json => @endorsements.to_json(:include => :user, :except => NB_CONFIG['api_exclude_fields']) }
     end
   end
 
@@ -698,26 +688,17 @@ class IdeasController < ApplicationController
     end
   end
 
-  # GET /ideas/1/edit
   def edit
     @idea = Idea.find(params[:id])
-    @page_name = tr("Edit {idea_name}", "controller/ideas", :idea_name => @idea.name)
-    if not (current_user.id == @idea.user_id and @idea.endorsements_count < 2) and not current_user.is_admin?
-      flash[:error] = tr("You cannot change a idea's name once other people have endorsed it.", "controller/ideas")
-      redirect_to @idea and return
-    end
-    respond_to do |format|
-      format.html # new.html.erb
-    end    
   end
 
   def access_denied
     flash[:error] = tr('Access denied', 'ideas')
     redirect_to '/ideas/'
   end
-  
+
   def create
-    @idea = Idea.new(idea_params)
+    @idea = Idea.new({"status" => "pending"}.merge(idea_params))
     @idea.user = current_user
     @idea.ip_address = request.remote_ip
 
@@ -754,99 +735,18 @@ class IdeasController < ApplicationController
     end
   end
 
-  # PUT /ideas/1
-  # PUT /ideas/1.xml
   def update
+    # Only admins allowed to update for now.
     @idea = Idea.find(params[:id])
-    @previous_name = @idea.name
-    @page_name = tr("Edit {idea_name}", "controller/ideas", :idea_name => @idea.name)
 
-    if params[:idea]
-      if params[:idea][:idea_type] and current_sub_instance and current_sub_instance.required_tags
-        required_tags = current_sub_instance.required_tags.split(',')
-        issues = @idea.issue_list
-        if not issues.include?(params[:idea][:idea_type])
-          new_issues = issues - required_tags
-          new_issues << params[:idea][:idea_type]
-          @idea.issue_list = new_issues.join(',')
-        end
+    if @idea.update_attributes(idea_params)
+      respond_to do |format|
+        format.html { redirect_to @idea }
+        partial = XHR_PARTIALS.include?(params[:partial]) && params[:partial]
+        format.js { render :partial => params[:partial] } if partial
       end
-      if params[:idea]["finished_status_date(1i)"]
-        # TODO: isn't there an easier way to do this?
-        params[:idea][:finished_status_date] = Date.new(params[:idea].delete("finished_status_date(1i)").to_i, params[:idea].delete("finished_status_date(2i)").to_i, params[:idea].delete("finished_status_date(3i)").to_i)
-      end
-      if params[:idea][:category]
-        old_category = @idea.category
-        new_category = Category.find(params[:idea][:category])
-        params[:idea][:category] = new_category
-        current_issues = @idea.issue_list
-        remove_issues = [old_category.name]
-        add_issues = [new_category.name]
-        new_issues = add_issues | (current_issues - remove_issues)
-        params[:idea][:issue_list] = new_issues.join(',')
-      end
-      if params[:idea][:finished_status_message]
-        change_log = @idea_status_changelog = IdeaStatusChangeLog.new(
-            idea_id: @idea.id,
-            date: params[:idea][:finished_status_date],
-            content: params[:idea][:finished_status_message],
-            subject: params[:idea][:finished_status_subject]
-        )
-        @idea_status_changelog.save
-      end
-      if params[:idea][:official_status] and params[:idea][:official_status].to_i != @idea.official_status
-        @change_status = params[:idea][:official_status].to_i
-        #params[:idea].delete(:official_status)
-      end
-    end
-    respond_to do |format|
-      params[:idea][:group] = nil if params[:idea][:group]==""
-      if params[:idea][:name] and @idea.update_attributes(params[:idea]) and @previous_name != params[:idea][:name]
-        # already renamed?
-        @activity = ActivityIdeaRenamed.find_by_user_id_and_idea_id(current_user.id,@idea.id)
-        if @activity
-          @activity.update_attribute(:changed_at,Time.now)
-        else
-          @activity = ActivityIdeaRenamed.create(:user => current_user, :idea => @idea)
-        end
-        format.html {
-          flash[:notice] = tr("Saved {idea_name}", "controller/ideas", :idea_name => @idea.name)
-          redirect_to(@idea)
-        }
-        format.js {
-          render :update do |page|
-            page.select('#idea_' + @idea.id.to_s + '_edit_form').each {|item| item.remove}
-            page.select('#activity_and_comments_' + @activity.id.to_s).each {|item| item.remove}
-            page.insert_html :top, 'activities', render(:partial => "activities/show", :locals => {:activity => @activity, :suffix => "_noself"})
-            page.replace_html 'idea_' + @idea.id.to_s + '_name', render(:partial => "ideas/name", :locals => {:idea => @idea})
-            # page.visual_effect :highlight, 'idea_' + @idea.id.to_s + '_name'
-          end
-        }
-      else
-        format.html {
-          if params[:idea][:finished_status_message]
-            flash[:notice] = tr('Status updated with "{status_text}"', "controller/ideas", status_text: params[:idea][:finished_status_subject])
-          end
-          redirect_to(@idea)
-        }
-        format.js {
-          render :update do |page|
-            page.select('#idea_' + @idea.id.to_s + '_edit_form').each {|item| item.remove}
-            page.insert_html :top, 'activities', render(:partial => "ideas/new_inline", :locals => {:idea => @idea})
-            page['idea_name'].focus
-          end
-        }
-      end
-      @idea.reload
-
-      if @change_status
-        @idea.change_status!(@change_status)
-        @idea.delay.deactivate_endorsements
-      end
-      if change_log
-        @idea.create_status_update(change_log)
-        User.delay.send_status_email(@idea.id, params[:idea][:official_status], params[:idea][:finished_status_date], params[:idea][:finished_status_subject], params[:idea][:finished_status_message])
-      end
+    else
+      render "edit", :status => :unprocessable_entity
     end
   end
 
@@ -881,10 +781,10 @@ class IdeasController < ApplicationController
           else
             page.replace_html "idea_report_#{@idea.id}","<div class='warning_inline'> #{tr("Thanks for bringing this to our attention", "controller/ideas")}</div>"
           end
-        end        
+        end
       }
-    end    
-  end  
+    end
+  end
 
   def abusive
     @idea = Idea.find(params[:id])
@@ -894,9 +794,9 @@ class IdeasController < ApplicationController
       format.js {
         render :update do |page|
           page.replace_html "idea_flag_#{@idea.id}", "<div class='warning_inline'>#{tr("The content has been deleted and a warning_sent", "controller/ideas")}</div>"
-        end        
+        end
       }
-    end    
+    end
   end
 
   def not_abusive
@@ -906,11 +806,11 @@ class IdeasController < ApplicationController
       format.js {
         render :update do |page|
           page.replace_html "idea_flag_#{@idea.id}",""
-        end        
+        end
       }
-    end    
+    end
   end
-  
+
   # PUT /ideas/1/bury
   def bury
     @idea = Idea.find(params[:id])
@@ -920,8 +820,8 @@ class IdeasController < ApplicationController
       flash[:notice] = tr("{idea_name} is now buried, it will no longer be displayed in the charts.", "controller/ideas", :idea_name => @idea.name)
       format.html { redirect_to(@idea) }
     end
-  end  
-  
+  end
+
   # PUT /ideas/1/successful
   def successful
     @idea = Idea.find(params[:id])
@@ -930,8 +830,8 @@ class IdeasController < ApplicationController
       flash[:notice] = tr("{idea_name} is now marked finished and successful", "controller/ideas", :idea_name => @idea.name)
       format.html { redirect_to(@idea) }
     end
-  end  
-  
+  end
+
   # PUT /ideas/1/intheworks
   def intheworks
     @idea = Idea.find(params[:id])
@@ -940,8 +840,8 @@ class IdeasController < ApplicationController
       flash[:notice] = tr("{idea_name} is now marked 'in the works'", "controller/ideas", :idea_name => @idea.name)
       format.html { redirect_to(@idea) }
     end
-  end  
-  
+  end
+
   # PUT /ideas/1/failed
   def failed
     @idea = Idea.find(params[:id])
@@ -950,8 +850,8 @@ class IdeasController < ApplicationController
       flash[:notice] = tr("{idea_name} is now marked finished and failed", "controller/ideas", :idea_name => @idea.name)
       format.html { redirect_to(@idea) }
     end
-  end  
-  
+  end
+
   # PUT /ideas/1/compromised
   def compromised
     @idea = Idea.find(params[:id])
@@ -960,8 +860,8 @@ class IdeasController < ApplicationController
       flash[:notice] = tr("{idea_name} is now marked finished but compromised", "controller/ideas", :idea_name => @idea.name)
       format.html { redirect_to(@idea) }
     end
-  end  
-  
+  end
+
   def endorsed
     @idea = Idea.find(params[:id])
     @endorsement = @idea.endorse(current_user,request,current_sub_instance,@referral)
@@ -982,7 +882,7 @@ class IdeasController < ApplicationController
         render :update do |page|
           page.replace_html 'idea_' + @idea.id.to_s + '_tags', render(:partial => "ideas/tag", :locals => {:idea => @idea})
           page['idea_' + @idea.id.to_s + "_issue_list"].focus
-        end        
+        end
       }
     end
   end
@@ -995,11 +895,11 @@ class IdeasController < ApplicationController
       format.js {
         render :update do |page|
           page.replace_html 'idea_' + @idea.id.to_s + '_tags', render(:partial => "ideas/tag_show", :locals => {:idea => @idea})
-        end        
+        end
       }
     end
   end
-  
+
   # DELETE /ideas/1
   def destroy
     @idea = Idea.find(params[:id])
@@ -1007,7 +907,7 @@ class IdeasController < ApplicationController
     return unless @idea
     unless current_user.is_admin?
       if current_user != @idea.user || check_for_suspension
-        redirect_to '/' and return 
+        redirect_to '/' and return
       end
       unless @idea.points.published.empty?
         flash[:error] = tr("You cannot delete an idea once there are arguments for/against it.", "ideas")
@@ -1026,18 +926,6 @@ class IdeasController < ApplicationController
     end
   end
 
-  def update_status
-    @idea = Idea.find(params[:id])
-    @page_name = tr("Edit the status of {idea_name}", "controller/ideas", :idea_name => @idea.name)
-    if not current_user.is_admin?
-      flash[:error] = tr("You cannot change a idea's name once other people have endorsed it.", "controller/ideas")
-      redirect_to @idea and return
-    end
-    respond_to do |format|
-      format.html
-    end
-  end
-
   def statistics
     @idea = Idea.find(params[:id])
     respond_to do |format|
@@ -1047,14 +935,14 @@ class IdeasController < ApplicationController
   end
 
   private
-  
+
     def get_endorsements
       @endorsements = nil
       if logged_in? # pull all their endorsements on the ideas shown
         @endorsements = current_user.endorsements.active.find(:all, :conditions => ["idea_id in (?)", @ideas.compact.collect {|c| c.id}])
       end
     end
-    
+
     def load_endorsement
       @idea = Idea.unscoped.find(params[:id])
       if @idea.status == 'removed' or @idea.status == 'abusive'
@@ -1067,7 +955,7 @@ class IdeasController < ApplicationController
       if logged_in? # pull all their endorsements on the ideas shown
         @endorsement = @idea.endorsements.active.find_by_user_id(current_user.id)
       end
-    end    
+    end
 
     def get_qualities(multi_points=nil)
       if multi_points
@@ -1080,8 +968,8 @@ class IdeasController < ApplicationController
         @qualities = nil
         if logged_in? # pull all their qualities on the ideas shown
           @qualities = PointQuality.find(:all, :conditions => ["point_id in (?) and user_id = ? ", @points.collect {|c| c.id},current_user.id])
-        end      
-      end      
+        end
+      end
     end
 
     def setup_top_points(limit)
@@ -1107,28 +995,10 @@ class IdeasController < ApplicationController
       end
     end
 
-    def setup_menu_items
-      @items = Hash.new
-      @items[1]=[tr("Top All", "view/ideas"), top_ideas_url]
-      @items[2]=[tr("Top Active 24 hours", "view/ideas"), top_24hr_ideas_url]
-      @items[3]=[tr("Top Active 7 days", "view/ideas"), top_7days_ideas_url]
-      @items[4]=[tr("Top Active 30 days", "view/ideas"), top_30days_ideas_url]
-      @items[6]=[tr("New", "view/ideas"), newest_ideas_url]
-      @items[7]=[tr("Recently revised", "view/ideas"), revised_ideas_url]
-      @items[8]=[tr("Random", "view/ideas"), random_ideas_url]
-      @items[9]=[tr("In Progress", "view/ideas"), finished_ideas_url]
-      @items[10]=[tr("Controversial", "view/ideas"), controversial_ideas_url]
-      @items[12]=[tr("Rising", "view/ideas"), rising_ideas_url]
-      @items[13]=[tr("Falling", "view/ideas"), falling_ideas_url]
-      if logged_in?
-        @items[14]=[tr("Your network", "view/ideas"), network_ideas_url]
-        @items[15]=[tr("Minu", "view/ideas"), minu_ideas_url]
-      end
-      @items
-    end
-
   private
   def idea_params
-    params[:idea].slice(*ALLOWED_PARAMS) if params[:idea]
+    allowed_params = %w[name name description text category_id attachment]
+    allowed_params.push "status" if current_user.admin?
+    params[:idea].slice(*allowed_params) if params[:idea]
   end
 end

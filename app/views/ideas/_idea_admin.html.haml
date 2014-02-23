@@ -1,0 +1,15 @@
+%article
+  = render "idea_admin_menu", :idea => idea
+
+  %header
+    = image_tag idea.user.buddy_icon(:icon_40)
+    %h2
+      %a{:href => url_for(idea)}= idea.name
+
+    .author
+      %a(rel="author"){:href => url_for(idea.user)}= idea.author_sentence
+      - published_at = idea.published_at
+      %time{:title => published_at}= time_ago_in_words(published_at)+" tagasi"
+
+  %section
+    %p= simple_format(idea.description)

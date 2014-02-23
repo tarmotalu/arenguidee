@@ -63,10 +63,7 @@ h2, h3 {
 }
 
 h2 { font-size: 16px }
-
-label h2 {
-  text-transform: uppercase;
-}
+form h2 { text-transform: uppercase }
 
 a { text-decoration: inherit }
 
@@ -76,17 +73,29 @@ a:visited {
   cursor: pointer;
 }
 
+// https://code.google.com/p/chromium/issues/detail?id=271023
+button:focus { outline: none }
+
+button, .button {
+  cursor: pointer;
+  display: inline-block;
+}
+
+button.primary,
 .button.primary,
 input[type=submit] {
   border: 0;
   padding: 10px 30px;
-  display: block;
 
   background: $link;
   color: white;
   font-size: 18px;
   text-align: center;
-  cursor: pointer;
+}
+
+button.link,
+.button.link {
+  color: $red;
 }
 
 // Be explicit to not color type=files.
@@ -223,6 +232,7 @@ center > header {
   float: left;
 
   a {
+    display: block;
     font-size: 24px;
     padding-top: 24px;
     padding-bottom: 24px;
@@ -419,12 +429,23 @@ center > header {
     line-height: 1.5;
   }
 
+  menu {
+    float: right;
+    max-width: 240px;
+  }
+
   article + article { border-top: 2px solid $border; }
 }
 
+#ideas-list .admin {
+  text-align: right;
+  line-height: 1.5;
+
+  button.primary { border-radius: 30px }
+  strong { font-weight: bold }
+}
+
 #ideas-list .endorsements {
-  float: right;
-  max-width: 240px;
   text-align: right;
 
   form {
@@ -482,18 +503,23 @@ center > form {
     margin-bottom: 30px;
   }
 
-  label {
-    display: block;
+  h2 ~ h2 {
+    margin-top: 25px;
     margin-bottom: 5px;
-
-    & ~ label { margin-top: 25px }
   }
 
   h2 { margin-bottom: 5px }
+  p { margin-bottom: 5px }
 
-  p + p {
-    margin-top: 5px;
+  label {
+    font-size: 12px;
   }
+
+  label.radio {
+    display: inline-block;
+    cursor: pointer;
+  }
+  label.radio + label.radio { margin-left: 15px }
 
   input[type=text], textarea {
     width: 100%;
@@ -518,6 +544,7 @@ center > form {
   strong { font-weight: bold }
 
   input[type=submit] {
+    display: block;
     width: 100%;
     margin-top: 35px;
   }
@@ -536,7 +563,11 @@ center > form + menu {
   textarea[name="idea[description]"] { height: 130px }
   textarea[name="idea[text]"] { height: 250px }
 
-  .countdown { float: right }
+  .countdown {
+    float: right;
+    font-weight: normal;
+    text-transform: none;
+  }
 }
 
 body.categories #main > center {

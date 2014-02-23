@@ -2,13 +2,9 @@ require 'will_paginate/array'
 
 class ApplicationController < ActionController::Base
   include FaceboxRender
+  protect_from_forgery
 
-  require_dependency "activity.rb"
-  require_dependency "relationship.rb"
-  require_dependency "capital.rb"
-
-  helper :all # include all helpers, all the time
-  
+  helper :all
   # Make these methods visible to views as well
   helper_method :current_facebook_user, :instance_cache, :current_sub_instance, :current_user_endorsements, :current_idea_ids, :current_following_ids, :current_ignoring_ids, :current_following_facebook_uids, :current_instance, :current_tags, :facebook_session, :is_robot?, :js_help, :logged_in?
 
@@ -27,7 +23,6 @@ class ApplicationController < ActionController::Base
   before_filter :setup_inline_translation_parameters
   before_filter :get_categories
 
-  protect_from_forgery
   helper_method :is_admin?
 
   def is_admin?

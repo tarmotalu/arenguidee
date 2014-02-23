@@ -4,7 +4,6 @@ class IdeasController < ApplicationController
     :consider,
     :create,
     :destroy,
-    :edit,
     :endorse,
     :endorsed,
     :flag_inappropriate,
@@ -13,18 +12,19 @@ class IdeasController < ApplicationController
     :opposed,
     :tag,
     :tag_save,
-    :update,
     :yours_finished,
     :yours_lowest,
     :yours_top,
   ]
 
-  before_filter :admin_required, :only => [
+  before_filter :authenticate_admin!, :only => [
     :bury,
     :compromised,
+    :edit,
     :failed,
     :intheworks,
     :successful,
+    :update,
   ]
   before_filter :load_endorsement, :only => [
     :activities,
@@ -696,17 +696,8 @@ class IdeasController < ApplicationController
     end
   end
 
-  # GET /ideas/1/edit
   def edit
     @idea = Idea.find(params[:id])
-    @page_name = tr("Edit {idea_name}", "controller/ideas", :idea_name => @idea.name)
-    if not (current_user.id == @idea.user_id and @idea.endorsements_count < 2) and not current_user.is_admin?
-      flash[:error] = tr("You cannot change a idea's name once other people have endorsed it.", "controller/ideas")
-      redirect_to @idea and return
-    end
-    respond_to do |format|
-      format.html # new.html.erb
-    end
   end
 
   def access_denied
@@ -752,99 +743,14 @@ class IdeasController < ApplicationController
     end
   end
 
-  # PUT /ideas/1
-  # PUT /ideas/1.xml
   def update
+    # Only admins allowed to update for now.
     @idea = Idea.find(params[:id])
-    @previous_name = @idea.name
-    @page_name = tr("Edit {idea_name}", "controller/ideas", :idea_name => @idea.name)
 
-    if params[:idea]
-      if params[:idea][:idea_type] and current_sub_instance and current_sub_instance.required_tags
-        required_tags = current_sub_instance.required_tags.split(',')
-        issues = @idea.issue_list
-        if not issues.include?(params[:idea][:idea_type])
-          new_issues = issues - required_tags
-          new_issues << params[:idea][:idea_type]
-          @idea.issue_list = new_issues.join(',')
-        end
-      end
-      if params[:idea]["finished_status_date(1i)"]
-        # TODO: isn't there an easier way to do this?
-        params[:idea][:finished_status_date] = Date.new(params[:idea].delete("finished_status_date(1i)").to_i, params[:idea].delete("finished_status_date(2i)").to_i, params[:idea].delete("finished_status_date(3i)").to_i)
-      end
-      if params[:idea][:category]
-        old_category = @idea.category
-        new_category = Category.find(params[:idea][:category])
-        params[:idea][:category] = new_category
-        current_issues = @idea.issue_list
-        remove_issues = [old_category.name]
-        add_issues = [new_category.name]
-        new_issues = add_issues | (current_issues - remove_issues)
-        params[:idea][:issue_list] = new_issues.join(',')
-      end
-      if params[:idea][:finished_status_message]
-        change_log = @idea_status_changelog = IdeaStatusChangeLog.new(
-            idea_id: @idea.id,
-            date: params[:idea][:finished_status_date],
-            content: params[:idea][:finished_status_message],
-            subject: params[:idea][:finished_status_subject]
-        )
-        @idea_status_changelog.save
-      end
-      if params[:idea][:official_status] and params[:idea][:official_status].to_i != @idea.official_status
-        @change_status = params[:idea][:official_status].to_i
-        #params[:idea].delete(:official_status)
-      end
-    end
-    respond_to do |format|
-      params[:idea][:group] = nil if params[:idea][:group]==""
-      if params[:idea][:name] and @idea.update_attributes(params[:idea]) and @previous_name != params[:idea][:name]
-        # already renamed?
-        @activity = ActivityIdeaRenamed.find_by_user_id_and_idea_id(current_user.id,@idea.id)
-        if @activity
-          @activity.update_attribute(:changed_at,Time.now)
-        else
-          @activity = ActivityIdeaRenamed.create(:user => current_user, :idea => @idea)
-        end
-        format.html {
-          flash[:notice] = tr("Saved {idea_name}", "controller/ideas", :idea_name => @idea.name)
-          redirect_to(@idea)
-        }
-        format.js {
-          render :update do |page|
-            page.select('#idea_' + @idea.id.to_s + '_edit_form').each {|item| item.remove}
-            page.select('#activity_and_comments_' + @activity.id.to_s).each {|item| item.remove}
-            page.insert_html :top, 'activities', render(:partial => "activities/show", :locals => {:activity => @activity, :suffix => "_noself"})
-            page.replace_html 'idea_' + @idea.id.to_s + '_name', render(:partial => "ideas/name", :locals => {:idea => @idea})
-            # page.visual_effect :highlight, 'idea_' + @idea.id.to_s + '_name'
-          end
-        }
-      else
-        format.html {
-          if params[:idea][:finished_status_message]
-            flash[:notice] = tr('Status updated with "{status_text}"', "controller/ideas", status_text: params[:idea][:finished_status_subject])
-          end
-          redirect_to(@idea)
-        }
-        format.js {
-          render :update do |page|
-            page.select('#idea_' + @idea.id.to_s + '_edit_form').each {|item| item.remove}
-            page.insert_html :top, 'activities', render(:partial => "ideas/new_inline", :locals => {:idea => @idea})
-            page['idea_name'].focus
-          end
-        }
-      end
-      @idea.reload
-
-      if @change_status
-        @idea.change_status!(@change_status)
-        @idea.delay.deactivate_endorsements
-      end
-      if change_log
-        @idea.create_status_update(change_log)
-        User.delay.send_status_email(@idea.id, params[:idea][:official_status], params[:idea][:finished_status_date], params[:idea][:finished_status_subject], params[:idea][:finished_status_message])
-      end
+    if @idea.update_attributes(idea_params)
+      redirect_to @idea
+    else
+      render "edit", :status => :unprocessable_entity
     end
   end
 
@@ -1024,18 +930,6 @@ class IdeasController < ApplicationController
     end
   end
 
-  def update_status
-    @idea = Idea.find(params[:id])
-    @page_name = tr("Edit the status of {idea_name}", "controller/ideas", :idea_name => @idea.name)
-    if not current_user.is_admin?
-      flash[:error] = tr("You cannot change a idea's name once other people have endorsed it.", "controller/ideas")
-      redirect_to @idea and return
-    end
-    respond_to do |format|
-      format.html
-    end
-  end
-
   def statistics
     @idea = Idea.find(params[:id])
     respond_to do |format|
@@ -1103,26 +997,6 @@ class IdeasController < ApplicationController
       else
         access_denied and return
       end
-    end
-
-    def setup_menu_items
-      @items = Hash.new
-      @items[1]=[tr("Top All", "view/ideas"), top_ideas_url]
-      @items[2]=[tr("Top Active 24 hours", "view/ideas"), top_24hr_ideas_url]
-      @items[3]=[tr("Top Active 7 days", "view/ideas"), top_7days_ideas_url]
-      @items[4]=[tr("Top Active 30 days", "view/ideas"), top_30days_ideas_url]
-      @items[6]=[tr("New", "view/ideas"), newest_ideas_url]
-      @items[7]=[tr("Recently revised", "view/ideas"), revised_ideas_url]
-      @items[8]=[tr("Random", "view/ideas"), random_ideas_url]
-      @items[9]=[tr("In Progress", "view/ideas"), finished_ideas_url]
-      @items[10]=[tr("Controversial", "view/ideas"), controversial_ideas_url]
-      @items[12]=[tr("Rising", "view/ideas"), rising_ideas_url]
-      @items[13]=[tr("Falling", "view/ideas"), falling_ideas_url]
-      if logged_in?
-        @items[14]=[tr("Your network", "view/ideas"), network_ideas_url]
-        @items[15]=[tr("Minu", "view/ideas"), minu_ideas_url]
-      end
-      @items
     end
 
   private

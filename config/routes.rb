@@ -136,7 +136,6 @@ Rahvakogu::Application.routes.draw do
       get :endorsed_top_points
       get :comments
       get :documents
-      get :update_status
   	end
 
   	collection do

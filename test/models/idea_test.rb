@@ -42,4 +42,24 @@ describe Idea do
       idea.tap(&:valid?).errors[:description].wont_be_empty
     end
   end
+
+  describe "#text" do
+    it "must default to blank" do
+      Idea.new.text.must_equal ""
+    end
+
+    it "must require existence" do
+      Idea.new(:text => nil).tap(&:valid?).errors[:text].wont_be_empty
+    end
+
+    it "must be allowed blank" do
+      Idea.new(:text => "").tap(&:valid?).errors[:text].must_be_empty
+      Idea.new(:text => " ").tap(&:valid?).errors[:text].must_be_empty
+    end
+
+    it "must require length up to 2500 characters" do
+      Idea.new(:text => "x" * 2500).tap(&:valid?).errors[:text].must_be_empty
+      Idea.new(:text => "x" * 2501).tap(&:valid?).errors[:text].wont_be_empty
+    end
+  end
 end

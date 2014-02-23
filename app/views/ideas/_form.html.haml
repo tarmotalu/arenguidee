@@ -16,6 +16,13 @@
   = f.text_area :description, :maxlength => 500
 
   %label
+    %small.countdown
+      <strong id="idea-text-countdown"></strong> tähemärki veel järel.
+    %h2= t("activerecord.attributes.idea.text")
+    = errors_for @idea, :text
+  = f.text_area :text, :maxlength => 2500
+
+  %label
     %h2= t("activerecord.attributes.idea.category")
   %select(name="idea[category_id]")
     - @categories.each do |category|
@@ -30,7 +37,6 @@
     = errors_for @idea, :attachment_file_size
   = f.file_field :attachment
 
-  %br
   = submit_tag "Esita oma arenguidee"
 
 :javascript
@@ -45,5 +51,10 @@
     var desc = form.elements["idea[description]"]
     $(desc).NobleCount("#idea-description-countdown", {
       max_chars: desc.getAttribute("maxlength")
+    })
+
+    var text = form.elements["idea[text]"]
+    $(text).NobleCount("#idea-text-countdown", {
+      max_chars: text.getAttribute("maxlength")
     })
   })()

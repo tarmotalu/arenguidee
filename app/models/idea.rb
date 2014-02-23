@@ -8,6 +8,8 @@ class Idea < ActiveRecord::Base
   validates_length_of :name, :within => 5..140
   validates_exclusion_of :description, :in => [nil]
   validates_length_of :description, :within => 0..500
+  validates_exclusion_of :text, :in => [nil]
+  validates_length_of :text, :within => 0..2500
 
   validates_presence_of :category_id
 

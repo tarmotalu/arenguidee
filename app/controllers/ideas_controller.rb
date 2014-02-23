@@ -1,5 +1,5 @@
 class IdeasController < ApplicationController
-  ALLOWED_PARAMS = [:name, :category_id, :name, :description, :attachment]
+  ALLOWED_PARAMS = %w[name name description text category_id attachment]
 
   before_filter :authenticate_user!, :only => [
     :comment,
@@ -721,7 +721,7 @@ class IdeasController < ApplicationController
     @idea.user = current_user
     @idea.ip_address = request.remote_ip
 
-    return render "new" if !@idea.save
+    return render "new", :status => :unprocessable_entity if !@idea.save
 
     unless @idea.points.empty?
       first_point = @idea.points.first
@@ -1129,6 +1129,6 @@ class IdeasController < ApplicationController
 
   private
   def idea_params
-    params[:idea].slice(*ALLOWED_PARAMS)
+    params[:idea].slice(*ALLOWED_PARAMS) if params[:idea]
   end
 end

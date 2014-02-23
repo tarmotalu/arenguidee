@@ -48,7 +48,8 @@ et:
     attributes:
       idea:
         name: "Pealkiri"
-        description: "Kirjeldus"
+        description: "Lühikokkuvõte"
+        text: "Kirjeldus"
         category: "Kategooria"
         attachment: "Manus"
         attachment_content_type: "Manuse tüüp"

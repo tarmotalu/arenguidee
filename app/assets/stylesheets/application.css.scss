@@ -532,13 +532,9 @@ center > form + menu {
   margin: 0 auto;
   max-width: 620px;
 
-  input[name="idea[name]"] {
-    font-size: 17px;
-  }
-
-  textarea {
-    height: 200px;
-  }
+  input[name="idea[name]"] { font-size: 17px }
+  textarea[name="idea[description]"] { height: 130px }
+  textarea[name="idea[text]"] { height: 250px }
 
   .countdown { float: right }
 }

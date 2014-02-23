@@ -3,15 +3,15 @@ class IdeaRevision < ActiveRecord::Base
     include HTMLDiff
   end
   scope :published, :conditions => "idea_revisions.status = 'published'"
-  scope :by_recently_created, :order => "idea_revisions.created_at desc"  
+  scope :by_recently_created, :order => "idea_revisions.created_at desc"
 
   belongs_to :idea
   belongs_to :user
   belongs_to :category
-    
+
   has_many :activities
   has_many :notifications, :as => :notifiable, :dependent => :destroy
-      
+
   # this is actually just supposed to be 500, but bumping it to 520 because the javascript counter doesn't include carriage returns in the count, whereas this does.
   validates_length_of :description, :maximum => 300, :allow_blank => true, :allow_nil => true, :too_long => "has a maximum of 500 characters"
 
@@ -33,11 +33,11 @@ class IdeaRevision < ActiveRecord::Base
   end
 
   before_save :truncate_user_agent
-  
+
   def truncate_user_agent
     self.user_agent = self.user_agent[0..149] if self.user_agent # some user agents are longer than 150 chars!
   end
-  
+
   def on_published_entry(new_state, event)
     self.published_at = Time.now
     self.auto_html_prepare
@@ -51,8 +51,8 @@ class IdeaRevision < ActiveRecord::Base
         end
       end
     rescue Timeout::Error
-    end    
-    idea.idea_revisions_count += 1    
+    end
+    idea.idea_revisions_count += 1
     changed = false
     if idea.idea_revisions_count == 1
       ActivityIdeaNew.create(:user => user, :idea => idea, :idea_revision => self)
@@ -69,14 +69,14 @@ class IdeaRevision < ActiveRecord::Base
         changed = true
         ActivityIdeaRevisionCategory.create(:user => user, :idea => idea, :idea_revision => self)
       end
-    end    
+    end
     if changed
       for a in idea.author_users
         if a.id != self.user_id
-          notifications << NotificationIdeaRevision.new(:sender => self.user, :recipient => a)    
+          notifications << NotificationIdeaRevision.new(:sender => self.user, :recipient => a)
         end
       end
-    end    
+    end
     idea.description = self.description
     idea.idea_revision_id = self.id
     idea.name = self.name
@@ -86,27 +86,27 @@ class IdeaRevision < ActiveRecord::Base
     idea.published_at = Time.now
     idea.save(:validate => false)
     save(:validate => false)
-    user.increment!(:idea_revisions_count)    
+    user.increment!(:idea_revisions_count)
   end
-  
+
   def on_archived_entry(new_state, event)
     self.published_at = nil
     save(:validate => false)
   end
-  
+
   def on_removed_entry(new_state, event)
     Idea.unscoped.find(idea_id).decrement!(:idea_revisions_count)
-    user.decrement!(:idea_revisions_count)    
+    user.decrement!(:idea_revisions_count)
   end
-  
+
   def is_up?
     value > 0
   end
-  
+
   def is_down?
     value < 0
   end
-  
+
   def is_neutral?
     value == 0
   end
@@ -114,30 +114,30 @@ class IdeaRevision < ActiveRecord::Base
   def idea_name
     idea.name if idea
   end
-  
+
   def idea_name=(n)
     self.idea = Idea.find_by_name(n) unless n.blank?
   end
-  
+
   def other_idea_name
     other_idea.name if other_idea
   end
-  
+
   def other_idea_name=(n)
     self.other_idea = Idea.find_by_name(n) unless n.blank?
-  end  
-  
+  end
+
   def has_other_idea?
     attribute_present?("other_idea_id")
   end
-  
+
   def text
     s = idea.name
     s += " [#{tr("In support", "model/revision")}]" if is_down?
-    s += " [#{tr("Neutral", "model/revision")}]" if is_neutral?    
+    s += " [#{tr("Neutral", "model/revision")}]" if is_neutral?
     s += "\r\n" + description
-  end  
-  
+  end
+
   def request=(request)
     if request
       self.ip_address = request.remote_ip
@@ -147,7 +147,7 @@ class IdeaRevision < ActiveRecord::Base
       self.user_agent = "Import"
     end
   end
-  
+
   def IdeaRevision.create_from_idea(idea,ip=nil,agent=nil)
     r = IdeaRevision.new
     r.idea = idea
@@ -162,15 +162,15 @@ class IdeaRevision < ActiveRecord::Base
     r.save(:validate => false)
     r.publish!
   end
-  
+
   def url
     'http://' + idea.sub_instance.base_url_w_sub_instance + '/ideas/' + idea_id.to_s + '/idea_revisions/' + id.to_s + '?utm_source=ideas_changed&utm_medium=email'
-  end  
-  
+  end
+
   auto_html_for(:description) do
     html_escape
     youtube :width => 330, :height => 210
     vimeo :width => 330, :height => 180
     link :target => "_blank", :rel => "nofollow"
-  end  
+  end
 end

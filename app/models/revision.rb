@@ -5,10 +5,10 @@ class Revision < ActiveRecord::Base
   scope :published, :conditions => "revisions.status = 'published'"
   scope :by_recently_created, :order => "revisions.created_at desc"  
 
-  belongs_to :point  
+  belongs_to :point
   belongs_to :user
   belongs_to :other_idea, :class_name => "Idea"
-    
+
   has_many :activities
   has_many :notifications, :as => :notifiable, :dependent => :destroy
       

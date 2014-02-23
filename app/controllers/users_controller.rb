@@ -3,8 +3,6 @@ class UsersController < ApplicationController
     :edit,
     :endorse,
     :follow,
-    :resend_activation,
-    :resend_activation,
     :signups,
     :unfollow,
   ]
@@ -196,14 +194,6 @@ class UsersController < ApplicationController
     end
     flash[:notice] = tr("Thanks for verifying your email address", "controller/users")
     redirect_back_or_default('/')
-  end
-
-  def resend_activation
-    @user = User.find(params[:id])
-    redirect_to '/' and return if check_for_suspension
-    @user.resend_activation
-    flash[:notice] = tr("Resent verification email to {email}", "controller/users", :email => @user.email)
-    redirect_back_or_default(url_for(@user))
   end
 
   def follow

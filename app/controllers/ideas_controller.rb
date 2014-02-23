@@ -62,24 +62,7 @@ class IdeasController < ApplicationController
                 :expires_in => 5.minutes
 
   def index
-    if params[:term] and request.xhr?
-      ideas = Idea.published.find(:all, :select => "ideas.name", :conditions => ["name LIKE ?", "%#{params[:term]}%"], :order => "endorsements_count desc")
-      idea_links = []
-      ideas.each do |idea|
-        idea_links << view_context.link_to(idea.name, idea_path(idea))
-      end
-    end
-
-    respond_to do |format|
-      format.html
-      format.js {
-        if not idea_links
-          render :nothing => true
-        else
-          render :json => idea_links
-        end
-      }
-    end
+    @ideas = Idea.published.all
   end
 
   def pending

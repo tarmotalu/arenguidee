@@ -56,6 +56,6 @@
     :javascript
       $("#home-highlights ul").cycle({interval: 8000})
 
-  %a.show-all(href=newest_ideas_path)
+  %a.show-all(href=ideas_path)
     Näita kõiki
     = pluralize(Idea.published.count, "ettepanek")

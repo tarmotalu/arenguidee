@@ -1,14 +1,11 @@
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
+  include Workflow
   include Rails.application.routes.url_helpers
-
-  require 'paperclip'
-
-  attr_accessible :buddy_icon, :eula
-  attr_accessor :eula
-
   devise :omniauthable, :omniauth_providers => [:facebook, :idcard]
+
+  attr_accessible :buddy_icon
 
   scope :active, :conditions => "users.status in ('pending','active')"
   scope :at_least_one_endorsement, :conditions => "users.endorsements_count > 0"
@@ -68,7 +65,7 @@ class User < ActiveRecord::Base
   has_many :sub_instances, :through => :signups
 
   has_many :endorsements, :dependent => :destroy
-  has_many :ideas #, :conditions => "endorsements.status = 'active'", :through => :endorsements
+  has_many :ideas
   has_many :finished_ideas, :conditions => "endorsements.status = 'finished'", :through => :endorsements, :source => :idea
 
   has_many :created_ideas, :class_name => "Idea"
@@ -80,10 +77,7 @@ class User < ActiveRecord::Base
 
   has_many :point_qualities, :dependent => :destroy
 
-  # has_many :votes, :dependent => :destroy
-
   has_many :comments, :dependent => :destroy
-  # has_many :blasts, :dependent => :destroy
   has_many :charts, :class_name => "UserChart", :dependent => :destroy
   has_many :contacts, :class_name => "UserContact", :dependent => :destroy
 
@@ -119,79 +113,18 @@ class User < ActiveRecord::Base
   validates_length_of       :password, :within => 4..40, :if => [:should_validate_password?]
   validates_confirmation_of :password, :if => [:should_validate_password?]
   validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
-  #validates_presence_of     :post_code, :message => tr("Please enter your postcode.", "model/user")
-  #validates_presence_of     :age_group, :message => tr("Please select your age group.", "model/user")
-  #validates_presence_of     :my_gender, :message => tr("Please select your gender.", "model/user")
 
-  validates_acceptance_of   :terms, :message => "Please accept the terms and conditions"
 
- # validates_inclusion_of    :age_group, :in => lambda {|foo| foo.allowed_for_age_group},
- #                           message: tr("Please select your gender.", "model/user")
- # validates_inclusion_of    :my_gender, :in => lambda {|foo| foo.allowed_for_gender}, message: tr("Please select your gender.", "model/user")
-
-  #validate :validate_age_group
-  #validate :validate_gender
-
-  #before_save :encrypt_password
   before_create :make_rss_code
-  after_save :update_signups
   after_create :check_contacts
-  after_create :give_sub_instance_credit
   after_create :give_user_credit
   after_create :new_user_signedup
-  after_create :set_signup_country
-  validates_acceptance_of :eula, :message => "Must accept terms"
   attr_protected :activation_code, :salt, :crypted_password, :twitter_token, :twitter_secret
-
-  # Virtual attribute for the unencrypted password
-  attr_accessor :sub_instance_ids, :terms
 
   define_index do
     indexes "concat(first_name, ' ', last_name)", :as => :real_name
     has updated_at
     where "users.status = 'active'"
-  end
-
-  def validate_age_group
-    unless allowed_for_age_group.include?(self.age_group)
-      self.errors.add(:age_group ,tr("Please select your age group", "model/user"))
-    end
-  end
-
-  def validate_gender
-    unless allowed_for_gender.include?(self.my_gender)
-      self.errors.add(:my_gender ,tr("Please select gender", "model/user"))
-    end
-  end
-
-  def allowed_for_age_group
-    [tr("12 years and younger", "model/user"),tr("13 to 17 years", "model/user"),tr("18 to 25 years", "model/user"),tr("26 to 69 years", "model/user"),tr("70 years and older", "model/user")]
-  end
-
-  def allowed_for_gender
-    [tr("Male", "model/user"),tr("Female", "model/user")]
-  end
-
-  def set_signup_country
-    self.geoblocking_open_countries=Thread.current[:country_code] if Thread.current[:country_code]
-  end
-
-  def gender
-    tr('unknown','')
-  end
-
-  def guest?
-    false
-  end
-
-  def needs_activation?
-    if self.status == "active"
-      false
-    elsif self.facebook_uid or self.identifier_url
-      false
-    else
-      true
-    end
   end
 
   def ideas_and_points_and_endorsements
@@ -209,7 +142,6 @@ class User < ActiveRecord::Base
 
   def new_user_signedup
     ActivityUserNew.create(:user => self, :sub_instance => sub_instance)
-    resend_activation if self.has_email? and self.is_pending? # and not self.identifier_url
   end
 
   def check_contacts
@@ -243,13 +175,6 @@ class User < ActiveRecord::Base
     return false
   end
 
-  def give_sub_instance_credit
-    return unless sub_instance_referral
-#    ActivityPartnerUserRecruited.create(:user => sub_instance_referral.owner, :other_user => self, :sub_instance => sub_instance_referral)
-#    ActivityCapitalPartnerUserRecruited.create(:user => sub_instance_referral.owner, :other_user => self, :sub_instance => sub_instance_referral, :capital => CapitalPartnerUserRecruited.create(:recipient => sub_instance_referral.owner, :amount => 2, :capitalizable => self))
-#    sub_instance_referral.owner.increment!(:referrals_count)
-  end
-
   def give_user_credit
     return unless referral
     ActivityInvitationAccepted.create(:other_user => referral, :user => self)
@@ -257,23 +182,13 @@ class User < ActiveRecord::Base
     referral.increment!(:referrals_count)
   end
 
-  def update_signups
-    unless sub_instance_ids.nil?
-      self.signups.each do |s|
-        s.destroy unless sub_instance_ids.include?(s.sub_instance_id.to_s)
-        sub_instance_ids.delete(s.sub_instance_id.to_s)
-      end
-      sub_instance_ids.each do |p|
-        self.signups.create(:sub_instance_id => p) unless p.blank?
-      end
-      reload
-      self.sub_instance_ids = nil
-    end
+  # Guest? is used by Tr8n. I have no idea why.
+  def guest?
+    false
   end
 
   after_create :on_pending_entry
 
-  include Workflow
   workflow_column :status
   workflow do
     state :pending do
@@ -370,11 +285,6 @@ class User < ActiveRecord::Base
     save(:validate => false)
   end
 
-  def resend_activation
-    make_activation_code
-    UserMailer.welcome(self).deliver
-  end
-
   def send_welcome
     unless self.have_sent_welcome
       UserMailer.welcome(self).deliver
@@ -403,7 +313,6 @@ class User < ActiveRecord::Base
       return item.class.to_s
     end
   end
-
 
   def is_subscribed=(value)
     if not value
@@ -564,27 +473,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  def self.authenticate(email, password)
-    u = find :first, :conditions => ["email = ? and status in ('active','pending')", email] # need to get the salt
-    if u && u.authenticated?(password)
-      #u.update_attribute(:loggedin_at,Time.now)
-      return u
-    else
-      return nil
-    end
-  end
-
-  # Encrypts some data with the salt.
-  def self.encrypt(password, salt)
-    Digest::SHA1.hexdigest("--#{salt}--#{password}--")
-  end
-
-  # Encrypts the password with the user salt
-  def encrypt(password)
-    self.class.encrypt(password, salt)
-  end
-
   def name
     return real_name
   end
@@ -639,7 +527,6 @@ class User < ActiveRecord::Base
   end
 
   def has_picture?
-#    attribute_present?("picture_id") or attribute_present?("buddy_icon_file_name")
     attribute_present?("buddy_icon_file_name")
   end
 
@@ -849,12 +736,6 @@ class User < ActiveRecord::Base
   def access_secret
     self.twitter_secret
   end
-
-  #if TwitterAuth.oauth?
-  #  include TwitterAuth::OauthUser
-  #else
-  #   include TwitterAuth::BasicUser
-  #end
 
   def twitter
     if TwitterAuth.oauth?
@@ -1142,21 +1023,4 @@ class User < ActiveRecord::Base
   end
 
   def admin?; is_admin?  end
-
-  protected
-
-    # before filter
-    def encrypt_password
-      return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
-      self.crypted_password = encrypt(password)
-    end
-
-    def password_required?
-      false
-    end
-
-    def make_activation_code
-      self.update_attribute(:activation_code,Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join ))
-    end
 end

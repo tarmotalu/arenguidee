@@ -47,7 +47,6 @@ describe Users::SessionsController do
 
     describe "when email exists" do
       user_attrs = {
-        :login => "100000000001337",
         :facebook_uid => "100000000001337",
         :email => "user@example.org"
       }
@@ -79,7 +78,6 @@ describe Users::SessionsController do
 
     describe "when uid exists" do
       user_attrs = {
-        :login => "100000000001337",
         :facebook_uid => "100000000001337",
         :email => "user@example.org"
       }

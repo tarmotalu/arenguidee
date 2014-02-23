@@ -1,0 +1,18 @@
+%header
+  %h1 Kasutajad
+
+%ul#users-list
+  - @users.each do |user|
+    %li.user>
+      %h2
+        %a{:href => url_for(user)}= user.name
+
+      %ul
+        - if user.admin?
+          %li Administraator
+        - if user.suspended?
+          %li Blokeeritud
+
+      %dl
+        %dt E-post
+        %dd= user.email

@@ -27,8 +27,6 @@ class ApplicationController < ActionController::Base
   before_filter :setup_inline_translation_parameters
   before_filter :get_categories
 
-  layout :get_layout
-
   protect_from_forgery
   helper_method :is_admin?
 
@@ -36,8 +34,8 @@ class ApplicationController < ActionController::Base
     current_user && current_user.is_admin?
   end
 
-  def admin_required
-    return if is_admin?
+  def authenticate_admin!
+    return if current_user && current_user.admin?
 
     respond_to do |format|
       format.html do
@@ -46,6 +44,7 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+  alias admin_required authenticate_admin!
 
   protected
   def logged_in?
@@ -183,13 +182,6 @@ class ApplicationController < ActionController::Base
     end
     
     @google_translate_enabled_for_locale = Tr8n::Config.current_language.google_key
-  end
-  
-  def get_layout
-    return false if not is_robot? and not current_instance
-    return "basic" if not Instance.current
-    return "hverfapottar_main" if controller_name == "about" and action_name=="show" and params[:id] == 'choose_sub_instance'
-    return Instance.current.layout
   end
 
   def current_instance

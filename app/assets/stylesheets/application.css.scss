@@ -70,12 +70,11 @@ label h2 {
 
 a { text-decoration: inherit }
 
-a:link {
+a:link,
+a:visited {
   color: $link;
   cursor: pointer;
 }
-
-a:visited { color: $link }
 
 .button.primary,
 input[type=submit] {
@@ -541,6 +540,35 @@ center > form {
 
 body.categories #main > center {
   max-width: 620px;
+}
+
+#users-list {
+  // Expand outward to make up for the side padding of each user block.
+  margin-left: -20px;
+  margin-right: -20px;
+
+  font-size: 12px;
+  color: $black;
+  line-height: 1.5;
+
+  .user {
+    vertical-align: top;
+    padding: 0 20px;
+    display: inline-block;
+    width: 33.33%;
+    margin-bottom: 30px;
+  }
+
+  h2 { color: $link; }
+  .user li, dt, dd { display: inline }
+  .user li { font-weight: bold }
+  .user li + li:before { content: "," }
+
+  dt {
+    font-weight: bold;
+    &:before { content: ""; display: block; }
+    &:after { content: ":" }
+  }
 }
 
 #categories-list {

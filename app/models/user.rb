@@ -98,8 +98,6 @@ class User < ActiveRecord::Base
   has_many :following_discussions, :dependent => :destroy
   has_many :following_discussion_activities, :through => :following_discussions, :source => :activity
 
-  validates_presence_of :login
-
   # Require email explicitly elsewhere because signups via ID-card or Mobile-ID
   # don't have one initially.
   validates_length_of       :email, :within => 3..128, :allow_blank => true

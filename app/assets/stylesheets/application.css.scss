@@ -70,12 +70,11 @@ label h2 {
 
 a { text-decoration: inherit }
 
-a:link {
+a:link,
+a:visited {
   color: $link;
   cursor: pointer;
 }
-
-a:visited { color: $link }
 
 .button.primary,
 input[type=submit] {
@@ -541,6 +540,23 @@ center > form {
 
 body.categories #main > center {
   max-width: 620px;
+}
+
+#users-list {
+  font-size: 12px;
+  color: $black;
+  line-height: 1.5;
+
+  h2 { color: $link; }
+  dt, dd, li { display: inline }
+  li + li:before { content: "," }
+
+  dt {
+    font-weight: bold;
+
+    &:before { content: ""; display: block; }
+    &:after { content: ":" }
+  }
 }
 
 #categories-list {

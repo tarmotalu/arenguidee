@@ -16,8 +16,6 @@ class Users::SessionsController < Devise::SessionsController
     user = User.where(:facebook_uid => info["uid"]).first || User.new
     return sign_in_and_redirect(user) if user.persisted?
 
-    # Setting login just for validations for now.
-    user.login = SecureRandom.uuid
     user.facebook_uid = info["uid"]
     user.email = info["info"]["email"]
     user.first_name = info["info"]["first_name"]

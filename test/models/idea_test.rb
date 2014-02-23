@@ -10,9 +10,8 @@ describe Idea do
       Idea.new(:name => " ").tap(&:valid?).errors[:name].wont_be_empty
     end
 
-    it "must require length between 5 and 140 characters" do
-      Idea.new(:name => "x" * 4).tap(&:valid?).errors[:name].wont_be_empty
-      Idea.new(:name => "x" * 5).tap(&:valid?).errors[:name].must_be_empty
+    it "must require length between 1 and 140 characters" do
+      Idea.new(:name => "x").tap(&:valid?).errors[:name].must_be_empty
       Idea.new(:name => "x" * 140).tap(&:valid?).errors[:name].must_be_empty
       Idea.new(:name => "x" * 141).tap(&:valid?).errors[:name].wont_be_empty
     end
@@ -45,7 +44,9 @@ describe Idea do
       idea.tap(&:valid?).errors[:description].must_be_empty
     end
 
-    it "must require length up to 500 characters" do
+    it "must require length between 1 and 500 characters" do
+      idea = Idea.new(:description => "x")
+      idea.tap(&:valid?).errors[:description].must_be_empty
       idea = Idea.new(:description => "x" * 500)
       idea.tap(&:valid?).errors[:description].must_be_empty
       idea = Idea.new(:description => "x" * 501)
@@ -67,7 +68,8 @@ describe Idea do
       Idea.new(:text => " ").tap(&:valid?).errors[:text].must_be_empty
     end
 
-    it "must require length up to 2500 characters" do
+    it "must require length between 1 and 2500 characters" do
+      Idea.new(:text => "x").tap(&:valid?).errors[:text].must_be_empty
       Idea.new(:text => "x" * 2500).tap(&:valid?).errors[:text].must_be_empty
       Idea.new(:text => "x" * 2501).tap(&:valid?).errors[:text].wont_be_empty
     end

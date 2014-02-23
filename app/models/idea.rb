@@ -5,11 +5,11 @@ class Idea < ActiveRecord::Base
 
   validates_presence_of :category_id
   validates_presence_of :name
-  validates_length_of :name, :within => 5..140
+  validates_length_of :name, :maximum => 140
   validates_exclusion_of :description, :in => [nil]
-  validates_length_of :description, :within => 0..500
+  validates_length_of :description, :maximum => 500
   validates_exclusion_of :text, :in => [nil]
-  validates_length_of :text, :within => 0..2500
+  validates_length_of :text, :maximum => 2500
   validates_inclusion_of :status, :in => %w[published pending removed]
 
   validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix

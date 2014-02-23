@@ -1,6 +1,5 @@
 class Comment < ActiveRecord::Base
-
-  acts_as_set_sub_instance :table_name=>"comments"
+  belongs_to :sub_instance
 
   scope :published, :conditions => "comments.status = 'published'"
   scope :unpublished, :conditions => "comments.status not in ('published','abusive')"

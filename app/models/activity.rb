@@ -1,7 +1,6 @@
 class Activity < ActiveRecord::Base
-  
-  acts_as_set_sub_instance :table_name=>"activities"
-  
+  belongs_to :sub_instance
+
   scope :active, :conditions => "activities.status = 'active'"
   scope :removed, :conditions => "activities.status = 'removed'", :order => "updated_at desc"
   scope :for_all_users, :conditions => "is_user_only = 'f'"

@@ -1,7 +1,6 @@
 # encoding: utf-8
 class Point < ActiveRecord::Base
-
-  acts_as_set_sub_instance :table_name=>"points"
+  belongs_to :sub_instance
 
   scope :published, :conditions => "points.status = 'published'"
   scope :by_helpfulness, :order => "points.score desc"

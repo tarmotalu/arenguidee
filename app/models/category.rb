@@ -11,7 +11,7 @@ class Category < ActiveRecord::Base
 
   validates_presence_of :name
 
-  acts_as_set_sub_instance :table_name=>"categories"
+  belongs_to :sub_instance
   extend FriendlyId
   friendly_id :name, use: :slugged
 

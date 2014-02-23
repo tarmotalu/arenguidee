@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140219000621) do
+ActiveRecord::Schema.define(:version => 20140219012952) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -271,25 +271,25 @@ ActiveRecord::Schema.define(:version => 20140219000621) do
   end
 
   create_table "ideas", :force => true do |t|
-    t.integer  "position",                                :default => 0,     :null => false
+    t.integer  "position",                                :default => 0,           :null => false
     t.integer  "user_id"
-    t.string   "name",                                    :default => "",    :null => false
-    t.text     "description",                             :default => "",    :null => false
-    t.integer  "endorsements_count",                      :default => 0,     :null => false
-    t.string   "status",                   :limit => 50
+    t.string   "name",                                    :default => "",          :null => false
+    t.text     "description",                             :default => "",          :null => false
+    t.integer  "endorsements_count",                      :default => 0,           :null => false
+    t.string   "status",                                  :default => "published", :null => false
     t.string   "ip_address",               :limit => 16
     t.datetime "removed_at"
     t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position_1hr",                            :default => 0,     :null => false
-    t.integer  "position_24hr",                           :default => 0,     :null => false
-    t.integer  "position_7days",                          :default => 0,     :null => false
-    t.integer  "position_30days",                         :default => 0,     :null => false
-    t.integer  "position_1hr_delta",                      :default => 0,     :null => false
-    t.integer  "position_24hr_delta",                     :default => 0,     :null => false
-    t.integer  "position_7days_delta",                    :default => 0,     :null => false
-    t.integer  "position_30days_delta",                   :default => 0,     :null => false
+    t.integer  "position_1hr",                            :default => 0,           :null => false
+    t.integer  "position_24hr",                           :default => 0,           :null => false
+    t.integer  "position_7days",                          :default => 0,           :null => false
+    t.integer  "position_30days",                         :default => 0,           :null => false
+    t.integer  "position_1hr_delta",                      :default => 0,           :null => false
+    t.integer  "position_24hr_delta",                     :default => 0,           :null => false
+    t.integer  "position_7days_delta",                    :default => 0,           :null => false
+    t.integer  "position_30days_delta",                   :default => 0,           :null => false
     t.integer  "change_id"
     t.string   "cached_issue_list"
     t.integer  "up_endorsements_count",                   :default => 0
@@ -335,7 +335,7 @@ ActiveRecord::Schema.define(:version => 20140219000621) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.text     "text",                                    :default => "",    :null => false
+    t.text     "text",                                    :default => "",          :null => false
   end
 
   add_index "ideas", ["category_id"], :name => "index_ideas_on_category_id"

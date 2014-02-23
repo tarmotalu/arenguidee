@@ -72,4 +72,10 @@ describe Idea do
       Idea.new(:text => "x" * 2501).tap(&:valid?).errors[:text].wont_be_empty
     end
   end
+
+  describe "#status" do
+    it "must be published by default" do
+      Idea.new.status.must_equal "published"
+    end
+  end
 end

@@ -143,13 +143,11 @@ Rahvakogu::Application.routes.draw do
       get :minu
       get :yours_finished
       get :yours_top
-      get :yours_ads
       get :yours_lowest
       get :yours_created
       get :network
       get :consider
       get :finished
-      get :ads
       get :top
       get :top_24hr
       get :top_7days
@@ -184,15 +182,6 @@ Rahvakogu::Application.routes.draw do
     end
 
     resources :points
-
-    resources :ads do
-      collection do
-        post :preview
-      end
-      member do
-        post :skip
-      end
-    end
   end
 
   resources :activities do

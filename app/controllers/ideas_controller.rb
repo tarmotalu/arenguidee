@@ -16,7 +16,6 @@ class IdeasController < ApplicationController
     :tag,
     :tag_save,
     :update,
-    :yours_ads,
     :yours_finished,
     :yours_lowest,
     :yours_top,
@@ -55,7 +54,7 @@ class IdeasController < ApplicationController
   ]
 
   caches_action :revised, :index, :top, :top_24hr, :top_7days, :top_30days,
-                :ads, :controversial, :rising, :newest, :finished, :show,
+                :controversial, :rising, :newest, :finished, :show,
                 :top_points, :discussions, :endorsers, :opposers, :activities,
                 :if => proc {|c| c.do_action_cache?},
                 :cache_path => proc {|c| c.action_cache_path},
@@ -178,28 +177,6 @@ class IdeasController < ApplicationController
         n.read! if n.class == NotificationIdeaFinished and n.unread?
       end    
     end
-  end  
-
-  # GET /ideas/ads
-  def ads
-    @page_title = tr("Ads running at {sub_instance_name}", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
-    @ads = Ad.active_first.paginate :include => [:user, :idea], :page => params[:page], :per_page => params[:per_page]
-    respond_to do |format|
-      format.html
-      format.xml { render :xml => @ads.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @ads.to_json(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-    end
-  end
-
-  # GET /ideas/yours_ads
-  def yours_ads
-    @page_title = tr("Your ads", "controller/ideas", :sub_instance_name => tr(current_sub_instance.name,"Name from database"))
-    @ads = current_user.ads.active_first.paginate :include => [:user, :idea], :page => params[:page], :per_page => params[:per_page]
-    respond_to do |format|
-      format.html
-      format.xml { render :xml => @ads.to_xml(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @ads.to_json(:include => [:idea], :except => NB_CONFIG['api_exclude_fields']) }
-    end    
   end  
 
   # GET /ideas/consider
@@ -1141,7 +1118,6 @@ class IdeasController < ApplicationController
       @items[8]=[tr("Random", "view/ideas"), random_ideas_url]
       @items[9]=[tr("In Progress", "view/ideas"), finished_ideas_url]
       @items[10]=[tr("Controversial", "view/ideas"), controversial_ideas_url]
-      @items[11]=[tr("Ads", "view/ideas"), ads_ideas_url]
       @items[12]=[tr("Rising", "view/ideas"), rising_ideas_url]
       @items[13]=[tr("Falling", "view/ideas"), falling_ideas_url]
       if logged_in?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140217183412) do
+ActiveRecord::Schema.define(:version => 20140218220408) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -49,29 +49,6 @@ ActiveRecord::Schema.define(:version => 20140217183412) do
   add_index "activities", ["status"], :name => "index_activities_on_status"
   add_index "activities", ["type"], :name => "index_activities_on_type"
   add_index "activities", ["user_id"], :name => "index_activities_on_user_id"
-
-  create_table "ads", :force => true do |t|
-    t.integer  "idea_id"
-    t.integer  "user_id"
-    t.integer  "show_ads_count",                 :default => 0
-    t.integer  "shown_ads_count",                :default => 0
-    t.integer  "cost"
-    t.float    "per_user_cost"
-    t.float    "spent",                          :default => 0.0
-    t.integer  "yes_count",                      :default => 0
-    t.integer  "no_count",                       :default => 0
-    t.integer  "skip_count",                     :default => 0
-    t.string   "status",          :limit => 40
-    t.string   "content",         :limit => 140
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "finished_at"
-    t.integer  "position",                       :default => 0
-    t.integer  "sub_instance_id"
-  end
-
-  add_index "ads", ["idea_id"], :name => "index_ads_on_idea_id"
-  add_index "ads", ["status"], :name => "index_ads_on_status"
 
   create_table "capitals", :force => true do |t|
     t.integer  "sender_id"
@@ -643,20 +620,6 @@ ActiveRecord::Schema.define(:version => 20140217183412) do
   add_index "revisions", ["point_id"], :name => "index_revisions_on_point_id"
   add_index "revisions", ["status"], :name => "index_revisions_on_status"
   add_index "revisions", ["user_id"], :name => "index_revisions_on_user_id"
-
-  create_table "shown_ads", :force => true do |t|
-    t.integer  "ad_id"
-    t.integer  "user_id"
-    t.integer  "value",                     :default => 0
-    t.string   "ip_address", :limit => 16
-    t.string   "user_agent", :limit => 100
-    t.string   "referrer",   :limit => 100
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "seen_count",                :default => 1
-  end
-
-  add_index "shown_ads", ["ad_id", "user_id"], :name => "index_shown_ads_on_ad_id_and_user_id"
 
   create_table "signups", :force => true do |t|
     t.integer  "sub_instance_id"
@@ -1286,7 +1249,6 @@ ActiveRecord::Schema.define(:version => 20140217183412) do
     t.integer  "position",                                    :default => 0
     t.boolean  "is_followers_subscribed",                     :default => true
     t.integer  "sub_instance_referral_id"
-    t.integer  "ads_count",                                   :default => 0
     t.integer  "changes_count",                               :default => 0
     t.string   "google_token",                 :limit => 30
     t.integer  "top_endorsement_id"

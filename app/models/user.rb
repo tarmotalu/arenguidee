@@ -84,8 +84,6 @@ class User < ActiveRecord::Base
 
   has_many :comments, :dependent => :destroy
   # has_many :blasts, :dependent => :destroy
-  has_many :ads, :dependent => :destroy
-  has_many :shown_ads, :dependent => :destroy
   has_many :charts, :class_name => "UserChart", :dependent => :destroy
   has_many :contacts, :class_name => "UserContact", :dependent => :destroy
 
@@ -513,23 +511,6 @@ class User < ActiveRecord::Base
 
   def revisions_count
     @revision_count ||= point_revisions_count-points_count
-  end
-
-  def pick_ad(current_idea_ids)
-  	shown = 0
-  	for ad in Ad.active.most_paid.all
-  		if shown == 0 and not current_idea_ids.include?(ad.idea_id)
-  			shown_ad = ad.shown_ads.find_by_user_id(self.id)
-  			if shown_ad and not shown_ad.has_response? and shown_ad.seen_count < 4
-  				shown_ad.increment!(:seen_count)
-  				return ad
-  			elsif not shown_ad
-  				shown_ad = ad.shown_ads.create(:user => self)
-  				return ad
-  			end
-  		end
-  	end
-  	return nil
   end
 
   def following_user_ids

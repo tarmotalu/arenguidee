@@ -470,35 +470,6 @@ class Idea < ActiveRecord::Base
     attribute_present?("change_id") and self.status == 'inactive'
   end
 
-  def movement_text
-    s = ''
-    if status == 'buried'
-      return tr("delisted", "model/idea").capitalize
-    elsif status == 'inactive'
-      return tr("inactive", "model/idea").capitalize
-    elsif created_at > Time.now-86400
-      return tr("new", "model/idea").capitalize
-    elsif position_24hr_delta == 0 and position_7days_delta == 0 and position_30days_delta == 0
-      return tr("no change", "model/idea").capitalize
-    end
-    s += '+' if position_24hr_delta > 0
-    s += '-' if position_24hr_delta < 0
-    s += tr("no change", "model/idea") if position_24hr_delta == 0
-    s += position_24hr_delta.abs.to_s unless position_24hr_delta == 0
-    s += ' today'
-    s += ', +' if position_7days_delta > 0
-    s += ', -' if position_7days_delta < 0
-    s += ', ' + tr("no change", "model/idea") if position_7days_delta == 0
-    s += position_7days_delta.abs.to_s unless position_7days_delta == 0
-    s += ' this week'
-    s += ', and +' if position_30days_delta > 0
-    s += ', and -' if position_30days_delta < 0
-    s += ', and ' + tr("no change", "model/idea") if position_30days_delta == 0
-    s += position_30days_delta.abs.to_s unless position_30days_delta == 0
-    s += ' this month'
-    s
-  end
-
   def up_endorser_ids
     @up_endorser_ids ||= endorsements.active_and_inactive.endorsing.collect{|e|e.user_id.to_i}.uniq.compact
   end

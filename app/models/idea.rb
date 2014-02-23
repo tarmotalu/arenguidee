@@ -1,9 +1,16 @@
 class Idea < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
   self.per_page = 10
-  acts_as_set_sub_instance :table_name => "ideas"
-
   has_attached_file :attachment
+
+  validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
+  validates_presence_of :name
+  validates_length_of :name, :within => 5..140
+  validates_exclusion_of :description, :in => [nil]
+  validates_length_of :description, :within => 0..500
+
+  validates_presence_of :category_id
+
   validates_attachment_size :attachment, {:in => 0..25.megabytes}
   allowed_types = [/^image\//, /^text\//] + %w[application/pdf]
   validates_attachment_content_type :attachment, :content_type => allowed_types
@@ -105,7 +112,6 @@ class Idea < ActiveRecord::Base
 
   before_save :strip_name
 
-  validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
   define_index do
     indexes name
     indexes description
@@ -113,7 +119,7 @@ class Idea < ActiveRecord::Base
     has updated_at
     has sub_instance_id, :as=>:sub_instance_id, :type => :integer
     where "ideas.status in ('published','inactive')"
-  end  
+  end
 
   def strip_name
     name.strip!
@@ -126,12 +132,6 @@ class Idea < ActiveRecord::Base
       'No category'
     end
   end
-
-  validates_length_of :name, :within => 5..256
-  validates_length_of :description, :within => 0..3000
-
-  validates :category_id, :presence => true
-  validates :name, :uniqueness => {:scope => [:user_id, :category_id], :message => 'You have already suggested an idea of this name.', :if => Proc.new { |idea| idea.status == 'published' }}
 
   after_create :on_published_entry
 

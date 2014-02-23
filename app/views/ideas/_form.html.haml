@@ -6,14 +6,14 @@
       <strong id="idea-name-countdown"></strong> tähemärki veel järel.
     %h2= t("activerecord.attributes.idea.name")
     = errors_for @idea, :name
-  = f.text_field :name, :maxlength => 256, :size => nil
+  = f.text_field :name, :maxlength => 140, :size => nil
 
   %label
     %small.countdown
       <strong id="idea-description-countdown"></strong> tähemärki veel järel.
     %h2= t("activerecord.attributes.idea.description")
     = errors_for @idea, :description
-  = f.text_area :description, :maxlength => 3000
+  = f.text_area :description, :maxlength => 500
 
   %label
     %h2= t("activerecord.attributes.idea.category")

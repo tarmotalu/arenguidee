@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140218224018) do
+ActiveRecord::Schema.define(:version => 20140218234443) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -273,8 +273,8 @@ ActiveRecord::Schema.define(:version => 20140218224018) do
   create_table "ideas", :force => true do |t|
     t.integer  "position",                                :default => 0,     :null => false
     t.integer  "user_id"
-    t.string   "name"
-    t.text     "description"
+    t.string   "name",                                    :default => "",    :null => false
+    t.text     "description",                             :default => "",    :null => false
     t.integer  "endorsements_count",                      :default => 0,     :null => false
     t.string   "status",                   :limit => 50
     t.string   "ip_address",               :limit => 16

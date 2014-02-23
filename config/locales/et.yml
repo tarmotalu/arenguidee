@@ -45,12 +45,16 @@ et:
     models:
       idea: "Idee"
       category: "Kategooria"
+
     attributes:
       idea:
         name: "Pealkiri"
         description: "Lühikokkuvõte"
         text: "Kirjeldus"
         category: "Kategooria"
+        status: "Staatus"
+        status_published: "Avaldatud"
+        status_pending: "Ootel"
         attachment: "Manus"
         attachment_content_type: "Manuse tüüp"
         attachment_file_size: "Manuse suurus"

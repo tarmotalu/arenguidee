@@ -39,5 +39,36 @@ describe IdeasController do
       assert_template "new"
       assert_response :unprocessable_entity
     end
+
+    it "must set idea pending" do
+      post :create, :idea => {:name => "Love all", :category_id => @category.id}
+      Idea.first.status.must_equal "pending"
+    end
+
+    it "must not allow setting idea published" do
+      post :create, :idea => {
+        :name => "Love all", :category_id => @category.id,
+        :status => "published"
+      }
+      Idea.first.status.must_equal "pending"
+    end
+
+    it "must allow setting idea published if admin" do
+      @user.update_attributes(:is_admin => true)
+      post :create, :idea => {
+        :name => "Love all", :category_id => @category.id,
+        :status => "published"
+      }
+      Idea.first.status.must_equal "published"
+    end
+
+    it "must allow leaving idea pending if admin" do
+      @user.update_attributes(:is_admin => true)
+      post :create, :idea => {
+        :name => "Love all", :category_id => @category.id,
+        :status => "pending"
+      }
+      Idea.first.status.must_equal "pending"
+    end
   end
 end

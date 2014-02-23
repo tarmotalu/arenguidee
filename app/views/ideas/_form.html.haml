@@ -1,41 +1,48 @@
 = form_for @idea, :html => {:multipart => true, :id => "idea-form"} do |f|
   = error_summary @idea
 
-  %label
+  %h2
     %small.countdown
       <strong id="idea-name-countdown"></strong> tähemärki veel järel.
-    %h2= t("activerecord.attributes.idea.name")
-    = errors_for @idea, :name
+    = t("activerecord.attributes.idea.name")
+  = errors_for @idea, :name
   = f.text_field :name, :maxlength => 140, :size => nil
 
-  %label
+  %h2
     %small.countdown
       <strong id="idea-description-countdown"></strong> tähemärki veel järel.
-    %h2= t("activerecord.attributes.idea.description")
-    = errors_for @idea, :description
+    = t("activerecord.attributes.idea.description")
+  = errors_for @idea, :description
   = f.text_area :description, :maxlength => 500
 
-  %label
+  %h2
     %small.countdown
       <strong id="idea-text-countdown"></strong> tähemärki veel järel.
-    %h2= t("activerecord.attributes.idea.text")
-    = errors_for @idea, :text
+    = t("activerecord.attributes.idea.text")
+  = errors_for @idea, :text
   = f.text_area :text, :maxlength => 2500
 
-  %label
-    %h2= t("activerecord.attributes.idea.category")
+  %h2= t("activerecord.attributes.idea.category")
   %select(name="idea[category_id]")
     - @categories.each do |category|
       %option{:value => category.id, :selected => @idea.category == category}
         = category.name
 
-  %label
-    %h2= t("activerecord.attributes.idea.attachment")
-    %p
-      %small Lisa soovi korral ideed kirjeldav pilt või muu tekstidokument.
-    = errors_for @idea, :attachment_content_type
-    = errors_for @idea, :attachment_file_size
+  %h2= t("activerecord.attributes.idea.attachment")
+  %p
+    %small Lisa soovi korral ideed kirjeldav pilt või muu tekstidokument.
+  = errors_for @idea, :attachment_content_type
+  = errors_for @idea, :attachment_file_size
   = f.file_field :attachment
+
+  - if current_user.admin?
+    %h2= t("activerecord.attributes.idea.status")
+    %label.radio
+      = f.radio_button :status, :published
+      = t("activerecord.attributes.idea.status_published")
+    %label.radio
+      = f.radio_button :status, :pending
+      = t("activerecord.attributes.idea.status_pending")
 
   = submit_tag "Esita oma arenguidee"
 

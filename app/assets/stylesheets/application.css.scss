@@ -63,10 +63,7 @@ h2, h3 {
 }
 
 h2 { font-size: 16px }
-
-label h2 {
-  text-transform: uppercase;
-}
+form h2 { text-transform: uppercase }
 
 a { text-decoration: inherit }
 
@@ -482,18 +479,23 @@ center > form {
     margin-bottom: 30px;
   }
 
-  label {
-    display: block;
+  h2 ~ h2 {
+    margin-top: 25px;
     margin-bottom: 5px;
-
-    & ~ label { margin-top: 25px }
   }
 
   h2 { margin-bottom: 5px }
+  p { margin-bottom: 5px }
 
-  p + p {
-    margin-top: 5px;
+  label {
+    font-size: 12px;
   }
+
+  label.radio {
+    display: inline-block;
+    cursor: pointer;
+  }
+  label.radio + label.radio { margin-left: 15px }
 
   input[type=text], textarea {
     width: 100%;
@@ -536,7 +538,11 @@ center > form + menu {
   textarea[name="idea[description]"] { height: 130px }
   textarea[name="idea[text]"] { height: 250px }
 
-  .countdown { float: right }
+  .countdown {
+    float: right;
+    font-weight: normal;
+    text-transform: none;
+  }
 }
 
 body.categories #main > center {

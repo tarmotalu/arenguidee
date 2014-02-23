@@ -22,7 +22,7 @@
         %li.category
           %a{:href => issue_path(category)}
             = category.name
-            %small= category.ideas.count
+            %small= category.ideas.published.count
 
   %section#home-popular-ideas
     %h2 Populaarsemad ideed

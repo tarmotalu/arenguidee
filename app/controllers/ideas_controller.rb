@@ -1,6 +1,4 @@
 class IdeasController < ApplicationController
-  ALLOWED_PARAMS = %w[name name description text category_id attachment]
-
   before_filter :authenticate_user!, :only => [
     :comment,
     :consider,
@@ -717,7 +715,7 @@ class IdeasController < ApplicationController
   end
   
   def create
-    @idea = Idea.new(idea_params)
+    @idea = Idea.new({"status" => "pending"}.merge(idea_params))
     @idea.user = current_user
     @idea.ip_address = request.remote_ip
 
@@ -1129,6 +1127,8 @@ class IdeasController < ApplicationController
 
   private
   def idea_params
-    params[:idea].slice(*ALLOWED_PARAMS) if params[:idea]
+    allowed_params = %w[name name description text category_id attachment]
+    allowed_params.push "status" if current_user.admin?
+    params[:idea].slice(*allowed_params) if params[:idea]
   end
 end

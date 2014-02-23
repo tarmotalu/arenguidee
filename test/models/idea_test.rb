@@ -74,8 +74,26 @@ describe Idea do
   end
 
   describe "#status" do
+    it "must not allow blank" do
+      Idea.new(:status => nil).tap(&:valid?).errors[:status].wont_be_empty
+      Idea.new(:status => "").tap(&:valid?).errors[:status].wont_be_empty
+      Idea.new(:status => " ").tap(&:valid?).errors[:status].wont_be_empty
+    end
+
     it "must be published by default" do
       Idea.new.status.must_equal "published"
+    end
+
+    %w[published pending removed].each do |status|
+      it "must allow #{status} status" do
+        idea = Idea.new(:status => status)
+        idea.tap(&:valid?).errors[:status].must_be_empty
+        idea.status.must_equal status
+      end
+    end
+
+    it "must not allow foo status" do
+      Idea.new(:status => "foo").tap(&:valid?).errors[:status].wont_be_empty
     end
   end
 end

@@ -3,19 +3,22 @@ class Idea < ActiveRecord::Base
   self.per_page = 10
   has_attached_file :attachment
 
-  validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
+  validates_presence_of :category_id
   validates_presence_of :name
   validates_length_of :name, :within => 5..140
   validates_exclusion_of :description, :in => [nil]
   validates_length_of :description, :within => 0..500
   validates_exclusion_of :text, :in => [nil]
   validates_length_of :text, :within => 0..2500
+  validates_inclusion_of :status, :in => %w[published pending removed]
 
-  validates_presence_of :category_id
+  validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
 
   validates_attachment_size :attachment, {:in => 0..25.megabytes}
   allowed_types = [/^image\//, /^text\//] + %w[application/pdf]
   validates_attachment_content_type :attachment, :content_type => allowed_types
+
+  after_create :on_published_entry
 
   scope :published, :conditions => "ideas.status = 'published'"
 
@@ -129,32 +132,26 @@ class Idea < ActiveRecord::Base
     end
   end
 
-  after_create :on_published_entry
-
   include Workflow
   workflow_column :status
   workflow do
     state :published do
       event :remove, transitions_to: :removed
-      event :bury, transitions_to: :buried
-      event :deactivate, transitions_to: :inactive
     end
-    state :passive do
+
+    state :pending do
       event :publish, transitions_to: :published
       event :remove, transitions_to: :removed
-      event :bury, transitions_to: :buried
     end
+
     state :removed do
       event :bury, transitions_to: :buried
       event :unremove, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
     end
-    state :buried do
-      event :deactivate, transitions_to: :inactive
-    end
-    state :inactive do
-      event :remove, transitions_to: :removed
-    end
   end
+
+  # Workflow's write_initial_state interferes with validations.
+  def write_initial_state; end
 
   def name=(name)
     super name.is_a?(String) ? name.strip : name

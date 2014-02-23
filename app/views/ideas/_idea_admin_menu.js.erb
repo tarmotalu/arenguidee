@@ -1,0 +1,7 @@
+document.getElementById("idea-<%= @idea.id %>-admin-menu").outerHTML = "<%=
+	escape_javascript render(
+		:partial => "idea_admin_menu",
+		:formats => :html,
+		:locals => {:idea => @idea}
+	)
+%>"

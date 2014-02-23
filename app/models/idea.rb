@@ -21,8 +21,8 @@ class Idea < ActiveRecord::Base
   after_create :on_published_entry
 
   scope :published, :conditions => "ideas.status = 'published'"
+  scope :pending, :conditions => "ideas.status = 'pending'"
 
-  scope :published, :conditions => "ideas.status = 'published'"
   scope :unpublished, :conditions => "ideas.status not in ('published','abusive')"
 
   scope :not_removed, :conditions => "ideas.status <> 'removed'"

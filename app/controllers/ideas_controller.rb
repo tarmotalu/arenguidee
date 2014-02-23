@@ -1,4 +1,6 @@
 class IdeasController < ApplicationController
+  XHR_PARTIALS = %w[idea_admin_menu]
+
   before_filter :authenticate_user!, :only => [
     :comment,
     :consider,
@@ -23,6 +25,7 @@ class IdeasController < ApplicationController
     :edit,
     :failed,
     :intheworks,
+    :pending,
     :successful,
     :update,
   ]
@@ -77,6 +80,12 @@ class IdeasController < ApplicationController
         end
       }
     end
+  end
+
+  def pending
+    @page_title = "Ootel ideed"
+    @ideas = Idea.pending.all
+    render "admin"
   end
 
   # GET /ideas/yours
@@ -748,7 +757,11 @@ class IdeasController < ApplicationController
     @idea = Idea.find(params[:id])
 
     if @idea.update_attributes(idea_params)
-      redirect_to @idea
+      respond_to do |format|
+        format.html { redirect_to @idea }
+        partial = XHR_PARTIALS.include?(params[:partial]) && params[:partial]
+        format.js { render :partial => params[:partial] } if partial
+      end
     else
       render "edit", :status => :unprocessable_entity
     end

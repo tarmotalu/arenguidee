@@ -139,6 +139,8 @@ Rahvakogu::Application.routes.draw do
   	end
 
   	collection do
+      get :pending
+
       get :minu
       get :yours_finished
       get :yours_top

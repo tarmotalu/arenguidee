@@ -88,10 +88,10 @@ class Idea < ActiveRecord::Base
   has_many :up_endorsers, :through => :endorsements, :conditions => "endorsements.status in ('active','inactive') and endorsements.value=1", :source => :user, :class_name => "User"
   has_many :down_endorsers, :through => :endorsements, :conditions => "endorsements.status in ('active','inactive') and endorsements.value=-1", :source => :user, :class_name => "User"
     
-  has_many :points, :conditions => "points.status in ('published','draft')"
+  has_many :points, :conditions => "points.status in ('published')"
   accepts_nested_attributes_for :points
 
-  has_many :my_points, :conditions => "points.status in ('published','draft')", :class_name => "Point"
+  has_many :my_points, :conditions => "points.status in ('published')", :class_name => "Point"
   accepts_nested_attributes_for :my_points
   
   has_many :incoming_points, :foreign_key => "other_idea_id", :class_name => "Point"
@@ -144,16 +144,9 @@ class Idea < ActiveRecord::Base
       event :remove, transitions_to: :removed
       event :bury, transitions_to: :buried
     end
-    state :draft do
-      event :publish, transitions_to: :published
-      event :remove, transitions_to: :removed
-      event :bury, transitions_to: :buried
-      event :deactivate, transitions_to: :inactive
-    end
     state :removed do
       event :bury, transitions_to: :buried
       event :unremove, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
-      event :unremove, transitions_to: :draft
     end
     state :buried do
       event :deactivate, transitions_to: :inactive

@@ -18,9 +18,6 @@ class IdeaRevision < ActiveRecord::Base
   include Workflow
   workflow_column :status
   workflow do
-    state :draft do
-      event :publish, transitions_to: :published
-    end
     state :archived do
       event :publish, transitions_to: :published
       event :remove, transitions_to: :removed

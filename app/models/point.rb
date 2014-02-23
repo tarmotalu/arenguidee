@@ -97,20 +97,13 @@ class Point < ActiveRecord::Base
       event :bury, transitions_to: :buried
       event :remove, transitions_to: :removed
     end
-    state :draft do
-      event :publish, transitions_to: :published
-      event :remove, transitions_to: :removed
-      event :bury, transitions_to: :buried
-    end
     state :removed do
       event :bury, transitions_to: :buried
       event :unremove, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
-      event :unremove, transitions_to: :draft
     end
     state :buried do
       event :remove, transitions_to: :removed
       event :unbury, transitions_to: :published, meta: { validates_presence_of: [:published_at] }
-      event :unbury, transitions_to: :draft
     end
   end
 

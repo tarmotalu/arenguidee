@@ -112,8 +112,6 @@ class Idea < ActiveRecord::Base
   acts_as_taggable_on :issues
   acts_as_list
 
-  before_save :strip_name
-
   define_index do
     indexes name
     indexes description
@@ -121,10 +119,6 @@ class Idea < ActiveRecord::Base
     has updated_at
     has sub_instance_id, :as=>:sub_instance_id, :type => :integer
     where "ideas.status in ('published','inactive')"
-  end
-
-  def strip_name
-    name.strip!
   end
 
   def category_name
@@ -169,6 +163,9 @@ class Idea < ActiveRecord::Base
     end
   end
 
+  def name=(name)
+    super name.is_a?(String) ? name.strip : name
+  end
 
   def to_param
     "#{id}-#{name.parameterize_full}"

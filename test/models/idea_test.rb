@@ -18,6 +18,16 @@ describe Idea do
     end
   end
 
+  describe "#name=" do
+    it "must strip whitespace" do
+      Idea.new(:name => "\tWorld peace ").name.must_equal "World peace"
+    end
+
+    it "must not strip nil" do
+      Idea.new(:name => nil).name.must_equal nil
+    end
+  end
+
   describe "#description" do
     it "must default to blank" do
       Idea.new.description.must_equal ""

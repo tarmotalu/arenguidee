@@ -34,6 +34,18 @@ describe Users::SessionsController do
         user.last_name.must_equal "Cornwell"
       end
 
+      it "must set name blank if not given" do
+        auth :facebook, {
+          :uid => "100000000001337",
+          :info => {:email => "user@example.org"}
+        }
+
+
+        user = User.first
+        user.first_name.must_equal ""
+        user.last_name.must_equal ""
+      end
+
       it "must sign user in" do
         auth :facebook, omniauth_info
         assert warden.authenticated?(:user)
@@ -133,6 +145,17 @@ describe Users::SessionsController do
         user = User.first
         user.first_name.must_equal "James III"
         user.last_name.must_equal "Cornwell"
+      end
+
+      it "must set name blank if not given" do
+        auth :idcard, {
+          :uid => "38002240211",
+          :user_info => {:personal_code => "38002240211"}
+        }
+
+        user = User.first
+        user.first_name.must_equal ""
+        user.last_name.must_equal ""
       end
 
       it "must sign user in" do

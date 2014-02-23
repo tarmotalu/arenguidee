@@ -18,8 +18,8 @@ class Users::SessionsController < Devise::SessionsController
 
     user.facebook_uid = info["uid"]
     user.email = info["info"]["email"]
-    user.first_name = info["info"]["first_name"]
-    user.last_name = info["info"]["last_name"]
+    user.first_name = info["info"]["first_name"] || ""
+    user.last_name = info["info"]["last_name"] || ""
 
     if user.save
       sign_in_and_redirect user
@@ -37,8 +37,8 @@ class Users::SessionsController < Devise::SessionsController
     # NOTE: Omniauth::Idcard returns extra info in the "user_info" property
     # while the standard seems to be "info".
     user.login = info["uid"]
-    user.first_name = info["user_info"]["first_name"]
-    user.last_name = info["user_info"]["last_name"]
+    user.first_name = info["user_info"]["first_name"] || ""
+    user.last_name = info["user_info"]["last_name"] || ""
 
     if user.save
       sign_in_and_redirect user

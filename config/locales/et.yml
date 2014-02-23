@@ -12,6 +12,7 @@ et:
         unauthenticated: "Palun logi selleks sisse."
 
   users:
+    unnamed: "Nimetu"
     sessions:
       user_denied: "Sisselogimine katkestatud"
       failed_to_connect: "Sisselogimine ebaõnnestus. Palun proovi uuesti."

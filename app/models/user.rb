@@ -472,14 +472,13 @@ class User < ActiveRecord::Base
   end
 
   def name
-    return real_name
+    name = first_name + " " + last_name
+    name = email if name.blank?
+    name = I18n.t("users.unnamed") if name.blank?
+    name
   end
 
-  def real_name
-    return login if not attribute_present?("first_name") or not attribute_present?("last_name")
-    n = first_name + ' ' + last_name
-    n
-  end
+  alias real_name name
 
   def is_sub_instance?
     attribute_present?("sub_instance_id")

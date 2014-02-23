@@ -15,4 +15,4 @@
       %time{:title => published_at}= time_ago_in_words(published_at)+" tagasi"
 
   %section
-    %p= truncate_html(simple_format(idea.description), :length => 350)
+    %p= simple_format(idea.description)

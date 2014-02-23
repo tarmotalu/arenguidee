@@ -5,6 +5,6 @@
   %label
     %h2= t("activerecord.attributes.category.name")
     = errors_for @category, :name
-  = f.text_field :name
+  = f.text_field :name, :autofocus => @category.new_record?
 
   = f.submit

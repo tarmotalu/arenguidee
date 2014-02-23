@@ -523,6 +523,11 @@ center > form {
   }
 }
 
+center > form + menu {
+  margin-top: 30px;
+  text-align: right;
+}
+
 #idea-form {
   margin: 0 auto;
   max-width: 620px;

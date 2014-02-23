@@ -18,6 +18,9 @@ et:
       failed_to_connect: "Sisselogimine ebaõnnestus. Palun proovi uuesti."
 
   helpers:
+    confirm:
+      destroy: "Kindel?"
+
     select:
       prompt: "Palun vali"
 

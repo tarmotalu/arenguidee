@@ -105,7 +105,6 @@ class Idea < ActiveRecord::Base
   has_many :activities, :dependent => :destroy
 
   has_many :charts, :class_name => "IdeaChart", :dependent => :destroy
-  has_many :ads, :dependent => :destroy
   has_many :notifications, :as => :notifiable, :dependent => :destroy
 
   has_many :idea_status_change_logs, dependent: :destroy

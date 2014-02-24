@@ -7,12 +7,12 @@ set :branch, "master"
 set :git_cache, "shared/deploy"
 set :bundle_path, ".gem"
 
+# Links public/system manually below.
 set :shared_paths, %w[
   config/application.yml
   config/database.yml
   log
   tmp
-  public/system
 ]
 
 task :setup do
@@ -50,6 +50,10 @@ task :deploy do
     invoke "git:checkout"
 
     invoke "deploy:link_shared_paths"
+    # Link public/system manually because Mina wants to link it to
+    # shared/public/system instead of shared/system.
+    queue! %(ln -s "#{deploy_to}/#{shared_path}/system" "public/system")
+
     invoke "bundle:install"
     invoke "rails:db_migrate"
 

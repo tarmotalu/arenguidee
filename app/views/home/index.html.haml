@@ -50,7 +50,7 @@
           %a{:href => idea_path(idea)}
             %em> Ettepanek
             %span>
-              = idea.author_sentence + ","
+              = idea.author.name + ","
               %time= l(idea.published_at.to_date, :format => :long)
 
     :javascript

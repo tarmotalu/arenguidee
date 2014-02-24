@@ -169,6 +169,10 @@ class Idea < ActiveRecord::Base
     IdeaRevision.create_from_idea(self)
   end
 
+  def author
+    user
+  end
+
   def author_user
     self.author_users.order("idea_revisions.created_at ASC").first
   end

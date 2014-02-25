@@ -999,6 +999,7 @@ class IdeasController < ApplicationController
   def idea_params
     allowed_params = %w[name name description text category_id attachment]
     allowed_params.push "status" if current_user.admin?
+    allowed_params.push "author_name" if current_user.admin?
     params[:idea].slice(*allowed_params) if params[:idea]
   end
 end

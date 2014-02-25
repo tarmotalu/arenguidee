@@ -498,9 +498,14 @@ center > header {
 }
 
 center > form {
+  p {
+    font-size: 12px;
+  }
+
   p.errors {
     color: $red;
     margin-bottom: 30px;
+    font-size: 14px;
   }
 
   h2 ~ h2 {
@@ -562,6 +567,7 @@ center > form + menu {
   input[name="idea[name]"] { font-size: 17px }
   textarea[name="idea[description]"] { height: 130px }
   textarea[name="idea[text]"] { height: 250px }
+  input[name="idea[author_name]"] { max-width: 250px }
 
   .countdown {
     float: right;

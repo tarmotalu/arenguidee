@@ -11,6 +11,7 @@ class Idea < ActiveRecord::Base
   validates_exclusion_of :text, :in => [nil]
   validates_length_of :text, :maximum => 2500
   validates_inclusion_of :status, :in => %w[published pending removed]
+  validates_exclusion_of :author_name, :in => [nil]
 
   validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
 
@@ -170,7 +171,8 @@ class Idea < ActiveRecord::Base
   end
 
   def author
-    user
+    return user if author_name.blank?
+    @author ||= User.new(:first_name => author_name).tap(&:readonly!)
   end
 
   def author_user

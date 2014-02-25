@@ -4,6 +4,7 @@ development: &development
   facebook_app_id: ""
   facebook_app_secret: ""
   typekit: ""
+  admin_email: ""
 
 test: *development
 production: *development

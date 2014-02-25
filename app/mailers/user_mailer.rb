@@ -1,11 +1,5 @@
 class UserMailer < ActionMailer::Base
-    
   helper :application
-
-  # so DelayedJob will know how to make absolute urls
-  def url_options
-    { host: "https://www.rahvakogu.ee"}.merge(super)
-  end
 
   def welcome(user)
     @recipient = @user = user

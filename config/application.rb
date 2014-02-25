@@ -73,6 +73,8 @@ module Rahvakogu
     ActionView::Base.field_error_proc = proc do |html, instance_tag|
       ApplicationController.helpers.errorify_tag(html)
     end
+
+    config.action_mailer.default_url_options = {:host => "localhost"}
   end
 
   require 'open-uri'

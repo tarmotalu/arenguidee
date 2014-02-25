@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   before_filter :admin_required
 
   def index
-    @categories = Category.all.sort_by(&:name)
+    @categories = Category.sorted.all
   end
 
   def new

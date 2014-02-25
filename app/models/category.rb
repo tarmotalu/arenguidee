@@ -1,19 +1,20 @@
 class Category < ActiveRecord::Base
+  belongs_to :sub_instance
   has_many :ideas
   has_many :blog_posts
   has_many :activities, :order => "activities.created_at DESC, id DESC"
   belongs_to :page
   has_attached_file :icon, :styles => { :icon_32 => "32x32#", :icon_25 => "25x25#", :icon_40  => "40x40#", :icon_50  => "50x50#", :icon_100 => "100x100#" }
 
+  validates_presence_of :name
   validates_attachment_size :icon, :less_than => 5.megabytes
   validates_attachment_content_type :icon, :content_type => ['image/png']
   attr_accessible :blue_box_text, :name, :description, :page_id
 
-  validates_presence_of :name
-
-  belongs_to :sub_instance
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :name, :use => :slugged
+
+  scope :sorted, order("name ASC")
 
   def self.default_or_sub_instance
     if Category.count>0

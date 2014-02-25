@@ -4,7 +4,7 @@ class IssuesController < ApplicationController
 
   def index
     @page_title =  tr("Categories", "controller/issues")
-    @categories = Category.all
+    @categories = Category.sorted.all
     @sub_instance_tags = []
 
     respond_to do |format|

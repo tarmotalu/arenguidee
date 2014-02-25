@@ -677,7 +677,7 @@ class IdeasController < ApplicationController
     @idea ||= Idea.new
     @idea.category = Category.find(params[:category_id]) if params[:category_id]
     @idea.points.build
-    @categories = Category.all
+    @categories = Category.sorted.all
 
     if @ideas
       @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.map(&:id), current_user.id])

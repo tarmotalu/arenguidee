@@ -98,4 +98,29 @@ describe Idea do
       Idea.new(:status => "foo").tap(&:valid?).errors[:status].wont_be_empty
     end
   end
+
+  describe "#save" do
+    after { ActionMailer::Base.deliveries.clear }
+
+    it "must send a new idea email if pending" do
+      Idea.create!(
+        :name => "Love",
+        :status => "pending",
+        :category => Category.create!(:name => "Peace"),
+        :user => User.create!)
+
+      ActionMailer::Base.deliveries.size.must_equal 1
+      ActionMailer::Base.deliveries.last.subject.must_include "Uus idee"
+    end
+
+    it "must not send a new idea email if not pending" do
+      Idea.create!(
+        :name => "Love",
+        :status => "published",
+        :category => Category.create!(:name => "Peace"),
+        :user => User.create!)
+
+      ActionMailer::Base.deliveries.must_be_empty
+    end
+  end
 end

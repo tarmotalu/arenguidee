@@ -19,6 +19,7 @@ class Idea < ActiveRecord::Base
   validates_attachment_content_type :attachment, :content_type => allowed_types
 
   after_create :on_published_entry
+  after_create :send_email_to_admin, :if => :pending?
 
   scope :published, :conditions => "ideas.status = 'published'"
   scope :pending, :conditions => "ideas.status = 'pending'"
@@ -742,5 +743,9 @@ class Idea < ActiveRecord::Base
   def endorsement_by(user)
     endorsement = endorsements.active.find_by_user_id(user.id)
     endorsement if endorsement && endorsement.active?
+  end
+
+  def send_email_to_admin
+    AdminMailer.new_idea(self).deliver
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140219012952) do
+ActiveRecord::Schema.define(:version => 20140221042820) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -336,6 +336,7 @@ ActiveRecord::Schema.define(:version => 20140219012952) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.text     "text",                                    :default => "",          :null => false
+    t.string   "author_name",                             :default => "",          :null => false
   end
 
   add_index "ideas", ["category_id"], :name => "index_ideas_on_category_id"

@@ -472,7 +472,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    name = first_name + " " + last_name
+    name = (first_name + " " + last_name).strip
     name = email if name.blank?
     name = I18n.t("users.unnamed") if name.blank?
     name

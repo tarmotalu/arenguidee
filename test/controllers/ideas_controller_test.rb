@@ -70,6 +70,21 @@ describe IdeasController do
       }
       Idea.first.status.must_equal "pending"
     end
+
+    it "must not allow setting idea author name" do
+      post :create, :idea => {
+        :name => "Love all", :category_id => @category.id, :author_name => "Mia"
+      }
+      Idea.first.author_name.must_be_empty
+    end
+
+    it "must allow setting idea author name if admin" do
+      @user.update_attributes(:is_admin => true)
+      post :create, :idea => {
+        :name => "Love all", :category_id => @category.id, :author_name => "Mia"
+      }
+      Idea.first.author_name.must_equal "Mia"
+    end
   end
 
   describe "#edit" do

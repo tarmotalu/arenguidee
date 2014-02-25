@@ -44,6 +44,10 @@
       = f.radio_button :status, :pending
       = t("activerecord.attributes.idea.status_pending")
 
+    %h2 Autor
+    %p Kui idee tegelik autor on keegi teine, sisesta siia ta nimi.
+    = f.text_field :author_name
+
   = submit_tag "Esita oma arenguidee"
 
 :javascript

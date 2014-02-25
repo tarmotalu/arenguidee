@@ -99,6 +99,38 @@ describe Idea do
     end
   end
 
+  describe "#author_name" do
+    it "must default to blank" do
+      Idea.new.author_name.must_equal ""
+    end
+
+    it "must require existence" do
+      idea = Idea.new(:author_name => nil)
+      idea.tap(&:valid?).errors[:author_name].wont_be_empty
+    end
+
+    it "must be allowed blank" do
+      idea = Idea.new(:author_name => "")
+      idea.tap(&:valid?).errors[:author_name].must_be_empty
+      idea = Idea.new(:author_name => " ")
+      idea.tap(&:valid?).errors[:author_name].must_be_empty
+    end
+  end
+
+  describe "#author" do
+    it "must return user if no author name" do
+      user = User.new
+      Idea.new(:user => user).author.must_equal user
+    end
+
+    it "must return new readonly user if author name set" do
+      author = Idea.new(:user => User.new, :author_name => "John").author
+      author.name.must_equal "John"
+      author.new_record?.must_equal true
+      author.readonly?.must_equal true
+    end
+  end
+
   describe "#save" do
     after { ActionMailer::Base.deliveries.clear }
 

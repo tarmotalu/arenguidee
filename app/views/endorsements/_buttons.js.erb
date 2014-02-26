@@ -1,4 +1,4 @@
-document.getElementById("idea-<%= @idea.id %>-endorsements").innerHTML = "<%=
+document.getElementById("idea-<%= @idea.id %>-endorsements").outerHTML = "<%=
 	# This might be called from controllers other than EndorsementsController, so
 	# use full path for partial.
 	escape_javascript render(

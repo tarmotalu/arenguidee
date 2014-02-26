@@ -9,77 +9,29 @@
     - for_point = @point
     - against_point = Point.new
 
-%header#idea-header
-  = image_tag @idea.author.buddy_icon(:icon_80)
-  %br
-  %a{:href => url_for(@idea.author)}= @idea.author.name
+%article#idea
+  %aside
+    %a.author{:href => url_for(@idea.author)}
+      = image_tag @idea.author.buddy_icon(:icon_80)
+      = @idea.author.name
 
-  %h1= @idea.name
+    - published_at = @idea.published_at
+    %time{:title => published_at}= time_ago_in_words(published_at) + " tagasi"
 
-%section
-  = @idea.published_at.strftime("%d.%m.%Y")
-  = simple_format(@idea.description)
+    - if current_user && current_user.admin?
+      %menu
+        %li
+          %a{:href => edit_idea_path(@idea)} Muuda ideed
+
+  %header
+    %h1= @idea.name
+
+  %section
+    = simple_format(@idea.description)
+    = simple_format(@idea.text)
 
   - if @idea.attachment?
-    %a{:href => @idea.attachment.url}= @idea.attachment_file_name
+    %section.attachments
+      %a{:href => @idea.attachment.url}= @idea.attachment_file_name
 
-- if logged_in?
-  - if (@idea.user == current_user && @idea.is_editable?) || current_user.is_admin?
-    = link_to tr('edit this idea', '/views/ideas'), edit_idea_path(@idea)
-
-.faces_wrapper.clearfix{:id => "faces_wrapper_#{@idea.id.to_s}"}
-  .faces_for{:id => "faces_for_#{@idea.id.to_s}"}
-    - @idea.all_for.each do |face|
-      = link_to image_tag(face.buddy_icon(:icon_48)), face
-  .faces_against{:id => "faces_against_#{@idea.id.to_s}"}
-    - @idea.all_against.each do |face|
-      = link_to image_tag(face.buddy_icon(:icon_48)), face     
-
-.point_form{:id => "support_#{@idea.id.to_s}", :style => (for_point.value == 1  ? 'display: block;' : false)}
-  = tr("Why should people support this idea?", "views/ideas/form")
-  = form_for [@idea, for_point] do |point_form|
-    = point_form.error_messages      
-    .field
-      .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
-      = point_form.hidden_field :value, :value => "1"
-    .field
-      %span.characters
-        %span.form_header
-          = tr("Explain your point - ", "view/ideas/_form")
-        %span#pointContentDown_for
-        = tr("characters left", "view/ideas/_form")
-      .field_box= point_form.text_area :content, :id => 'pointContent_for', :button => 'submit', :class=>"point_field", :rows => 5, :maxLength => 1000
-
-    .field
-      .field_label= tr("Add a link to an external website", "views/ideas/form")
-      .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
-    .field
-      .field_box.blue= point_form.submit 'Lisan pooltargumendi'
-    
-.point_form.against{:id => "oppose_#{@idea.id.to_s}", :style => (against_point.value == -1  ? 'display: block;' : false)}
-  = tr("Why should people oppose this idea?", "views/ideas/form")
-
-  = form_for [@idea, against_point] do |point_form|
-    = point_form.error_messages 
-    .field
-      .field_box= point_form.text_field :name, :size => 40, :maxlength => 80, :class => "point_field"
-      = point_form.hidden_field :value, :value => "-1"
-    .field
-      %span.characters
-        %span.form_header
-          = tr("Explain your point - ", "view/ideas/_form")
-        %span#pointContentDown_opp
-        = tr("characters left", "view/ideas/_form")
-      .field_box= point_form.text_area :content, :id => 'pointContent_opp', :button => 'submit', :class=>"point_field", :rows => 5, :maxLength => 1000
-
-    .field
-      .field_label= tr("Add a link to an external website", "views/ideas/form")
-      .field_box= point_form.text_field :website, :size => 40, :class => "point_field"
-    .field
-      .field_box= point_form.submit 'Lisan vastuargumendi'  
-- unless @points_top_up.nil? || @points_top_down.nil?
-  .idea_wrapper
-    .col-left.clearfix
-      = render :partial => "points/short_list", :locals => {:newest_points=>true, :id => "pro_new", :points => @points_top_up, :numbering=>false}
-    .col-right
-      = render :partial => "points/short_list", :locals => {:points => @points_top_down, :numbering=>false}
+  = render "endorsements/buttons", {:idea => @idea}

@@ -1,26 +1,27 @@
-- endorsement = @endorsement
-- endorsement ||= idea.endorsement_by(current_user) if current_user
-
 - form = {}
 - form["method"] = "post"
 - form["data-remote"] = true
 
-- if endorsement && endorsement.up?
-  - up = form.merge("action" => url_for(endorsement), "method" => "delete")
-- else
-  - up = form.merge("action" => endorse_idea_path(idea))
-%form.endorse{up}
-  .count= idea.all_for.count
+- endorsement = @endorsement
+- endorsement ||= idea.endorsement_by(current_user) if current_user
 
-  - if current_user
-    %button(type="submit") Toetan
+%menu.idea-endorsements{:id => "idea-#{idea.id}-endorsements"}
+  - if endorsement && endorsement.up?
+    - up = form.merge("action" => url_for(endorsement), "method" => "delete")
+  - else
+    - up = form.merge("action" => endorse_idea_path(idea))
+  %form.endorse{up}>
+    .count= idea.all_for.count
 
-- if endorsement && endorsement.down?
-  - down = form.merge("action" => url_for(endorsement), "method"=>"delete")
-- else
-  - down = form.merge("action" => oppose_idea_path(idea))
-%form.oppose{down}
-  .count= idea.all_against.count
+    - if current_user
+      %button(type="submit") Toetan
 
-  - if current_user
-    %button(type="submit") Olen vastu
+  - if endorsement && endorsement.down?
+    - down = form.merge("action" => url_for(endorsement), "method"=>"delete")
+  - else
+    - down = form.merge("action" => oppose_idea_path(idea))
+  %form.oppose{down}>
+    .count= idea.all_against.count
+
+    - if current_user
+      %button(type="submit") Olen vastu

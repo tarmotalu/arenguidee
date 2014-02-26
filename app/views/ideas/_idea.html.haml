@@ -1,6 +1,5 @@
 %article
-  %menu.endorsements{:id => "idea-#{idea.id}-endorsements"}
-    = render "endorsements/buttons", {:idea => idea}
+  = render "endorsements/buttons", {:idea => idea}
 
   %header
     = image_tag idea.author.buddy_icon(:icon_40)
@@ -12,7 +11,7 @@
     .author
       %a(rel="author"){:href => url_for(idea.author)}= idea.author.name
       - published_at = idea.published_at
-      %time{:title => published_at}= time_ago_in_words(published_at)+" tagasi"
+      %time{:title => published_at}= time_ago_in_words(published_at) + " tagasi"
 
   %section
     %p= simple_format(idea.description)

@@ -24,6 +24,7 @@ $link: $red;
 $gray: #ccc;
 $dark-gray: #8b8b8b;
 $background: #444444;
+$gray-border: #dfdfdf;
 
 $open-sans: "Open Sans", sans-serif;
 // Minion Pro needs TypeKit.
@@ -391,9 +392,8 @@ center > header {
 }
 
 #ideas-list {
-  $border: #dfdfdf;
-  border-top: 2px solid $border;
-  border-bottom: 2px solid $border;
+  border-top: 2px solid $gray-border;
+  border-bottom: 2px solid $gray-border;
 
   article {
     padding: 40px 0 30px;
@@ -442,7 +442,7 @@ center > header {
     max-width: 240px;
   }
 
-  article + article { border-top: 2px solid $border; }
+  article + article { border-top: 2px solid $gray-border; }
 }
 
 #ideas-list .admin {
@@ -453,28 +453,8 @@ center > header {
   strong { font-weight: bold }
 }
 
-#ideas-list .endorsements {
+#ideas-list .idea-endorsements {
   text-align: right;
-
-  form {
-    text-align: right;
-    display: inline-block;
-  }
-
-  .oppose { margin-left: 40px }
-
-  .count {
-    padding-left: 35px;
-    background-repeat: no-repeat;
-    background-position: 0 center;
-
-    text-align: left;
-    font-size: 30px;
-    font-weight: bold;
-  }
-
-  .endorse .count { background-image: url(image_path("thumb-yes.png")) }
-  .oppose .count { background-image: url(image_path("thumb-no.png")) }
 
   // NOTE: The submit button may be hidden for signed out people, so add
   // margins to that instead of the count above to not have dangling margins.
@@ -483,25 +463,6 @@ center > header {
     // the whole idea is shorter than the endorsement buttons.
     margin-top: 15px;
     margin-bottom: 10px;
-
-    border: 0;
-    border-radius: 20px;
-    display: inline-block;
-    padding: 5px 10px;
-
-    color: white;
-    font-size: 12px;
-
-    cursor: pointer;
-    &:focus { outline: 0 }
-  }
-
-  .endorse button { background: #81b622 }
-  .oppose button { background: $link }
-
-  form.submitting .count {
-    background-image: url(image_path("loading.gif"));
-    background-size: 25px;
   }
 }
 
@@ -568,6 +529,70 @@ center > form + menu {
   text-align: right;
 }
 
+#idea {
+  margin-top: 65px;
+  overflow: hidden;
+
+  header,
+  section,
+  section + menu { margin-left: 80px + 40px }
+
+  header,
+  section { max-width: 660px }
+
+  h1 {
+    font-size: 32px;
+    text-align: left;
+  }
+
+  aside {
+    float: left;
+    max-width: 80px;
+    line-height: 1.4;
+    text-align: right;
+
+    .author {
+      display: block;
+      margin-bottom: 5px;
+
+      font-size: 14px;
+      font-weight: bold;
+      color: $black;
+
+      img { margin-bottom: 10px }
+    }
+
+    time {
+      font-size: 12px;
+      color: $dark-gray;
+    }
+
+    menu {
+      margin-top: 10px;
+      font-size: 12px;
+    }
+  }
+
+  section {
+    margin-top: 30px;
+
+    p { line-height: 1.5; color: $black; }
+    p + p { margin-top: 25px }
+  }
+
+  .idea-endorsements {
+    padding: 10px 0;
+    margin-top: 40px;
+    border-top: 2px solid $gray-border;
+    border-bottom: 2px solid $gray-border;
+    line-height: 30px;
+
+    form { width: 50% }
+    .count, button { vertical-align: middle }
+    .count { display: inline-block; margin-right: 15px; }
+  }
+}
+
 #idea-form {
   margin: 0 auto;
   max-width: 620px;
@@ -582,11 +607,6 @@ center > form + menu {
     font-weight: normal;
     text-transform: none;
   }
-}
-
-#idea-header {
-  text-align: center;
-  h1 { font-size: 28px }
 }
 
 body.categories #main > center {
@@ -690,6 +710,48 @@ body.categories #main > center {
 
   a { color: white }
   small { font-size: inherit }
+}
+
+.idea-endorsements {
+  form { display: inline-block }
+
+  // Use padding over margins so you could set widths to <form>s.
+  .oppose { padding-left: 40px }
+
+  .count {
+    padding-left: 35px;
+    background-repeat: no-repeat;
+    background-position: 0 center;
+
+    text-align: left;
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  .endorse .count { background-image: url(image_path("thumb-yes.png")) }
+  .oppose .count { background-image: url(image_path("thumb-no.png")) }
+
+  button {
+    border: 0;
+    border-radius: 20px;
+    display: inline-block;
+    padding: 5px 10px;
+    line-height: 1;
+
+    color: white;
+    font-size: 12px;
+
+    cursor: pointer;
+    &:focus { outline: 0 }
+  }
+
+  .endorse button { background: #81b622 }
+  .oppose button { background: $link }
+
+  form.submitting .count {
+    background-image: url(image_path("loading.gif"));
+    background-size: 25px;
+  }
 }
 
 * html .clearfix{

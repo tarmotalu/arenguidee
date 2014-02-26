@@ -13,7 +13,7 @@ describe UsersController do
       assert_redirected_to new_user_session_path
     end
 
-    it "must redirect to user's page if not same user" do
+    it "must redirect to user's page if not signed in user" do
       user = User.create!
       get :edit, :id => user.id
       assert_redirected_to user_path(user)
@@ -32,14 +32,14 @@ describe UsersController do
       assert_redirected_to user_path(user)
     end
 
-    it "must redirect to user's page if not same user" do
+    it "must redirect to user's page if not signed in user" do
       sign_in User.create!
       user = User.create!
       put :update, :id => user.id, :user => {:email => "other@example.org"}
       assert_redirected_to user_path(user)
     end
 
-    it "must not update if not same user" do
+    it "must not update if not signed in user" do
       sign_in User.create!
       user = User.create!(:email => "me@example.org")
       put :update, :id => user.id, :user => {:email => "other@example.org"}

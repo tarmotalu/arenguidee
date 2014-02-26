@@ -4,12 +4,12 @@ et:
       user:
         signed_up: "Tänud registreerimast"
     sessions:
-      signed_in: "Oled sisse loginud"
-      signed_out: "Oled välja loginud"
+      signed_in: ""
+      signed_out: ""
 
     failure:
       user:
-        unauthenticated: "Palun logi selleks sisse."
+        unauthenticated: ""
 
   users:
     unnamed: "Nimetu"

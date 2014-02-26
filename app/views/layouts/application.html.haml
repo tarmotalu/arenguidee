@@ -36,7 +36,9 @@
       #flash
         %center
           - [:warning, :notice, :alert, :error].each do |type|
-            - if flash[type]
+            -# Don't intentionally show set, yet empty messages. Devise
+            -# will still set empty translation strings.
+            - if flash[type].present?
               %p(class=type)= flash[type]
 
       %center= yield

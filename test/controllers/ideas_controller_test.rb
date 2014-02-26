@@ -94,7 +94,7 @@ describe IdeasController do
     end
 
     it "must redirect to root page if not admin" do
-      put :edit, :id => 1
+      get :edit, :id => 1
       assert_redirected_to root_path
     end
 
@@ -102,7 +102,7 @@ describe IdeasController do
       category = Category.create(:name => "World Peace")
       idea = Idea.create!(:user => @user, :category => category, :name => "X!")
       @user.update_attributes(:is_admin => true)
-      put :edit, :id => idea.id
+      get :edit, :id => idea.id
       assert_template "edit"
     end
   end

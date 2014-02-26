@@ -622,6 +622,19 @@ body.categories #main > center {
   }
 }
 
+#user-form {
+  margin: 0 auto;
+  max-width: 620px;
+
+  input[name="user[first_name]"],
+  input[name="user[last_name]"] {
+    max-width: 200px;
+    display: inline-block;
+  }
+
+  textarea[name="user[bio]"] { height: 200px }
+}
+
 #categories-list {
   li + li { margin-top: 15px; }
 

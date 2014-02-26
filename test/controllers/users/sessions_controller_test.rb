@@ -78,7 +78,7 @@ describe Users::SessionsController do
         User.create!(user_attrs)
         auth :facebook, omniauth_info
         assert_redirected_to new_user_session_path
-        request.flash.alert.must_include "Email"
+        request.flash.alert.must_include User.human_attribute_name("email")
       end
 
       it "must not sign in" do

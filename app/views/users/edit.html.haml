@@ -1,60 +1,24 @@
-.col-group
-  .col-2
-    .col-content
-      = render :partial => "users/profile_pic"
-      = render :partial => "users/profile_nav"
-  = form_for(@user) do |f|
-    .col-5
-      .col-content
-        = f.error_messages 
-        - if current_user.is_admin?
-          .field
-            .field_label= tr("First name", "view/users/edit")
-            .field_box= f.text_field :first_name, :size => 12
-            .field_label= tr("and Last name", "view/users/edit")
-            .field_box= f.text_field :last_name, :size => 15
-            / .small= tr("(Not displayed on the site)", "view/users/edit")
-        .field
-          .field_label= tr("Email address", "view/users/edit")
-          .field_box= f.text_field :email
-          .small= tr("(Never shared without your permission)", "view/users/edit")
-        / .field
-        /   .field_label= tr("How should you be identified on the site?", "view/users/edit")
-        /   .field_box= f.text_field :login, :maxlength => 40, :size => 30
-        /   .small= tr("(Can be your name, or a pseudonym)", "view/users/edit")
-        .field
-          / .field_box
-          /   = f.check_box :is_mergeable
-          /   = tr("Merge your ideas with others meaning the same thing", "view/users/edit")
-          .field_box
-            %h4= tr("Periodic updates on your ideas", "view/settings/signups")
-            = f.radio_button :report_frequency, 2
-            = tr("Weekly", "view/settings/signups")
-            = f.radio_button :report_frequency, 1
-            = tr("Monthly", "view/settings/signups")
-            = f.radio_button :report_frequency, 0
-            = tr("Never", "view/settings/signups")
-        .field
-          .field_label= tr("Organisation (optional)", "views/registrations/new")
-          .field_box= f.text_field :organisation
-        .field
-          .field_label= tr("Your title", "views/registraions/new")
-          .field_box= f.text_field :title   
-    .col-5
-      .col-content       
-        .field
-          .field_label= tr("Short biography (max. 500 characters)", "views/registrations/new")
-          .field_box= f.text_area :bio, :rows => 4            
-        .field
-          .field_label= tr("Your city", "view/users/edit")
-          .field_box= f.text_field :city
-        .field
-          .field_label= tr("Website", "view/users/edit")
-          .field_box= f.text_field :website
-        .field
-          .field_label= tr("Link to your social networking page", "views/registrations/new")
-        = f.text_field :social_network_url
-        / .field
-        /   .field_label= tr("Birth date", "view/users/edit")
-        /   .field_box= f.date_select :birth_date, :include_blank => true, :start_year => 1908, :end_year => 1996,  :order => [:month, :day, :year]
-    = f.submit tr("Save settings", "view/users/edit"), :class => "yellow_button"
+%header
+  %h1 Muuda profiili
+
+= form_for @user, :html => {:id => "user-form"} do |f|
+  = error_summary @user
+
+  - first_name = t("activerecord.attributes.user.first_name")
+  - last_name = t("activerecord.attributes.user.last_name")
+  %h2 #{first_name} ja #{last_name.downcase}
+  = errors_for @user, :first_name
+  = errors_for @user, :last_name
+  = f.text_field :first_name
+  = f.text_field :last_name
+
+  %h2= t("activerecord.attributes.user.email")
+  = errors_for @user, :email
+  = f.text_field :email
+
+  %h2= t("activerecord.attributes.user.bio")
+  %p Nähtav ainult Arenguidee meeskonnale.
+  = errors_for @user, :bio
+  = f.text_area :bio
+
+  = f.submit "Salvesta"

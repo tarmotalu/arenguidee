@@ -43,11 +43,12 @@ et:
     template:
       body: "Probleeme ilmnes järgmiste väljadega:"
       header:
-        one: "Esines üks viga %{model} juures"
-        other: "Esines %{count} viga %{model} juures"
+        one: "Kahjuks esines üks viga."
+        other: "Kahjuks esines %{count} viga."
 
   activerecord:
     models:
+      user: "Kasutaja"
       idea: "Idee"
       category: "Kategooria"
 
@@ -65,6 +66,11 @@ et:
         attachment_file_size: "Manuse suurus"
       category:
         name: "Nimi"
+      user:
+        first_name: "Eeesnimi"
+        last_name: "Perekonnanimi"
+        email: "E-post"
+        bio: "Lühike biograafia"
 
     errors:
       format: "%{attribute} %{message}"

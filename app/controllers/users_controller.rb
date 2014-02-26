@@ -26,40 +26,17 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-
-    unless current_user.is_admin?
-      if current_user != @user || check_for_suspension
-        redirect_to '/' and return
-      end
-    end
-    @page_title = tr("Changing settings for {user_name}", "controller/users", :user_name => @user.name)
+    return redirect_to url_for(@user) if current_user != @user
   end
 
   def update
     @user = User.find(params[:id])
-    unless current_user.is_admin?
-      if current_user != @user || check_for_suspension
-        redirect_to '/' and return
-      end
-    end
-    @page_title = tr("Changing settings for {user_name}", "controller/users", :user_name => @user.name)
-    unless current_user.is_admin?
-      params[:user].delete :first_name
-      params[:user].delete :last_name
-      params[:user].delete :is_admin
-      params[:user].delete :login
-    end
+    return redirect_to url_for(@user) if current_user != @user
 
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        flash[:notice] = tr("Saved settings for {user_name}", "controller/users", :user_name => @user.name)
-        @page_title = tr("Changing settings for {user_name}", "controller/users", :user_name => @user.name)
-        format.html { redirect_to @user }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
-      end
+    if @user.update_attributes(user_params)
+      redirect_to @user
+    else
+      render "edit", :status => :unprocessable_entity
     end
   end
 
@@ -389,5 +366,10 @@ class UsersController < ApplicationController
       flash[:error] = tr("That user deleted their account", "controller/users")
       return true
     end
+  end
+
+  def user_params
+    allowed_params = %w[first_name last_name email bio]
+    params[:user].slice(*allowed_params) if params[:user]
   end
 end

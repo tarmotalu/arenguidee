@@ -20,7 +20,7 @@
     - if controller_name == "ideas" and action_name == "show"
       = render :partial=>"ideas/fb_og_tags"
 
-  %body{:class => params[:controller]}
+  %body{:class => params[:controller].tr("/", "-")}
     #main
       %nav#nav
         %center

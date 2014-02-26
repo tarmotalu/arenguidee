@@ -14,8 +14,13 @@ et:
   users:
     unnamed: "Nimetu"
     sessions:
-      user_denied: "Sisselogimine katkestatud"
-      failed_to_connect: "Sisselogimine ebaõnnestus. Palun proovi uuesti."
+      user_denied: |
+        Sisselogimine katkestatud.
+        Kui soovisid sisse logida, palun proovi uuesti.
+      failed_to_connect: |
+        Sisselogimine ebaõnnestus. Palun proovi uuesti.
+      client_certificate_missing: |
+        Kahjuks ei õnnestunud ID-kaardiga autentida. Palun proovi uuesti.
 
   helpers:
     confirm:

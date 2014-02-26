@@ -584,6 +584,11 @@ center > form + menu {
   }
 }
 
+#idea-header {
+  text-align: center;
+  h1 { font-size: 28px }
+}
+
 body.categories #main > center {
   max-width: 620px;
 }

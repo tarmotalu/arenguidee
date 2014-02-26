@@ -14,6 +14,8 @@ Rahvakogu::Application.configure do
 
   # Let Nginx respond with static files:
   config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
+  Paperclip::Attachment.default_options[:url] =
+    "/:class/:id_partition/:attachment/:style/:filename"
 
   config.force_ssl = true
 

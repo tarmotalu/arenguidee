@@ -68,10 +68,10 @@ describe Idea do
       Idea.new(:text => " ").tap(&:valid?).errors[:text].must_be_empty
     end
 
-    it "must require length between 1 and 2500 characters" do
+    it "must require length between 1 and 5000 characters" do
       Idea.new(:text => "x").tap(&:valid?).errors[:text].must_be_empty
-      Idea.new(:text => "x" * 2500).tap(&:valid?).errors[:text].must_be_empty
-      Idea.new(:text => "x" * 2501).tap(&:valid?).errors[:text].wont_be_empty
+      Idea.new(:text => "x" * 5000).tap(&:valid?).errors[:text].must_be_empty
+      Idea.new(:text => "x" * 5001).tap(&:valid?).errors[:text].wont_be_empty
     end
   end
 

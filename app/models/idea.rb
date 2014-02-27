@@ -9,7 +9,7 @@ class Idea < ActiveRecord::Base
   validates_exclusion_of :description, :in => [nil]
   validates_length_of :description, :maximum => 500
   validates_exclusion_of :text, :in => [nil]
-  validates_length_of :text, :maximum => 2500
+  validates_length_of :text, :maximum => 5000
   validates_inclusion_of :status, :in => %w[published pending removed]
   validates_exclusion_of :author_name, :in => [nil]
 

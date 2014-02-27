@@ -20,7 +20,7 @@
       <strong id="idea-text-countdown"></strong> tähemärki veel järel.
     = t("activerecord.attributes.idea.text")
   = errors_for @idea, :text
-  = f.text_area :text, :maxlength => 2500
+  = f.text_area :text, :maxlength => 5000
 
   %h2= t("activerecord.attributes.idea.category")
   %select(name="idea[category_id]")

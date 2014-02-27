@@ -14,6 +14,10 @@ Rahvakogu::Application.configure do
 
   # Let Nginx respond with static files:
   config.action_dispatch.x_sendfile_header = "X-Accel-Redirect"
+
+  system = ":rails_root/public/system"
+  Paperclip::Attachment.default_options[:path] =
+    "#{system}/:class/:attachment/:id_partition/:style/:filename"
   Paperclip::Attachment.default_options[:url] =
     "/:class/:id_partition/:attachment/:style/:filename"
 

@@ -170,29 +170,18 @@ class PointsController < ApplicationController
 
   # POST /ideas/1/points
   def create
-    load_endorsement
-    @idea = Idea.find(params[:idea_id])
-    @point_value = 0
-    @points_top_up = @idea.points.published.by_helpfulness.up_value.five
-    @points_top_down = @idea.points.published.by_helpfulness.down_value.five
-    @points_new_up = @idea.points.published.by_recently_created.up_value.five.reject {|p| @points_top_up.include?(p)}
-    @points_new_down = @idea.points.published.by_recently_created.down_value.five.reject {|p| @points_top_down.include?(p)}
-    @total_up_points = @idea.points.published.up_value.count
-    @total_down_points = @idea.points.published.down_value.count
-    @total_up_points_new = [0,@total_up_points-@points_top_up.length].max
-    @total_down_points_new = [0,@total_down_points-@points_top_down.length].max
-    @point = @idea.points.new(params[:point])
+    @idea = Idea.find(params[:point][:idea_id])
+    @point = @idea.points.new(point_params)
     @point.user = current_user
-    @saved = @point.save
-    respond_to do |format|
-      if @saved
-        Revision.create_from_point(@point,request.remote_ip,request.env['HTTP_USER_AGENT'])
-        session[:goal] = 'point'
-        flash[:notice] = tr("Thanks for contributing your point", "controller/points")
-        @quality = @point.point_qualities.find_or_create_by_user_id_and_value(current_user.id,true)
-        format.html { redirect_to(idea_url(@idea)) }
-      else
-        format.html { render :template => "/ideas/show" }
+
+    if @point.save
+      respond_to do |format|
+        format.html { redirect_to idea_url(@idea) }
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.js { render :partial => "form", :locals => {:point => @point} }
       end
     end
   end
@@ -398,4 +387,9 @@ class PointsController < ApplicationController
       end
       @items
     end
+
+  def point_params
+    allowed_params = %w[value content]
+    params[:point].slice(*allowed_params) if params[:point]
+  end
 end

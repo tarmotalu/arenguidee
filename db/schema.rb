@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140221042820) do
+ActiveRecord::Schema.define(:version => 20140222143204) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -531,7 +531,7 @@ ActiveRecord::Schema.define(:version => 20140221042820) do
     t.integer  "revisions_count",                         :default => 0
     t.string   "status",                   :limit => 50
     t.string   "name"
-    t.text     "content"
+    t.text     "content",                                 :default => "",  :null => false
     t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"

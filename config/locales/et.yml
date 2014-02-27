@@ -64,8 +64,15 @@ et:
         attachment: "Manus"
         attachment_content_type: "Manuse tüüp"
         attachment_file_size: "Manuse suurus"
+
+      point:
+        value_up: "Pooltargument"
+        value_down: "Vastuargument"
+        content: "Sisu"
+
       category:
         name: "Nimi"
+
       user:
         first_name: "Eeesnimi"
         last_name: "Perekonnanimi"

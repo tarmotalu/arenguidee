@@ -1,0 +1,14 @@
+<% id = "points-#{@point.is_up? ? "up" : "down"}" %>
+var el = document.getElementById("<%= id %>")
+
+el.lastElementChild.insertAdjacentHTML("beforebegin", "<%=
+	escape_javascript render(
+		:partial => "point",
+		:formats => :html,
+		:locals => {:point => @point}
+	)
+%>")
+
+<%=
+	render "form", :point => Point.new(:value => @point.value, :idea => @idea)
+%>

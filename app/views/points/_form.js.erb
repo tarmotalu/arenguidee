@@ -1,0 +1,8 @@
+<% id = "point-#{point.is_up? ? "up" : "down"}-form" %>
+document.getElementById("<%= id %>").outerHTML = "<%=
+	escape_javascript render(
+		:partial => "form",
+		:formats => :html,
+		:locals => {:point => point}
+	)
+%>"

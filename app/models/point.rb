@@ -2,6 +2,8 @@
 class Point < ActiveRecord::Base
   belongs_to :sub_instance
 
+  validates_length_of :content, :within => 1..2500
+
   scope :published, :conditions => "points.status = 'published'"
   scope :by_helpfulness, :order => "points.score desc"
   scope :by_endorser_helpfulness, :conditions => "points.endorser_score > 0", :order => "points.endorser_score desc"
@@ -69,24 +71,14 @@ class Point < ActiveRecord::Base
   end
   
   cattr_reader :per_page
-  @@per_page = 15  
-  
+  @@per_page = 15
+
   def to_param
     "#{id}-#{name.parameterize_full}"
-  end  
-  
+  end
+
   after_destroy :delete_point_quality_activities
   before_destroy :remove_counts
-#  after_commit :setup_revision
-  before_save :ensure_request_and_user_are_set
-  
-  validates_length_of :name, :within => 5..60, :too_long => "has a maximum of 60 characters", :too_short => "please enter more than 5 characters"
-    #validates_uniqueness_of :name
-  # this is actually just supposed to be 500, but bumping it to 520 because the javascript counter doesn't include carriage returns in the count, whereas this does.
-  validates_length_of :content, :within => 5..1000, :too_long => "has a maximum of 500 characters", :too_short => "please enter more than 5 characters"
-
-  validates :name, :uniqueness => {:scope => [:user_id, :idea_id, :name, :value], :message => 'You have already made this argument.' }, :if => Proc.new { |point| point.status == 'published' }                                                   
-  validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
   after_create :on_published_entry
 
   include Workflow
@@ -144,19 +136,7 @@ class Point < ActiveRecord::Base
   def setup_revision
     Revision.create_from_point(self)
   end
- 
-  def ensure_request_and_user_are_set
-    if self.idea
-      self.ip_address = self.idea.ip_address if not self.ip_address
-      self.user_agent = self.idea.user_agent if not self.user_agent
-      self.user_id = self.idea.user_id if not self.user_id
-      Rails.logger.debug("SELF PRIORITY: #{pp self.idea.inspect}")
-    else
-      Rails.logger.error("No Idea for point id: #{self.id}")
-      puts "No Idea for point id: #{self.id}"
-    end
-  end
-  
+
   def on_buried_entry(new_state, event)
     remove_counts
     idea.save(:validate => false)

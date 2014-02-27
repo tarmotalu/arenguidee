@@ -1,0 +1,8 @@
+%article.point
+  = simple_format(point.content)
+
+  %footer
+    %a{:href => url_for(point.user)}= point.user.name
+    %br
+    - created_at = point.created_at
+    %time{:title => created_at}= time_ago_in_words(created_at) + " tagasi"

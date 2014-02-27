@@ -3,9 +3,16 @@ describe IdeasController do
 
   describe "#create" do
     before do
-      @category = Category.create!(:name => "World Peace")
       @user = User.create!
       sign_in @user
+
+      @category = Category.create!(:name => "World Peace")
+    end
+
+    it "must redirect to signin page if not signed in" do
+      sign_out @user
+      post :create, :idea => {:name => "Love", :category_id => @category.id}
+      assert_redirected_to new_user_session_path
     end
 
     it "must save idea" do

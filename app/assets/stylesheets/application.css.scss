@@ -9,7 +9,6 @@
 //= require ./side_navigation
 //= require ./sub_navigation
 //= require ./idea_navigation
-//= require ./debate
 //= require ./users
 //= require ./shared
 //= require ./search
@@ -466,7 +465,7 @@ center > header {
   }
 }
 
-center > form {
+form {
   p {
     font-size: 12px;
   }
@@ -516,7 +515,9 @@ center > form {
   }
 
   strong { font-weight: bold }
+}
 
+center > form {
   input[type=submit] {
     display: block;
     width: 100%;
@@ -529,13 +530,16 @@ center > form + menu {
   text-align: right;
 }
 
+#idea header,
+#idea section,
+#idea section + menu,
+#idea-points {
+ margin-left: 80px + 40px
+}
+
 #idea {
   margin-top: 65px;
   overflow: hidden;
-
-  header,
-  section,
-  section + menu { margin-left: 80px + 40px }
 
   header,
   section { max-width: 660px }
@@ -591,6 +595,55 @@ center > form + menu {
     .count, button { vertical-align: middle }
     .count { display: inline-block; margin-right: 15px; }
   }
+}
+
+#idea-points {
+  margin-top: 40px;
+
+  .positive,
+  .negative {
+    vertical-align: top;
+    display: inline-block;
+    width: 50%;
+  }
+
+  .positive { padding-right: 10px }
+  .negative { padding-left: 10px }
+
+  article { border-bottom: 2px solid $gray-border }
+  article + form { padding-top: 20px }
+
+  textarea {
+    display: block;
+    width: 100%;
+    height: 70px;
+    resize: vertical;
+    font-size: 14px;
+  }
+
+  input[type=submit] {
+    margin-top: 4px;
+    padding: 7px 15px;
+    font-size: 14px;
+    font-weight: 300;
+  }
+}
+
+article.point {
+  color: $black;
+  line-height: 1.4;
+  padding-bottom: 20px;
+
+  footer {
+    margin-top: 10px;
+
+    a {
+      color: inherit;
+      font-weight: bold;
+    }
+  }
+
+  & + article { padding-top: 20px }
 }
 
 #idea-form {

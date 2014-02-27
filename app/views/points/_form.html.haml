@@ -1,0 +1,11 @@
+- direction = point.is_up? ? "up" : "down"
+- id = "point-#{direction}-form"
+= form_for point, :remote => true, :html => {:id => id} do |f|
+  = f.hidden_field :idea_id
+  = f.hidden_field :value
+
+  - title = t("activerecord.attributes.point.value_#{direction}").downcase
+  %h2 Lisa #{title}
+  = errors_for point, :content
+  = f.text_area :content, :maxlength => 2500
+  = f.submit "Lisa " + title

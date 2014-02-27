@@ -3,20 +3,12 @@
     .col-content
       = render :partial => "users/profile_pic"
       = render :partial => "users/profile_nav"
+
   .col-10
     .col-content
       = render :partial => "users/profile_info"
+
       - unless @ideas.empty?
         %h2= @user.real_name + " tegi  " + (@ideas.count < 2 ? 'järgmise ettepaneku: ' :  'järgmised ettepanekud:') 
-        #propositions.users= render :partial => 'issues/ideas', :locals => {:ideas  => @ideas }
-      - unless @points.empty?
-        %h2= @user.real_name + " avaldas arvamust " + (@points.count < 2 ? 'järgmise ettepaneku kohta: ' :  'järgmiste ettepanekute kohta:') 
-        #user_points.users= render :partial => 'user_points', :locals => {:points  => @points, :user => @user}
-      - unless @supporting.empty?
-        %h2= @user.real_name + " häälitas  " + (@points.count < 2 ? 'järgmise ettepaneku kohta: ' :  'järgmiste ettepanekute kohta:') 
-        #supporting.users= render :partial => 'issues/ideas', :locals => {:ideas => @supporting.map(&:idea) }
-      -# = will_paginate(@ideas)
-      -# - if @ideas.any?
-      -#   - @ideas.each do |idea_endorsement|
-      -#     = render :partial=>"ideas/top_level_listing", :locals=>{:idea=>idea_endorsement.idea, :endorsements=>@endorsements}
-      -#     %div{:id => "idea_detail_#{idea_endorsement.idea.id}"}
+
+      = render :partial => 'ideas/idea', :collection => @ideas

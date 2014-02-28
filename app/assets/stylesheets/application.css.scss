@@ -141,7 +141,7 @@ center {
 
   #user-menu-button {
     float: left;
-    padding-left: 20px;
+    padding-left: 20px + 34px;
     padding-right: 20px;
 
     // Turning this into a zero-width button prevents it from pushing
@@ -152,7 +152,10 @@ center {
     text-transform: uppercase;
     font-size: 12px;
 
-    &.open { background: $nav-background }
+    background: url(image_path("icon-menu.svg")) 20px center no-repeat;
+    background-size: 20px;
+
+    &.open { background-color: $nav-background }
   }
 
   menu {

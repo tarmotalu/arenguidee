@@ -769,6 +769,9 @@ body.pages #main > center {
 
   header { margin-bottom: 40px }
   h1 { font-size: 70px }
+
+  line-height: 1.4;
+  p + p { margin-top: 20px }
 }
 
 #footer {

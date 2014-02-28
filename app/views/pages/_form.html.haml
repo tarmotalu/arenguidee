@@ -14,6 +14,7 @@
   %p
     Kui soovid lehele anda kindla aadressi, sisesta see siia. Vaikimisi luuakse
     aadress lehe pealkirjast.
+  = errors_for @page, :slug
   = f.text_field :slug
 
   %h2 Staatus

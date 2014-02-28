@@ -10,7 +10,6 @@
       %menu
         %a{:href => edit_category_path(category)} Muuda
         %a{:href => url_for(category),
-          "date-remote" => true,
           "data-method" => :delete,
           "data-confirm" => t("helpers.confirm.destroy")}
           Kustuta

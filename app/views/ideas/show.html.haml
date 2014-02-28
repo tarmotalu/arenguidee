@@ -10,7 +10,12 @@
     - if current_user && current_user.admin?
       %menu
         %li
-          %a{:href => edit_idea_path(@idea)} Muuda ideed
+          %a{:href => edit_idea_path(@idea)} Muuda
+        %li
+          %a{:href => url_for(@idea),
+            "data-method" => "delete",
+            "data-confirm" => t("helpers.confirm.destroy")}
+            Kustuta
 
   %header
     %h1= @idea.name

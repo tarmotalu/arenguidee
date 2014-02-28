@@ -5,7 +5,6 @@ class IdeasController < ApplicationController
     :comment,
     :consider,
     :create,
-    :destroy,
     :endorse,
     :endorsed,
     :flag_inappropriate,
@@ -22,6 +21,7 @@ class IdeasController < ApplicationController
   before_filter :authenticate_admin!, :only => [
     :bury,
     :compromised,
+    :destroy,
     :edit,
     :failed,
     :intheworks,
@@ -870,30 +870,10 @@ class IdeasController < ApplicationController
     end
   end
 
-  # DELETE /ideas/1
   def destroy
     @idea = Idea.find(params[:id])
-
-    return unless @idea
-    unless current_user.is_admin?
-      if current_user != @idea.user || check_for_suspension
-        redirect_to '/' and return
-      end
-      unless @idea.points.published.empty?
-        flash[:error] = tr("You cannot delete an idea once there are arguments for/against it.", "ideas")
-        redirect_to '/' and return
-      end
-      unless @idea.is_editable?
-        flash[:error] = tr('You cannot delete your idea after one hour has passed.', "ideas")
-        redirect_to '/' and return
-      end
-    end
-    name = @idea.name
-    @idea.remove!
-    flash[:notice] = tr("Permanently deleting {idea_name}. This may take a few minutes depending on how many endorsements/oppositions need to be removed.", "controller/ideas", :idea_name => name)
-    respond_to do |format|
-      format.html { redirect_to yours_created_ideas_url }
-    end
+    @idea.destroy
+    redirect_to ideas_path
   end
 
   def statistics

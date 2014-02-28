@@ -121,15 +121,15 @@ describe IdeasController do
       sign_in @user
     end
 
-    it "must update if admin" do
+    it "must redirect to signin page if not signed in" do
+      sign_out @user
       idea = Idea.create!(
         :user => @user, :category => @category, :name => "Peace!"
       )
-      @user.update_attributes(:is_admin => true)
       put :update, :id => idea.id, :idea => {:name => "War!"}
 
-      assert_redirected_to Idea.first
-      Idea.first.name.must_equal "War!"
+      assert_redirected_to new_user_session_path
+      Idea.first.name.must_equal "Peace!"
     end
 
     it "must redirect to root page if not admin" do
@@ -140,6 +140,17 @@ describe IdeasController do
 
       assert_redirected_to root_path
       Idea.first.name.must_equal "Peace!"
+    end
+
+    it "must update if admin" do
+      idea = Idea.create!(
+        :user => @user, :category => @category, :name => "Peace!"
+      )
+      @user.update_attributes(:is_admin => true)
+      put :update, :id => idea.id, :idea => {:name => "War!"}
+
+      assert_redirected_to Idea.first
+      Idea.first.name.must_equal "War!"
     end
 
     it "must render edit page when validation failed" do
@@ -169,6 +180,45 @@ describe IdeasController do
       )
       put :update, :id => idea.id, :idea => {:status => "published"}
       Idea.first.status.must_equal "pending"
+    end
+  end
+  
+  describe "#destroy" do
+    before do
+      @category = Category.create!(:name => "World Peace")
+      @user = User.create!
+      sign_in @user
+    end
+
+    it "must redirect to signin page if not signed in" do
+      sign_out @user
+      idea = Idea.create!(:user => @user, :category => @category, :name => "X")
+      delete :destroy, :id => idea.id
+      assert_redirected_to new_user_session_path
+      Idea.count.must_equal 1
+    end
+
+    it "must redirect to root page if not admin" do
+      idea = Idea.create!(:user => @user, :category => @category, :name => "X")
+      delete :destroy, :id => idea.id
+      assert_redirected_to root_path
+      Idea.count.must_equal 1
+    end
+
+    it "must delete idea if admin" do
+      idea = Idea.create!(
+        :user => @user, :category => @category, :name => "Peace!"
+      )
+      @user.update_attributes(:is_admin => true)
+      delete :destroy, :id => idea.id
+      Idea.count.must_equal 0
+    end
+
+    it "must redirect to ideas page" do
+      idea = Idea.create!(:user => @user, :category => @category, :name => "X")
+      @user.update_attributes(:is_admin => true)
+      delete :destroy, :id => idea.id
+      assert_redirected_to ideas_path
     end
   end
 end

@@ -30,7 +30,8 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin!
-    return if current_user && current_user.admin?
+    return authenticate_user! if !current_user
+    return if current_user.admin?
 
     respond_to do |format|
       format.html do

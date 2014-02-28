@@ -79,6 +79,7 @@ et:
         title: "Pealkiri"
         body: "Sisu"
         published: "Avaldatud"
+        slug: "Aadress"
 
       user:
         first_name: "Eeesnimi"

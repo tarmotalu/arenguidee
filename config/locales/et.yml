@@ -51,6 +51,8 @@ et:
       user: "Kasutaja"
       idea: "Idee"
       category: "Kategooria"
+      point: "Argument"
+      page: "Leht"
 
     attributes:
       idea:
@@ -72,6 +74,11 @@ et:
 
       category:
         name: "Nimi"
+
+      page:
+        title: "Pealkiri"
+        body: "Sisu"
+        published: "Avaldatud"
 
       user:
         first_name: "Eeesnimi"

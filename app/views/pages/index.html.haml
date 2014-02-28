@@ -1,18 +1,21 @@
-%h2 static pages
+%header
+  %h1 Staatilised lehed
 
-= link_to tr("create new page", 'views/pages'), new_page_path
-%table
-  %thead
-    %th #
-    %th title
-    %th actions
-  %tbody
-    - @pages.each do |page|
-      %tr
-        %td= page.id.to_s
-        %td= page.title
-        %td 
-          = link_to '[edit]', edit_page_path(page)
-          |
-          = link_to '[destroy]', page, :method => :delete, :confirm => 'Are you sure?'
-          
+%ul#pages-list
+  - @pages.each do |page|
+    %li.page
+      %h2
+        %a{:href => url_for(page)}
+          = page.title
+          = "(Avaldamata)" if !page.published?
+
+      %menu
+        %a{:href => edit_page_path(page)} Muuda
+        %a{:href => url_for(page),
+          "date-remote" => true,
+          "data-method" => :delete,
+          "data-confirm" => t("helpers.confirm.destroy")}
+          Kustuta
+
+%menu#pages-menu
+  %a(href=new_page_path) Uus leht

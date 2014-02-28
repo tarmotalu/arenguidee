@@ -1,26 +1,18 @@
-= nested_form_for (@page), :html => {:multipart => true } do  |f|
-  %p
-    Title of page:
-    = f.text_field :title
-  / %p
-  /   Slug of page (changing will break old URLs)
-  /   = f.text_field :slug
-  %p
-    Body of page. HTML is OK.
-    = f.text_area :body
-  %p
-    Publish as belonging to category:
-    = f.collection_select :category_id, Category.all, :id, :name, :include_blank => true
-  %p
-    Allow comments?
-    = f.check_box :is_commentable
-  %p
-    Optional PDF attachment:
-    = f.file_field :attachment
-  %p
-    Published?
+- html = {:multipart => true, :id => "page-form"}
+= form_for @page, :html => html do |f|
+  = error_summary @page
+
+  %h2= t("activerecord.attributes.page.title")
+  = errors_for @page, :title
+  = f.text_field :title
+
+  %h2= t("activerecord.attributes.page.body")
+  = errors_for @page, :body
+  = f.text_area :body
+
+  %h2 Staatus
+  %label.checkbox
     = f.check_box :published
-  %p
-    Allow as standalone page in /pages/:slug URL (do not check for footer)
-    = f.check_box :standalone
+    = t("activerecord.attributes.page.published")
+
   = f.submit

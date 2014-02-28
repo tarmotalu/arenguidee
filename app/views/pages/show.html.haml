@@ -1,29 +1,5 @@
-.page 
-  .page_title= @page.title
-  - if @page.attachment?
-    .download_link= link_to '[lae alla PDF]', @page.attachment.url
-  .page_left
-    = raw @page.body
-    - if @page.is_commentable
-      .page_comments
-        %h2 Kommentaarid
-        - if @page.pagecomments
-          - @page.pagecomments.each do |comment|
-            - next if comment.hidden == true
-            = render :partial => 'comment', :locals => {:comment => comment}
-        - if logged_in?
-          = render :partial => 'new_comment', :locals => {:page => @page}
-  .page_sidebar
-    - if @page.category.nil?
-      %b= tr("Latest activity", "pages/show")
-      - acts = Activity.includes(:idea).where('activities.user_id is not null AND activities.type  NOT LIKE "%Delete"').where("ideas.status = 'published'").by_recently_created.limit(6)
-      - link = new_idea_path
-    - else
-      %b= tr("Latest activity in {category_name}", "pages/show", :category_name => @page.category.name )
-      - acts = @page.category.activities.select{|x| !x.user_id.nil?}[0..5]
-      - link = new_category_idea_path(@page.category)
-    - acts.each do |activity|
-      .page_activity.clearfix
-        .person= image_tag activity.user.buddy_icon(:icon_40)
-        .activity= render :partial => "activities/#{activity[:type].downcase}", :locals => {:activity => activity}  
-    #proposal-index= link_to "Näita kõiki ettepanekuid", top_ideas_path , :class => :button
+%article#page
+  %header
+    %h1= @page.title
+
+  = raw @page.body

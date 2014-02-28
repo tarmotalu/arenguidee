@@ -2,7 +2,7 @@
   %h1 Arenguideede konkurss
 
 %section#home-banner
-  %a(href="#")
+  %a{:href => page_path("about")}
     %img{:src => path_to_image("banner.jpeg")}
 
   %blockquote<
@@ -43,7 +43,7 @@
       %p
         Enim vastukaja saanud ideed lähevad arutamisele Arenguideede
         konverentsil 21. aprillil 2014 Linnahallis.
-      %a(href="#") Loe lähemalt
+      %a{:href => page_path("about")} Loe lähemalt
 
 %section#home-highlights
   - if !@highlights.empty?

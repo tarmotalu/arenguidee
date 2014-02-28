@@ -2,11 +2,3 @@
   %h1= @category.name
 
 = render "form"
-
-%menu
-  %li
-    %a{:href => url_for(@category),
-      "date-remote" => true,
-      "data-method" => :delete,
-      "data-confirm" => t("helpers.confirm.destroy")}
-      Kustuta

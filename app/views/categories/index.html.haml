@@ -6,8 +6,14 @@
     %li
       %h2
         %a{:href => issue_path(category)}= category.name
+
       %menu
         %a{:href => edit_category_path(category)} Muuda
+        %a{:href => url_for(category),
+          "date-remote" => true,
+          "data-method" => :delete,
+          "data-confirm" => t("helpers.confirm.destroy")}
+          Kustuta
 
 %menu#categories-menu
-  %a.button.primary(href=new_category_path) Uus kategooria
+  %a(href=new_category_path) Uus kategooria

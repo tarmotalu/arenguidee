@@ -1,10 +1,7 @@
 - html = {:multipart => true, :id => "category-form"}
 = form_for @category, :html => html do |f|
-  = error_summary @category
-
-  %label
-    %h2= t("activerecord.attributes.category.name")
-    = errors_for @category, :name
+  %h2= t("activerecord.attributes.category.name")
+  = errors_for @category, :name
   = f.text_field :name, :autofocus => @category.new_record?
 
   = f.submit

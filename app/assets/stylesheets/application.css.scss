@@ -330,13 +330,15 @@ center > header {
 
 #home-outcome {
   float: right;
-  color: $black;
   text-align: center;
 
-  div {
+  a {
+    display: block;
     padding-top: 35px;
     padding-bottom: 25px;
+
     background: #e7e7e7;
+    color: $black;
   }
 
   p {
@@ -347,7 +349,8 @@ center > header {
     font-family: $minion-pro;
   }
 
-  a {
+  span {
+    color: $link;
     font-size: 12px;
     font-weight: 500;
   }

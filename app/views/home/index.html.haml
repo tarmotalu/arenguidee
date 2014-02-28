@@ -39,11 +39,11 @@
             %small #{idea.score}
 
   %section#home-outcome
-    %div
+    %a{:href => page_path("about")}
       %p
-        Enim vastukaja saanud ideed lähevad arutamisele Arenguideede
-        konverentsil 21. aprillil 2014 Linnahallis.
-      %a{:href => page_path("about")} Loe lähemalt
+        Arengufond annab maikuus võitjale aastase stipendiumi suurusega 2000
+        eurot kuus oma arenguidee teostamiseks.
+      %span Loe lähemalt
 
 %section#home-highlights
   - if !@highlights.empty?

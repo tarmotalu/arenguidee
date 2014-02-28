@@ -203,21 +203,43 @@ center > header {
 
 #home-banner {
   background: $background;
-  padding: 20px;
+  padding: 20px 20px 0;
   overflow: hidden;
 
-  color: darken(white, 7%);
-  font-size: 20px;
-  font-weight: 300;
+  color: darken(white, 10%);
   line-height: 1.4;
+  font-weight: 300;
 
   a {
     display: block;
     float: left;
+
+    padding-right: 20px;
     margin-right: 20px;
+    margin-bottom: 20px;
+
+    width: 50%;
   }
 
-  img { display: block }
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  blockquote {
+    font-size: 20px;
+
+    quotes: '"' '"';
+    &:before { content: open-quote }
+    &:after  { content: close-quote }
+  }
+
+  .author {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  strong { font-weight: bold }
 }
 
 #home-ideas {

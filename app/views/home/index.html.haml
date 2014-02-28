@@ -2,14 +2,18 @@
   %h1 Arenguideede konkurss
 
 %section#home-banner
-  %a(href="http://vimeo.com/56854479" rel="lightbox")
-    = image_tag("presidendi.intro.png")
-  :javascript
-    $("a[rel=lightbox]").prettyPhoto({social_tools: ""})
+  %a(href="#")
+    %img{:src => path_to_image("banner.jpeg")}
 
-  %p
-    Arengufondi eesmärk on toetada positiivseid muutusi Eesti majanduses
-    investeerimistegevuse, arenguseire- ja kasvuprogrammide kaudu.
+  %blockquote<
+    Mis oleks, kui me oma rahva ja riigina jätaksime ka enda eesmärkidele
+    rohkem hulljulget lõtku sisse? Annaks üksteisele ruumi katsetada ja
+    ebaõnnestuda, peaasi, et suund on see, milles kokku leppisime?
+
+  .author
+    %strong Sten Tamkivi
+    %br
+    Hääl mere tagant
 
 #home-ideas
   %section#home-new-idea

@@ -36,7 +36,6 @@
 //= require jquery.cookie
 //= require jquery.functions
 //= require jquery_nested_form
-//= require jquery.prettyPhoto
 //= require jquery.pageless.min
 //= require jquery.tools.min
 

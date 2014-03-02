@@ -611,6 +611,13 @@ center > form + menu {
     p { line-height: 1.5; color: $black; }
     p + p { margin-top: 25px }
   }
+
+  article.idea {
+    // No point in displaying the same profile image next to each idea as on
+    // the user page.
+    header img { display: none }
+    header { padding-left: 0 }
+  }
 }
 
 #idea ~ *,

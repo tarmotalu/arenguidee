@@ -6,7 +6,6 @@ gem "rails-i18n"
 gem "acts_as_list", "0.1.9"
 gem "auto_html", "1.5.1"
 gem "awesome_print"
-gem "backup", :require => false
 gem "daemons"
 gem "delayed_job"
 gem "delayed_job_active_record"

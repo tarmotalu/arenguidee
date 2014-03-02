@@ -36,11 +36,8 @@ Rahvakogu::Application.routes.draw do
   resources :news, :except => [:show]
 
   devise_for :users,
-    :controllers => {
-      :registrations => "users/registrations",
-      :omniauth_callbacks => "users/sessions"
-    },
-    :skip => [:sessions]
+    :controllers => {:omniauth_callbacks => "users/sessions"},
+    :skip => [:sessions, :registrations]
 
   devise_scope :user do
     controller "users/sessions" do

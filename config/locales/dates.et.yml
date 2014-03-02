@@ -31,10 +31,10 @@ et:
     - reede
     - laupäev
     formats:
-      default: ! '%d.%m.%Y'
-      long: ! '%d. %B %Y'
-      long_no_year: ! '%d. %B'
-      short: ! '%d.%m.%y'
+      default: '%d.%m.%Y'
+      long: '%-d. %B %Y'
+      long_no_year: '%d. %B'
+      short: '%d.%m.%Y'
     month_names:
     - 
     - jaanuar

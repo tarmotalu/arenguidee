@@ -53,6 +53,7 @@ et:
       category: "Kategooria"
       point: "Argument"
       page: "Leht"
+      news: "Uudis"
 
     attributes:
       idea:
@@ -86,6 +87,12 @@ et:
         last_name: "Perekonnanimi"
         email: "E-post"
         bio: "Lühike biograafia"
+
+      news:
+        title: "Pealkiri"
+        url: "Lingi aadress"
+        source: "Allikas"
+        date: "Kuupäev"
 
     errors:
       format: "%{attribute} %{message}"

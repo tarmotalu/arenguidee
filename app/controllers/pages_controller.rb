@@ -28,7 +28,7 @@ class PagesController < ApplicationController
   end
 
   def update
-    @page = Page.unscoped.find(params[:id])
+    @page = Page.find(params[:id])
 
     if @page.update_attributes(params[:page])
       redirect_to @page

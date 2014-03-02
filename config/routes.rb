@@ -33,6 +33,8 @@ Rahvakogu::Application.routes.draw do
     end
   end
 
+  resources :news, :except => [:show]
+
   devise_for :users,
     :controllers => {
       :registrations => "users/registrations",

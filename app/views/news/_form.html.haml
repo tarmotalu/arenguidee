@@ -1,0 +1,24 @@
+- html = {:multipart => true, :id => "news-form"}
+= form_for @news, :html => html do |f|
+  = error_summary @news
+
+  %h2= t("activerecord.attributes.news.title")
+  = errors_for @news, :title
+  = f.text_field :title
+
+  %h2= t("activerecord.attributes.news.url")
+  = errors_for @news, :url
+  = f.text_field :url
+
+  %h2= t("activerecord.attributes.news.source")
+  = errors_for @news, :source
+  = f.text_field :source
+
+  %h2= t("activerecord.attributes.news.date")
+  = errors_for @news, :date
+  = f.text_field :date, :value => @news.date.try(:strftime, "%b %-d, %Y")
+
+  = f.submit
+
+:javascript
+  $("#news_date").datepicker()

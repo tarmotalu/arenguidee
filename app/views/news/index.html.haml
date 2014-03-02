@@ -1,0 +1,22 @@
+%header
+  %h1 Uudised
+
+%ul#news-list
+  - @news.each do |news|
+    %li.news
+      %h2
+        %a{:href => news.url}= news.title
+
+      .source
+        = news.source
+        %time= l(news.date, :format => :long)
+
+      %menu
+        %a{:href => edit_news_path(news)} Muuda
+        %a{:href => url_for(news),
+          "data-method" => :delete,
+          "data-confirm" => t("helpers.confirm.destroy")}
+          Kustuta
+
+%menu#news-menu
+  %a(href=new_news_path) Uus uudis

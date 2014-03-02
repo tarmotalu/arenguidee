@@ -15,6 +15,7 @@
 //= require jquery.ui.button
 //= require jquery.ui.dialog
 //= require jquery.ui.slider
+//= require jquery.ui.datepicker
 //= require jquery.ui.tabs
 //= jquery.endless-scroll
 //= require facebox
@@ -38,6 +39,10 @@
 //= require jquery_nested_form
 //= require jquery.pageless.min
 //= require jquery.tools.min
+
+$.datepicker.setDefaults({
+  dateFormat: "M d, yy"
+})
 
 jQuery(function ($) {
   $.fn.extend({

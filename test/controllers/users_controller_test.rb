@@ -29,7 +29,7 @@ describe UsersController do
     it "must redirect to signin page if not signed in" do
       user = User.create!
       put :update, :id => user.id, :user => {:email => "other@example.org"}
-      assert_redirected_to user_path(user)
+      assert_redirected_to new_user_session_path
     end
 
     it "must redirect to user's page if not signed in user" do

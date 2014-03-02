@@ -49,51 +49,7 @@ Rahvakogu::Application.routes.draw do
     end
   end
 
-  resources :users, :except => [:new, :create, :destroy] do
-  	resource :profile
-
-  	collection do
-  	  get :endorsements
-  	  post :order
-  	end
-
-  	member do
-  	  put :suspend
-      put :unsuspend
-      get :activities
-      get :comments
-  	  get :points
-  	  get :discussions
-  	  get :capital
-  	  put :impersonate
-  	  get :followers
-  	  get :documents
-  	  get :ignorers
-  	  get :following
-  	  get :ignoring
-  	  post :follow
-  	  post :unfollow
-  	  put :make_admin
-  	  get :ideas
-  	  post :endorse
-    end
-
-    resources :followings do
-      collection do
-        put :multiple
-      end
-    end
-
-    resources :user_contacts, :as => "contacts" do
-      collection do
-        put :multiple
-        get :following
-        get :members
-        get :not_invited
-        get :invited
-      end
-    end
-  end
+  resources :users, :except => [:new, :create, :destroy]
 
   resources :settings do
     collection do

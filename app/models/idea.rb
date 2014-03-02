@@ -16,7 +16,20 @@ class Idea < ActiveRecord::Base
   validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
 
   validates_attachment_size :attachment, {:in => 0..25.megabytes}
-  allowed_types = [/^image\//, /^text\//] + %w[application/pdf]
+
+  allowed_types = []
+  allowed_types << /^image\//
+  allowed_types << /^text\//
+  allowed_types << /^audio\//
+  allowed_types << /^video\//
+  allowed_types << "application/pdf"
+  allowed_types << "application/zip"
+  # Microsoft Office
+  allowed_types << "application/msword"
+  allowed_types << /^application\/vnd\.ms-/
+  allowed_types << /^application\/vnd\.openxmlformats-/
+  # OpenOffice
+  allowed_types << /^application\/vnd\.oasis-/
   validates_attachment_content_type :attachment, :content_type => allowed_types
 
   after_create :on_published_entry

@@ -3,7 +3,6 @@ class IssuesController < ApplicationController
   before_filter :authenticate_user!, :only => [:minu]
 
   def index
-    @page_title =  tr("Categories", "controller/issues")
     @categories = Category.sorted.all
     @sub_instance_tags = []
 
@@ -34,7 +33,6 @@ class IssuesController < ApplicationController
     end
 
     @category = Category.find(params[:id])
-    @page_title = @category.name
 
     @ideas = @category.ideas.published
     @ideas = @ideas.send(scpe).paginate(:page => params[:page], :per_page => params[:per_page])

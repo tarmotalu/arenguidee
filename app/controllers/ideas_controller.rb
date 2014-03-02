@@ -66,7 +66,7 @@ class IdeasController < ApplicationController
   end
 
   def pending
-    @page_title = "Ootel ideed"
+    @title = "Ootel ideed"
     @ideas = Idea.pending.all
     render "admin"
   end
@@ -464,7 +464,6 @@ class IdeasController < ApplicationController
 
   def show
     @idea = Idea.find(params[:id])
-    @page_title = @idea.name
     @points_up = @idea.points.published.up_value.order("created_at ASC")
     @points_down = @idea.points.published.down_value.order("created_at ASC")
   end
@@ -640,22 +639,10 @@ class IdeasController < ApplicationController
     end
   end
 
-  # GET /ideas/new
-  # GET /ideas/new.xml
   def new
-    @page_title = "New idea"
+    @categories = Category.sorted.all
     @idea ||= Idea.new
     @idea.category = Category.find(params[:category_id]) if params[:category_id]
-    @idea.points.build
-    @categories = Category.sorted.all
-
-    if @ideas
-      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.map(&:id), current_user.id])
-    end
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   def edit

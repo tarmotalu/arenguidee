@@ -37,8 +37,8 @@ class Idea < ActiveRecord::Base
 
   scope :published, :conditions => "ideas.status = 'published'"
   scope :pending, :conditions => "ideas.status = 'pending'"
-
-  scope :unpublished, :conditions => "ideas.status not in ('published','abusive')"
+  scope :unpublished, :conditions => "ideas.status != 'published'"
+  scope :own, :conditions => "ideas.author_name = ''"
 
   scope :not_removed, :conditions => "ideas.status <> 'removed'"
 

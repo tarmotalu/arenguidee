@@ -27,7 +27,7 @@
   %header
     %h1= @idea.name
 
-  %section
+  %section.text
     = simple_format(@idea.description)
     = simple_format(@idea.text)
 
@@ -37,13 +37,13 @@
 
   = render "endorsements/buttons", {:idea => @idea}
 
-#idea-points
-  .positive#points-up>
-    = render :partial => "points/point", :collection => @points_up
-    - point = Point.new(:value => 1, :idea => @idea)
-    = render :partial => "points/form", :locals => {:point => point}
+  #idea-points
+    .positive#points-up>
+      = render :partial => "points/point", :collection => @points_up
+      - point = Point.new(:value => 1, :idea => @idea)
+      = render :partial => "points/form", :locals => {:point => point}
 
-  .negative#points-down>
-    = render :partial => "points/point", :collection => @points_down
-    - point = Point.new(:value => -1, :idea => @idea)
-    = render :partial => "points/form", :locals => {:point => point}
+    .negative#points-down>
+      = render :partial => "points/point", :collection => @points_down
+      - point = Point.new(:value => -1, :idea => @idea)
+      = render :partial => "points/form", :locals => {:point => point}

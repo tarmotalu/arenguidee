@@ -1,15 +1,17 @@
-.col-group
-  .col-2
-    .col-content
-      = render :partial => "users/profile_pic"
-      = render :partial => "users/profile_nav"
+%article#user
+  %aside
+    = image_tag @user.buddy_icon(:icon_80)
 
-  .col-10
-    .col-content
-      = render :partial => "users/profile_info"
+    %menu
+      - if current_user == @user
+        %li
+          %a{:href => edit_user_url(@user)} Muuda profiili
 
-      - if @ideas.any?
-        %h2= tr("{name} has created {count} ideas", "view/users/show", :name => @user.name, :count => @ideas.length)
+  %header
+    %h1= @user.name
 
-        #propositions.users
-          = render :partial => "ideas/idea", :collection => @ideas
+  %section
+    - if @ideas.empty?
+      %p Ei ole veel ühtegi ideed esitanud.
+    - else
+      #ideas-list= render :partial => "ideas/idea", :collection => @ideas

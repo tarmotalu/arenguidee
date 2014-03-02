@@ -42,26 +42,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    redirect_to '/' and return if check_for_suspension
-    @page_title = tr("{user_name} at {instance_name}", "controller/users", :user_name => @user.name, :instance_name => tr(current_instance.name,"Name from database"))
-    @ideas = Idea.where(:user_id => @user.id).published.top_rank
-    @endorsements = nil
-    get_following
-    if logged_in? # pull all their endorsements on the ideas shown
-      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.id},current_user.id])
-    end
-    @activities = @user.activities.active.by_recently_created.paginate :include => :user, :page => params[:page], :per_page => params[:per_page]
-
-    @endorsements = nil
-    if logged_in? # pull all their endorsements on the ideas shown
-      @endorsements = Endorsement.find(:all, :conditions => ["idea_id in (?) and user_id = ? and status='active'", @ideas.collect {|c| c.id},current_user.id])
-    end
-
-    respond_to do |format|
-      format.html
-      format.xml { render :xml => @user.to_xml(:methods => [:revisions_count], :include => [:top_endorsement, :referral, :sub_instance_referral], :except => NB_CONFIG['api_exclude_fields']) }
-      format.json { render :json => @user.to_json(:methods => [:revisions_count], :include => [:top_endorsement, :referral, :sub_instance_referral], :except => NB_CONFIG['api_exclude_fields']) }
-    end
+    @ideas = Idea.published.own.where(:user_id => @user.id)
   end
 
   def ideas

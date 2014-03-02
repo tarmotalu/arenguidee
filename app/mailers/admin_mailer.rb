@@ -1,6 +1,6 @@
 class AdminMailer < ActionMailer::Base
-  default :from => Rahvakogu.config["admin_email"]
-  default :to => Rahvakogu.config["admin_email"]
+  default :from => Arenguidee.config["admin_email"]
+  default :to => Arenguidee.config["admin_email"]
 
   def new_idea(idea)
     @idea = idea

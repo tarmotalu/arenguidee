@@ -1,4 +1,4 @@
-Rahvakogu::Application.routes.draw do
+Arenguidee::Application.routes.draw do
   resources :categories do
     resources :ideas
   end

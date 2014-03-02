@@ -65,7 +65,7 @@ class UserMailer < ActionMailer::Base
         1 => tr("Monthly", 'email')
     }
     freq = freq_to_word[frequency]
-    subject = tr("{frequency} status report from Rahvakogu", 'email', frequency: freq)
+    subject = tr("{frequency} status report from Arenguidee", 'email', frequency: freq)
     @instance = Instance.current
     @important = important
     @important_to_followers = important_to_followers

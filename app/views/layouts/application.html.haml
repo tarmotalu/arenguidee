@@ -10,7 +10,7 @@
     = render :partial => "shared/description"
     = render :partial => "shared/javascripts"
 
-    - if typekit = Rahvakogu.config["typekit"]
+    - if typekit = Arenguidee.config["typekit"]
       %script(src="//use.typekit.com/#{typekit}.js")
       %script try { Typekit.load() } catch (ex) {}
 

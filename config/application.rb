@@ -9,7 +9,7 @@ if defined?(Bundler)
   Bundler.require(:default, :assets, Rails.env)
 end
 
-module Rahvakogu
+module Arenguidee
   self.singleton_class.send :attr_accessor, :config
   self.config = YAML.load_file("config/application.yml")[Rails.env]
   self.config.each_key {|key| value = ENV[key.upcase] and config[key] = value }
@@ -17,7 +17,7 @@ module Rahvakogu
   class Application < Rails::Application
     require 'core_extensions'
 
-    config.secret_token = Rahvakogu.config["secret_token"]
+    config.secret_token = Arenguidee.config["secret_token"]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

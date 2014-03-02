@@ -141,8 +141,8 @@ function showSubNavLayer(layer) {
     }
 }
 
-if (typeof Rahvakogu == "undefined" || !Rahvakogu) {
-    var Rahvakogu = {};
+if (typeof Arenguidee == "undefined" || !Arenguidee) {
+    var Arenguidee = {};
 }
 
 /* Mobile ID check */
@@ -175,7 +175,7 @@ if (typeof Rahvakogu == "undefined" || !Rahvakogu) {
         };
     }();
     
-    Rahvakogu.MobileIdCheck = MobileIdCheck;
+    Arenguidee.MobileIdCheck = MobileIdCheck;
 })(jQuery);
 
 $(document).on("ajax:beforeSend", "form", function(ev) {

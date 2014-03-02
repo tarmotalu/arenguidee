@@ -4,10 +4,10 @@ Devise.setup do |config|
 
   config.case_insensitive_keys = [:email]
   config.authentication_keys = [:email]
-  config.pepper = Rahvakogu.config["pepper"]
+  config.pepper = Arenguidee.config["pepper"]
 
-  fb_app_id = Rahvakogu.config["facebook_app_id"]
-  fb_app_secret = Rahvakogu.config["facebook_app_secret"]
+  fb_app_id = Arenguidee.config["facebook_app_id"]
+  fb_app_secret = Arenguidee.config["facebook_app_secret"]
   fb_opts = {:scope => "email,user_about_me"}
   config.omniauth :facebook, fb_app_id, fb_app_secret, fb_opts
 

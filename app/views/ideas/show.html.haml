@@ -1,3 +1,10 @@
+- content_for :main do
+  #message
+    - if @idea.pending?
+      %p
+        Idee on <strong>ootel</strong> ja avaldatakse kohe, kui oleme selle üle
+        vaadanud! Täname idee esitamise eest!
+
 %article#idea
   %aside
     %a.author{:href => url_for(@idea.author)}

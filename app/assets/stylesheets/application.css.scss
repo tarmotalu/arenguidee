@@ -228,6 +228,7 @@ center > header {
 
   blockquote {
     font-size: 20px;
+    padding-right: 20px;
 
     quotes: '"' '"';
     &:before { content: open-quote }
@@ -235,8 +236,15 @@ center > header {
   }
 
   .author {
-    margin-top: 20px;
+    margin-top: 15px;
     margin-bottom: 20px;
+
+    img {
+      float: left;
+      height: 40px;
+      width: 40px;
+      margin-right: 15px;
+    }
   }
 
   strong { font-weight: bold }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140225022941) do
+ActiveRecord::Schema.define(:version => 20140302224042) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -571,16 +571,6 @@ ActiveRecord::Schema.define(:version => 20140225022941) do
   add_index "points", ["revision_id"], :name => "index_points_on_revision_id"
   add_index "points", ["status"], :name => "index_points_on_status"
   add_index "points", ["user_id"], :name => "index_points_on_user_id"
-
-  create_table "profiles", :force => true do |t|
-    t.integer  "user_id"
-    t.text     "bio"
-    t.text     "bio_html"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "profiles", ["user_id"], :name => "index_profiles_on_user_id"
 
   create_table "rankings", :force => true do |t|
     t.integer  "idea_id"

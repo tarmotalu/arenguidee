@@ -6,9 +6,9 @@
     %title #{@title and @title + " - "} Arenguidee
     = csrf_meta_tag
 
+    = stylesheet_link_tag "application"
     = render :partial => "shared/description"
     = render :partial => "shared/javascripts"
-    = render :partial => "shared/css"
 
     - if typekit = Rahvakogu.config["typekit"]
       %script(src="//use.typekit.com/#{typekit}.js")

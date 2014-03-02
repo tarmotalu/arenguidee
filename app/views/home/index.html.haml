@@ -45,6 +45,16 @@
         eurot kuus oma arenguidee teostamiseks.
       %span Loe lähemalt
 
+  %section#home-news
+    %h2 Uudised
+    %ol
+      - @news.each do |news|
+        %li
+          %a{:href => news.url}
+            = news.title
+            %strong= news.source
+            %time= news.date.strftime("%-d.%2m")
+
 %section#home-highlights
   - if !@highlights.empty?
     %ul

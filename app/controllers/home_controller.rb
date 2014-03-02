@@ -41,6 +41,7 @@ class HomeController < ApplicationController
   def index
     @categories = Category.sorted.all
     @ideas = Idea.published.top.limit(20).all(:include => :category)
+    @news = News.order("date DESC").all
     @highlights = Idea.published.random(3)
   end
 

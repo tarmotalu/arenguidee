@@ -6,6 +6,12 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def show
+    @user = User.find(params[:id])
+    @ideas = Idea.own.where(:user_id => @user.id)
+    @ideas = @ideas.published unless current_user == @user
+  end
+
   def edit
     @user = User.find(params[:id])
     return redirect_to url_for(@user) if current_user != @user
@@ -20,11 +26,6 @@ class UsersController < ApplicationController
     else
       render "edit", :status => :unprocessable_entity
     end
-  end
-
-  def show
-    @user = User.find(params[:id])
-    @ideas = Idea.published.own.where(:user_id => @user.id)
   end
 
   private

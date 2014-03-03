@@ -131,19 +131,34 @@ describe Users::SessionsController do
         User.first.login.must_equal "38002240211"
       end
 
-      it "must set name" do
+      it "must set titleized name" do
         auth :idcard, {
           :uid => "38002240211",
           :user_info => {
             :personal_code => "38002240211",
-            :first_name => "James III",
-            :last_name => "Cornwell",
+            :first_name => "JAMES LEE",
+            :last_name => "CORNWELL",
           }
         }
 
         user = User.first
-        user.first_name.must_equal "James III"
+        user.first_name.must_equal "James Lee"
         user.last_name.must_equal "Cornwell"
+      end
+
+      it "must set titleized umlauted name" do
+        auth :idcard, {
+          :uid => "38002240211",
+          :user_info => {
+            :personal_code => "38002240211",
+            :first_name => "ANDREWS",
+            :last_name => "MÖLSKÄ",
+          }
+        }
+
+        user = User.first
+        user.first_name.must_equal "Andrews"
+        user.last_name.must_equal "Mölskä"
       end
 
       it "must set name blank if not given" do
@@ -270,20 +285,36 @@ describe Users::SessionsController do
         User.first.login.must_equal "38002240211"
       end
 
-      it "must set name" do
+      it "must set titleized name" do
         auth_mobileid({
           :uid => "38002240211",
           :user_info => {
             :personal_code => "38002240211",
-            :first_name => "James III",
-            :last_name => "Cornwell",
+            :first_name => "JAMES LEE",
+            :last_name => "CORNWELL",
           },
           :read_pin => {:challenge_id => "1234", :session_code => "31337"}
         })
 
         user = User.first
-        user.first_name.must_equal "James III"
+        user.first_name.must_equal "James Lee"
         user.last_name.must_equal "Cornwell"
+      end
+
+      it "must set titleized umlauted name" do
+        auth_mobileid({
+          :uid => "38002240211",
+          :user_info => {
+            :personal_code => "38002240211",
+            :first_name => "ANDREWS",
+            :last_name => "MÖLSKÄ",
+          },
+          :read_pin => {:challenge_id => "1234", :session_code => "31337"}
+        })
+
+        user = User.first
+        user.first_name.must_equal "Andrews"
+        user.last_name.must_equal "Mölskä"
       end
 
       it "must set name blank if not given" do

@@ -36,8 +36,8 @@ class Users::SessionsController < Devise::SessionsController
       # NOTE: Omniauth::Idcard returns extra info in the "user_info" property
       # while the standard seems to be "info".
       :login => info["uid"],
-      :first_name => info["user_info"]["first_name"] || "",
-      :last_name => info["user_info"]["last_name"] || ""
+      :first_name => (info["user_info"]["first_name"] || "").mb_chars.titleize,
+      :last_name => (info["user_info"]["last_name"] || "").mb_chars.titleize
     })
 
     if user.persisted? or user.save
@@ -59,8 +59,8 @@ class Users::SessionsController < Devise::SessionsController
 
     user = User.where(:login => info["uid"]).first || User.new({
       :login => info["uid"],
-      :first_name => info["user_info"]["first_name"] || "",
-      :last_name => info["user_info"]["last_name"] || ""
+      :first_name => (info["user_info"]["first_name"] || "").mb_chars.titleize,
+      :last_name => (info["user_info"]["last_name"] || "").mb_chars.titleize
     })
 
     if user.persisted? or user.save

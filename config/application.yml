@@ -5,6 +5,8 @@ development: &development
   facebook_app_secret: ""
   typekit: ""
   admin_email: ""
+  mobileid_endpoint_url: "https://openxades.org:8443/DigiDocService"
+  mobileid_service_name: "Testimine"
 
 test: *development
 production: *development

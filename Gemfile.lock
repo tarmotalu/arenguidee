@@ -79,6 +79,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
     daemons (1.1.9)
     delayed_job (4.0.0)
       activesupport (>= 3.0, < 4.1)
@@ -90,6 +92,12 @@ GEM
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
+    digidoc_client (0.1.1)
+      crack (>= 0.1.8)
+      httpclient (>= 2.2.4)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.4.0)
+      savon (>= 0.9.7)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -115,6 +123,7 @@ GEM
       railties (>= 3.2.0, < 5.0)
     htmldiff (0.0.1)
     htmlentities (4.3.1)
+    httpclient (2.3.4.1)
     httpi (1.1.1)
       rack
     i18n (0.6.9)
@@ -169,6 +178,9 @@ GEM
     omniauth-facebook (1.6.0)
       omniauth-oauth2 (~> 1.1)
     omniauth-idcard (0.2.3)
+      omniauth-oauth (~> 1.0)
+    omniauth-mobileid (0.1.2)
+      digidoc_client (~> 0.1)
       omniauth-oauth (~> 1.0)
     omniauth-oauth (1.0.1)
       oauth
@@ -226,6 +238,7 @@ GEM
     riddle (1.5.6)
     rinku (1.5.1)
     rmagick (2.13.2)
+    safe_yaml (1.0.1)
     sass (3.2.14)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -262,6 +275,7 @@ GEM
       riddle (>= 1.5.3)
     thor (0.18.1)
     tilt (1.4.1)
+    timecop (0.7.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -324,6 +338,7 @@ DEPENDENCIES
   oauth
   omniauth-facebook (>= 1.5.1)
   omniauth-idcard (~> 0.2.1)
+  omniauth-mobileid
   paperclip
   rails (>= 3.2.16, < 4)
   rails-dev-boost
@@ -331,13 +346,14 @@ DEPENDENCIES
   randumb
   rmagick
   sass-rails
-  savon (= 1.2.0)
+  savon (>= 1.2.0, < 2)
   sqlite3
   sunlight
   sys-filesystem
   therubyracer (~> 0.10.2)
   thin
   thinking-sphinx (= 2.0.13)
+  timecop
   tr8n!
   truncate_html
   uglifier

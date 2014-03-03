@@ -12,6 +12,11 @@ Devise.setup do |config|
   config.omniauth :facebook, fb_app_id, fb_app_secret, fb_opts
 
   config.omniauth :idcard
+
+  mobileid = {}
+  mobileid[:endpoint_url] = Arenguidee.config["mobileid_endpoint_url"]
+  mobileid[:service_name] = Arenguidee.config["mobileid_service_name"]
+  config.omniauth :mobileid, mobileid
 end
 
 # Nginx passes $ssl_client_cert with indented lines which breaks
@@ -24,3 +29,7 @@ class OmniAuth::Strategies::Idcard
   end
   alias_method_chain :parse_client_certificate, :strip_lines
 end
+
+# Mobile-ID will otherwise throw an exception when giving it an invalid mobile
+# number.
+Savon.configure {|savon| savon.raise_errors = false }

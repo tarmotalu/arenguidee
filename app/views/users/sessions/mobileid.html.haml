@@ -1,0 +1,25 @@
+%center#signin-mobileid
+  %header
+    %h1 Mobiil-ID
+
+  %h2
+    Kontrollkood
+    %strong= @challenge_id
+
+  %p
+    Palun kontrolli, kas näed telefonil <strong>sama
+    kontrollikoodi.</strong><br>
+    Seejärel sisesta Mobiil-ID <strong>PIN 1</strong>.
+
+  - attrs = {:id => "mobileid-pin", :remote => true}
+  = form_tag user_omniauth_authorize_path(:mobileid), attrs do
+    = hidden_field_tag :session_code, @session_code
+    = hidden_field_tag :info, @info
+
+:javascript
+  ;(function() {
+    var el = document.getElementById("mobileid-pin")
+    function next() { setTimeout(function() { $(el).submit() }, 1337) }
+    $(el).on("ajax:success", next)
+    next()
+  })()

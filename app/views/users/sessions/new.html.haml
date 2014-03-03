@@ -1,4 +1,12 @@
-%header
-  %h1 Palun logi sisse
+- @title = "Logi sisse"
 
-%menu#signin-menu= render "form"
+%center#signin
+  %header
+    %h1 Palun logi sisse
+
+  %menu= render "form"
+
+  = form_tag user_omniauth_authorize_path(:mobileid), :id => "mobileid" do
+    %h2 Mobiil-ID
+    %input(name="phone" type="tel" placeholder="Telefoninumber" value=@phone)
+    %input(type="submit" value="Sisene Mobiil-ID-ga")

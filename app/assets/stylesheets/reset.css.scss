@@ -51,13 +51,18 @@ table {
 
 li { list-style: none }
 
+input, textarea {
+  margin: 0;
+  font-family: inherit;
+}
+
+input[type=submit] {
+  line-height: 1;
+}
+
 button {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
   background: none;
-}
-
-input, textarea {
-  margin: 0;
 }

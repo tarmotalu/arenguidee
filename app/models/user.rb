@@ -3,7 +3,7 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
   include Workflow
   include Rails.application.routes.url_helpers
-  devise :omniauthable, :omniauth_providers => [:facebook, :idcard]
+  devise :omniauthable, :omniauth_providers => [:facebook, :idcard, :mobileid]
 
   attr_accessible :buddy_icon
 

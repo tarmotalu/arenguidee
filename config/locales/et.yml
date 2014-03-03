@@ -8,6 +8,7 @@ et:
       signed_out: ""
 
     failure:
+      already_authenticated: "Oled juba sisse loginud."
       user:
         unauthenticated: ""
 
@@ -21,6 +22,25 @@ et:
         Sisselogimine ebaõnnestus. Palun proovi uuesti.
       client_certificate_missing: |
         Kahjuks ei õnnestunud ID-kaardiga autentida. Palun proovi uuesti.
+
+      mobileid:
+        error_101: Sisselogimine ebaõnnestus. Palun proovi uuesti.
+        error_102: Telefoninumber jäi tühjaks. Palun proovi uuesti.
+        error_301: Telefoninumber ei paista kahjuks olevat Mobiil-ID kasutaja.
+        error_302: Mobiil-ID sertifikaadid on aegunud.
+        error_303: Telefoninumbril ei paista Mobiil-ID aktiveeritud olevat.
+        error_internal_error: Tehniline rike. Palun proovi hiljem uuesti.
+        error_sim_error: SIM-kaardi tehniline rike. Palun proovi uuesti.
+        error_phone_absent: |
+          Telefon levipiirkonnast väljast. Palun proovi uuesti.
+
+        error_user_cancel: |
+          Sisselogimine katkestatud.
+          Kui soovisid sisse logida, palun proovi uuesti.
+
+        error_mid_not_ready: |
+          Mobiil-ID sel telefoninumbril ei ole veel aktiivne.
+          Palun proovi varsti uuesti.
 
   helpers:
     confirm:

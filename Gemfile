@@ -27,10 +27,10 @@ gem "nested_form", :git => "git://github.com/ryanb/nested_form.git"
 gem "nokogiri"
 gem "oauth"
 gem "omniauth-idcard", "~> 0.2.1"
+gem "omniauth-mobileid"
 gem "paperclip"
 gem "randumb"
 gem "rmagick", require: false
-gem "savon", "1.2.0"
 gem "sqlite3"
 gem "sunlight"
 gem "sys-filesystem"
@@ -46,6 +46,10 @@ gem "workflow"
 # Versions < 1.5.1 are vulnerable.
 gem "omniauth-facebook", ">= 1.5.1"
 
+# Digidoc::Client gem has no upper-bounds on dependencies, yet does not work
+# with the latest versions.
+gem "savon", ">= 1.2.0", "< 2"
+
 group :development do
   gem "better_errors"
 
@@ -58,6 +62,7 @@ group :test do
   gem "minitest"
   gem "minitest-rails"
   gem "minitest-reporters"
+  gem "timecop"
 
   # No need to depend on Guard. Whoever wants it can install it themselves
   # with their preferred Rails preloader like Spring or Zeus.

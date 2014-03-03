@@ -58,8 +58,6 @@ class User < ActiveRecord::Base
   belongs_to :sub_instance_referral, :class_name => "SubInstance", :foreign_key => "sub_instance_referral_id"
   belongs_to :top_endorsement, :class_name => "Endorsement", :foreign_key => "top_endorsement_id", :include => :idea
 
-  has_one :profile, :dependent => :destroy
-
   has_many :unsubscribes, :dependent => :destroy
   has_many :signups
   has_many :sub_instances, :through => :signups

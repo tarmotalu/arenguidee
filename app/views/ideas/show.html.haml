@@ -33,9 +33,15 @@
     = simple_format(@idea.description)
     = simple_format(@idea.text)
 
+  - if @idea.video_url.present?
+    %section.video
+      Vaata videot:
+      %a{:href => @idea.video_url, target: '_blank'}
+        =@idea.video_url
+
   - if @idea.attachment?
     %section.attachments
-      %a{:href => @idea.attachment.url}= @idea.attachment_file_name
+      %a{:href => @idea.attachment.url}=@idea.attachment_file_name
 
   = render "endorsements/buttons", {:idea => @idea}
 

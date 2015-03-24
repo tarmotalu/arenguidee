@@ -9,11 +9,10 @@ module ApplicationHelper
     unless logged_in?
 
       if args.third.nil?
-        args.push({:class => 'form_overlay', :rel => "#login_overlay"})
+        args.push({:class => 'form_overlay', :rel => "#login_overlay", :onClick =>  "return false;" })
 
-        args.push({:onClick =>  "return false;" })
       else
-        args.third.merge!({:class => 'form_overlay', :rel => "#login_overlay"}) {|k, o, n| o.to_s + " " + n.to_s}
+        args.third.merge!({:class => 'form_overlay', :rel => "#login_overlay", :onClick => "return false;"}) {|k, o, n| o.to_s + " " + n.to_s}
         args.third.merge!({:remote => false })
         args.third.merge!({:method => false })
         # args.third.merge!({:onClick => nil, :onclick => nil})
@@ -22,7 +21,7 @@ module ApplicationHelper
               args.third[y] = nil
             end
         }
-        args.third.merge!({:onClick => "return false;"})
+ 
       end
     end
     link_to *args, &block

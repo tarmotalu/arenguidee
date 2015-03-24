@@ -40,7 +40,8 @@ class HomeController < ApplicationController
 
   def index
     @categories = Category.sorted.all
-    @ideas = Idea.published.top.limit(20).all(:include => :category)
+    @popular = Idea.published.top.limit(15).all(:include => :category)
+    @new_ideas = Idea.published.limit(15).order('created_at DESC').all(:include => :category)
     @news = News.order("date DESC").all
     @highlights = Idea.published.random(3)
   end

@@ -9,7 +9,13 @@ gem "awesome_print"
 gem "daemons"
 gem "delayed_job"
 gem "delayed_job_active_record"
-gem "devise", "2.1.2"
+#gem "devise", "2.1.2"
+gem 'devise', '3.2.2'
+gem 'omniauth-idcard', '0.2.3'
+gem 'omniauth-mobileid', '0.3.1'
+gem "digidoc_client", "0.2.1"
+#gem "omniauth-idcard", "~> 0.2.1"
+#gem "omniauth-mobileid"
 gem "friendly_id", "4.0.9"
 gem "geoip"
 gem "googlecharts"
@@ -26,8 +32,6 @@ gem "kgio"
 gem "nested_form", :git => "git://github.com/ryanb/nested_form.git"
 gem "nokogiri"
 gem "oauth"
-gem "omniauth-idcard", "~> 0.2.1"
-gem "omniauth-mobileid"
 gem "paperclip"
 gem "randumb"
 gem "rmagick", require: false
@@ -46,16 +50,13 @@ gem "workflow"
 # Versions < 1.5.1 are vulnerable.
 gem "omniauth-facebook", ">= 1.5.1"
 
-# Digidoc::Client gem has no upper-bounds on dependencies, yet does not work
-# with the latest versions.
-gem "savon", ">= 1.2.0", "< 2"
-
 group :development do
   gem "better_errors"
 
   # Dev-Boost reloads files as they're changed and not before a request as
   # Rails (supposedly) does and thereby speeds up pageloads.
   gem "rails-dev-boost"
+  gem "mysql2"
 end
 
 group :test do

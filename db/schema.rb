@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140302224042) do
+ActiveRecord::Schema.define(:version => 20150324125243) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -274,7 +274,7 @@ ActiveRecord::Schema.define(:version => 20140302224042) do
     t.integer  "position",                                :default => 0,           :null => false
     t.integer  "user_id"
     t.string   "name",                                    :default => "",          :null => false
-    t.text     "description",                             :default => "",          :null => false
+    t.text     "description"
     t.integer  "endorsements_count",                      :default => 0,           :null => false
     t.string   "status",                                  :default => "published", :null => false
     t.string   "ip_address",               :limit => 16
@@ -335,8 +335,9 @@ ActiveRecord::Schema.define(:version => 20140302224042) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.text     "text",                                    :default => "",          :null => false
+    t.text     "text",                                                             :null => false
     t.string   "author_name",                             :default => "",          :null => false
+    t.string   "video_url"
   end
 
   add_index "ideas", ["category_id"], :name => "index_ideas_on_category_id"
@@ -456,6 +457,7 @@ ActiveRecord::Schema.define(:version => 20140302224042) do
     t.date     "date",                       :null => false
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+    t.text     "excerpt"
   end
 
   create_table "notifications", :force => true do |t|
@@ -496,7 +498,7 @@ ActiveRecord::Schema.define(:version => 20140302224042) do
   create_table "pages", :force => true do |t|
     t.string   "slug"
     t.string   "title",                   :default => "",   :null => false
-    t.text     "body",                    :default => "",   :null => false
+    t.text     "body",                                      :null => false
     t.boolean  "published",               :default => true, :null => false
     t.boolean  "standalone"
     t.datetime "created_at",                                :null => false
@@ -540,7 +542,7 @@ ActiveRecord::Schema.define(:version => 20140302224042) do
     t.integer  "revisions_count",                         :default => 0
     t.string   "status",                   :limit => 50
     t.string   "name"
-    t.text     "content",                                 :default => "",  :null => false
+    t.text     "content",                                                  :null => false
     t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"

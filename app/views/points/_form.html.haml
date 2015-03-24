@@ -7,5 +7,20 @@
   - title = t("activerecord.attributes.point.value_#{direction}").downcase
   %h2 Lisa #{title}
   = errors_for point, :content
-  = f.text_area :content, :maxlength => 2500
+  = f.text_area :content, :maxlength => 2500, :disabled => (user_signed_in? ? false : :disabled)
   = f.submit "Lisa " + title
+
+- unless user_signed_in?
+  :javascript 
+    $("form##{id} input[type=submit]").click(function() {
+      $('#login_overlay').overlay({
+      load: true, 
+      left: '400px',
+      closeOnClick: true,
+      mask: {
+        color: '#ebecff',
+        loadSpeed: 200,
+        opacity: 0.9
+      }
+    });
+    });

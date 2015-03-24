@@ -5,6 +5,7 @@ class Users::SessionsController < Devise::SessionsController
   skip_before_filter :update_loggedin_at
   skip_before_filter :check_blast_click
 
+  
   prepend_before_filter :only => [:facebook, :idcard, :mobileid, :failure] do
     request.env["devise.skip_timeout"] = true
   end
@@ -23,7 +24,8 @@ class Users::SessionsController < Devise::SessionsController
     })
 
     if user.persisted? or user.save
-      sign_in_and_redirect user
+      sign_in user
+      redirect_to root_path
     else
       flash.alert = user.errors.full_messages.join("\n")
       redirect_to new_user_session_path
@@ -41,7 +43,9 @@ class Users::SessionsController < Devise::SessionsController
     })
 
     if user.persisted? or user.save
-      sign_in_and_redirect user
+      sign_in user
+      #sign_in_and_redirect user
+      redirect_to root_path
     else
       flash.alert = user.errors.full_messages.join("\n")
       redirect_to new_user_session_path
@@ -98,7 +102,7 @@ class Users::SessionsController < Devise::SessionsController
       @session_code = info["read_pin"]["session_code"]
       @challenge_id = info["read_pin"]["challenge_id"]
 
-      info = info.to_hash.slice(*%w[uid user_info read_pin])
+      info = info.slice(*%w[uid user_info read_pin])
       info["time"] = Time.now
       @info = encryptor.encrypt_and_sign(info)
     end
@@ -114,6 +118,8 @@ class Users::SessionsController < Devise::SessionsController
       ActiveSupport::MessageEncryptor.new(Rails.configuration.secret_token)
     end
   end
+
+
 
   class InvalidInfo < StandardError; end
 end

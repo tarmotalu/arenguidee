@@ -28,6 +28,13 @@ class ApplicationController < ActionController::Base
   def is_admin?
     current_user && current_user.is_admin?
   end
+  
+  def after_sign_in_path_for(resource_or_scope)
+    if request.env['omniauth.origin']
+       request.env['omniauth.origin']
+     end
+ end
+ 
 
   def authenticate_admin!
     return authenticate_user! if !current_user

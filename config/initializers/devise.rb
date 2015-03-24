@@ -1,10 +1,10 @@
 Devise.setup do |config|
   require "devise/orm/active_record"
   config.mailer_sender = "please-change-me@config-initializers-devise.com"
+  config.secret_key = Arenguidee.config["pepper"]
 
   config.case_insensitive_keys = [:email]
   config.authentication_keys = [:email]
-  config.pepper = Arenguidee.config["pepper"]
 
   fb_app_id = Arenguidee.config["facebook_app_id"]
   fb_app_secret = Arenguidee.config["facebook_app_secret"]
@@ -32,4 +32,4 @@ end
 
 # Mobile-ID will otherwise throw an exception when giving it an invalid mobile
 # number.
-Savon.configure {|savon| savon.raise_errors = false }
+Digidoc::Client.logger = Logger.new('log/webservices.log')

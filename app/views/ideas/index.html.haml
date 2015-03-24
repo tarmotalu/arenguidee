@@ -1,4 +1,21 @@
 %header#ideas-header
   %h1 Ideed
 
+  %menu
+    Järjesta
+    %ul
+      - id = {:id => @category}
+      %li
+        - href = url_for_unless_current(id.merge(:action => :index))
+        %a(href=href) aja
+      %li
+        - href = url_for_unless_current(id.merge(:action => :top))
+        %a(href=href) toetuste
+      %li
+        - href = url_for_unless_current(id.merge(:action => :bottom))
+        %a(href=href) vastuhäälte
+      %li
+        - href = url_for_unless_current(id.merge(:action => :controversial))
+        %a(href=href) arutelude
+    põhjal.
 #ideas-list= render :partial => "ideas/idea", :collection => @ideas

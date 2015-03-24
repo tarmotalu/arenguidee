@@ -11,17 +11,22 @@
   - else
     - up = form.merge("action" => endorse_idea_path(idea))
   %form.endorse{up}>
-    .count= idea.all_for.count
 
-    - if current_user
+    - if !current_user
+      .count= protected_link_to(idea.all_for.count, idea)
+    - else
+      .count= idea.all_for.count
+
       %button(type="submit") Toetan
 
+      
   - if endorsement && endorsement.down?
     - down = form.merge("action" => url_for(endorsement), "method"=>"delete")
   - else
     - down = form.merge("action" => oppose_idea_path(idea))
   %form.oppose{down}>
-    .count= idea.all_against.count
-
-    - if current_user
+    - if !current_user
+      .count= protected_link_to(idea.all_against.count, idea)
+    - else
+      .count= idea.all_against.count
       %button(type="submit") Olen vastu

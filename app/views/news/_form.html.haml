@@ -13,7 +13,11 @@
   %h2= t("activerecord.attributes.news.source")
   = errors_for @news, :source
   = f.text_field :source
-
+  
+  %h2= t("activerecord.attributes.news.excerpt")
+  = errors_for @news, :excerpt
+  = f.text_area :excerpt 
+  
   %h2= t("activerecord.attributes.news.date")
   = errors_for @news, :date
   = f.text_field :date, :value => @news.date.try(:strftime, "%b %-d, %Y")

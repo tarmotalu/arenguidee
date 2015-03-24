@@ -21,6 +21,11 @@
       = render :partial=>"ideas/fb_og_tags"
 
   %body{:class => params[:controller].tr("/", "-")}
+    - unless user_signed_in?
+      #login_overlay
+        %p Logi sisse Facebooki, ID-kaardi või Mobiil-ID'ga, et postitada Arenguidee saiti
+        = render :partial => "users/sessions/form"
+
     #main
       %nav#nav
         %center

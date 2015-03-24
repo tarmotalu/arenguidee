@@ -1,6 +1,7 @@
 class IdeasController < ApplicationController
   XHR_PARTIALS = %w[idea_admin_menu]
 
+
   before_filter :authenticate_user!, :only => [
     :comment,
     :consider,
@@ -233,16 +234,17 @@ class IdeasController < ApplicationController
     @page_title = tr("Top ideas", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     if params[:category_id]
-      @ideas = Idea.by_category(params[:category_id]).published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
+      @ideas = Idea.by_category(params[:category_id]).published.all.sort_by(&:arenguidee_score)
     else
-      @ideas = Idea.published.top_rank.paginate :page => params[:page], :per_page => params[:per_page]
+      @ideas = Idea.published.all.sort_by(&:arenguidee_score).reverse
+      #.paginate :page => params[:page], :per_page => params[:per_page]
     end
     get_endorsements
     if request.xhr?
         render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
     else
       respond_to do |format|
-        format.html { render :template => "/issues/list" }
+        format.html { render :template => "ideas/index" }
         format.rss { render :action => "list" }
         format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
         format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
@@ -258,16 +260,16 @@ class IdeasController < ApplicationController
     @page_title = tr("Bottom ideas", "controller/ideas")
     @rss_url = top_ideas_url(:format => 'rss')
     if params[:category_id]
-      @ideas = Idea.by_category(params[:category_id]).published.bottom.paginate :page => params[:page], :per_page => params[:per_page]
+      @ideas = Idea.by_category(params[:category_id]).published.sort_by(&:arenguidee_score)
     else
-      @ideas = Idea.published.bottom.paginate :page => params[:page], :per_page => params[:per_page]
+      @ideas = Idea.published.sort_by(&:arenguidee_score)
     end
     get_endorsements
     if request.xhr?
       render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
     else
       respond_to do |format|
-        format.html { render :template => "/issues/list" }
+        format.html { render :template => "ideas/index" }
         format.rss { render :action => "list" }
         format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
         format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
@@ -368,7 +370,7 @@ class IdeasController < ApplicationController
       render :partial => 'issues/pageless', :locals => {:ideas => @ideas }
     else
       respond_to do |format|
-        format.html { render :template => "/issues/list"  }
+        format.html { render :template => "ideas/index"  }
         format.rss { render :action => "list" }
         format.js { render :layout => false, :text => "document.write('" + js_help.escape_javascript(render_to_string(:layout => false, :template => 'ideas/list_widget_small')) + "');" }
         format.xml { render :xml => @ideas.to_xml(:except => NB_CONFIG['api_exclude_fields']) }
@@ -654,25 +656,25 @@ class IdeasController < ApplicationController
     redirect_to '/ideas/'
   end
 
-  def create
-    @idea = Idea.new({"status" => "pending"}.merge(idea_params))
-    @idea.user = current_user
-    @idea.ip_address = request.remote_ip
+   def create
+     @idea = Idea.new({"status" => "pending"}.merge(idea_params))
+     @idea.user = current_user
+     @idea.ip_address = request.remote_ip
 
-    return render "new", :status => :unprocessable_entity if !@idea.save
+     return render "new", :status => :unprocessable_entity if !@idea.save
 
-    unless @idea.points.empty?
-      first_point = @idea.points.first
-      first_point.setup_revision
-      first_point.reload
-      @endorsement = @idea.endorse(current_user,request,current_sub_instance,@referral)
-      quality = first_point.point_qualities.find_or_create_by_user_id_and_value(current_user.id, true)
-    end
+     unless @idea.points.empty?
+       first_point = @idea.points.first
+       first_point.setup_revision
+       first_point.reload
+       @endorsement = @idea.endorse(current_user,request,current_sub_instance,@referral)
+       quality = first_point.point_qualities.find_or_create_by_user_id_and_value(current_user.id, true)
+     end
 
-    IdeaRevision.create_from_idea(@idea,request.remote_ip,request.env["HTTP_USER_AGENT"])
+     IdeaRevision.create_from_idea(@idea,request.remote_ip,request.env["HTTP_USER_AGENT"])
 
-    redirect_to @idea
-  end
+     redirect_to @idea
+   end
 
   def endorse
     @idea = Idea.find(params[:id])
@@ -934,7 +936,7 @@ class IdeasController < ApplicationController
 
   private
   def idea_params
-    allowed_params = %w[name name description text category_id attachment]
+    allowed_params = %w[name name description text category_id attachment video_url]
     allowed_params.push "status" if current_user.admin?
     allowed_params.push "author_name" if current_user.admin?
     params[:idea].slice(*allowed_params) if params[:idea]

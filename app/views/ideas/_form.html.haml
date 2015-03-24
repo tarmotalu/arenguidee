@@ -20,7 +20,14 @@
       <strong id="idea-text-countdown"></strong> tähemärki veel järel.
     = t("activerecord.attributes.idea.text")
   = errors_for @idea, :text
-  = f.text_area :text, :maxlength => 5000
+  = f.text_area :text, :maxlength =>8000
+
+  %h2
+    %small.countdown
+      <strong id="idea-video-url-countdown"></strong> tähemärki veel järel.
+    = t("activerecord.attributes.idea.video_url")
+  = errors_for @idea, :video_url
+  = f.text_field :video_url, :maxlength => 255
 
   %h2= t("activerecord.attributes.idea.category")
   %select(name="idea[category_id]")
@@ -62,6 +69,11 @@
     var desc = form.elements["idea[description]"]
     $(desc).NobleCount("#idea-description-countdown", {
       max_chars: desc.getAttribute("maxlength")
+    })
+
+    var video = form.elements["idea[video_url]"]
+    $(video).NobleCount("#idea-video-url-countdown", {
+      max_chars: video.getAttribute("maxlength")
     })
 
     var text = form.elements["idea[text]"]

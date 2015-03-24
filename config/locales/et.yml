@@ -80,6 +80,7 @@ et:
         name: "Pealkiri"
         description: "Lühikokkuvõte"
         text: "Kirjeldus"
+        video_url: "Viide video lingile (nt. Youtube, Vimeo, ...)"
         category: "Kategooria"
         status: "Staatus"
         status_published: "Avaldatud"

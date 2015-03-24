@@ -1,7 +1,7 @@
 class Idea < ActiveRecord::Base
   include ActionView::Helpers::DateHelper
-  self.per_page = 10
-  has_attached_file :attachment
+  self.per_page = 100
+  has_attached_file :attachment, :url => "/system/ideas/attachments/:id_partition/:style/:basename.:extension"
 
   validates_presence_of :category_id
   validates_presence_of :name
@@ -9,11 +9,12 @@ class Idea < ActiveRecord::Base
   validates_exclusion_of :description, :in => [nil]
   validates_length_of :description, :maximum => 500
   validates_exclusion_of :text, :in => [nil]
-  validates_length_of :text, :maximum => 5000
+  validates_length_of :text, :maximum => 8000
   validates_inclusion_of :status, :in => %w[published pending removed]
   validates_exclusion_of :author_name, :in => [nil]
 
   validates_format_of :website, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
+  validates_format_of :video_url, :with => /(^$)|(^((http|https):\/\/)*[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix
 
   validates_attachment_size :attachment, {:in => 0..25.megabytes}
 
@@ -202,6 +203,10 @@ class Idea < ActiveRecord::Base
 
   def editors
     idea_revisions.where("idea_revisions.user_id <> ?", user_id).map(&:user)
+  end
+
+  def arenguidee_score
+    all_for.count - all_against.count
   end
 
   def all_for

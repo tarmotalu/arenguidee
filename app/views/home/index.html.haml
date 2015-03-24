@@ -3,7 +3,7 @@
 
 %section#home-banner
   %a{:href => page_path("about")}
-    %img{:src => path_to_image("banner.jpeg")}
+    %img{:src => path_to_image("banner.jpg")}
 
   %blockquote<
     Mis oleks, kui me oma rahva ja riigina jätaksime ka enda eesmärkidele
@@ -16,10 +16,26 @@
     %br
     Hääl mere tagant
 
-#home-ideas
-  %section#home-new-idea
-    %a.button.primary(href=new_idea_path) Esita oma arenguidee
+  .home-last-year-summary
+    %a{:href => 'http://www.arengufond.ee/2014/06/arenguidee-konkursi-2014-loppurituse-salvestused/'}
+      %span Eelmise aasta võiduideede kokkuvõte &raquo;
 
+
+#home-new-idea-section
+  %a.button.primary(href=new_idea_path) Esita oma arenguidee
+
+#home-ideas
+  %section#home-news
+    %h2 Uudised
+    %ol
+      - @news.each do |news|
+        %li
+          = link_to_unless(news.url.blank?, news.title, news.url) do
+            = news.title
+          %strong= news.source
+          %time= news.date.strftime("%-d.%2m")
+          - unless news.excerpt.blank?
+            .excerpt= news.excerpt
   %section#home-categories
     %h2 Teemad
     %ul
@@ -27,35 +43,42 @@
         %li.category
           %a{:href => issue_path(category)}
             = category.name
-            %small= category.ideas.published.count
+            - if category.ideas.published.count > 0
+              %small= category.ideas.published.count
+    %h3= link_to 'Kõik ideed', ideas_path
 
   %section#home-popular-ideas
     %h2 Populaarsemad ideed
     %ol
-      - @ideas.each do |idea|
+      - @popular.each do |idea|
         %li
           %a.category{:href => issue_path(idea.category)}= idea.category.name
           %a.idea{:href => idea_path(idea)}
             = idea.name
-            %small #{idea.score}
+            - if idea.score > 0
+              %small #{idea.score}
+  %section#home-new-ideas.new-ideas
+    %h2 Uued ideed
+    %ol
+      - @new_ideas.each do |idea|
+        %li
+          %a.category{:href => issue_path(idea.category)}= idea.category.name
+          %a.idea{:href => idea_path(idea)}
+            = idea.name
+            - if idea.score > 0
+              %small #{idea.score}
+
+
+
 
   %section#home-outcome
     %a{:href => page_path("about")}
       %p
-        Arengufond annab maikuus võitjale aastase stipendiumi suurusega 2000
+        Arengufond annab juunis võitjale aastase stipendiumi suurusega 2000
         eurot kuus oma arenguidee teostamiseks.
       %span Loe lähemalt
-
-  %section#home-news
-    %h2 Uudised
-    %ol
-      - @news.each do |news|
-        %li
-          %a{:href => news.url}
-            = news.title
-            %strong= news.source
-            %time= news.date.strftime("%-d.%2m")
-
+    %a{:href => 'https://2014.arenguidee.ee'}
+      %span Vaata eelmise aasta arenguideede arhiivi &raquo;
 %section#home-highlights
   - if !@highlights.empty?
     %ul

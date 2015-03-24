@@ -5,16 +5,21 @@
 
 %ul#users-list
   - @users.each do |user|
+
     %li.user>
+
       %h2
-        %a{:href => url_for(user)}= user.name
+        %a{:href => url_for(user), :name => user.id.to_s}= user.name
 
       %ul
         - if user.admin?
           %li Administraator
         - if user.suspended?
           %li Blokeeritud
-
+      - if user_signed_in?
+        - if current_user.is_admin?
+          %ul
+            %li= link_to( (user.is_admin == true ? 'Remove ' : 'Make ') + "admin", toggle_admin_user_path(user), :data => {:confirm => "Are you sure you want to do this?"})
       %dl
         %dt E-post
         %dd= user.email

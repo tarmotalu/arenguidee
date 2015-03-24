@@ -2,6 +2,7 @@
 /config/*.pem
 /config/contacts.yml
 /config/deploy.rb
+/config/deploy/
 /config/development.sphinx.conf
 /config/facebooker.yml
 /config/newrelic.yml
@@ -13,3 +14,6 @@
 /log/
 /public/system/
 /tmp/
+.DS_Store
+.ruby-version
+Capfile

@@ -16,6 +16,7 @@ Devise.setup do |config|
   mobileid = {}
   mobileid[:endpoint_url] = Arenguidee.config["mobileid_endpoint_url"]
   mobileid[:service_name] = Arenguidee.config["mobileid_service_name"]
+  mobileid[:message_to_display] = Arenguidee.config["mobileid_message"]
   config.omniauth :mobileid, mobileid
 end
 

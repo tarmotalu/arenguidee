@@ -11,7 +11,11 @@ Arenguidee::Application.routes.draw do
     end
   end
 
-  resources :users, :except => [:new, :create, :destroy]
+  resources :users, :except => [:new, :create, :destroy] do
+    member do
+      get :toggle_admin
+    end
+  end
 
   resources :categories do
     resources :ideas
@@ -28,6 +32,9 @@ Arenguidee::Application.routes.draw do
 
     collection do
       get :pending
+      get :top
+      get :bottom
+      get :controversial
     end
 
     resources :points
